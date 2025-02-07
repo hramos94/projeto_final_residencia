@@ -8,6 +8,34 @@ Essas instruções permitirão que você obtenha uma cópia do projeto em opera�
 
 Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar o projeto.
 
+### Padronização das branches e commits
+
+Existirão 3 tipos de branches:
+- feat : criação de novas funcionalidades
+- fix : correção de bugs
+- docs : atualizar documentação
+
+Para criação de branches no projeto foi estabelecido o seguinte padrao, utilizando o card ENGBLK-12, do trello.
+
+```(type)/(card-number)_task_description```
+
+Exemplos de criação de branches (com nomes em ingles):
+```
+feat/engblk-12_update_readme
+
+fix/engblk-12_update_readme
+
+docs/engblk-12_update_readme
+```
+Já para os commits (feitos em ingles), será utilizada uma abordagem semelhante:
+Exemplos:
+
+``` feat: short description of the task functionality ```
+
+``` fix: short description of the task resolution ```
+
+``` docs: short description of the task documentation added/updated ```
+
 ### 📋 Pré-requisitos
 
 De que coisas você precisa para instalar o software e como instalá-lo?

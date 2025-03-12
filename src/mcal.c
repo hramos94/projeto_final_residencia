@@ -5,8 +5,13 @@
 #include <string.h>
 #include <sys/select.h>
 
-dIO pins[2];
-
+dIO pins[10];
+// pin 0 - luz de pisca alerta
+// pin 1 - botão do pisca alerta
+// pin 2 - Server envia bloqueio REB
+// pin 3 - reb envia sinal de REB ativado ao motorista
+// pin 4 - Server envia desbloqueio REB
+// pin 5 - REB envia sinal para motor ser bloqueado
 
 pthread_t new_thread(void *func){
   pthread_t nthread;

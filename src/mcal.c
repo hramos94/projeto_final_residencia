@@ -69,3 +69,21 @@ uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin){
 void go_sleep(uint8_t seconds){
   sleep(seconds);
 }
+
+// Função para verificar se a interface vcan0 existe
+uint8_t verify_can_socket(const char *interface)
+{
+    char verify_can_command[100];
+    sprintf(verify_can_command,"ip link show %s > /dev/null 2>&1", interface);
+
+    //return 1 if interface exists and 0 if not
+    if(system(verify_can_command) != 0) 
+    {
+      return FAIL;
+    }
+    else
+    {
+      return SUCCESS;
+    }
+  
+}

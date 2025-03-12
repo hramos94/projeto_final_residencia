@@ -70,20 +70,16 @@ void go_sleep(uint8_t seconds){
   sleep(seconds);
 }
 
-// Função para verificar se a interface vcan0 existe
+// Function to verify if can socket exists 
 uint8_t verify_can_socket(const char *interface)
 {
     char verify_can_command[100];
     sprintf(verify_can_command,"ip link show %s > /dev/null 2>&1", interface);
 
-    //return 1 if interface exists and 0 if not
+    //return FAIL if interface doesn not exists
     if(system(verify_can_command) != 0) 
     {
       return FAIL;
     }
-    else
-    {
-      return SUCCESS;
-    }
-  
+    return SUCCESS; 
 }

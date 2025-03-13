@@ -111,7 +111,7 @@ uint8_t can_interface_verify(const char *interface)
 }
 
 // Function to verify if can interface is UP or DOWN
-uint8_t can_interface_status(const char *interface, int *can_socket)
+uint8_t can_interface_status(int *can_socket, const char *interface)
 {
 
     struct ifreq socket_info; // Initialize the struct ifreq to hold the interface information
@@ -136,7 +136,7 @@ uint8_t can_interface_status(const char *interface, int *can_socket)
 }
 
 //Armed with the interface index, we can now bind the socket to the CAN Interface:
-uint8_t can_bind_socket(const char *interface,int *can_socket)
+uint8_t can_bind_socket(int *can_socket,const char *interface)
 {
     struct ifreq ifr;
     strcpy(ifr.ifr_name, interface);

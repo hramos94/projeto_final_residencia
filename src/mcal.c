@@ -135,6 +135,28 @@ uint8_t can_interface_status(const char *interface, int *can_socket)
     }
 }
 
+//Armed with the interface index, we can now bind the socket to the CAN Interface:
+uint8_t can_bind_socket(const char *interface,int *can_socket)
+{
+    struct ifreq ifr;
+    strcpy(ifr.ifr_name, interface);
+    ioctl(*can_socket, SIOCGIFINDEX, &ifr);
+
+
+    struct sockaddr_can addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.can_family = AF_CAN;
+    addr.can_ifindex = ifr.ifr_ifindex;
+    if (bind(*can_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0) 
+    {
+        perror("Bind");
+        return FAIL;
+    }
+    return SUCCESS;
+
+}
+
+
 
 
 

@@ -165,7 +165,7 @@ uint8_t can_bind_socket(int *can_socket,const char *interface)
 
 }
 
-
+//function to send frames on CAN BUS
 uint8_t can_send(int *can_socket, struct can_frame *frame)
 {
     if (write(*can_socket, frame, sizeof(struct can_frame)) != sizeof(struct can_frame)) 

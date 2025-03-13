@@ -111,7 +111,7 @@ uint8_t can_interface_verify(const char *interface)
 }
 
 // Function to verify if can socket is UP or DOWN
-uint8_t can_socket_status(const char *interface)
+uint8_t can_interface_status(const char *interface)
 {
     // Crete new CAN socket
     struct ifreq socket_info;

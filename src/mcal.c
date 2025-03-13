@@ -97,7 +97,7 @@ uint8_t can_socket_close(int *can_socket)
 }
 
 // Function to verify if can socket exists 
-uint8_t can_socket_verify(const char *interface)
+uint8_t can_interface_verify(const char *interface)
 {
     char verify_can_command[100];
     sprintf(verify_can_command,"ip link show %s > /dev/null 2>&1", interface);

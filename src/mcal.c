@@ -71,7 +71,7 @@ void go_sleep(uint8_t seconds){
 }
 
 // Function to verify if can socket exists 
-uint8_t verify_can_socket(const char *interface)
+uint8_t can_socket_verify(const char *interface)
 {
     char verify_can_command[100];
     sprintf(verify_can_command,"ip link show %s > /dev/null 2>&1", interface);

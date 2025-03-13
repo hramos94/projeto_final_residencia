@@ -70,6 +70,32 @@ void go_sleep(uint8_t seconds){
   sleep(seconds);
 }
 
+//======================================================================
+//======================== CAN =========================================
+//======================================================================
+
+//Opens Can socket - does not depend on VCAN interface
+uint8_t can_socket_open(int *can_socket)
+{
+    if ((*can_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) 
+    {
+        perror("Socket Open Failed: ");
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
+//Closes CAN socket - does not depend on VCAN interface
+uint8_t can_socket_close(int *can_socket)
+{
+    if (close(*can_socket) < 0) 
+    {
+        perror("Socket Close Failed:");
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
 // Function to verify if can socket exists 
 uint8_t can_socket_verify(const char *interface)
 {
@@ -120,7 +146,6 @@ uint8_t can_socket_status(const char *interface)
         close(socket_descriptor);
         return FAIL;
     }
-
 }
 
 

@@ -83,3 +83,47 @@ uint8_t verify_can_socket(const char *interface)
     }
     return SUCCESS; 
 }
+
+// Function to verify if can socket is UP or DOWN
+uint8_t can_socket_status(const char *interface)
+{
+    // Crete new CAN socket
+    struct ifreq socket_info;
+    int socket_descriptor;
+    socket_descriptor = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+    if (socket_descriptor < 0)
+    {
+        //perror("Error opening raw socket");
+        return FAIL;
+    }
+    
+    // Initialize the struct ifreq to hold the interface information
+    strncpy(socket_info.ifr_name, interface, IFNAMSIZ);
+    
+    // check if the interface exist getting the status using ioctl 
+    if (ioctl(socket_descriptor, SIOCGIFFLAGS, &socket_info) < 0) 
+    {
+        //perror("Error getting interface flags");
+        close(socket_descriptor);
+        return FAIL;
+    }
+    
+    // Check if the interface is up - IFF_UP is a flag that indicate if 
+    //interface is down
+    if (socket_info.ifr_flags & IFF_UP)
+    {
+        close(socket_descriptor);
+        return SUCCESS;
+    } 
+    else //interface is down
+    {
+        close(socket_descriptor);
+        return FAIL;
+    }
+
+}
+
+
+
+
+

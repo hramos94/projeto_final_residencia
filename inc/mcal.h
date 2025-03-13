@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 #include <pthread.h>
+#include <linux/can.h>   // struct can_frame, canid_t
+#include <linux/can/raw.h> // CAN_RAW para socket
 
 typedef struct {
   uint8_t pinNumber;

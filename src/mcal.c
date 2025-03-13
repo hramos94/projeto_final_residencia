@@ -1,9 +1,18 @@
-#include <stdio.h>
 #include <ecu.h>
 #include <mcal.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/select.h>
+
+#include <stdio.h>       // printf, perror, sprintf
+#include <stdint.h>      // uint8_t
+#include <string.h>      // strcpy, strncpy, memset
+#include <stdlib.h>      // system
+#include <unistd.h>      // close, write
+#include <sys/types.h>   // Tipos de dados do sistema
+#include <sys/socket.h>  // socket, bind
+#include <linux/can.h>   // struct can_frame, canid_t
+#include <linux/can/raw.h> // CAN_RAW para socket
+#include <net/if.h>      // struct ifreq, IFNAMSIZ
+#include <sys/ioctl.h>   // ioctl, SIOCGIFFLAGS, SIOCGIFINDEX
+
 
 dIO pins[10];
 // pin 0 - luz de pisca alerta

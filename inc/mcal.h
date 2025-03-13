@@ -18,4 +18,6 @@ pthread_t new_thread(void *func);
 uint8_t endthread(int thread_numb);
 uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status);
 
+uint8_t can_socket_status(const char *interface);
+
 #endif

@@ -176,6 +176,20 @@ uint8_t can_send(int *can_socket, struct can_frame *frame)
     return SUCCESS;
 }
 
+//function to read frames on CAN - this will block execution until a frame is received
+uint8_t can_read(int *can_socket, struct can_frame *frame)
+{
+    //this will block until frame avaliable
+    int nbytes = read(*can_socket, frame, sizeof(struct can_frame)); 
+    if (read(*can_socket, frame, sizeof(struct can_frame)) < 0) 
+    {
+        perror("Can Read Error: ");
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
+
 
 
 

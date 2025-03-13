@@ -35,5 +35,6 @@ uint8_t can_interface_verify(const char *interface);
 uint8_t can_interface_status(int *can_socket, const char *interface);
 uint8_t can_bind_socket(int *can_socket, const char *interface);
 uint8_t can_send(int *can_socket, struct can_frame *frame);
+uint8_t can_read(int *can_socket, struct can_frame *frame);
 
 #endif

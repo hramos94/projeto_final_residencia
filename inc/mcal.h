@@ -9,6 +9,15 @@ typedef struct {
   uint8_t status;
 }dIO;
 
+typedef struct {
+    canid_t can_id;  /* 32 bit CAN_ID + EFF/RTR/ERR flags */
+    __u8    can_dlc; /* frame payload length in byte (0 .. 8) */
+    __u8    __pad;   /* padding */
+    __u8    __res0;  /* reserved / padding */
+    __u8    __res1;  /* reserved / padding */
+    __u8    data[8] __attribute__((aligned(8)));
+}can_frame;
+
 void show_error(char errorStr[]);
 uint8_t mcal_init();
 uint8_t read_pin_status(uint8_t *status, uint8_t pin);

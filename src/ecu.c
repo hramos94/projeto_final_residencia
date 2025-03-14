@@ -31,3 +31,33 @@ uint8_t read_console(){
 
   return SUCCESS;
 }
+
+uint8_t block_engine(){
+  uint8_t status = 0;
+
+  // check server status (pin 2)
+  if(read_pin_status(&status, 2) == FAIL){
+    show_error("ECU.read_pin_status (server block request)\n");
+    return FAIL;
+  }
+
+  if(status  == S_ON) {
+    // Send command ON to pin 5 (block engine)
+    if(set_pin_status(S_ON, 5) == FAIL){
+      show_error("ECU.set_pin_status FAIL (engine block)");
+      return FAIL;
+    }
+  }
+  
+  return SUCCESS;
+}
+
+uint8_t unblock_engine(){
+  uint8_t status = 0;
+
+  // check server status (pin 4)
+  if (read_pin_status(&status, 4) == FAIL) {
+      show_error("ECU.read_pin_status FAIL (server unblock request)\n");
+      return FAIL;
+  }
+}

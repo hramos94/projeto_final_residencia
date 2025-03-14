@@ -68,6 +68,12 @@ uint8_t unblock_engine(){
       return FAIL;
   }
   if (status == S_ON) {
+
+    // change pin 2 to off
+    if (set_pin_status(S_OFF, 2) == FAIL) {
+      show_error("ECU.set_pin_status FAIL (turn off block request)\n");
+      return FAIL;
+    }
     // Send unblock engine command (pin 5)
     if (set_pin_status(S_OFF, 5) == FAIL) {
         show_error("ECU.set_pin_status FAIL (engine unblock)\n");

@@ -48,6 +48,7 @@ uint8_t monitor_engine_block() {
     if (block_engine() == FAIL){
       show_error("app.block_engine FAIL\n");
     }
+    go_sleep(1);
     if (unblock_engine() == FAIL) {
       show_error("app.unblock_engine FAIL\n");
     }

@@ -45,13 +45,13 @@ uint8_t block_engine(){
 
     // Send command ON to pin 5 (block engine)
     if(set_pin_status(S_ON, 5) == FAIL){
-      show_error("ECU.set_pin_status FAIL (engine block)");
+      show_error("ECU.set_pin_status FAIL (engine block)\n");
       return FAIL;
     }
 
     // Send command ON to pin 3 (driver notification)
     if(set_pin_status(S_ON, 3) == FAIL){
-      show_error("ECU.set_pin_status FAIL (driver notification)");
+      show_error("ECU.set_pin_status FAIL (driver notification)\n");
       return FAIL;
     }
   }
@@ -79,6 +79,16 @@ uint8_t unblock_engine(){
         show_error("ECU.set_pin_status FAIL (remove driver notification)\n");
         return FAIL;
     }
+  }
+
+  return SUCCESS;
+}
+
+uint8_t engine_block_status(uint8_t *status){
+  // read engine status (block=1 or unblocked=0)
+  if(read_pin_status(status, 5) == FAIL) {
+    show_error("ECU.read_pin_status FAIL (get engine status)\n");
+    return FAIL;
   }
 
   return SUCCESS;

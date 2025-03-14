@@ -4,14 +4,19 @@ TARGET = reb
 BINFOLDER = bin/
 SRCFOLDER = src/
 OBJFOLDER = obj/
-INCLUD = -I ./inc
+INCLUD = $(shell find ./inc -type d | sed 's/^/-I/')
+LINK = -lGL -lm -lGLU -lGLEW -lglfw 
 
-SRCFILES := $(wildcard $(SRCFOLDER)*.c)
 
-all: $(SRCFILES:src/%.c=obj/%.o) | $(BINFOLDER) 
-	$(CC) $(CFLAGS) $(OBJFOLDER)*.o -o $(BINFOLDER)$(TARGET) 
+SRCFILES := $(shell find $(SRCFOLDER) -type f -name '*.c')
 
-obj/%.o: src/%.c | $(OBJFOLDER)
+OBJFILES := $(patsubst $(SRCFOLDER)%.c,$(OBJFOLDER)%.o,$(SRCFILES))
+
+all: $(OBJFILES) | $(BINFOLDER) 
+	$(CC) $(CFLAGS) $(OBJFILES) -o $(BINFOLDER)$(TARGET) $(LINK)
+
+$(OBJFOLDER)%.o: $(SRCFOLDER)%.c | $(OBJFOLDER)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< $(INCLUD) -o $@ 
 
 $(BINFOLDER):
@@ -24,7 +29,7 @@ run:
 	$(BINFOLDER)$(TARGET)
 
 clean:
-	rm -f $(BINFOLDER)*
-	rm -f $(OBJFOLDER)*
+	rm -rf $(BINFOLDER)
+	rm -rf $(OBJFOLDER)
 
 

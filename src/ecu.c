@@ -42,22 +42,44 @@ uint8_t block_engine(){
   }
 
   if(status  == S_ON) {
+
     // Send command ON to pin 5 (block engine)
     if(set_pin_status(S_ON, 5) == FAIL){
       show_error("ECU.set_pin_status FAIL (engine block)");
       return FAIL;
     }
+
+    // Send command ON to pin 3 (driver notification)
+    if(set_pin_status(S_ON, 3) == FAIL){
+      show_error("ECU.set_pin_status FAIL (driver notification)");
+      return FAIL;
+    }
   }
-  
+
   return SUCCESS;
 }
 
 uint8_t unblock_engine(){
   uint8_t status = 0;
 
-  // check server status (pin 4)
+  // Check server status (pin 4)
   if (read_pin_status(&status, 4) == FAIL) {
       show_error("ECU.read_pin_status FAIL (server unblock request)\n");
       return FAIL;
   }
+  if (status == S_ON) {
+    // Send unblock engine command (pin 5)
+    if (set_pin_status(S_OFF, 5) == FAIL) {
+        show_error("ECU.set_pin_status FAIL (engine unblock)\n");
+        return FAIL;
+    }
+
+    // Remove driver notification (pin 3)
+    if (set_pin_status(S_OFF, 3) == FAIL) {
+        show_error("ECU.set_pin_status FAIL (remove driver notification)\n");
+        return FAIL;
+    }
+  }
+
+  return SUCCESS;
 }

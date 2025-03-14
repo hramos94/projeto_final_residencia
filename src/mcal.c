@@ -168,6 +168,8 @@ uint8_t can_bind_socket(int *can_socket,const char *interface)
 //function to send frames on CAN BUS
 uint8_t can_send(int *can_socket, struct can_frame *frame)
 {
+
+
     if (write(*can_socket, frame, sizeof(struct can_frame)) != sizeof(struct can_frame)) 
     {
         perror("Can Write error: ");
@@ -188,6 +190,58 @@ uint8_t can_read(int *can_socket, struct can_frame *frame)
     }
     return SUCCESS;
 }
+
+uint8_t can_start(int *my_vcan, const char *interface)
+{
+    if(can_socket_open(my_vcan)==FAIL)
+    {
+        return FAIL;
+    }
+    if(can_interface_status(interface,my_vcan)==FAIL)
+    {
+        return FAIL;
+    }
+    if(can_bind_socket(interface,my_vcan)==FAIL)
+    {
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
+//send can frame in vcan0
+uint8_t can_send_vcan0(struct can_frame *frame)
+{
+    int my_vcan;
+    const char *interface = "vcan0";
+    if(can_start(&my_vcan,interface)==FAIL)
+    {
+        return FAIL;
+    }
+    if(can_send(&my_vcan,frame)==FAIL)
+    {
+        return FAIL;
+    }
+    can_socket_close(&my_vcan);
+    return SUCCESS;
+}
+
+//read frame in vcan0 - will block until frame is received
+uint8_t can_read_vcan0(struct can_frame *frame)
+{
+    int my_vcan;
+    const char *interface = "vcan0";
+    if(can_start(&my_vcan,interface)==FAIL)
+    {
+        return FAIL;
+    }
+    if(can_read(&my_vcan,frame)==FAIL)
+    {
+        return FAIL;
+    }
+    can_socket_close(&my_vcan);
+    return SUCCESS;
+}
+
 
 
 

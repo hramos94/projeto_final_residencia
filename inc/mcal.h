@@ -37,4 +37,7 @@ uint8_t can_bind_socket(int *can_socket, const char *interface);
 uint8_t can_send(int *can_socket, struct can_frame *frame);
 uint8_t can_read(int *can_socket, struct can_frame *frame);
 
+uint8_t can_send_vcan0(struct can_frame *frame);
+uint8_t can_read_vcan0(struct can_frame *frame);
+
 #endif

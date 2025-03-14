@@ -42,3 +42,16 @@ uint8_t hazard_lights_blink() {
     }
   }
 }
+
+uint8_t monitor_engine_block() {
+  while (1) {
+    if (block_engine() == FAIL){
+      show_error("app.block_engine FAIL\n");
+    }
+    go_sleep(1);
+    if (unblock_engine() == FAIL) {
+      show_error("app.unblock_engine FAIL\n");
+    }
+    go_sleep(1);
+  }
+}

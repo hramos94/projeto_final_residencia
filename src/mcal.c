@@ -122,7 +122,6 @@ uint8_t can_interface_verify(const char *interface)
 // Function to verify if can interface is UP or DOWN
 uint8_t can_interface_status(int *can_socket, const char *interface)
 {
-
     struct ifreq socket_info; // Initialize the struct ifreq to hold the interface information
     strncpy(socket_info.ifr_name, interface, IFNAMSIZ);
     
@@ -151,7 +150,6 @@ uint8_t can_bind_socket(int *can_socket,const char *interface)
     strcpy(ifr.ifr_name, interface);
     ioctl(*can_socket, SIOCGIFINDEX, &ifr);
 
-
     struct sockaddr_can addr;
     memset(&addr, 0, sizeof(addr));
     addr.can_family = AF_CAN;
@@ -168,8 +166,6 @@ uint8_t can_bind_socket(int *can_socket,const char *interface)
 //function to send frames on CAN BUS
 uint8_t can_send(int *can_socket, struct can_frame *frame)
 {
-
-
     if (write(*can_socket, frame, sizeof(struct can_frame)) != sizeof(struct can_frame)) 
     {
         perror("Can Write error: ");
@@ -197,11 +193,11 @@ uint8_t can_start(int *my_vcan, const char *interface)
     {
         return FAIL;
     }
-    if(can_interface_status(interface,my_vcan)==FAIL)
+    if(can_interface_status(my_vcan,interface)==FAIL)
     {
         return FAIL;
     }
-    if(can_bind_socket(interface,my_vcan)==FAIL)
+    if(can_bind_socket(my_vcan,interface)==FAIL)
     {
         return FAIL;
     }

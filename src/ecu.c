@@ -43,6 +43,12 @@ uint8_t block_engine(){
 
   if(status  == S_ON) {
 
+    // change pin 4 to off (unblock request)
+    if (set_pin_status(S_OFF, 4) == FAIL) {
+      show_error("ECU.set_pin_status FAIL (turn off unblock server request)\n");
+      return FAIL;
+    }
+
     // Send command ON to pin 5 (block engine)
     if(set_pin_status(S_ON, 5) == FAIL){
       show_error("ECU.set_pin_status FAIL (engine block)\n");

@@ -7,7 +7,7 @@
 #define FAIL 1
 
 // ON/OFF Definitions (modularize by context -> ecu)
-#define S_ON  0x01U
+#define S_ON 0x01U
 #define S_OFF 0x00U
 
 uint8_t get_hazard_button_status(uint8_t *status);

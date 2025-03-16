@@ -44,42 +44,44 @@ uint8_t read_console()
 uint8_t start_reb()
 {
     uint8_t status = 0;
-    struct timespec start_time, current_time;
-    const int countdown_sec = 5;
+    clock_t start_time, current_time;
+    double elapsed_time = 0;
+    const double TIMEOUT = 5.0;
 
-    if (read_pin_status(&status, 3) == FAIL)
+    if (read_pin_status(&status, 6) == FAIL)
     {
-        show_error("ECU.read_pin_status FAIL (get start_reb status)\n");
+        show_error("ECU.read_pin_status FAIL (start_reb)\n");
         return FAIL;
     }
 
     if (status == S_ON)
     {
-        clock_gettime(CLOCK_MONOTONIC, &start_time);
 
-        do
+        // start the counting to 5 seconds
+        start_time = clock();
+
+        while (1)
         {
-            if (read_pin_status(&status, 3) == FAIL)
+            current_time = clock();
+            elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
+
+            printf("Elapsed time: %f seconds\n", elapsed_time);
+
+            if (read_pin_status(&status, 6) == FAIL)
             {
-                show_error("ECU.read_pin_status FAIL (during count)\n");
+                show_error("ECU.read_pin_status FAIL (start_reb)\n");
                 return FAIL;
             }
 
-            if (status == S_OFF)
+            if (elapsed_time >= TIMEOUT)
             {
+                // Send command OFF to pin 6 (start reb)
+                set_pin_status(S_OFF, 6);
+                // Send command ON to pin 2 (block engine)
+                set_pin_status(S_ON, 2);
                 return SUCCESS;
             }
-
-            clock_gettime(CLOCK_MONOTONIC, &current_time);
-            double elapsed_time = (current_time.tv_sec - start_time.tv_sec) +
-                                  (current_time.tv_nsec - start_time.tv_nsec) / 1.0e9;
-
-            if (elapsed_time >= countdown_sec)
-            {
-                return block_engine();
-            }
-
-        } while (1);
+        }
     }
 
     return SUCCESS;
@@ -98,7 +100,6 @@ uint8_t block_engine()
 
     if (status == S_ON)
     {
-
         // change pin 4 to off (unblock request)
         if (set_pin_status(S_OFF, 4) == FAIL)
         {

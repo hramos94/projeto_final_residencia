@@ -4,6 +4,7 @@
 
 uint8_t application_init()
 {
+
     if (mcal_init() == FAIL)
     {
         show_error("mcal_init FAIL\n");

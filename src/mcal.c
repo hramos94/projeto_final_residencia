@@ -196,14 +196,17 @@ uint8_t can_start(int *my_vcan, const char *interface)
 {
     if (can_socket_open(my_vcan) == FAIL)
     {
+        perror("Can socket open Error: ");
         return FAIL;
     }
     if (can_interface_status(my_vcan, interface) == FAIL)
     {
+        perror("Can interface Error: ");
         return FAIL;
     }
     if (can_bind_socket(my_vcan, interface) == FAIL)
     {
+        perror("Can bind Error: ");
         return FAIL;
     }
     return SUCCESS;

@@ -127,6 +127,7 @@ uint8_t engine_block_status(uint8_t *status)
     return SUCCESS;
 }
 
+
 uint8_t can_send_hazard_light(uint8_t status)
 {
     struct can_frame frame = {
@@ -142,6 +143,22 @@ uint8_t can_send_hazard_light(uint8_t status)
     if (can_send_vcan0(&frame) == FAIL)
     {
         return FAIL;
+    }
+}
+
+uint8_t handle_tcu_can(unsigned char *data)
+{
+    unsigned char signalREB = data[0];
+    if (signalREB ==  0x01)
+    {
+        // TODO
+        show_error("Ativando REB\n");
+    }
+
+    if (signalREB == 0x02)
+    {
+        // TODO
+       show_error("Desativando REB\n");
     }
 
     return SUCCESS;

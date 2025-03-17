@@ -128,6 +128,7 @@ uint8_t monitor_read_can()
         struct can_frame frame = {
             .can_id = 29, .can_dlc = 8, .data = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}};
 
+        printf("cand ID read %X\n", frame.can_id);
         if (can_read_vcan0(&frame) != FAIL)
         {
             if (frame.can_id == 0x7E0)

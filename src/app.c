@@ -72,3 +72,26 @@ uint8_t monitor_engine_block()
         go_sleep(1);
     }
 }
+
+uint8_t monitor_read_can()
+{
+    while (1)
+    {
+
+        struct can_frame frame = {
+            .can_id = 29, .can_dlc = 8, .data = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}};
+
+        if (can_read_vcan0(&frame) != FAIL)
+        {
+            if (frame.can_id == 0x7E0)
+            {
+                handle_tcu_can(frame.data);
+            }
+        }
+        else
+        {
+            show_error("Error monitor_read_can\n");
+            go_sleep(2);
+        }
+    }
+}

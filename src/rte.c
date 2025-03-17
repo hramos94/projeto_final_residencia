@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     pthread_t hazard_th = new_thread(hazard_lights_blink);
     pthread_t read_input_th = new_thread(read_input);
     pthread_t engine_block_th = new_thread(monitor_engine_block);
+    pthread_t monitor_read_can_th = new_thread(monitor_read_can);
 
     pthread_t gui_runner_th = new_thread(gui_runner);
 
@@ -21,4 +22,5 @@ int main(int argc, char *argv[])
     pthread_join(read_input_th, NULL);
     pthread_join(gui_runner_th, NULL);
     pthread_join(engine_block_th, NULL);
+    pthread_join(monitor_read_can_th, NULL);
 }

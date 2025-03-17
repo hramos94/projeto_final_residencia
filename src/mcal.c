@@ -20,6 +20,9 @@ dIO pins[10];
 // pin 3 - reb envia sinal de REB ativado ao motorista
 // pin 4 - Server envia desbloqueio REB
 // pin 5 - REB envia sinal para motor ser bloqueado
+//
+// pin 8 - Envia sinal na redCAN para desligar o pisca alerta 
+// pin 9 - Envia sinal na redCAN para ligar o pisca alerta
 
 int my_vcan;
 const char *interface = "vcan0";

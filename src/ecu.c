@@ -127,6 +127,26 @@ uint8_t engine_block_status(uint8_t *status)
     return SUCCESS;
 }
 
+
+uint8_t can_send_hazard_light(uint8_t status)
+{
+    struct can_frame frame = {
+        .can_id = 0x400, .can_dlc = 8, .data = {0}
+    };
+
+    if(status){
+        frame.data[0] = 0x01;
+    } else{
+        frame.data[0] = 0x02;
+    }
+    
+    if (can_send_vcan0(&frame) == FAIL)
+    {
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
 uint8_t handle_tcu_can(unsigned char *data)
 {
     unsigned char signalREB = data[0];

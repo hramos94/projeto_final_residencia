@@ -78,6 +78,53 @@ uint8_t monitor_engine_block()
     }
 }
 
+
+uint8_t send_can_hazard_light()
+{
+    while (1)
+    {
+        // TESTE; precisa abstrair
+        uint8_t status;
+        if (read_pin_status(&status, 9) == FAIL)
+        {
+            return FAIL;
+        }
+
+        if (status == 1)
+        {
+            if (set_pin_status(0, 9) == FAIL)
+            {
+                return FAIL;
+            }
+            if(can_send_hazard_light(1) == FAIL)
+            {
+                show_error("app.can_send_hazard FAIL\n");
+                return FAIL;
+            }
+        }
+
+        if (read_pin_status(&status, 8) == FAIL)
+        {
+            return FAIL;
+        }
+
+        if (status == 1)
+        {
+            if (set_pin_status(0, 8) == FAIL)
+            {
+                return FAIL;
+            }
+            if(can_send_hazard_light(0) == FAIL)
+            {
+                show_error("app.can_send_hazard FAIL\n");
+                return FAIL;
+            }
+        }
+
+        go_sleep(1);
+    }
+}
+
 uint8_t monitor_read_can()
 {
     while (1)

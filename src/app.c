@@ -10,6 +10,11 @@ uint8_t application_init()
         show_error("mcal_init FAIL\n");
     }
 
+    if(can_init() == FAIL)
+    {
+        show_error("can_init FAIL\n");
+    }
+
     return SUCCESS;
 }
 

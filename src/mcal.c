@@ -21,6 +21,9 @@ dIO pins[10];
 // pin 4 - Server envia desbloqueio REB
 // pin 5 - REB envia sinal para motor ser bloqueado
 
+int my_vcan;
+const char *interface = "vcan0";
+
 pthread_t new_thread(void *func)
 {
     pthread_t nthread;
@@ -212,33 +215,34 @@ uint8_t can_start(int *my_vcan, const char *interface)
 // send can frame in vcan0
 uint8_t can_send_vcan0(struct can_frame *frame)
 {
-    int my_vcan;
-    const char *interface = "vcan0";
-    if (can_start(&my_vcan, interface) == FAIL)
-    {
-        return FAIL;
-    }
     if (can_send(&my_vcan, frame) == FAIL)
     {
         return FAIL;
     }
-    can_socket_close(&my_vcan);
     return SUCCESS;
 }
 
 // read frame in vcan0 - will block until frame is received
 uint8_t can_read_vcan0(struct can_frame *frame)
 {
-    int my_vcan;
-    const char *interface = "vcan0";
-    if (can_start(&my_vcan, interface) == FAIL)
-    {
-        return FAIL;
-    }
     if (can_read(&my_vcan, frame) == FAIL)
     {
         return FAIL;
     }
+    return SUCCESS;
+}
+
+uint8_t can_init()
+{
+    if (can_start(&my_vcan, interface) == FAIL)
+    {
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
+uint8_t can_close()
+{
     can_socket_close(&my_vcan);
     return SUCCESS;
 }

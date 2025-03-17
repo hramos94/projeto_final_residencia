@@ -16,5 +16,6 @@ uint8_t read_console();
 uint8_t block_engine();
 uint8_t unblock_engine();
 uint8_t engine_block_status(uint8_t *status);
+uint8_t can_send_hazard_light(uint8_t status);
 
 #endif

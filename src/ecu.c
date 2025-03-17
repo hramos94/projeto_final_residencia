@@ -1,4 +1,5 @@
 #include <ecu.h>
+#include <stdio.h>
 #include <mcal.h>
 
 uint8_t get_hazard_button_status(uint8_t *status)
@@ -121,6 +122,28 @@ uint8_t engine_block_status(uint8_t *status)
     if (read_pin_status(status, 5) == FAIL)
     {
         show_error("ECU.read_pin_status FAIL (get engine status)\n");
+        return FAIL;
+    }
+
+    return SUCCESS;
+}
+
+uint8_t can_send_hazard_light(uint8_t status)
+{
+    printf("Tentando enviar frame_1\n");
+    struct can_frame frame = {
+        .can_id = 0x400, .can_dlc = 8, .data = {0}
+    };
+
+    if(status){
+        frame.data[0] = 0x01;
+    } else{
+        frame.data[0] = 0x02;
+    }
+    
+    printf("Tentando enviar frame\n");
+    if (can_send_vcan0(&frame) == FAIL)
+    {
         return FAIL;
     }
 

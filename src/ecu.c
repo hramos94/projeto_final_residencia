@@ -46,7 +46,7 @@ uint8_t start_reb()
     uint8_t status = 0;
     clock_t start_time, current_time;
     double elapsed_time = 0;
-    const double TIMEOUT = 5.0;
+    const double TIMEOUT = 300.0;
 
     if (read_pin_status(&status, 6) == FAIL)
     {
@@ -57,15 +57,13 @@ uint8_t start_reb()
     if (status == S_ON)
     {
 
-        // start the counting to 5 seconds
+        // start the counting to 5 min
         start_time = clock();
 
         while (1)
         {
             current_time = clock();
             elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
-
-            printf("Elapsed time: %f seconds\n", elapsed_time);
 
             if (read_pin_status(&status, 6) == FAIL)
             {

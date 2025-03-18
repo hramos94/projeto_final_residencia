@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
         show_error("application_init error\n");
     }
 
-    pthread_t hazard_th = new_thread(hazard_lights_blink);
     pthread_t read_input_th = new_thread(read_input);
     pthread_t engine_block_th = new_thread(monitor_engine_block);
     pthread_t send_can_hazard_light_th = new_thread(send_can_hazard_light);
@@ -19,7 +18,6 @@ int main(int argc, char *argv[])
 
     pthread_t gui_runner_th = new_thread(gui_runner);
 
-    pthread_join(hazard_th, NULL);
     pthread_join(read_input_th, NULL);
     pthread_join(gui_runner_th, NULL);
     pthread_join(engine_block_th, NULL);

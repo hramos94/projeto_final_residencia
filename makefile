@@ -21,4 +21,4 @@ reb:
 	$(REB_DIR)/bin/reb
 
 aux:
-	&(AUX_DIR)/bin/aux
+	$(AUX_DIR)/bin/aux

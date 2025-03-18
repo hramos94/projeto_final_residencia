@@ -73,6 +73,75 @@ uint8_t monitor_engine_block()
     }
 }
 
+uint8_t send_can_hazard_light()
+{
+    while (1)
+    {
+        // TESTE; precisa abstrair
+        uint8_t status;
+        if (read_pin_status(&status, 9) == FAIL)
+        {
+            return FAIL;
+        }
+
+        if (status == 1)
+        {
+            if (set_pin_status(0, 9) == FAIL)
+            {
+                return FAIL;
+            }
+            if (can_send_hazard_light(1) == FAIL)
+            {
+                show_error("app.can_send_hazard FAIL\n");
+                return FAIL;
+            }
+        }
+
+        if (read_pin_status(&status, 8) == FAIL)
+        {
+            return FAIL;
+        }
+
+        if (status == 1)
+        {
+            if (set_pin_status(0, 8) == FAIL)
+            {
+                return FAIL;
+            }
+            if (can_send_hazard_light(0) == FAIL)
+            {
+                show_error("app.can_send_hazard FAIL\n");
+                return FAIL;
+            }
+        }
+
+        go_sleep(1);
+    }
+}
+
+uint8_t monitor_read_can()
+{
+    while (1)
+    {
+
+        struct can_frame frame = {
+            .can_id = 29, .can_dlc = 8, .data = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}};
+
+        if (can_read_vcan0(&frame) != FAIL)
+        {
+            if (frame.can_id == 0x7E0)
+            {
+                handle_tcu_can(frame.data);
+            }
+        }
+        else
+        {
+            show_error("Error monitor_read_can\n");
+            go_sleep(2);
+        }
+    }
+}
+
 uint8_t initiation_start_reb()
 {
     while (1)

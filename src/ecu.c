@@ -98,6 +98,7 @@ uint8_t block_engine()
 
     if (status == S_ON)
     {
+
         // change pin 4 to off (unblock request)
         if (set_pin_status(S_OFF, 4) == FAIL)
         {
@@ -167,6 +168,43 @@ uint8_t engine_block_status(uint8_t *status)
     {
         show_error("ECU.read_pin_status FAIL (get engine status)\n");
         return FAIL;
+    }
+
+    return SUCCESS;
+}
+
+uint8_t can_send_hazard_light(uint8_t status)
+{
+    struct can_frame frame = {.can_id = 0x400, .can_dlc = 8, .data = {0}};
+
+    if (status)
+    {
+        frame.data[0] = 0x01;
+    }
+    else
+    {
+        frame.data[0] = 0x02;
+    }
+
+    if (can_send_vcan0(&frame) == FAIL)
+    {
+        return FAIL;
+    }
+}
+
+uint8_t handle_tcu_can(unsigned char *data)
+{
+    unsigned char signalREB = data[0];
+    if (signalREB == 0x01)
+    {
+        // TODO
+        show_error("Ativando REB\n");
+    }
+
+    if (signalREB == 0x02)
+    {
+        // TODO
+        show_error("Desativando REB\n");
     }
 
     return SUCCESS;

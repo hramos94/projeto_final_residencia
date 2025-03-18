@@ -11,5 +11,7 @@ uint8_t hazard_lights_blink();
 uint8_t read_input();
 uint8_t monitor_engine_block();
 uint8_t initiation_start_reb();
+uint8_t send_can_hazard_light();
+uint8_t monitor_read_can();
 
 #endif

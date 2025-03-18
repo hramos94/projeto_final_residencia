@@ -1,24 +1,26 @@
 #ifndef H_MCAL
 #define H_MCAL
 
-#include <stdint.h>
-#include <pthread.h>
-#include <linux/can.h>   // struct can_frame, canid_t
+#include <linux/can.h>     // struct can_frame, canid_t
 #include <linux/can/raw.h> // CAN_RAW para socket
+#include <pthread.h>
+#include <stdint.h>
 
-typedef struct {
-  uint8_t pinNumber;
-  uint8_t status;
-}dIO;
+typedef struct
+{
+    uint8_t pinNumber;
+    uint8_t status;
+} dIO;
 
-typedef struct {
-    canid_t can_id;  /* 32 bit CAN_ID + EFF/RTR/ERR flags */
-    __u8    can_dlc; /* frame payload length in byte (0 .. 8) */
-    __u8    __pad;   /* padding */
-    __u8    __res0;  /* reserved / padding */
-    __u8    __res1;  /* reserved / padding */
-    __u8    data[8] __attribute__((aligned(8)));
-}can_frame;
+typedef struct
+{
+    canid_t can_id; /* 32 bit CAN_ID + EFF/RTR/ERR flags */
+    __u8 can_dlc;   /* frame payload length in byte (0 .. 8) */
+    __u8 __pad;     /* padding */
+    __u8 __res0;    /* reserved / padding */
+    __u8 __res1;    /* reserved / padding */
+    __u8 data[8] __attribute__((aligned(8)));
+} can_frame;
 
 void show_error(char errorStr[]);
 uint8_t mcal_init();

@@ -1,4 +1,4 @@
-.PHONY: all clean
+.PHONY: all clean reb aux
 
 
 REB_DIR = reb
@@ -21,4 +21,4 @@ reb:
 	$(REB_DIR)/bin/reb
 
 aux:
-	&(AUX_DIR)/bin/aux
+	$(AUX_DIR)/bin/aux

@@ -190,6 +190,7 @@ uint8_t can_send_hazard_light(uint8_t status)
     {
         return FAIL;
     }
+    return SUCCESS;
 }
 
 uint8_t handle_tcu_can(unsigned char *data)

@@ -1,4 +1,4 @@
-.PHONY: all clean
+.PHONY: all clean reb aux
 
 
 REB_DIR = reb

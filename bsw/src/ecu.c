@@ -1,5 +1,7 @@
 #include <ecu.h>
 #include <mcal.h>
+#include <time.h>
+#include <unistd.h>
 
 uint8_t get_hazard_button_status(uint8_t *status)
 {
@@ -34,6 +36,50 @@ uint8_t read_console()
     {
         show_error("read_console.set_pin_status FAIL\n");
         return FAIL;
+    }
+
+    return SUCCESS;
+}
+
+uint8_t start_reb()
+{
+    uint8_t status = 0;
+    clock_t start_time, current_time;
+    double elapsed_time = 0;
+    const double TIMEOUT = 300.0;
+
+    if (read_pin_status(&status, 6) == FAIL)
+    {
+        show_error("ECU.read_pin_status FAIL (start_reb)\n");
+        return FAIL;
+    }
+
+    if (status == S_ON)
+    {
+
+        // start the counting to 5 min
+        start_time = clock();
+
+        while (1)
+        {
+            current_time = clock();
+            elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
+
+            if (read_pin_status(&status, 6) == FAIL)
+            {
+                show_error("ECU.read_pin_status FAIL (start_reb)\n");
+                return FAIL;
+            }
+
+            if (elapsed_time >= TIMEOUT)
+            {
+                // Send command OFF to pin 6 (start reb)
+                set_pin_status(S_OFF, 6);
+                // Send command ON to pin 2 (block engine)
+                set_pin_status(S_ON, 2);
+                return SUCCESS;
+            }
+        }
     }
 
     return SUCCESS;
@@ -127,29 +173,30 @@ uint8_t engine_block_status(uint8_t *status)
     return SUCCESS;
 }
 
-
 uint8_t can_send_hazard_light(uint8_t status)
 {
-    struct can_frame frame = {
-        .can_id = 0x400, .can_dlc = 8, .data = {0}
-    };
+    struct can_frame frame = {.can_id = 0x400, .can_dlc = 8, .data = {0}};
 
-    if(status){
+    if (status)
+    {
         frame.data[0] = 0x01;
-    } else{
+    }
+    else
+    {
         frame.data[0] = 0x02;
     }
-    
+
     if (can_send_vcan0(&frame) == FAIL)
     {
         return FAIL;
     }
+    return SUCCESS;
 }
 
 uint8_t handle_tcu_can(unsigned char *data)
 {
     unsigned char signalREB = data[0];
-    if (signalREB ==  0x01)
+    if (signalREB == 0x01)
     {
         // TODO
         show_error("Ativando REB\n");
@@ -158,7 +205,7 @@ uint8_t handle_tcu_can(unsigned char *data)
     if (signalREB == 0x02)
     {
         // TODO
-       show_error("Desativando REB\n");
+        show_error("Desativando REB\n");
     }
 
     return SUCCESS;

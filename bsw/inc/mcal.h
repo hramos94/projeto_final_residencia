@@ -42,4 +42,7 @@ uint8_t can_read(int *can_socket, struct can_frame *frame);
 uint8_t can_send_vcan0(struct can_frame *frame);
 uint8_t can_read_vcan0(struct can_frame *frame);
 
+uint8_t can_init();
+uint8_t can_close();
+
 #endif

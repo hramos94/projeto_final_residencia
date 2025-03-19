@@ -2,15 +2,21 @@
 #define H_PINS
 
 // pin 0 - hazard lights                 Pino da luz de pisca alerta
-// pin 1 - Hazard lights toggle          Pino do botão do pisca alerta
-// pin 2 - Server Lock Engine            Pino que envia envia bloqueio REB 
-// pin 3 - Server Unlock Engine          Pino que envia envia desbloqueio REB
-// pin 4 - REB driver warning status     Pino que envia sinal de REB ativado ao motorista
+// pin 1 - Hazard lights button          Pino do botão do pisca alerta
+// pin 2 - REB activation                Pino para ativação do REB (sistema de retorno de energia)
+// pin 3 - REB IPC warning               Pino para sinal de alerta do IPC (Instrument Cluster)
+// pin 4 - REB deactivate                Pino para desativação do REB 
+// pin 5 - Engine REB mode               Pino para controlar o modo de REB do motor
+// pin 6 - REB IPC fault pin             Pino para sinal de falha do IPC no sistema REB 
 
-#define hazard_lights_pin 0     
-#define hazard_toggle_pin 1         
-#define reb_lock_eng_pin 2
-#define reb_unlock_eng_pin 3
-#define reb_driv_warn_pin 4
+
+#define HAZARD_LIGHTS_PIN 0     
+#define HAZARD_BUTTON_PIN 1         
+#define REB_ACTIVATE_PIN 2
+#define REB_IPC_WARNING 3
+#define REB_DEACTIVATE 4
+#define ENGINE_REB_MODE 5
+#define REB_IPC_FAULT_PIN 6
+
 
 #endif

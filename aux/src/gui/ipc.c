@@ -202,6 +202,12 @@ int ipc_runner()
     int hazard_lights_state=0;
     int hazard_light=0;
 
+    static int button_state[10]; // Estado inicial de cada botão
+    for (int i = 0; i < 10; i++)
+    {
+        button_state[i] = 0;
+    }
+
     while (!quit) 
     {
         // Lidar com eventos
@@ -218,6 +224,7 @@ int ipc_runner()
         
         SDL_Color grey = {45, 45, 45, 255};  
         draw_rectangle(renderer,40,50,1120,550,grey);
+        draw_rectangle(renderer,40,650,1120,300,grey);
         SDL_Rect dest_rect = {120,100,1280*0.75,720*0.75};//Imagem SDL_Rect dest_rect = {120,100,960,540};
         SDL_RenderCopy(renderer, texture, NULL, &dest_rect); // Renderizar a imagem
         SDL_Color red = {255, 0, 0, 255};  // Cor vermelha

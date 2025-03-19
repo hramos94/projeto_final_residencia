@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 1000
 
 int reb_fault_warning =0;
 int reb_imobilize_procedure =0;
@@ -104,10 +104,6 @@ void draw_line(SDL_Renderer* renderer, int x1, int y1, int x2, int y2, SDL_Color
 }
 
 
-
-
-
-
 int ipc_runner() 
 {
     // Inicializar SDL
@@ -147,6 +143,7 @@ int ipc_runner()
     }
 
     // Criar renderer
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"); // Ativa interpolação linear
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
         printf("Erro ao criar o renderer: %s\n", SDL_GetError());
@@ -168,26 +165,8 @@ int ipc_runner()
         SDL_Quit();
         return -1;
     }
-
-    // Obter a largura e altura da imagem original
-    int img_width = surface->w;
-    int img_height = surface->h;
-
-    // Calcular o aspect ratio
-    float aspect_ratio = (float)img_width / (float)img_height;
-
-    // Ajustar a imagem para caber na janela, mantendo o aspect ratio
-    int render_width = WINDOW_WIDTH;
-    int render_height = WINDOW_HEIGHT;
-
-    if (render_width / aspect_ratio <= render_height) {
-        render_height = render_width / aspect_ratio;
-    } else {
-        render_width = render_height * aspect_ratio;
-    }
-
-    // Criar textura a partir da superfície
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);// Criar textura a partir da superfície
     SDL_FreeSurface(surface);  // Liberar a superfície após criar a textura
     if (!texture) {
         printf("Falha ao criar a textura: %s\n", SDL_GetError());
@@ -200,10 +179,11 @@ int ipc_runner()
     }
 
     // Carregar fonte
-    TTF_Font* font = TTF_OpenFont("./aux/img/aptos.ttf", 64);  // Você pode substituir "arial.ttf" pelo caminho para a fonte
+    TTF_Font* font = TTF_OpenFont("./aux/img/aptos.ttf", 64); 
     TTF_Font* font2 = TTF_OpenFont("./aux/img/aptos.ttf", 16);
     TTF_Font* font3 = TTF_OpenFont("./aux/img/aptos.ttf",24);    
-    if (!font) {
+    if (!font || !font2 || !font3) 
+    {
         printf("Erro ao carregar a fonte: %s\n", TTF_GetError());
         SDL_DestroyTexture(texture);
         SDL_DestroyRenderer(renderer);
@@ -217,120 +197,97 @@ int ipc_runner()
     // Loop principal
     SDL_Event e;
     int quit = 0;
-    int counter = 1;
-    int counter2 =-30;
+    int frame_counter = 1;
+    int counter2 =0;
+    int hazard_lights_state=0;
+    int hazard_light=0;
 
-    while (!quit) {
+    while (!quit) 
+    {
         // Lidar com eventos
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT) {
+        while (SDL_PollEvent(&e)) 
+        {
+            if (e.type == SDL_QUIT) 
+            {
                 quit = 1;
             }
         }
 
-        // Limpar a tela
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-        // Definir a posição e o tamanho da imagem para preservar o aspect ratio
-        SDL_Rect dest_rect = { (WINDOW_WIDTH - render_width) / 2, (WINDOW_HEIGHT - render_height) / 2, render_width, render_height };
-
-        // Renderizar a imagem
-        SDL_RenderCopy(renderer, texture, NULL, &dest_rect);
-        SDL_Color red = {255, 0, 0, 255};  // Cor vermelha
-        //draw_rectangle(renderer, 580, 300, 100, 2, red);
+        SDL_SetRenderDrawColor(renderer, 26, 46, 61,255);
+        SDL_RenderClear(renderer);// Limpar a tela
         
+        SDL_Color grey = {45, 45, 45, 255};  
+        draw_rectangle(renderer,40,50,1120,550,grey);
+        SDL_Rect dest_rect = {120,100,1280*0.75,720*0.75};//Imagem SDL_Rect dest_rect = {120,100,960,540};
+        SDL_RenderCopy(renderer, texture, NULL, &dest_rect); // Renderizar a imagem
+        SDL_Color red = {255, 0, 0, 255};  // Cor vermelha
+        
+        //Speedometer
+        int vehicle_speed=counter2;
         #define M_PI 3.1415
-        int angle=counter2;
+        double angle=-30+ 1*vehicle_speed;
         double radians = angle * M_PI / 180.0;
-        int Radius=80;
-        int centerX=680;
-        int centerY=300;
+        int Radius=107;
+        int centerX=888;
+        int centerY=408;
         int finalX = centerX - (int)(Radius * cos(radians));
         int finalY = centerY - (int)(Radius * sin(radians));
         draw_line(renderer,centerX, centerY, finalX, finalY,  red);
 
+        read_pin_status(&hazard_lights_state,1);
+        read_pin_status(&hazard_light,0);
+        read_pin_status(&reb_fault_warning,6);
 
         if(reb_fault_warning==1)
         {
-            char msg4[50];
-            snprintf(msg4, sizeof(msg4), "REB", counter);
-            draw_text(renderer, font3, msg4, 330,202,3);
-            //texto da velocidade
-            char velocidade[50];
-            snprintf(velocidade, sizeof(velocidade), "REB Fault", counter);
-            draw_text(renderer, font2, velocidade, 420,300,1);
-            SDL_RenderPresent(renderer);
+            //alerta na parte superior
+            draw_image(renderer, "./aux/img/reb_red.png", 480,284,408/7,227/7);
 
-            
-            
-
+            char velocidade[50]; //alerta de fault no lugar da velocidade
+            snprintf(velocidade, sizeof(velocidade), "REB Fault");
+            draw_text(renderer, font2, velocidade, 600,420,1);
         }
         else if (reb_imobilize_procedure==1)
         {
+            draw_image(renderer, "./aux/img/reb_yellow.png", 480,284,408/7,227/7);
+
             char msg[50];
-            snprintf(msg, sizeof(msg), "Engine Will be Gradually", counter);
+            snprintf(msg, sizeof(msg), "Engine Will be Gradually");
             draw_text(renderer, font2, msg, 420,300,1);
 
             char msg2[50];
-            snprintf(msg2, sizeof(msg2), "Deactivated in 5 minutes", counter);
+            snprintf(msg2, sizeof(msg2), "Deactivated in 5 minutes");
             draw_text(renderer, font2, msg2, 420,320,1);
-            SDL_RenderPresent(renderer);
         }
-        
-
-
         else
         {
-            if(counter%50<25)
+            if(hazard_lights_state==1) //pisca alerta
             {
-                draw_image(renderer, "./aux/img/left_sign.png", 250,180,40,40);
-                draw_image(renderer, "./aux/img/right_sign.png", 542,180,40,40);
+                draw_image(renderer, "./aux/img/hazard_warning.png", 685,284,92/2.5,85/2.5);
+                if(hazard_light==1)
+                {
+                    draw_image(renderer, "./aux/img/left_sign.png", 428,278,39,47);
+                    draw_image(renderer, "./aux/img/right_sign.png", 732,278,39,47);
+                }
             }
-            draw_image(renderer, "./aux/img/hazard_warning.png", 490,185,35,35);
 
-            char msg4[50];
-            snprintf(msg4, sizeof(msg4), "REB", counter);
-            draw_text(renderer, font3, msg4, 330,202,2);
+            //draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
 
-            //texto da velocidade
-            char velocidade[50];
-            snprintf(velocidade, sizeof(velocidade), "%d", counter);
-            draw_text(renderer, font, velocidade, 420,300,1);
-            //SDL_RenderPresent(renderer);
+            char velocidade[10]; //texto da velocidade
+            snprintf(velocidade, sizeof(velocidade), "%d", vehicle_speed);
+            draw_text(renderer, font, velocidade, 600,400,1);
 
-            //texto da velocidade
-            char km_indicator[50];
-            snprintf(velocidade, sizeof(velocidade), "km/h", counter,1);
-            draw_text(renderer, font2, velocidade, 420,340,1);
-            SDL_RenderPresent(renderer);
+            char km_indicator[10]; //texto da km
+            snprintf(km_indicator, sizeof(km_indicator), "km/h");
+            draw_text(renderer, font2,km_indicator, 600,440,1);
         }
 
-        if (counter ==200)
-       {
-            
-       }
         
-       if (counter >200 && counter<400)
-       {
-            reb_fault_warning =1;
+        frame_counter = (frame_counter % 200) + 1; // Contador de 1 a 100
+        counter2 = (counter2 % 200) + 1; // Contador de 1 a 100
 
-       }
-       else if(counter >400 && counter<600)
-       {
-            reb_fault_warning =0;
-            reb_imobilize_procedure =1;
-       }
-       else
-       {
-            reb_imobilize_procedure =0;
-       }    
-        counter = (counter % 600) + 1; // Contador de 1 a 100
-        counter2 = (counter2 % 210) + 1; // Contador de 1 a 100
-
-        // Atualizar a tela
-
-        
-        SDL_Delay(5); // Define o FPS 100
+        SDL_RenderPresent(renderer); // Atualizar a tela
+        SDL_Delay(30); // Define o FPS 100
     }
 
     // Liberar recursos

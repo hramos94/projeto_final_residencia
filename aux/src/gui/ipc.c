@@ -3,17 +3,22 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <math.h>
+#include <mcal.h>
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 1000
 
-int reb_fault_warning =0;
-int reb_imobilize_procedure =0;
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
+uint8_t reb_fault_warning =0;
+uint8_t reb_imobilize_procedure =0;
 
 
 
 // Função para desenhar o texto, recebendo uma string e coordenadas (x, y) para centralização
-void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int x, int y, SDL_Color textColor) 
+void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int16_t x, int16_t y, SDL_Color textColor) 
 {
 
     // Criar superfície com o texto
@@ -33,12 +38,12 @@ void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int x, 
     }
 
     // Obter a largura e altura do texto
-    int textWidth = 0, textHeight = 0;
+    int32_t textWidth = 0, textHeight = 0;
     SDL_QueryTexture(textTexture, NULL, NULL, &textWidth, &textHeight);
 
     // Calcular a posição para centralizar o texto em relação à coordenada (x, y)
-    int textX = x - textWidth / 2;
-    int textY = y - textHeight / 2;
+    int16_t textX = x - textWidth / 2;
+    int16_t textY = y - textHeight / 2;
 
     SDL_Rect textRect = {textX, textY, textWidth, textHeight};// Definir o retângulo do texto (posição e tamanho)
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect); // Renderizar o texto
@@ -46,7 +51,7 @@ void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int x, 
 }
 
 // Função para desenhar uma imagem, recebendo o caminho do arquivo de imagem e as coordenadas (x, y)
-void draw_image(SDL_Renderer* renderer, const char* image_path, int x, int y, int width, int height) 
+void draw_image(SDL_Renderer* renderer, const char* image_path, int16_t x, int16_t y, int16_t width, int16_t height) 
 {
     // Carregar a imagem
     SDL_Surface* imageSurface = IMG_Load(image_path);
@@ -74,7 +79,7 @@ void draw_image(SDL_Renderer* renderer, const char* image_path, int x, int y, in
     SDL_DestroyTexture(imageTexture);
 }
 
-void draw_rectangle(SDL_Renderer* renderer, int x, int y, int width, int height, SDL_Color color) 
+void draw_rectangle(SDL_Renderer* renderer, int16_t x, int16_t y, int16_t width, int16_t height, SDL_Color color) 
 {   
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     
@@ -84,7 +89,7 @@ void draw_rectangle(SDL_Renderer* renderer, int x, int y, int width, int height,
 
 }
 
-void draw_line(SDL_Renderer* renderer, int x1, int y1, int x2, int y2, SDL_Color color) 
+void draw_line(SDL_Renderer* renderer, int16_t x1, int16_t y1, int16_t x2, int16_t y2, SDL_Color color) 
 {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
@@ -93,7 +98,7 @@ void draw_line(SDL_Renderer* renderer, int x1, int y1, int x2, int y2, SDL_Color
 
 typedef struct {
     SDL_Rect rect;
-    int clicked;
+    int16_t clicked;
     const char* label;
 } Button;
 
@@ -106,7 +111,7 @@ void draw_button(SDL_Renderer* renderer, Button* button, SDL_Color color, TTF_Fo
 }
 
 // Função para verificar se um botão foi clicado
-void handle_button_click(Button* button, int mouseX, int mouseY) {
+void handle_button_click(Button* button, int16_t mouseX, int16_t mouseY) {
     if (mouseX >= button->rect.x && mouseX <= button->rect.x + button->rect.w &&
         mouseY >= button->rect.y && mouseY <= button->rect.y + button->rect.h) {
         button->clicked = !button->clicked;
@@ -114,7 +119,7 @@ void handle_button_click(Button* button, int mouseX, int mouseY) {
 }
 
 
-int ipc_runner() 
+int16_t ipc_runner() 
 {
     // Inicializar SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) 
@@ -206,19 +211,19 @@ int ipc_runner()
 
     // Loop principal -- Responsável por fazer o movimento das coisas
     SDL_Event e;
-    int quit = 0;
-    int frame_counter = 1;
-    int counter2 =0;
-    int hazard_lights_state=0;
-    int hazard_light=0;
+    int16_t quit = 0;
+    int16_t frame_counter = 1;
+    int16_t counter2 =0;
+    uint8_t hazard_lights_state=0;
+    uint8_t hazard_light=0;
 
     // Criar botões
-    int button_x0 = 100;
-    int button_y0 = 725;
-    int button_height=50;
-    int button_width=150;
-    int button_v_space=25;
-    int button_h_space=25;
+    int16_t button_x0 = 100;
+    int16_t button_y0 = 725;
+    int16_t button_height=50;
+    int16_t button_width=150;
+    int16_t button_v_space=25;
+    //int16_t button_h_space=25;
 
   
     #define NUM_BUTTONS 3
@@ -228,7 +233,7 @@ int ipc_runner()
     
     Button buttons[NUM_BUTTONS];
     
-    for (int i = 0; i < NUM_BUTTONS; i++) {
+    for (int16_t i = 0; i < NUM_BUTTONS; i++) {
         buttons[i].rect.x = button_x0;
         buttons[i].rect.y = button_y0 + (i * (button_height + button_v_space));
         buttons[i].rect.w = button_width;
@@ -251,9 +256,9 @@ int ipc_runner()
             if (e.type == SDL_QUIT) {
                 quit = 1;
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
-                int mouseX, mouseY;
+                int32_t mouseX, mouseY;
                 SDL_GetMouseState(&mouseX, &mouseY);
-                for (int i = 0; i < 3; i++) 
+                for (int16_t i = 0; i < 3; i++) 
                 {
                     handle_button_click(&buttons[i], mouseX, mouseY);
                 }
@@ -270,19 +275,18 @@ int ipc_runner()
         SDL_RenderCopy(renderer, texture, NULL, &dest_rect); // Renderizar a imagem
 
         //Speedometer
-        int vehicle_speed=counter2;
-        #define M_PI 3.1415
+        int16_t vehicle_speed=counter2;
         double angle=-30+ 1*vehicle_speed;
         double radians = angle * M_PI / 180.0;
-        int Radius=107;
-        int centerX=888;
-        int centerY=408;
-        int finalX = centerX - (int)(Radius * cos(radians));
-        int finalY = centerY - (int)(Radius * sin(radians));
+        int16_t Radius=107;
+        int16_t centerX=888;
+        int16_t centerY=408;
+        int16_t finalX = centerX - (int16_t)(Radius * cos(radians));
+        int16_t finalY = centerY - (int16_t)(Radius * sin(radians));
         draw_line(renderer,centerX, centerY, finalX, finalY,  red);
 
         //buttons
-        for (int i = 0; i < 3; i++) 
+        for (int16_t i = 0; i < 3; i++) 
         {
             SDL_Color buttonColor = buttons[i].clicked ? button_clicked : button_not_clicked;
             draw_button(renderer, &buttons[i], buttonColor, font3);

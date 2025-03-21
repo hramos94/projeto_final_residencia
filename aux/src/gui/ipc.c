@@ -12,8 +12,10 @@
     #define M_PI 3.14159265358979323846
 #endif
 
-uint8_t reb_fault_warning =0;
-uint8_t reb_imobilize_procedure =0;
+uint8_t reb_fault_warning = 0;
+uint8_t reb_activate = 0;
+uint8_t reb_deactivate = 0;
+uint8_t reb_imobilize_procedure = 0;
 
 
 
@@ -283,7 +285,7 @@ int16_t ipc_runner()
     #define NUM_BUTTONS2 6
     #define NUM_ROWS2 2
     #define NUM_BUTTONS_PER_ROW2 3
-    const char* labels2[NUM_BUTTONS2] = {"Can Fault","GPS Fault","Server Fault","","",""};
+    const char* labels2[NUM_BUTTONS2] = {"Can Fault","GPS Fault","Server Fault"," "," "," "};
     Button buttons2[NUM_BUTTONS2];
 
     int8_t rowcounter2=0, linecounter2=0; 
@@ -309,8 +311,8 @@ int16_t ipc_runner()
     }
 
     //Accelerator and Brake buttons
-    Button accelarator = {{625, 750, 199*0.25, 519*0.25}, 0, ""};// 199 × 519
-    Button brake = {{530, 788, 264*0.25, 364*0.25}, 0, ""};// 264 × 346 
+    Button accelarator = {{625, 750, 199*0.25, 519*0.25}, 0, " "};// 199 × 519
+    Button brake = {{530, 788, 264*0.25, 364*0.25}, 0, " "};// 264 × 346 
 
     //color definition
     SDL_Color white = {255,255,255,255};
@@ -384,10 +386,29 @@ int16_t ipc_runner()
             SDL_Color buttonColor = buttons1[i].clicked ? button_clicked : button_not_clicked;
             draw_button(renderer, &buttons1[i], buttonColor, font3);
         }
+
+        //REB ON Button - if true write to pin
+        if(buttons1[1].clicked==1)
+        {
+            set_pin_status(1, 2);
+        }
+        else
+        {
+            set_pin_status(0, 2);
+        }
+
+        read_pin_status(&hazard_lights_state,1);
+        read_pin_status(&hazard_light,0);
+        read_pin_status(&reb_activate,3);
+        read_pin_status(&reb_fault_warning,6);
+
+
+
         //buttons2
         for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
         {
-            SDL_Color buttonColor = buttons2[i].clicked ? button_clicked : button_not_clicked;
+            //SDL_Color buttonColor = buttons2[i].clicked ? button_clicked : button_not_clicked;
+            SDL_Color buttonColor = accelarator.clicked ? button_clicked : button_not_clicked;
             draw_button(renderer, &buttons2[i], buttonColor, font3);
         }
 
@@ -395,10 +416,6 @@ int16_t ipc_runner()
         draw_image_button(renderer, &brake, "./aux/img/brake.png");
 
         
-        read_pin_status(&hazard_lights_state,1);
-        read_pin_status(&hazard_light,0);
-        read_pin_status(&reb_fault_warning,6);
-
         if(reb_fault_warning==1)
         {
             //alerta na parte superior

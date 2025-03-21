@@ -3,32 +3,28 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <math.h>
+#include <mcal.h>
+#include <pins.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 1000
 
-int reb_fault_warning =0;
-int reb_imobilize_procedure =0;
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
+uint8_t reb_fault_warning = 0;
+uint8_t reb_activate = 0;
+uint8_t reb_deactivate = 0;
+uint8_t reb_imobilize_procedure = 0;
+uint8_t reb_vehicle_imobilized = 0;
+
 
 
 // Função para desenhar o texto, recebendo uma string e coordenadas (x, y) para centralização
-void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int x, int y, int color) 
+void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int16_t x, int16_t y, SDL_Color textColor) 
 {
-    SDL_Color textColor = {255, 255, 255};  // Cor do texto (branco)
 
-    if(color==2)
-    {
-            textColor.r = 255;  // componente vermelho
-            textColor.g = 192;  // componente verde
-            textColor.b = 0;    // componente azul
-    }
-
-    if(color==3)
-    {
-            textColor.r = 255;  // componente vermelho
-            textColor.g = 0;  // componente verde
-            textColor.b = 0;    // componente azul
-    }
     // Criar superfície com o texto
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
     if (!textSurface) {
@@ -46,12 +42,12 @@ void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int x, 
     }
 
     // Obter a largura e altura do texto
-    int textWidth = 0, textHeight = 0;
+    int32_t textWidth = 0, textHeight = 0;
     SDL_QueryTexture(textTexture, NULL, NULL, &textWidth, &textHeight);
 
     // Calcular a posição para centralizar o texto em relação à coordenada (x, y)
-    int textX = x - textWidth / 2;
-    int textY = y - textHeight / 2;
+    int16_t textX = x - textWidth / 2;
+    int16_t textY = y - textHeight / 2;
 
     SDL_Rect textRect = {textX, textY, textWidth, textHeight};// Definir o retângulo do texto (posição e tamanho)
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect); // Renderizar o texto
@@ -59,7 +55,7 @@ void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int x, 
 }
 
 // Função para desenhar uma imagem, recebendo o caminho do arquivo de imagem e as coordenadas (x, y)
-void draw_image(SDL_Renderer* renderer, const char* image_path, int x, int y, int width, int height) 
+void draw_image(SDL_Renderer* renderer, const char* image_path, int16_t x, int16_t y, int16_t width, int16_t height) 
 {
     // Carregar a imagem
     SDL_Surface* imageSurface = IMG_Load(image_path);
@@ -87,7 +83,7 @@ void draw_image(SDL_Renderer* renderer, const char* image_path, int x, int y, in
     SDL_DestroyTexture(imageTexture);
 }
 
-void draw_rectangle(SDL_Renderer* renderer, int x, int y, int width, int height, SDL_Color color) 
+void draw_rectangle(SDL_Renderer* renderer, int16_t x, int16_t y, int16_t width, int16_t height, SDL_Color color) 
 {   
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     
@@ -97,18 +93,58 @@ void draw_rectangle(SDL_Renderer* renderer, int x, int y, int width, int height,
 
 }
 
-void draw_line(SDL_Renderer* renderer, int x1, int y1, int x2, int y2, SDL_Color color) 
+void draw_line(SDL_Renderer* renderer, int16_t x1, int16_t y1, int16_t x2, int16_t y2, SDL_Color color) 
 {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 }
 
 
+typedef struct {
+    SDL_Rect rect;
+    int16_t clicked;
+    const char* label;
+} Button;
+
+// Função para desenhar um botão
+void draw_button(SDL_Renderer* renderer, Button* button, SDL_Color color, TTF_Font* font) {
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
+    SDL_RenderFillRect(renderer, &button->rect);
+    SDL_Color textColor = {255, 255, 255, 255};
+    draw_text(renderer, font, button->label, button->rect.x + button->rect.w / 2, button->rect.y + button->rect.h / 2, textColor);
+}
+
+void draw_image_button(SDL_Renderer* renderer, Button* button, const char* image_path) {
+    SDL_Surface* imageSurface = IMG_Load(image_path);
+    if (!imageSurface) {
+        printf("Erro ao carregar a imagem do botão: %s\n", IMG_GetError());
+        return;
+    }
+
+    SDL_Texture* imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+    SDL_FreeSurface(imageSurface);  
+
+    if (!imageTexture) {
+        printf("Erro ao criar a textura do botão: %s\n", SDL_GetError());
+        return;
+    }
+
+    SDL_RenderCopy(renderer, imageTexture, NULL, &button->rect);
+    SDL_DestroyTexture(imageTexture);
+}
+
+
+// Função para verificar se um botão foi clicado
+void handle_button_click(Button* button, int16_t mouseX, int16_t mouseY) {
+    if (mouseX >= button->rect.x && mouseX <= button->rect.x + button->rect.w &&
+        mouseY >= button->rect.y && mouseY <= button->rect.y + button->rect.h) {
+        button->clicked = !button->clicked;
+    }
+}
 
 
 
-
-int ipc_runner() 
+int16_t ipc_runner() 
 {
     // Inicializar SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) 
@@ -147,6 +183,7 @@ int ipc_runner()
     }
 
     // Criar renderer
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"); // Ativa interpolação linear
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
         printf("Erro ao criar o renderer: %s\n", SDL_GetError());
@@ -168,26 +205,8 @@ int ipc_runner()
         SDL_Quit();
         return -1;
     }
-
-    // Obter a largura e altura da imagem original
-    int img_width = surface->w;
-    int img_height = surface->h;
-
-    // Calcular o aspect ratio
-    float aspect_ratio = (float)img_width / (float)img_height;
-
-    // Ajustar a imagem para caber na janela, mantendo o aspect ratio
-    int render_width = WINDOW_WIDTH;
-    int render_height = WINDOW_HEIGHT;
-
-    if (render_width / aspect_ratio <= render_height) {
-        render_height = render_width / aspect_ratio;
-    } else {
-        render_width = render_height * aspect_ratio;
-    }
-
-    // Criar textura a partir da superfície
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);// Criar textura a partir da superfície
     SDL_FreeSurface(surface);  // Liberar a superfície após criar a textura
     if (!texture) {
         printf("Falha ao criar a textura: %s\n", SDL_GetError());
@@ -200,10 +219,11 @@ int ipc_runner()
     }
 
     // Carregar fonte
-    TTF_Font* font = TTF_OpenFont("./aux/img/aptos.ttf", 64);  // Você pode substituir "arial.ttf" pelo caminho para a fonte
+    TTF_Font* font = TTF_OpenFont("./aux/img/aptos.ttf", 64); 
     TTF_Font* font2 = TTF_OpenFont("./aux/img/aptos.ttf", 16);
     TTF_Font* font3 = TTF_OpenFont("./aux/img/aptos.ttf",24);    
-    if (!font) {
+    if (!font || !font2 || !font3) 
+    {
         printf("Erro ao carregar a fonte: %s\n", TTF_GetError());
         SDL_DestroyTexture(texture);
         SDL_DestroyRenderer(renderer);
@@ -214,123 +234,257 @@ int ipc_runner()
         return -1;
     }
 
-    // Loop principal
+    // Loop principal -- Responsável por fazer o movimento das coisas
     SDL_Event e;
-    int quit = 0;
-    int counter = 1;
-    int counter2 =-30;
+    int16_t quit = 0;
+    int16_t frame_counter = 1;
+    int16_t counter2 =0;
+    uint8_t hazard_lights_state=0;
+    uint8_t hazard_light=0;
+
+    //Vehicle Control Buttons
+    int16_t button1_x0 = 60;
+    int16_t button1_y0 = 725;
+    int16_t button1_height=50;
+    int16_t button1_width=175;
+    int16_t button1_v_space=25;
+    int16_t button1_h_space=20;
+    #define NUM_BUTTONS1 6
+    #define NUM_ROWS1 2
+    #define NUM_BUTTONS_PER_ROW1 3
+    const char* labels1[NUM_BUTTONS1] = {"Ignition On", "REB On", "REB Off","Scenario 1","Scenario 2","Scenario 3"};
+    Button buttons1[NUM_BUTTONS1];
+
+    int8_t rowcounter1=0, linecounter1=0; 
+    for (int16_t i = 0; i < NUM_BUTTONS1; i++) 
+    {
+        buttons1[i].rect.x = button1_x0 + (rowcounter1 * (button1_width + button1_h_space));
+        buttons1[i].rect.y = button1_y0 + (linecounter1 * (button1_height + button1_v_space));
+
+        buttons1[i].rect.w = button1_width;
+        buttons1[i].rect.h = button1_height;
+        buttons1[i].clicked = 0;
+        buttons1[i].label = labels1[i];
+
+        if((linecounter1+1) == NUM_BUTTONS_PER_ROW1)
+        {
+            rowcounter1++;
+            linecounter1=0;
+        }
+        else
+        {
+            linecounter1++;
+        }
+    }
+
+    //Vehicle Fautl Simulation Buttons
+    int16_t button2_x0 = 765;
+    int16_t button2_y0 = 735;
+    int16_t button2_height=50;
+    int16_t button2_width=175;
+    int16_t button2_v_space=25;
+    int16_t button2_h_space=20;
+    #define NUM_BUTTONS2 6
+    #define NUM_ROWS2 2
+    #define NUM_BUTTONS_PER_ROW2 3
+    const char* labels2[NUM_BUTTONS2] = {"Can Fault"," ","Server Fault"," "," "," "};
+    Button buttons2[NUM_BUTTONS2];
+
+    int8_t rowcounter2=0, linecounter2=0; 
+    for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
+    {
+        buttons2[i].rect.x = button2_x0 + (rowcounter2 * (button2_width + button2_h_space));
+        buttons2[i].rect.y = button2_y0 + (linecounter2 * (button2_height + button2_v_space));
+
+        buttons2[i].rect.w = button2_width;
+        buttons2[i].rect.h = button2_height;
+        buttons2[i].clicked = 0;
+        buttons2[i].label = labels2[i];
+
+        if((linecounter2+1) == NUM_BUTTONS_PER_ROW2)
+        {
+            rowcounter2++;
+            linecounter2=0;
+        }
+        else
+        {
+            linecounter2++;
+        }
+    }
+
+    //Accelerator and Brake buttons
+    Button accelarator = {{625, 750, 199*0.25, 519*0.25}, 0, " "};// 199 × 519
+    Button brake = {{530, 788, 264*0.25, 364*0.25}, 0, " "};// 264 × 346 
+
+    //color definition
+    SDL_Color white = {255,255,255,255};
+    SDL_Color background_rectangle = {45, 45, 45, 255};
+    SDL_Color red = {255, 0, 0, 255};  // Cor vermelha
+    SDL_Color button_clicked = {72, 143, 49, 255};
+    SDL_Color button_not_clicked = {110, 110, 110, 110};
+
 
     while (!quit) {
-        // Lidar com eventos
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
                 quit = 1;
+            } else if (e.type == SDL_MOUSEBUTTONDOWN) {
+                int32_t mouseX, mouseY;
+                SDL_GetMouseState(&mouseX, &mouseY);
+                for (int16_t i = 0; i < NUM_BUTTONS1; i++) 
+                {
+                    handle_button_click(&buttons1[i], mouseX, mouseY);
+                }
+                for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
+                {
+                    handle_button_click(&buttons2[i], mouseX, mouseY);
+                }
+                handle_button_click(&accelarator, mouseX, mouseY);
+                handle_button_click(&brake, mouseX, mouseY);
             }
         }
 
-        // Limpar a tela
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-        // Definir a posição e o tamanho da imagem para preservar o aspect ratio
-        SDL_Rect dest_rect = { (WINDOW_WIDTH - render_width) / 2, (WINDOW_HEIGHT - render_height) / 2, render_width, render_height };
-
-        // Renderizar a imagem
-        SDL_RenderCopy(renderer, texture, NULL, &dest_rect);
-        SDL_Color red = {255, 0, 0, 255};  // Cor vermelha
-        //draw_rectangle(renderer, 580, 300, 100, 2, red);
+        SDL_SetRenderDrawColor(renderer, 26, 46, 61,255);
+        SDL_RenderClear(renderer);// Limpar a tela
         
-        #define M_PI 3.1415
-        int angle=counter2;
+        //retangulos cinza e Imagem do velocimetro de fundo
+        draw_rectangle(renderer,40,50,1120,550,background_rectangle);
+        draw_rectangle(renderer,40,650,415,300,background_rectangle);
+        draw_rectangle(renderer,475,650,250,300,background_rectangle);
+        draw_rectangle(renderer,745,650,415,300,background_rectangle);
+        SDL_Rect dest_rect = {120,100,1280*0.75,720*0.75};//Imagem SDL_Rect dest_rect = {120,100,960,540};
+        SDL_RenderCopy(renderer, texture, NULL, &dest_rect); // Renderizar a imagem
+
+        //texto de títutlo
+        char tit1[50];
+        snprintf(tit1, sizeof(tit1), "Instrument Cluster Panel");
+        draw_text(renderer, font3, tit1, 600,110,white);
+        char tit2[50];
+        snprintf(tit2, sizeof(tit2), "Vehicle Control");
+        draw_text(renderer, font3, tit2, 257,680,white);
+        char tit3[50];
+        snprintf(tit3, sizeof(tit3), "Vehicle Control");
+        draw_text(renderer, font3, tit3, 600,680,white);
+        char tit4[50];
+        snprintf(tit4, sizeof(tit4), "Fault Simulation");
+        draw_text(renderer, font3, tit4, 952,680,white);
+
+
+
+        //Speedometer
+        int16_t vehicle_speed=counter2;
+        if(reb_vehicle_imobilized == 1)
+        {
+            vehicle_speed=0;
+        }
+        double angle=-30+ 1*vehicle_speed;
         double radians = angle * M_PI / 180.0;
-        int Radius=80;
-        int centerX=680;
-        int centerY=300;
-        int finalX = centerX - (int)(Radius * cos(radians));
-        int finalY = centerY - (int)(Radius * sin(radians));
+        int16_t Radius=107;
+        int16_t centerX=888;
+        int16_t centerY=408;
+        int16_t finalX = centerX - (int16_t)(Radius * cos(radians));
+        int16_t finalY = centerY - (int16_t)(Radius * sin(radians));
         draw_line(renderer,centerX, centerY, finalX, finalY,  red);
 
-
-        if(reb_fault_warning==1)
+        //buttons1
+        for (int16_t i = 0; i < NUM_BUTTONS1; i++) 
         {
-            char msg4[50];
-            snprintf(msg4, sizeof(msg4), "REB", counter);
-            draw_text(renderer, font3, msg4, 330,202,3);
-            //texto da velocidade
-            char velocidade[50];
-            snprintf(velocidade, sizeof(velocidade), "REB Fault", counter);
-            draw_text(renderer, font2, velocidade, 420,300,1);
-            SDL_RenderPresent(renderer);
-
-            
-            
-
+            SDL_Color buttonColor = buttons1[i].clicked ? button_clicked : button_not_clicked;
+            draw_button(renderer, &buttons1[i], buttonColor, font3);
         }
-        else if (reb_imobilize_procedure==1)
+
+        //REB ON Button - if true write to pin
+        if(buttons1[1].clicked==1)
         {
-            char msg[50];
-            snprintf(msg, sizeof(msg), "Engine Will be Gradually", counter);
-            draw_text(renderer, font2, msg, 420,300,1);
-
-            char msg2[50];
-            snprintf(msg2, sizeof(msg2), "Deactivated in 5 minutes", counter);
-            draw_text(renderer, font2, msg2, 420,320,1);
-            SDL_RenderPresent(renderer);
+            set_pin_status(1, REB_ACTIVATE_PIN);
         }
-        
-
-
         else
         {
-            if(counter%50<25)
-            {
-                draw_image(renderer, "./aux/img/left_sign.png", 250,180,40,40);
-                draw_image(renderer, "./aux/img/right_sign.png", 542,180,40,40);
-            }
-            draw_image(renderer, "./aux/img/hazard_warning.png", 490,185,35,35);
-
-            char msg4[50];
-            snprintf(msg4, sizeof(msg4), "REB", counter);
-            draw_text(renderer, font3, msg4, 330,202,2);
-
-            //texto da velocidade
-            char velocidade[50];
-            snprintf(velocidade, sizeof(velocidade), "%d", counter);
-            draw_text(renderer, font, velocidade, 420,300,1);
-            //SDL_RenderPresent(renderer);
-
-            //texto da velocidade
-            char km_indicator[50];
-            snprintf(velocidade, sizeof(velocidade), "km/h", counter,1);
-            draw_text(renderer, font2, velocidade, 420,340,1);
-            SDL_RenderPresent(renderer);
+            set_pin_status(0, REB_ACTIVATE_PIN);
         }
 
-        if (counter ==200)
-       {
+        read_pin_status(&hazard_lights_state,HAZARD_BUTTON_PIN);
+        read_pin_status(&hazard_light,HAZARD_LIGHTS_PIN);
+        read_pin_status(&reb_imobilize_procedure,REB_IPC_WARNING);
+        read_pin_status(&reb_fault_warning,REB_IPC_FAULT_PIN);
+        read_pin_status(&reb_vehicle_imobilized,ENGINE_REB_MODE);
+
+        //buttons2
+        for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
+        {
+            //SDL_Color buttonColor = buttons2[i].clicked ? button_clicked : button_not_clicked;
+            SDL_Color buttonColor = accelarator.clicked ? button_clicked : button_not_clicked;
+            draw_button(renderer, &buttons2[i], buttonColor, font3);
+        }
+
+        draw_image_button(renderer, &accelarator, "./aux/img/accelerator.png");
+        draw_image_button(renderer, &brake, "./aux/img/brake.png");
+
+        
+        if(reb_fault_warning==1)
+        {
+            //alerta na parte superior
+            draw_image(renderer, "./aux/img/reb_red.png", 480,284,408/7,227/7);
+
+            char velocidade[50]; //alerta de fault no lugar da velocidade
+            snprintf(velocidade, sizeof(velocidade), "REB Fault");
+            draw_text(renderer, font2, velocidade, 600,420,white);
+        }
+        else if (reb_imobilize_procedure == 1 && reb_vehicle_imobilized == 0)
+        {
+            draw_image(renderer, "./aux/img/reb_yellow.png", 480,284,408/7,227/7);
+
+            char msg[50];
+            snprintf(msg, sizeof(msg), "Engine Will be Gradually");
+            draw_text(renderer, font2, msg, 600,400,white);
+
+            char msg2[50];
+            snprintf(msg2, sizeof(msg2), "Deactivated in 5 minutes");
+            draw_text(renderer, font2, msg2, 600,420,white);
             
-       }
+
+        }
+        else if(reb_vehicle_imobilized == 1)
+        {
+            draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
+
+            char msg[50];
+            snprintf(msg, sizeof(msg), "Engine is Stopping");
+            draw_text(renderer, font2, msg, 600,410,white);
+
+        }
+        else
+        {
+
+            char velocidade[10]; //texto da velocidade
+            snprintf(velocidade, sizeof(velocidade), "%d", vehicle_speed);
+            draw_text(renderer, font, velocidade, 600,400,white);
+
+            char km_indicator[10]; //texto da km
+            snprintf(km_indicator, sizeof(km_indicator), "km/h");
+            draw_text(renderer, font2,km_indicator, 600,440,white);
         
-       if (counter >200 && counter<400)
-       {
-            reb_fault_warning =1;
+        }
+    
+        if(hazard_lights_state==1) //pisca alerta
+        {
+            draw_image(renderer, "./aux/img/hazard_warning.png", 685,284,92/2.5,85/2.5);
+            if(hazard_light==1)
+            {
+                draw_image(renderer, "./aux/img/left_sign.png", 428,278,39,47);
+                draw_image(renderer, "./aux/img/right_sign.png", 732,278,39,47);
+            }
+        }
 
-       }
-       else if(counter >400 && counter<600)
-       {
-            reb_fault_warning =0;
-            reb_imobilize_procedure =1;
-       }
-       else
-       {
-            reb_imobilize_procedure =0;
-       }    
-        counter = (counter % 600) + 1; // Contador de 1 a 100
-        counter2 = (counter2 % 210) + 1; // Contador de 1 a 100
+        //draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
 
-        // Atualizar a tela
 
         
-        SDL_Delay(5); // Define o FPS 100
+        frame_counter = (frame_counter % 200) + 1; // Contador de 1 a 100
+        counter2 = (counter2 % 200) + 1; // Contador de 1 a 100
+
+        SDL_RenderPresent(renderer); // Atualizar a tela
+        SDL_Delay(30); // Define o FPS 100
     }
 
     // Liberar recursos

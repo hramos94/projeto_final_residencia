@@ -3,7 +3,6 @@
 #include <mcal.h>
 #include <pins.h>
 #include <unistd.h>
-#include <pins.h>
 
 uint8_t get_hazard_button_status(uint8_t *status)
 {
@@ -94,7 +93,7 @@ uint8_t handle_ecu_can(unsigned char *data)
     {
         if (block_engine() == FAIL)
         {
-            show_error("bloc_engine FAIL\n");
+            show_error("block_engine FAIL\n");
             return FAIL;
         }
     }
@@ -115,7 +114,7 @@ uint8_t block_engine()
 {
 
     show_log("block Engine Started");
-    // Send command ON to pin 2 (hazard Light)
+    // Send command ON to pin 1 (hazard Light)
     if (set_pin_status(S_ON, HAZARD_BUTTON_PIN) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (hazard Light)\n");
@@ -141,8 +140,8 @@ uint8_t block_engine()
 uint8_t unblock_engine()
 {
     show_log("unblock engine started");
-    // change pin 2 to off
-    if (set_pin_status(S_OFF, REB_ACTIVATE_PIN) == FAIL)
+    // change pin 1 to off
+    if (set_pin_status(S_OFF, HAZARD_BUTTON_PIN) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (turn off block request)\n");
         return FAIL;

@@ -56,15 +56,16 @@ uint8_t reb_can_send_ecu(uint8_t status)
 
     if (status == ECU_REB_START)
     {
+        show_log("send can to ECU to stop vehicle");
         frame.data[0] = 0x01;
     }
 
     if (status == ECU_REB_CANCEL)
     {
+        show_log("send can to ECU to remove reb blocking");
         frame.data[0] = 0x02;
     }
 
-    show_log("send can to ECU to stop vehicle");
     if (can_send_vcan0(&frame) == FAIL)
     {
         return FAIL;

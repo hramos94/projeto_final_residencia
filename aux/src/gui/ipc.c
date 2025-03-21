@@ -287,7 +287,7 @@ int16_t ipc_runner()
     #define NUM_BUTTONS2 6
     #define NUM_ROWS2 2
     #define NUM_BUTTONS_PER_ROW2 3
-    const char* labels2[NUM_BUTTONS2] = {"Can Fault","GPS Fault","Server Fault"," "," "," "};
+    const char* labels2[NUM_BUTTONS2] = {"Can Fault"," ","Server Fault"," "," "," "};
     Button buttons2[NUM_BUTTONS2];
 
     int8_t rowcounter2=0, linecounter2=0; 

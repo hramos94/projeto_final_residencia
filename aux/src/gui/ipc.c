@@ -402,7 +402,7 @@ int16_t ipc_runner()
             last_clicked=1;
            
         }
-        else if(buttons1[1].clicked==0 && last_clicked==0)
+        else if(buttons1[1].clicked==0 && last_clicked==1)
         {
             set_pin_status(0, REB_ACTIVATE_PIN);
             last_clicked=0;

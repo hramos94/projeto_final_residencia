@@ -57,6 +57,7 @@ uint8_t tcu_can_send_reb(uint8_t status)
         frame.data[0] = 0x02;
     }
 
+    show_log("send can to REB to start REB");
     if (can_send_vcan0(&frame) == FAIL)
     {
         return FAIL;
@@ -91,6 +92,7 @@ uint8_t handle_ecu_can(unsigned char *data)
 uint8_t block_engine()
 {
 
+    show_log("block Engine Started");
     // Send command ON to pin 2 (hazard Light)
     if (set_pin_status(S_ON, 1) == FAIL)
     {
@@ -116,6 +118,7 @@ uint8_t block_engine()
 
 uint8_t unblock_engine()
 {
+    show_log("unblock engine started");
     // change pin 2 to off
     if (set_pin_status(S_OFF, 2) == FAIL)
     {

@@ -217,31 +217,75 @@ int16_t ipc_runner()
     uint8_t hazard_lights_state=0;
     uint8_t hazard_light=0;
 
-    // Criar botões
-    int16_t button_x0 = 100;
-    int16_t button_y0 = 725;
-    int16_t button_height=50;
-    int16_t button_width=150;
-    int16_t button_v_space=25;
-    //int16_t button_h_space=25;
+    //Vehicle Control Buttons
+    int16_t button1_x0 = 60;
+    int16_t button1_y0 = 725;
+    int16_t button1_height=50;
+    int16_t button1_width=175;
+    int16_t button1_v_space=25;
+    int16_t button1_h_space=20;
+    #define NUM_BUTTONS1 6
+    #define NUM_ROWS1 2
+    #define NUM_BUTTONS_PER_ROW1 3
+    const char* labels1[NUM_BUTTONS1] = {"Ignition On", "REB On", "REB Off","Scenario 1","Scenario 2","Scenario 3"};
+    Button buttons1[NUM_BUTTONS1];
 
-  
-    #define NUM_BUTTONS 3
-    const char* labels[NUM_BUTTONS] = {
-        "Ignition On", "REB Activate", "CAN Fault"
-    };
-    
-    Button buttons[NUM_BUTTONS];
-    
-    for (int16_t i = 0; i < NUM_BUTTONS; i++) {
-        buttons[i].rect.x = button_x0;
-        buttons[i].rect.y = button_y0 + (i * (button_height + button_v_space));
-        buttons[i].rect.w = button_width;
-        buttons[i].rect.h = button_height;
-        buttons[i].clicked = 0;
-        buttons[i].label = labels[i];
+    int8_t rowcounter1=0, linecounter1=0; 
+    for (int16_t i = 0; i < NUM_BUTTONS1; i++) 
+    {
+        buttons1[i].rect.x = button1_x0 + (rowcounter1 * (button1_width + button1_h_space));
+        buttons1[i].rect.y = button1_y0 + (linecounter1 * (button1_height + button1_v_space));
+
+        buttons1[i].rect.w = button1_width;
+        buttons1[i].rect.h = button1_height;
+        buttons1[i].clicked = 0;
+        buttons1[i].label = labels1[i];
+
+        if((linecounter1+1) == NUM_BUTTONS_PER_ROW1)
+        {
+            rowcounter1++;
+            linecounter1=0;
+        }
+        else
+        {
+            linecounter1++;
+        }
     }
-    
+
+    //Vehicle Control Buttons
+    int16_t button2_x0 = 765;
+    int16_t button2_y0 = 735;
+    int16_t button2_height=50;
+    int16_t button2_width=175;
+    int16_t button2_v_space=25;
+    int16_t button2_h_space=20;
+    #define NUM_BUTTONS2 6
+    #define NUM_ROWS2 2
+    #define NUM_BUTTONS_PER_ROW2 3
+    const char* labels2[NUM_BUTTONS2] = {"Can Fault","GPS Fault","Server Fault","","",""};
+    Button buttons2[NUM_BUTTONS2];
+
+    int8_t rowcounter2=0, linecounter2=0; 
+    for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
+    {
+        buttons2[i].rect.x = button2_x0 + (rowcounter2 * (button2_width + button2_h_space));
+        buttons2[i].rect.y = button2_y0 + (linecounter2 * (button2_height + button2_v_space));
+
+        buttons2[i].rect.w = button2_width;
+        buttons2[i].rect.h = button2_height;
+        buttons2[i].clicked = 0;
+        buttons2[i].label = labels2[i];
+
+        if((linecounter2+1) == NUM_BUTTONS_PER_ROW2)
+        {
+            rowcounter2++;
+            linecounter2=0;
+        }
+        else
+        {
+            linecounter2++;
+        }
+    }
 
     //color definition
     SDL_Color white = {255,255,255,255};
@@ -258,9 +302,13 @@ int16_t ipc_runner()
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
                 int32_t mouseX, mouseY;
                 SDL_GetMouseState(&mouseX, &mouseY);
-                for (int16_t i = 0; i < 3; i++) 
+                for (int16_t i = 0; i < NUM_BUTTONS1; i++) 
                 {
-                    handle_button_click(&buttons[i], mouseX, mouseY);
+                    handle_button_click(&buttons1[i], mouseX, mouseY);
+                }
+                for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
+                {
+                    handle_button_click(&buttons2[i], mouseX, mouseY);
                 }
             }
         }
@@ -270,9 +318,27 @@ int16_t ipc_runner()
         
         //retangulos cinza e Imagem do velocimetro de fundo
         draw_rectangle(renderer,40,50,1120,550,background_rectangle);
-        draw_rectangle(renderer,40,650,1120,300,background_rectangle);
+        draw_rectangle(renderer,40,650,415,300,background_rectangle);
+        draw_rectangle(renderer,475,650,250,300,background_rectangle);
+        draw_rectangle(renderer,745,650,415,300,background_rectangle);
         SDL_Rect dest_rect = {120,100,1280*0.75,720*0.75};//Imagem SDL_Rect dest_rect = {120,100,960,540};
         SDL_RenderCopy(renderer, texture, NULL, &dest_rect); // Renderizar a imagem
+
+        //texto de títutlo
+        char tit1[50];
+        snprintf(tit1, sizeof(tit1), "Instrument Cluster Panel");
+        draw_text(renderer, font3, tit1, 600,110,white);
+        char tit2[50];
+        snprintf(tit2, sizeof(tit2), "Vehicle Control");
+        draw_text(renderer, font3, tit2, 257,680,white);
+        char tit3[50];
+        snprintf(tit3, sizeof(tit3), "Vehicle Control");
+        draw_text(renderer, font3, tit3, 600,680,white);
+        char tit4[50];
+        snprintf(tit4, sizeof(tit4), "Fault Simulation");
+        draw_text(renderer, font3, tit4, 952,680,white);
+
+
 
         //Speedometer
         int16_t vehicle_speed=counter2;
@@ -285,15 +351,19 @@ int16_t ipc_runner()
         int16_t finalY = centerY - (int16_t)(Radius * sin(radians));
         draw_line(renderer,centerX, centerY, finalX, finalY,  red);
 
-        //buttons
-        for (int16_t i = 0; i < 3; i++) 
+        //buttons1
+        for (int16_t i = 0; i < NUM_BUTTONS1; i++) 
         {
-            SDL_Color buttonColor = buttons[i].clicked ? button_clicked : button_not_clicked;
-            draw_button(renderer, &buttons[i], buttonColor, font3);
+            SDL_Color buttonColor = buttons1[i].clicked ? button_clicked : button_not_clicked;
+            draw_button(renderer, &buttons1[i], buttonColor, font3);
+        }
+        //buttons2
+        for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
+        {
+            SDL_Color buttonColor = buttons2[i].clicked ? button_clicked : button_not_clicked;
+            draw_button(renderer, &buttons2[i], buttonColor, font3);
         }
         
-
-
         read_pin_status(&hazard_lights_state,1);
         read_pin_status(&hazard_light,0);
         read_pin_status(&reb_fault_warning,6);

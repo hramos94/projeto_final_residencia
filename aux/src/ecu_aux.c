@@ -1,8 +1,8 @@
 #include <ecu.h>
 #include <ecu_aux.h>
 #include <mcal.h>
-#include <unistd.h>
 #include <pins.h>
+#include <unistd.h>
 
 uint8_t get_hazard_button_status(uint8_t *status)
 {
@@ -44,21 +44,42 @@ uint8_t set_tcu_start_reb(uint8_t status)
     return SUCCESS;
 }
 
+uint8_t set_tcu_cancel_reb(uint8_t status)
+{
+    if (set_pin_status(status, REB_DEACTIVATE) == FAIL)
+    {
+        show_error("ECU.set_pin_status FAIL\n");
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
+uint8_t get_tcu_cancel_reb(uint8_t *status)
+{
+    if (read_pin_status(status, REB_DEACTIVATE) == FAIL)
+    {
+        show_error("ECU.set_pin_status FAIL\n");
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
 uint8_t tcu_can_send_reb(uint8_t status)
 {
     struct can_frame frame = {.can_id = TCU_REB_ID, .can_dlc = 8, .data = {0}};
 
     if (status == REB_START)
     {
+        show_log("send can to REB to start REB");
         frame.data[0] = 0x01;
     }
 
     if (status == REB_CANCEL)
     {
+        show_log("send can to REB to stop REB");
         frame.data[0] = 0x02;
     }
 
-    show_log("send can to REB to start REB");
     if (can_send_vcan0(&frame) == FAIL)
     {
         return FAIL;
@@ -73,7 +94,7 @@ uint8_t handle_ecu_can(unsigned char *data)
     {
         if (block_engine() == FAIL)
         {
-            show_error("bloc_engine FAIL\n");
+            show_error("block_engine FAIL\n");
             return FAIL;
         }
     }
@@ -94,7 +115,7 @@ uint8_t block_engine()
 {
 
     show_log("block Engine Started");
-    // Send command ON to pin 2 (hazard Light)
+    // Send command ON to pin 1 (hazard Light)
     if (set_pin_status(S_ON, HAZARD_BUTTON_PIN) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (hazard Light)\n");
@@ -120,8 +141,8 @@ uint8_t block_engine()
 uint8_t unblock_engine()
 {
     show_log("unblock engine started");
-    // change pin 2 to off
-    if (set_pin_status(S_OFF, REB_ACTIVATE_PIN) == FAIL)
+    // change pin 1 to off
+    if (set_pin_status(S_OFF, HAZARD_BUTTON_PIN) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (turn off block request)\n");
         return FAIL;
@@ -147,6 +168,7 @@ uint8_t handle_ipc_can(unsigned char *data)
     unsigned char signalREB = data[0];
     if (signalREB == 0x01)
     {
+        show_log("Receive from REB ipc to start");
         if (set_reb_warning(S_ON) == FAIL)
         {
             show_error("bloc_engine FAIL\n");
@@ -156,6 +178,7 @@ uint8_t handle_ipc_can(unsigned char *data)
 
     if (signalREB == 0x02)
     {
+        show_log("Receive from REB ipc to cancel");
         if (set_reb_warning(S_OFF) == FAIL)
         {
             show_error("bloc_engine FAIL\n");

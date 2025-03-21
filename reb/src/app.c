@@ -4,6 +4,8 @@
 #include <mcal.h>
 #include <time.h>
 
+static volatile uint8_t flag_reb_canceled = REB_RUNNING;
+
 uint8_t application_init()
 {
 
@@ -54,10 +56,32 @@ uint8_t monitor_read_can()
     }
 }
 
+uint8_t cancel_reb()
+{
+    flag_reb_canceled = REB_CANCELED;
+    if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
+    {
+        show_error("cancel_reb.reb_can_send_ipc FAIL\n");
+        return FAIL;
+    }
+
+    if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
+    {
+        show_error("cancel_reb.reb_can_send_ecu FAIL\n");
+        return FAIL;
+    }
+
+    show_error("REB deactivate with success.\n");
+    return SUCCESS;
+}
+
 uint8_t start_reb()
 {
     clock_t start_time, current_time;
     double elapsed_time = 0;
+
+    // Reset flag when start reb
+    flag_reb_canceled = REB_RUNNING;
 
     // start the counting to 5 min
     start_time = clock();
@@ -69,6 +93,7 @@ uint8_t start_reb()
         return FAIL;
     }
 
+    // TODO create another thread? probably a mutex?
     while (1)
     {
         current_time = clock();
@@ -79,11 +104,9 @@ uint8_t start_reb()
             reb_can_send_ecu(ECU_REB_START);
             return SUCCESS;
         }
-
-        // TODO
-        if (1 == 0)
+        if (flag_reb_canceled == REB_CANCELED)
         {
-            // TODO cancelando a contagem
+            show_error("REB canceled before timeout\n");
             return SUCCESS;
         }
     }

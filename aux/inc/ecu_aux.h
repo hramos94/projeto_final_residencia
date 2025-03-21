@@ -16,5 +16,7 @@ uint8_t block_engine();
 uint8_t unblock_engine();
 uint8_t handle_ipc_can(unsigned char *data);
 uint8_t set_reb_warning(uint8_t status);
+uint8_t set_tcu_cancel_reb(uint8_t status);
+uint8_t get_tcu_cancel_reb(uint8_t *status);
 
 #endif

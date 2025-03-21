@@ -38,8 +38,13 @@ uint8_t handle_tcu_can(unsigned char *data)
 
     if (signalREB == 0x02)
     {
-        // TODO
-        show_error("Desativando REB\n");
+        show_error("Deactivating REB.\n");
+        if (cancel_reb() == FAIL)
+        {
+            // Need dennis task for naming
+            show_error("tcu_can.cancel_reb FAIL\n");
+            return FAIL;
+        }
     }
 
     return SUCCESS;
@@ -51,15 +56,16 @@ uint8_t reb_can_send_ecu(uint8_t status)
 
     if (status == ECU_REB_START)
     {
+        show_log("send can to ECU to stop vehicle");
         frame.data[0] = 0x01;
     }
 
     if (status == ECU_REB_CANCEL)
     {
+        show_log("send can to ECU to remove reb blocking");
         frame.data[0] = 0x02;
     }
 
-    show_log("send can to ECU to stop vehicle");
     if (can_send_vcan0(&frame) == FAIL)
     {
         return FAIL;
@@ -73,11 +79,13 @@ uint8_t reb_can_send_ipc(uint8_t status)
 
     if (status == IPC_REB_START)
     {
+        show_log("Send can to IPC to start reb");
         frame.data[0] = 0x01;
     }
 
     if (status == IPC_REB_CANCEL)
     {
+        show_log("Send can to IPC to stop reb");
         frame.data[0] = 0x02;
     }
 

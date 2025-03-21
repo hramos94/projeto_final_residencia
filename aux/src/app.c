@@ -113,6 +113,25 @@ uint8_t monitor_tcu()
                 return FAIL;
             }
         }
+
+        if (get_tcu_cancel_reb(&status) == FAIL)
+        {
+            show_error("get_tcu_cancel_reb FAIL\n");
+            return FAIL;
+        }
+        if (status == S_ON)
+        {
+            if (set_tcu_cancel_reb(S_OFF) == FAIL)
+            {
+                show_error("set_tcu_cancel_reb FAIL\n");
+                return FAIL;
+            }
+            if (tcu_can_send_reb(REB_CANCEL) == FAIL)
+            {
+                show_error("tcu_can_send_reb FAIL\n");
+                return FAIL;
+            }
+        }
         else
         {
             go_sleep(2);

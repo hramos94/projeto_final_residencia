@@ -64,6 +64,7 @@ uint8_t reb_can_send_ecu(uint8_t status)
         frame.data[0] = 0x02;
     }
 
+    show_log("send can to ECU to stop vehicle");
     if (can_send_vcan0(&frame) == FAIL)
     {
         return FAIL;

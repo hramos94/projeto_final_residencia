@@ -14,6 +14,8 @@
 #define S_ON 0x01U
 #define S_OFF 0x00U
 
+#define SHOW_LOG 1
+
 uint8_t read_console();
 
 #endif

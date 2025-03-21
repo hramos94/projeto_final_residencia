@@ -33,52 +33,6 @@ uint8_t read_input()
     }
 }
 
-uint8_t send_can_hazard_light()
-{
-    while (1)
-    {
-        //@TODO isso será removido OU alterado conforme a necessidade
-        uint8_t status;
-        if (read_pin_status(&status, 9) == FAIL)
-        {
-            return FAIL;
-        }
-
-        if (status == 1)
-        {
-            if (set_pin_status(0, 9) == FAIL)
-            {
-                return FAIL;
-            }
-            if (can_send_hazard_light(1) == FAIL)
-            {
-                show_error("app.can_send_hazard FAIL\n");
-                return FAIL;
-            }
-        }
-
-        if (read_pin_status(&status, 8) == FAIL)
-        {
-            return FAIL;
-        }
-
-        if (status == 1)
-        {
-            if (set_pin_status(0, 8) == FAIL)
-            {
-                return FAIL;
-            }
-            if (can_send_hazard_light(0) == FAIL)
-            {
-                show_error("app.can_send_hazard FAIL\n");
-                return FAIL;
-            }
-        }
-
-        go_sleep(1);
-    }
-}
-
 uint8_t monitor_read_can()
 {
     while (1)
@@ -133,6 +87,7 @@ uint8_t start_reb()
     // start the counting to 5 min
     start_time = clock();
 
+    show_log("Start REB counting and send can to IPC");
     if (reb_can_send_ipc(IPC_REB_START) == FAIL)
     {
         show_error("start_reb.reb_can_send_ipc FAIL\n");

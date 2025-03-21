@@ -323,6 +323,7 @@ int16_t ipc_runner()
     SDL_Color button_clicked = {72, 143, 49, 255};
     SDL_Color button_not_clicked = {110, 110, 110, 110};
 
+    uint8_t last_clicked=0;
 
     while (!quit) {
         while (SDL_PollEvent(&e)) {
@@ -394,13 +395,17 @@ int16_t ipc_runner()
         }
 
         //REB ON Button - if true write to pin
-        if(buttons1[1].clicked==1)
+
+        if(buttons1[1].clicked==1 && last_clicked==0)
         {
             set_pin_status(1, REB_ACTIVATE_PIN);
+            last_clicked=1;
+           
         }
-        else
+        else if(buttons1[1].clicked==0 && last_clicked==0)
         {
             set_pin_status(0, REB_ACTIVATE_PIN);
+            last_clicked=0;
         }
 
         read_pin_status(&hazard_lights_state,HAZARD_BUTTON_PIN);

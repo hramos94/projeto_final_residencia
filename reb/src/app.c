@@ -59,7 +59,6 @@ uint8_t monitor_read_can()
 uint8_t cancel_reb()
 {
     flag_reb_canceled = REB_CANCELED;
-
     if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
     {
         show_error("cancel_reb.reb_can_send_ipc FAIL\n");
@@ -94,6 +93,7 @@ uint8_t start_reb()
         return FAIL;
     }
 
+    // TODO create another thread? probably a mutex?
     while (1)
     {
         current_time = clock();
@@ -104,7 +104,6 @@ uint8_t start_reb()
             reb_can_send_ecu(ECU_REB_START);
             return SUCCESS;
         }
-
         if (flag_reb_canceled == REB_CANCELED)
         {
             show_error("REB canceled before timeout\n");

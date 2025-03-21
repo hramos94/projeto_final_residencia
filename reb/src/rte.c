@@ -12,13 +12,11 @@ int main(int argc, char *argv[])
     }
 
     pthread_t read_input_th = new_thread(read_input);
-    pthread_t send_can_hazard_light_th = new_thread(send_can_hazard_light);
     pthread_t monitor_read_can_th = new_thread(monitor_read_can);
 
     pthread_t gui_runner_th = new_thread(gui_runner);
 
     pthread_join(read_input_th, NULL);
     pthread_join(gui_runner_th, NULL);
-    pthread_join(send_can_hazard_light_th, NULL);
     pthread_join(monitor_read_can_th, NULL);
 }

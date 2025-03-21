@@ -127,6 +127,9 @@ uint8_t start_reb()
     clock_t start_time, current_time;
     double elapsed_time = 0;
 
+    // Reset flag when start reb
+    flag_reb_canceled = REB_RUNNING;
+
     // start the counting to 5 min
     start_time = clock();
 

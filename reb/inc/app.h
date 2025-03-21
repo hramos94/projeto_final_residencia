@@ -6,7 +6,7 @@
 #define S_ON 0x01U
 #define S_OFF 0x00U
 
-#define REB_RUNNING 0x00U
+#define REB_RUNNING 0x01U
 #define REB_CANCELED 0x00U
 
 uint8_t application_init();

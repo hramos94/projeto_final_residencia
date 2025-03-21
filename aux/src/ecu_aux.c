@@ -2,10 +2,11 @@
 #include <ecu_aux.h>
 #include <mcal.h>
 #include <unistd.h>
+#include <pins.h>
 
 uint8_t get_hazard_button_status(uint8_t *status)
 {
-    if (read_pin_status(status, 1) == FAIL)
+    if (read_pin_status(status, HAZARD_BUTTON_PIN) == FAIL)
     {
         show_error("ECU.read_pin_status FAIL\n");
         return FAIL;
@@ -15,7 +16,7 @@ uint8_t get_hazard_button_status(uint8_t *status)
 
 uint8_t set_hazard_light(uint8_t status)
 {
-    if (set_pin_status(status, 0) == FAIL)
+    if (set_pin_status(status, HAZARD_LIGHTS_PIN) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL\n");
         return FAIL;
@@ -25,7 +26,7 @@ uint8_t set_hazard_light(uint8_t status)
 
 uint8_t get_tcu_start_reb(uint8_t *status)
 {
-    if (read_pin_status(status, 2) == FAIL)
+    if (read_pin_status(status, REB_ACTIVATE_PIN) == FAIL)
     {
         show_error("ECU.read_pin_status FAIL\n");
         return FAIL;
@@ -35,7 +36,7 @@ uint8_t get_tcu_start_reb(uint8_t *status)
 
 uint8_t set_tcu_start_reb(uint8_t status)
 {
-    if (set_pin_status(status, 2) == FAIL)
+    if (set_pin_status(status, REB_ACTIVATE_PIN) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL\n");
         return FAIL;
@@ -94,21 +95,21 @@ uint8_t block_engine()
 
     show_log("block Engine Started");
     // Send command ON to pin 2 (hazard Light)
-    if (set_pin_status(S_ON, 1) == FAIL)
+    if (set_pin_status(S_ON, HAZARD_BUTTON_PIN) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (hazard Light)\n");
         return FAIL;
     }
 
     // Send command ON to pin 5 (block engine)
-    if (set_pin_status(S_ON, 5) == FAIL)
+    if (set_pin_status(S_ON, ENGINE_REB_MODE) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (engine block)\n");
         return FAIL;
     }
 
     // Send command ON to pin 3 (driver notification)
-    if (set_pin_status(S_ON, 3) == FAIL)
+    if (set_pin_status(S_ON, REB_IPC_WARNING) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (driver notification)\n");
         return FAIL;
@@ -120,20 +121,20 @@ uint8_t unblock_engine()
 {
     show_log("unblock engine started");
     // change pin 2 to off
-    if (set_pin_status(S_OFF, 2) == FAIL)
+    if (set_pin_status(S_OFF, REB_ACTIVATE_PIN) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (turn off block request)\n");
         return FAIL;
     }
     // Send unblock engine command (pin 5)
-    if (set_pin_status(S_OFF, 5) == FAIL)
+    if (set_pin_status(S_OFF, ENGINE_REB_MODE) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (engine unblock)\n");
         return FAIL;
     }
 
     // Remove driver notification (pin 3)
-    if (set_pin_status(S_OFF, 3) == FAIL)
+    if (set_pin_status(S_OFF, REB_IPC_WARNING) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL (remove driver notification)\n");
         return FAIL;
@@ -168,7 +169,7 @@ uint8_t handle_ipc_can(unsigned char *data)
 uint8_t set_reb_warning(uint8_t status)
 {
     // Remove driver notification (pin 3)
-    if (set_pin_status(status, 3) == FAIL)
+    if (set_pin_status(status, REB_IPC_WARNING) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL  (driver notification)\n");
         return FAIL;

@@ -110,6 +110,26 @@ void draw_button(SDL_Renderer* renderer, Button* button, SDL_Color color, TTF_Fo
     draw_text(renderer, font, button->label, button->rect.x + button->rect.w / 2, button->rect.y + button->rect.h / 2, textColor);
 }
 
+void draw_image_button(SDL_Renderer* renderer, Button* button, const char* image_path) {
+    SDL_Surface* imageSurface = IMG_Load(image_path);
+    if (!imageSurface) {
+        printf("Erro ao carregar a imagem do botão: %s\n", IMG_GetError());
+        return;
+    }
+
+    SDL_Texture* imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+    SDL_FreeSurface(imageSurface);  
+
+    if (!imageTexture) {
+        printf("Erro ao criar a textura do botão: %s\n", SDL_GetError());
+        return;
+    }
+
+    SDL_RenderCopy(renderer, imageTexture, NULL, &button->rect);
+    SDL_DestroyTexture(imageTexture);
+}
+
+
 // Função para verificar se um botão foi clicado
 void handle_button_click(Button* button, int16_t mouseX, int16_t mouseY) {
     if (mouseX >= button->rect.x && mouseX <= button->rect.x + button->rect.w &&
@@ -117,6 +137,7 @@ void handle_button_click(Button* button, int16_t mouseX, int16_t mouseY) {
         button->clicked = !button->clicked;
     }
 }
+
 
 
 int16_t ipc_runner() 
@@ -252,7 +273,7 @@ int16_t ipc_runner()
         }
     }
 
-    //Vehicle Control Buttons
+    //Vehicle Fautl Simulation Buttons
     int16_t button2_x0 = 765;
     int16_t button2_y0 = 735;
     int16_t button2_height=50;
@@ -287,6 +308,10 @@ int16_t ipc_runner()
         }
     }
 
+    //Accelerator and Brake buttons
+    Button accelarator = {{625, 750, 199*0.25, 519*0.25}, 0, ""};// 199 × 519
+    Button brake = {{530, 788, 264*0.25, 364*0.25}, 0, ""};// 264 × 346 
+
     //color definition
     SDL_Color white = {255,255,255,255};
     SDL_Color background_rectangle = {45, 45, 45, 255};
@@ -310,6 +335,8 @@ int16_t ipc_runner()
                 {
                     handle_button_click(&buttons2[i], mouseX, mouseY);
                 }
+                handle_button_click(&accelarator, mouseX, mouseY);
+                handle_button_click(&brake, mouseX, mouseY);
             }
         }
 
@@ -363,6 +390,10 @@ int16_t ipc_runner()
             SDL_Color buttonColor = buttons2[i].clicked ? button_clicked : button_not_clicked;
             draw_button(renderer, &buttons2[i], buttonColor, font3);
         }
+
+        draw_image_button(renderer, &accelarator, "./aux/img/accelerator.png");
+        draw_image_button(renderer, &brake, "./aux/img/brake.png");
+
         
         read_pin_status(&hazard_lights_state,1);
         read_pin_status(&hazard_light,0);

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <mcal.h>
+#include <pins.h>
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 1000
@@ -16,6 +17,7 @@ uint8_t reb_fault_warning = 0;
 uint8_t reb_activate = 0;
 uint8_t reb_deactivate = 0;
 uint8_t reb_imobilize_procedure = 0;
+uint8_t reb_vehicle_imobilized = 0;
 
 
 
@@ -371,6 +373,10 @@ int16_t ipc_runner()
 
         //Speedometer
         int16_t vehicle_speed=counter2;
+        if(reb_vehicle_imobilized == 1)
+        {
+            vehicle_speed=0;
+        }
         double angle=-30+ 1*vehicle_speed;
         double radians = angle * M_PI / 180.0;
         int16_t Radius=107;
@@ -390,19 +396,18 @@ int16_t ipc_runner()
         //REB ON Button - if true write to pin
         if(buttons1[1].clicked==1)
         {
-            set_pin_status(1, 2);
+            set_pin_status(1, REB_ACTIVATE_PIN);
         }
         else
         {
-            set_pin_status(0, 2);
+            set_pin_status(0, REB_ACTIVATE_PIN);
         }
 
-        read_pin_status(&hazard_lights_state,1);
-        read_pin_status(&hazard_light,0);
-        read_pin_status(&reb_activate,3);
-        read_pin_status(&reb_fault_warning,6);
-
-
+        read_pin_status(&hazard_lights_state,HAZARD_BUTTON_PIN);
+        read_pin_status(&hazard_light,HAZARD_LIGHTS_PIN);
+        read_pin_status(&reb_imobilize_procedure,REB_IPC_WARNING);
+        read_pin_status(&reb_fault_warning,REB_IPC_FAULT_PIN);
+        read_pin_status(&reb_vehicle_imobilized,ENGINE_REB_MODE);
 
         //buttons2
         for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
@@ -425,31 +430,31 @@ int16_t ipc_runner()
             snprintf(velocidade, sizeof(velocidade), "REB Fault");
             draw_text(renderer, font2, velocidade, 600,420,white);
         }
-        else if (reb_imobilize_procedure==1)
+        else if (reb_imobilize_procedure == 1 && reb_vehicle_imobilized == 0)
         {
             draw_image(renderer, "./aux/img/reb_yellow.png", 480,284,408/7,227/7);
 
             char msg[50];
             snprintf(msg, sizeof(msg), "Engine Will be Gradually");
-            draw_text(renderer, font2, msg, 420,300,white);
+            draw_text(renderer, font2, msg, 600,400,white);
 
             char msg2[50];
             snprintf(msg2, sizeof(msg2), "Deactivated in 5 minutes");
-            draw_text(renderer, font2, msg2, 420,320,white);
+            draw_text(renderer, font2, msg2, 600,420,white);
+            
+
+        }
+        else if(reb_vehicle_imobilized == 1)
+        {
+            draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
+
+            char msg[50];
+            snprintf(msg, sizeof(msg), "Engine is Stopping");
+            draw_text(renderer, font2, msg, 600,410,white);
+
         }
         else
         {
-            if(hazard_lights_state==1) //pisca alerta
-            {
-                draw_image(renderer, "./aux/img/hazard_warning.png", 685,284,92/2.5,85/2.5);
-                if(hazard_light==1)
-                {
-                    draw_image(renderer, "./aux/img/left_sign.png", 428,278,39,47);
-                    draw_image(renderer, "./aux/img/right_sign.png", 732,278,39,47);
-                }
-            }
-
-            //draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
 
             char velocidade[10]; //texto da velocidade
             snprintf(velocidade, sizeof(velocidade), "%d", vehicle_speed);
@@ -458,7 +463,21 @@ int16_t ipc_runner()
             char km_indicator[10]; //texto da km
             snprintf(km_indicator, sizeof(km_indicator), "km/h");
             draw_text(renderer, font2,km_indicator, 600,440,white);
+        
         }
+    
+        if(hazard_lights_state==1) //pisca alerta
+        {
+            draw_image(renderer, "./aux/img/hazard_warning.png", 685,284,92/2.5,85/2.5);
+            if(hazard_light==1)
+            {
+                draw_image(renderer, "./aux/img/left_sign.png", 428,278,39,47);
+                draw_image(renderer, "./aux/img/right_sign.png", 732,278,39,47);
+            }
+        }
+
+        //draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
+
 
         
         frame_counter = (frame_counter % 200) + 1; // Contador de 1 a 100

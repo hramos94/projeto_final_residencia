@@ -21,7 +21,7 @@ dIO pins[10];
 // pin 4 - Server envia desbloqueio REB
 // pin 5 - REB envia sinal para motor ser bloqueado
 //
-// pin 8 - Envia sinal na redCAN para desligar o pisca alerta 
+// pin 8 - Envia sinal na redCAN para desligar o pisca alerta
 // pin 9 - Envia sinal na redCAN para ligar o pisca alerta
 
 int my_vcan;
@@ -248,4 +248,11 @@ uint8_t can_close()
 {
     can_socket_close(&my_vcan);
     return SUCCESS;
+}
+void show_log(char logStr[])
+{
+    if (SHOW_LOG == 1)
+    {
+        printf("%s\n", logStr);
+    }
 }

@@ -108,6 +108,7 @@ uint8_t start_reb()
     // start the counting to 5 min
     start_time = clock();
 
+    show_log("Start REB counting and send can to IPC");
     if (reb_can_send_ipc(IPC_REB_START) == FAIL)
     {
         show_error("start_reb.reb_can_send_ipc FAIL\n");

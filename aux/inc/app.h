@@ -13,5 +13,6 @@ uint8_t monitor_engine_block();
 uint8_t initiation_start_reb();
 uint8_t send_can_hazard_light();
 uint8_t monitor_read_can();
+uint8_t monitor_tcu();
 
 #endif

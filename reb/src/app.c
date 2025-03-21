@@ -1,6 +1,8 @@
 #include <app.h>
 #include <ecu.h>
+#include <ecu_reb.h>
 #include <mcal.h>
+#include <time.h>
 
 uint8_t application_init()
 {
@@ -29,60 +31,11 @@ uint8_t read_input()
     }
 }
 
-uint8_t hazard_lights_blink()
-{
-    while (1)
-    {
-        uint8_t status = 0;
-        if (get_hazard_button_status(&status) == FAIL)
-        {
-            show_error("get_hazard_button_status FAIL\n");
-            return FAIL;
-        }
-        if (status == S_ON)
-        {
-            if (set_hazard_light(S_ON) == FAIL)
-            {
-                show_error("set_hazard_light FAIL\n");
-                return FAIL;
-            };
-            go_sleep(1);
-            if (set_hazard_light(S_OFF) == FAIL)
-            {
-                show_error("set_hazard_light FAIL\n");
-                return FAIL;
-            };
-            go_sleep(1);
-        }
-        else
-        {
-            go_sleep(2);
-        }
-    }
-}
-
-uint8_t monitor_engine_block()
-{
-    while (1)
-    {
-        if (block_engine() == FAIL)
-        {
-            show_error("app.block_engine FAIL\n");
-        }
-        go_sleep(1);
-        if (unblock_engine() == FAIL)
-        {
-            show_error("app.unblock_engine FAIL\n");
-        }
-        go_sleep(1);
-    }
-}
-
 uint8_t send_can_hazard_light()
 {
     while (1)
     {
-        // TESTE; precisa abstrair
+        //@TODO isso será removido OU alterado conforme a necessidade
         uint8_t status;
         if (read_pin_status(&status, 9) == FAIL)
         {
@@ -132,10 +85,9 @@ uint8_t monitor_read_can()
         struct can_frame frame = {
             .can_id = 29, .can_dlc = 8, .data = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}};
 
-        printf("cand ID read %X\n", frame.can_id);
         if (can_read_vcan0(&frame) != FAIL)
         {
-            if (frame.can_id == 0x7E0)
+            if (frame.can_id == TCU_REB_ID)
             {
                 handle_tcu_can(frame.data);
             }
@@ -146,4 +98,40 @@ uint8_t monitor_read_can()
             go_sleep(2);
         }
     }
+}
+
+uint8_t start_reb()
+{
+    clock_t start_time, current_time;
+    double elapsed_time = 0;
+
+    // start the counting to 5 min
+    start_time = clock();
+
+    if (reb_can_send_ipc(IPC_REB_START) == FAIL)
+    {
+        show_error("start_reb.reb_can_send_ipc FAIL\n");
+        return FAIL;
+    }
+
+    while (1)
+    {
+        current_time = clock();
+        elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
+
+        if (elapsed_time >= REB_TIMEOUT)
+        {
+            reb_can_send_ecu(ECU_REB_START);
+            return SUCCESS;
+        }
+
+        // TODO
+        if (1 == 0)
+        {
+            // TODO cancelando a contagem
+            return SUCCESS;
+        }
+    }
+
+    return SUCCESS;
 }

@@ -70,15 +70,16 @@ uint8_t tcu_can_send_reb(uint8_t status)
 
     if (status == REB_START)
     {
+        show_log("send can to REB to start REB");
         frame.data[0] = 0x01;
     }
 
     if (status == REB_CANCEL)
     {
+        show_log("send can to REB to stop REB");
         frame.data[0] = 0x02;
     }
 
-    show_log("send can to REB to start REB");
     if (can_send_vcan0(&frame) == FAIL)
     {
         return FAIL;
@@ -167,6 +168,7 @@ uint8_t handle_ipc_can(unsigned char *data)
     unsigned char signalREB = data[0];
     if (signalREB == 0x01)
     {
+        show_log("Receive from REB ipc to start");
         if (set_reb_warning(S_ON) == FAIL)
         {
             show_error("bloc_engine FAIL\n");
@@ -176,6 +178,7 @@ uint8_t handle_ipc_can(unsigned char *data)
 
     if (signalREB == 0x02)
     {
+        show_log("Receive from REB ipc to cancel");
         if (set_reb_warning(S_OFF) == FAIL)
         {
             show_error("bloc_engine FAIL\n");

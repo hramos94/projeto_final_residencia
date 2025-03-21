@@ -79,11 +79,13 @@ uint8_t reb_can_send_ipc(uint8_t status)
 
     if (status == IPC_REB_START)
     {
+        show_log("Send can to IPC to start reb");
         frame.data[0] = 0x01;
     }
 
     if (status == IPC_REB_CANCEL)
     {
+        show_log("Send can to IPC to stop reb");
         frame.data[0] = 0x02;
     }
 

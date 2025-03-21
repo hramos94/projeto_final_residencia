@@ -1,6 +1,7 @@
 #include <ecu.h>
 #include <ecu_aux.h>
 #include <mcal.h>
+#include <pins.h>
 #include <unistd.h>
 
 uint8_t get_hazard_button_status(uint8_t *status)
@@ -36,6 +37,26 @@ uint8_t get_tcu_start_reb(uint8_t *status)
 uint8_t set_tcu_start_reb(uint8_t status)
 {
     if (set_pin_status(status, 2) == FAIL)
+    {
+        show_error("ECU.set_pin_status FAIL\n");
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
+uint8_t set_tcu_cancel_reb(uint8_t status)
+{
+    if (set_pin_status(status, REB_DEACTIVATE) == FAIL)
+    {
+        show_error("ECU.set_pin_status FAIL\n");
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
+uint8_t get_tcu_cancel_reb(uint8_t *status)
+{
+    if (read_pin_status(status, REB_DEACTIVATE) == FAIL)
     {
         show_error("ECU.set_pin_status FAIL\n");
         return FAIL;

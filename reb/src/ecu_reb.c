@@ -38,8 +38,13 @@ uint8_t handle_tcu_can(unsigned char *data)
 
     if (signalREB == 0x02)
     {
-        // TODO
-        show_error("Desativando REB\n");
+        show_error("Deactivating REB.\n");
+        if (cancel_reb() == FAIL)
+        {
+            // Need dennis task for naming
+            show_error("tcu_can.cancel_reb FAIL\n");
+            return FAIL;
+        }
     }
 
     return SUCCESS;

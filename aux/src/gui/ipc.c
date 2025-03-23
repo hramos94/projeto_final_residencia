@@ -11,6 +11,8 @@
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 1000
 
+
+
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
 #endif
@@ -22,81 +24,16 @@ uint8_t reb_imobilize_procedure = 0;
 uint8_t reb_vehicle_imobilized = 0;
 
 
-
 int16_t ipc_runner() 
 {
-    // Inicializar SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) 
+    //SDL Inititalization
+    SDL_Window *window = NULL;
+    SDL_Renderer *renderer = NULL;
+    if (ipc_render_init(&window, &renderer,WINDOW_WIDTH,WINDOW_HEIGHT) == FAIL) 
     {
-        printf("Erro ao inicializar o SDL: %s\n", SDL_GetError());
-        return -1;
-    }
-
-    // Inicializar SDL_image
-    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) 
-    {
-        printf("Erro ao inicializar o SDL_image: %s\n", IMG_GetError());
-        SDL_Quit();
-        return -1;
-    }
-
-    // Inicializar SDL_ttf
-    if (TTF_Init() == -1) 
-    {
-        printf("Erro ao inicializar o SDL_ttf: %s\n", TTF_GetError());
-        IMG_Quit();
-        SDL_Quit();
-        return -1;
-    }
-
-    // Criar janela
-    SDL_Window* window = SDL_CreateWindow("Instrument Cluster Panel",
-        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
-    if (!window) {
-        printf("Erro ao criar a janela: %s\n", SDL_GetError());
-        TTF_Quit();
-        IMG_Quit();
-        SDL_Quit();
-        return -1;
-    }
-
-    // Criar renderer
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"); // Ativa interpolação linear
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer) {
-        printf("Erro ao criar o renderer: %s\n", SDL_GetError());
-        SDL_DestroyWindow(window);
-        TTF_Quit();
-        IMG_Quit();
-        SDL_Quit();
-        return -1;
-    }
-
-    // Carregar a imagem
-    SDL_Surface* surface = IMG_Load("./aux/img/ipc_background.png");
-    if (!surface) {
-        printf("Falha ao carregar a imagem: %s\n", IMG_GetError());
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        TTF_Quit();
-        IMG_Quit();
-        SDL_Quit();
         return -1;
     }
     
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);// Criar textura a partir da superfície
-    SDL_FreeSurface(surface);  // Liberar a superfície após criar a textura
-    if (!texture) {
-        printf("Falha ao criar a textura: %s\n", SDL_GetError());
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        TTF_Quit();
-        IMG_Quit();
-        SDL_Quit();
-        return -1;
-    }
-
     // Carregar fonte
     TTF_Font* font = TTF_OpenFont("./aux/img/aptos.ttf", 64); 
     TTF_Font* font2 = TTF_OpenFont("./aux/img/aptos.ttf", 16);
@@ -104,12 +41,7 @@ int16_t ipc_runner()
     if (!font || !font2 || !font3) 
     {
         printf("Erro ao carregar a fonte: %s\n", TTF_GetError());
-        SDL_DestroyTexture(texture);
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        TTF_Quit();
-        IMG_Quit();
-        SDL_Quit();
+        ipc_render_cleanup(&window, &renderer);
         return -1;
     }
 
@@ -233,7 +165,8 @@ int16_t ipc_runner()
         draw_rectangle(renderer,475,650,250,300,background_rectangle);
         draw_rectangle(renderer,745,650,415,300,background_rectangle);
         SDL_Rect dest_rect = {120,100,1280*0.75,720*0.75};//Imagem SDL_Rect dest_rect = {120,100,960,540};
-        SDL_RenderCopy(renderer, texture, NULL, &dest_rect); // Renderizar a imagem
+        draw_image(renderer, "./aux/img/ipc_background.png", 120,100,1280*0.75,720*0.75);
+        //SDL_RenderCopy(renderer, texture, NULL, &dest_rect); // Renderizar a imagem
 
         //texto de títutlo
         char tit1[50];
@@ -373,12 +306,7 @@ int16_t ipc_runner()
 
     // Liberar recursos
     TTF_CloseFont(font);
-    SDL_DestroyTexture(texture);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    TTF_Quit();
-    IMG_Quit();
-    SDL_Quit();
+    ipc_render_cleanup(&window, &renderer); 
 
     return 0;
 }

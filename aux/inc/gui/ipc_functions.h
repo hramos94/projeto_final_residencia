@@ -13,6 +13,11 @@ typedef struct {
     const char* label;
 } Button;
 
+#define SUCCESS 0
+#define FAIL 1
+
+uint8_t ipc_render_init(SDL_Window **window, SDL_Renderer **renderer, uint16_t window_width,int16_t window_height);
+void ipc_render_cleanup(SDL_Window **window, SDL_Renderer **renderer);
 void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int16_t x, int16_t y, SDL_Color textColor);
 void draw_image(SDL_Renderer* renderer, const char* image_path, int16_t x, int16_t y, int16_t width, int16_t height); 
 void draw_rectangle(SDL_Renderer* renderer, int16_t x, int16_t y, int16_t width, int16_t height, SDL_Color color);

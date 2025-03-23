@@ -8,19 +8,83 @@
 #include <pins.h>
 #include <ipc_functions.h>
 
+//This makes all windows initialization for drawing graphics 
+uint8_t ipc_render_init(SDL_Window **window, SDL_Renderer **renderer, uint16_t window_width,int16_t window_height) {
+    // start SDL - Initialize Simple DiretMedia layer - Allows for Audio videos and events
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("SDL init Fail: %s\n", SDL_GetError());
+        return FAIL;
+    }
 
-// Função para desenhar o texto, recebendo uma string e coordenadas (x, y) para centralização
+    // start SDL_image - allows to load images
+    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
+        printf("Erro ao inicializar o SDL_image: %s\n", IMG_GetError());
+        SDL_Quit();
+        return FAIL;
+    }
+
+    // Inicializar SDL_ttf - allows to use letter fonts
+    if (TTF_Init() == -1) {
+        printf("Erro ao inicializar o SDL_ttf: %s\n", TTF_GetError());
+        IMG_Quit();
+        SDL_Quit();
+        return FAIL;
+    }
+
+    // This creates a window
+    *window = SDL_CreateWindow("Instrument Cluster Panel",
+                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                               window_width, window_height, SDL_WINDOW_RESIZABLE);
+    if (!*window) {
+        printf("Erro ao criar a janela: %s\n", SDL_GetError());
+        TTF_Quit();
+        IMG_Quit();
+        SDL_Quit();
+        return FAIL;
+    }
+
+    // Create renderer object - used for drawing 
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"); // Ativa interpolação linear
+    *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
+    if (!*renderer) {
+        printf("Erro ao criar o renderer: %s\n", SDL_GetError());
+        SDL_DestroyWindow(*window);
+        TTF_Quit();
+        IMG_Quit();
+        SDL_Quit();
+        return FAIL;
+    }
+    return SUCCESS;
+}
+
+//this makes all cleanup when program is exiting
+void ipc_render_cleanup(SDL_Window **window, SDL_Renderer **renderer) 
+{
+    if (*renderer) {
+        SDL_DestroyRenderer(*renderer);
+    }
+    if (window) {
+        SDL_DestroyWindow(*window);
+    }
+    TTF_Quit();
+    IMG_Quit();
+    SDL_Quit();
+}
+
+
+
+
+// Function to draw text, receiving a string and coordinates (x, y) for centering.
 void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int16_t x, int16_t y, SDL_Color textColor) 
 {
-
-    // Criar superfície com o texto
+    // Create surface with text
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
     if (!textSurface) {
         printf("Erro ao renderizar texto: %s\n", TTF_GetError());
         return;
     }
 
-    // Criar textura a partir da superfície
+    // Create a texture from surfacce
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_FreeSurface(textSurface); // Liberar a superfície após criar a textura
 
@@ -29,18 +93,22 @@ void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int16_t
         return;
     }
 
-    // Obter a largura e altura do texto
+    // Get the width and height of the text
     int32_t textWidth = 0, textHeight = 0;
     SDL_QueryTexture(textTexture, NULL, NULL, &textWidth, &textHeight);
 
-    // Calcular a posição para centralizar o texto em relação à coordenada (x, y)
+    // Calculate the position to center the text relative to the (x, y) coordinate
     int16_t textX = x - textWidth / 2;
     int16_t textY = y - textHeight / 2;
 
-    SDL_Rect textRect = {textX, textY, textWidth, textHeight};// Definir o retângulo do texto (posição e tamanho)
-    SDL_RenderCopy(renderer, textTexture, NULL, &textRect); // Renderizar o texto
-    SDL_DestroyTexture(textTexture); // Liberar a textura do texto
+    // Define the text position, size, and render it to the screen, then destroy the texture
+    SDL_Rect textRect = {textX, textY, textWidth, textHeight};
+    SDL_RenderCopy(renderer, textTexture, NULL, &textRect); 
+    SDL_DestroyTexture(textTexture);
 }
+
+
+
 
 // Função para desenhar uma imagem, recebendo o caminho do arquivo de imagem e as coordenadas (x, y)
 void draw_image(SDL_Renderer* renderer, const char* image_path, int16_t x, int16_t y, int16_t width, int16_t height) 

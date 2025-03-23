@@ -21,6 +21,40 @@ uint8_t reb_activate = 0;
 uint8_t reb_deactivate = 0;
 uint8_t reb_imobilize_procedure = 0;
 uint8_t reb_vehicle_imobilized = 0;
+uint8_t accelerator_percentage=0;
+uint8_t brake_percentage=0;
+
+
+//#define MAX_SPEED 200.0  // Velocidade máxima em km/h
+#define ACCELERATION 0.005  // Aceleração máxima por ciclo
+#define BRAKE_POWER 0.020  // Força máxima de frenagem por ciclo
+#define FRICTION 0.1      // Perda de velocidade natural
+
+float atualizar_velocidade(float velocidade, int acelerador, int freio)
+{
+
+    float MAX_SPEED = 200.0 * acelerador * 0.01;
+    float aceleração_reduzida = acelerador;
+    if (velocidade > MAX_SPEED * 0.8 && MAX_SPEED!=0 ) 
+    {  
+        aceleração_reduzida *= (MAX_SPEED - velocidade) / (MAX_SPEED * 0.2);
+    }
+
+    // Atualiza a velocidade
+    velocidade += aceleração_reduzida * ACCELERATION;
+    velocidade -= (freio) * BRAKE_POWER;
+    
+    // Atrito natural (se nenhum pedal for pressionado)
+    if (acelerador == 0 && freio == 0 && velocidade > 0) {
+        velocidade -= FRICTION;
+    }
+
+    // Garantir limites de velocidade
+    if (velocidade > 200) velocidade = MAX_SPEED;
+    if (velocidade < 0) velocidade = 0;
+
+    return velocidade;
+}
 
 
 int16_t ipc_runner() 
@@ -145,12 +179,16 @@ int16_t ipc_runner()
     SDL_Color button_not_clicked = {110, 110, 110, 110};
 
     uint8_t last_clicked=0;
+    float vehicle_speed_double=0;
 
     while (!quit) {
         while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT) {
+            if (e.type == SDL_QUIT) 
+            {
                 quit = 1;
-            } else if (e.type == SDL_MOUSEBUTTONDOWN) {
+            } 
+            else if (e.type == SDL_MOUSEBUTTONDOWN) 
+            {
                 int32_t mouseX, mouseY;
                 SDL_GetMouseState(&mouseX, &mouseY);
                 for (int16_t i = 0; i < NUM_BUTTONS1; i++) 
@@ -161,9 +199,12 @@ int16_t ipc_runner()
                 {
                     handle_button_click(&buttons2[i], mouseX, mouseY);
                 }
-                handle_button_click(&accelarator, mouseX, mouseY);
-                handle_button_click(&brake, mouseX, mouseY);
+
+                handle_pedal_press(&accelarator, mouseX, mouseY,&accelerator_percentage,10);
+                handle_pedal_press(&brake, mouseX, mouseY,&brake_percentage,10);
+            
             }
+
         }
 
         //clear Window
@@ -193,12 +234,18 @@ int16_t ipc_runner()
 
 
         //Speedometer
-        int16_t vehicle_speed=counter2;
+
+        vehicle_speed_double=atualizar_velocidade(vehicle_speed_double, accelerator_percentage, brake_percentage);
+        //printf("ACC: %d | brake: %d |vel: %f\n", accelerator_percentage, brake_percentage, vehicle_speed_double);
+        uint16_t vehicle_speed =(int16_t)(vehicle_speed_double);
+
+
+
         if(reb_vehicle_imobilized == 1)
         {
             vehicle_speed=0;
         }
-        double angle=-30+ 1*vehicle_speed;
+        double angle=-30+ 1*vehicle_speed_double;
         double radians = angle * M_PI / 180.0;
         int16_t Radius=107;
         int16_t centerX=888;
@@ -237,13 +284,20 @@ int16_t ipc_runner()
         //buttons2
         for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
         {
-            //SDL_Color buttonColor = buttons2[i].clicked ? button_clicked : button_not_clicked;
-            SDL_Color buttonColor = accelarator.clicked ? button_clicked : button_not_clicked;
+            SDL_Color buttonColor = buttons2[i].clicked ? button_clicked : button_not_clicked;
             draw_button(renderer, &buttons2[i], buttonColor, font3);
         }
 
+        //accelerator
         draw_image_button(renderer, &accelarator, "./aux/img/accelerator.png");
+        char accelerator_perc_text[50];
+        snprintf(accelerator_perc_text, sizeof(accelerator_perc_text), "%d %%",accelerator_percentage);
+        draw_text(renderer, font3, accelerator_perc_text, 660,900,white);
+
         draw_image_button(renderer, &brake, "./aux/img/brake.png");
+        char brake_perc_text[50];
+        snprintf(brake_perc_text, sizeof(brake_perc_text), "%d %%",brake_percentage);
+        draw_text(renderer, font3, brake_perc_text, 570,900,white);
 
         
         if(reb_fault_warning==1)
@@ -305,7 +359,7 @@ int16_t ipc_runner()
 
 
         
-        frame_counter = (frame_counter % 200) + 1; // Contador de 1 a 100
+        frame_counter = (frame_counter % 10000) + 1; // Contador de 1 a 100
         counter2 = (counter2 % 200) + 1; // Contador de 1 a 100
 
         SDL_RenderPresent(renderer); // Atualizar a tela

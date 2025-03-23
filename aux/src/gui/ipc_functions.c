@@ -193,4 +193,24 @@ void handle_button_click(Button* button, int32_t mouseX, int32_t mouseY) {
     }
 }
 
+void handle_pedal_press(Button* button, int32_t mouseX, int32_t mouseY, uint16_t *percentage, uint16_t increment) {
+    if (mouseX >= button->rect.x && mouseX <= button->rect.x + button->rect.w &&
+        mouseY >= button->rect.y && mouseY <= button->rect.y + button->rect.h) {
+        button->clicked = 1;
+        *percentage=*percentage+increment;
+        if(*percentage>100)
+        {
+            *percentage=0;
+        }
+    }
+}
+
+void handle_pedal_release(Button* button, int32_t mouseX, int32_t mouseY, uint16_t *percentage, uint16_t increment) {
+    if (mouseX >= button->rect.x && mouseX <= button->rect.x + button->rect.w &&
+        mouseY >= button->rect.y && mouseY <= button->rect.y + button->rect.h) {
+        button->clicked = 0;
+        *percentage=*percentage-increment;
+    }
+}
+
 

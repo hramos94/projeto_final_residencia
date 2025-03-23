@@ -25,6 +25,8 @@ void draw_rectangle(SDL_Renderer* renderer, int16_t x, int16_t y, int16_t width,
 void draw_line(SDL_Renderer* renderer, int16_t x1, int16_t y1, int16_t x2, int16_t y2, SDL_Color color);
 void draw_button(SDL_Renderer* renderer, Button* button, SDL_Color color, TTF_Font* font);
 void handle_button_click(Button* button, int32_t mouseX, int32_t mouseY);
+void handle_pedal_press(Button* button, int32_t mouseX, int32_t mouseY, uint16_t *percentage, uint16_t increment);
+void handle_pedal_release(Button* button, int32_t mouseX, int32_t mouseY, uint16_t *percentage, uint16_t increment);
 void draw_image_button(SDL_Renderer* renderer, Button* button, const char* image_path);
 
 #endif

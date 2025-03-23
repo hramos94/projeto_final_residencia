@@ -23,6 +23,7 @@ uint8_t reb_imobilize_procedure = 0;
 uint8_t reb_vehicle_imobilized = 0;
 uint8_t accelerator_percentage=0;
 uint8_t brake_percentage=0;
+float vehicle_speed_float=0;
 
 int16_t ipc_runner() 
 {
@@ -85,6 +86,7 @@ int16_t ipc_runner()
 
         buttons1[i].rect.w = button1_width;
         buttons1[i].rect.h = button1_height;
+        buttons1[i].last_click = 1;
         buttons1[i].clicked = 0;
         buttons1[i].label = labels1[i];
 
@@ -120,6 +122,7 @@ int16_t ipc_runner()
 
         buttons2[i].rect.w = button2_width;
         buttons2[i].rect.h = button2_height;
+        buttons2[i].last_click = 1;
         buttons2[i].clicked = 0;
         buttons2[i].label = labels2[i];
 
@@ -135,8 +138,8 @@ int16_t ipc_runner()
     }
 
     //Accelerator and Brake buttons
-    Button accelarator = {{625, 750, 199*0.25, 519*0.25}, 0, " "};// 199 × 519
-    Button brake = {{530, 788, 264*0.25, 364*0.25}, 0, " "};// 264 × 346 
+    Button accelarator = {{625, 750, 199*0.25, 519*0.25}, 1, 0, " "};// 199 × 519
+    Button brake = {{530, 788, 264*0.25, 364*0.25}, 1, 0, " "};// 264 × 346 
 
     //color definition
     SDL_Color white = {255,255,255,255};
@@ -145,8 +148,6 @@ int16_t ipc_runner()
     SDL_Color button_clicked = {72, 143, 49, 255};
     SDL_Color button_not_clicked = {110, 110, 110, 110};
 
-    uint8_t last_clicked=0;
-    float vehicle_speed_float=0;
 
     while (!quit) {
         while (SDL_PollEvent(&e)) {
@@ -226,16 +227,16 @@ int16_t ipc_runner()
 
         //REB ON Button - if true write to pin
 
-        if(buttons1[1].clicked==1 && last_clicked==0)
+        if(buttons1[1].clicked == 1 && buttons1[1].last_click == 0)
         {
             set_pin_status(1, REB_ACTIVATE_PIN);
-            last_clicked=1;
+            buttons1[1].last_click = 1;
            
         }
-        else if(buttons1[1].clicked==0 && last_clicked==1)
+        else if(buttons1[1].clicked == 0 && buttons1[1].last_click == 1)
         {
             set_pin_status(0, REB_ACTIVATE_PIN);
-            last_clicked=0;
+            buttons1[1].last_click = 0;
         }
 
         read_pin_status(&hazard_lights_state,HAZARD_BUTTON_PIN);

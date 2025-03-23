@@ -9,6 +9,7 @@
 
 typedef struct {
     SDL_Rect rect;
+    int16_t last_click;
     int16_t clicked;
     const char* label;
 } Button;

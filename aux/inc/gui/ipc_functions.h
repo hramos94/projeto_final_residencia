@@ -28,5 +28,5 @@ void handle_button_click(Button* button, int32_t mouseX, int32_t mouseY);
 void handle_pedal_press(Button* button, int32_t mouseX, int32_t mouseY, uint16_t *percentage, uint16_t increment);
 void handle_pedal_release(Button* button, int32_t mouseX, int32_t mouseY, uint16_t *percentage, uint16_t increment);
 void draw_image_button(SDL_Renderer* renderer, Button* button, const char* image_path);
-
+float update_speed(float speed, int accelerator_percentage, int brake_percentage);
 #endif

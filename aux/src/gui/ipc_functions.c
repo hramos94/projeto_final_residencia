@@ -214,3 +214,38 @@ void handle_pedal_release(Button* button, int32_t mouseX, int32_t mouseY, uint16
 }
 
 
+//Function to simulate vehicle speed
+#define MAX_SPEED 200.0     // Vehicle maximum speed km/h
+#define ACCELERATION 0.005  // Acceleration coeficient
+#define BRAKE_POWER 0.020   // Brake coeficient
+#define FRICTION 0.1        // Friction coeficient
+float update_speed(float speed, int accelerator_percentage, int brake_percentage)
+{
+
+    //this is the maximum possible speed in current conditions (depends on accelerator percentage)
+    float current_max_speed = MAX_SPEED * accelerator_percentage * 0.01;
+
+    //this part will smooth out when achieving the maximum current speed
+    float accel_smothout_coeficient = accelerator_percentage;
+    if (speed > current_max_speed * 0.8 && current_max_speed!=0 ) 
+    {  
+        accel_smothout_coeficient *= (current_max_speed - speed) / (current_max_speed * 0.2);
+    }
+
+    //here we do increment and decrement of the speed based on accelerator and brake pedals percentage
+    speed += accel_smothout_coeficient * ACCELERATION;
+    speed -= (brake_percentage) * BRAKE_POWER;
+    
+    //this will kick in to simulate drag when accelarator and brake are not pressed
+    if (accelerator_percentage == 0 && brake_percentage == 0 && speed > 0) {
+        speed -= FRICTION;
+    }
+
+    //assure that speed limits are not passed
+    if (speed > MAX_SPEED) speed = current_max_speed;
+    if (speed < 0) speed = 0;
+
+    return speed;
+}
+
+

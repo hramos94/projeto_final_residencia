@@ -10,8 +10,7 @@
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 1000
-
-
+const uint32_t FPS = 30;
 
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
@@ -31,18 +30,29 @@ int16_t ipc_runner()
     SDL_Renderer *renderer = NULL;
     if (ipc_render_init(&window, &renderer,WINDOW_WIDTH,WINDOW_HEIGHT) == FAIL) 
     {
-        return -1;
+        return FAIL;
     }
-    
-    // Carregar fonte
-    TTF_Font* font = TTF_OpenFont("./aux/img/aptos.ttf", 64); 
-    TTF_Font* font2 = TTF_OpenFont("./aux/img/aptos.ttf", 16);
-    TTF_Font* font3 = TTF_OpenFont("./aux/img/aptos.ttf",24);    
-    if (!font || !font2 || !font3) 
+
+    //Font Initialization
+    TTF_Font *font, *font2, *font3;
+    if(initialize_font(&font,"./aux/img/aptos.ttf", 64) == FAIL)
     {
-        printf("Erro ao carregar a fonte: %s\n", TTF_GetError());
+        printf("Font Error: %s\n", TTF_GetError());
         ipc_render_cleanup(&window, &renderer);
-        return -1;
+        return FAIL;
+    }
+    if(initialize_font(&font2,"./aux/img/aptos.ttf", 16) == FAIL)
+    {
+        printf("Font Error: %s\n", TTF_GetError());
+        ipc_render_cleanup(&window, &renderer);
+        return FAIL;
+
+    }
+    if(initialize_font(&font3,"./aux/img/aptos.ttf", 24) == FAIL)
+    {
+        printf("Font Error: %s\n", TTF_GetError());
+        ipc_render_cleanup(&window, &renderer);
+        return FAIL;
     }
 
     // Loop principal -- Responsável por fazer o movimento das coisas
@@ -54,12 +64,12 @@ int16_t ipc_runner()
     uint8_t hazard_light=0;
 
     //Vehicle Control Buttons
-    int16_t button1_x0 = 60;
-    int16_t button1_y0 = 725;
-    int16_t button1_height=50;
-    int16_t button1_width=175;
-    int16_t button1_v_space=25;
-    int16_t button1_h_space=20;
+    const int16_t button1_x0 = 60;
+    const int16_t button1_y0 = 725;
+    const int16_t button1_height=50;
+    const int16_t button1_width=175;
+    const int16_t button1_v_space=25;
+    const int16_t button1_h_space=20;
     #define NUM_BUTTONS1 6
     #define NUM_ROWS1 2
     #define NUM_BUTTONS_PER_ROW1 3
@@ -89,12 +99,12 @@ int16_t ipc_runner()
     }
 
     //Vehicle Fautl Simulation Buttons
-    int16_t button2_x0 = 765;
-    int16_t button2_y0 = 735;
-    int16_t button2_height=50;
-    int16_t button2_width=175;
-    int16_t button2_v_space=25;
-    int16_t button2_h_space=20;
+    const int16_t button2_x0 = 765;
+    const int16_t button2_y0 = 735;
+    const int16_t button2_height=50;
+    const int16_t button2_width=175;
+    const int16_t button2_v_space=25;
+    const int16_t button2_h_space=20;
     #define NUM_BUTTONS2 6
     #define NUM_ROWS2 2
     #define NUM_BUTTONS_PER_ROW2 3
@@ -130,7 +140,7 @@ int16_t ipc_runner()
     //color definition
     SDL_Color white = {255,255,255,255};
     SDL_Color background_rectangle = {45, 45, 45, 255};
-    SDL_Color red = {255, 0, 0, 255};  // Cor vermelha
+    SDL_Color red = {255, 0, 0, 255};  
     SDL_Color button_clicked = {72, 143, 49, 255};
     SDL_Color button_not_clicked = {110, 110, 110, 110};
 
@@ -156,19 +166,18 @@ int16_t ipc_runner()
             }
         }
 
+        //clear Window
         SDL_SetRenderDrawColor(renderer, 26, 46, 61,255);
-        SDL_RenderClear(renderer);// Limpar a tela
+        SDL_RenderClear(renderer);
         
-        //retangulos cinza e Imagem do velocimetro de fundo
+        //Gray Background Rectangles and Speedometer Image
         draw_rectangle(renderer,40,50,1120,550,background_rectangle);
         draw_rectangle(renderer,40,650,415,300,background_rectangle);
         draw_rectangle(renderer,475,650,250,300,background_rectangle);
         draw_rectangle(renderer,745,650,415,300,background_rectangle);
-        SDL_Rect dest_rect = {120,100,1280*0.75,720*0.75};//Imagem SDL_Rect dest_rect = {120,100,960,540};
         draw_image(renderer, "./aux/img/ipc_background.png", 120,100,1280*0.75,720*0.75);
-        //SDL_RenderCopy(renderer, texture, NULL, &dest_rect); // Renderizar a imagem
 
-        //texto de títutlo
+        //Rectangle Titles
         char tit1[50];
         snprintf(tit1, sizeof(tit1), "Instrument Cluster Panel");
         draw_text(renderer, font3, tit1, 600,110,white);
@@ -181,7 +190,6 @@ int16_t ipc_runner()
         char tit4[50];
         snprintf(tit4, sizeof(tit4), "Fault Simulation");
         draw_text(renderer, font3, tit4, 952,680,white);
-
 
 
         //Speedometer
@@ -301,10 +309,10 @@ int16_t ipc_runner()
         counter2 = (counter2 % 200) + 1; // Contador de 1 a 100
 
         SDL_RenderPresent(renderer); // Atualizar a tela
-        SDL_Delay(30); // Define o FPS 100
+        SDL_Delay((1/FPS)*1000); // Define o FPS 100
     }
 
-    // Liberar recursos
+    // cleanup resorces
     TTF_CloseFont(font);
     ipc_render_cleanup(&window, &renderer); 
 

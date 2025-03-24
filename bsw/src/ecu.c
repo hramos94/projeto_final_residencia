@@ -2,6 +2,11 @@
 #include <mcal.h>
 #include <unistd.h>
 
+/**
+ *  @brief function get by console the status and number of the PIN set it.
+ *  @return 0 on success, 1 on failure.
+ */
+
 uint8_t read_console()
 {
     uint8_t pin = 0, status = 0;

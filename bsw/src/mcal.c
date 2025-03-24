@@ -27,6 +27,12 @@ dIO pins[10];
 int my_vcan;
 const char *interface = "vcan0";
 
+/**
+ *
+ *  @brief Create a new thread in posix.
+ *  @param func Pointer to the function that will runin the thread.
+ *  @return The created pthread_t identifier.
+ */
 pthread_t new_thread(void *func)
 {
     pthread_t nthread;
@@ -34,8 +40,21 @@ pthread_t new_thread(void *func)
     return nthread;
 }
 
+/**
+ *  @brief Show in terminal ERROR Message.
+ *  @param errorStr Pointer to the charr array of message.
+ *  @requir SwHLR_F_16.
+ */
 void show_error(char errorStr[]) { printf("%s", errorStr); }
 
+/**
+ *  @brief Set the status of PIN by terminal
+ *
+ *  @param p_pin Pointer of PIN number to be read.
+ *  @param p_ststus Pointer to store the read status of the PIN (0 or 1).
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_13, SysHLR_6.
+ */
 uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 {
     char *line = NULL;
@@ -60,6 +79,11 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
     return FAIL;
 }
 
+/**
+ *  @brief Inicializate the PINs status.
+ *
+ *  @return 0 on success, 1 on failure.
+ */
 uint8_t mcal_init()
 {
 
@@ -72,6 +96,14 @@ uint8_t mcal_init()
     return SUCCESS;
 }
 
+/**
+ *  @brief Get the status of desired PIN number.
+ *
+ *  @param status Pointer to store the read status of the PIN (0 or 1).
+ *  @param pin Pointer of PIN number to be read.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_13, SysHLR_6.
+ */
 uint8_t read_pin_status(uint8_t *status, uint8_t pin)
 {
     *status = pins[pin].status;
@@ -79,6 +111,14 @@ uint8_t read_pin_status(uint8_t *status, uint8_t pin)
     return SUCCESS;
 }
 
+/**
+ *  @brief Set the status of desired PIN number.
+ *
+ *  @param status Pointer to store the status of the PIN (0 or 1).
+ *  @param pin Pointer of PIN number to be read.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_13, SysHLR_6.
+ */
 uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
 {
     pins[p_pin].status = p_status;
@@ -86,13 +126,25 @@ uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
     return SUCCESS;
 }
 
+/**
+ *  @brief Sleep thread POSIX.
+ *
+ *  @param seconds How many seconds to sleep.
+ *  @requir SysHLR_12.
+ */
 void go_sleep(uint8_t seconds) { sleep(seconds); }
 
 //======================================================================
 //======================== CAN =========================================
 //======================================================================
 
-// Opens Can socket - does not depend on VCAN interface
+/**
+ *  @brief Opens Can socket - does not depend on VCAN interface.
+ *
+ *  @param can_socket Pointer to store the number of socket.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_socket_open(int *can_socket)
 {
     if ((*can_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
@@ -103,7 +155,13 @@ uint8_t can_socket_open(int *can_socket)
     return SUCCESS;
 }
 
-// Closes CAN socket - does not depend on VCAN interface
+/**
+ *  @brief Closes CAN socket - does not depend on VCAN interface.
+ *
+ *  @param can_socket Pointer to store the number of socket.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_socket_close(int *can_socket)
 {
     if (close(*can_socket) < 0)
@@ -114,7 +172,13 @@ uint8_t can_socket_close(int *can_socket)
     return SUCCESS;
 }
 
-// Function to verify if can socket exists
+/**
+ *  @brief Function to verify if can socket exists.
+ *
+ *  @param interface Pointer to char interface
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_interface_verify(const char *interface)
 {
     char verify_can_command[100];
@@ -128,7 +192,14 @@ uint8_t can_interface_verify(const char *interface)
     return SUCCESS;
 }
 
-// Function to verify if can interface is UP or DOWN
+/**
+ *  @brief Function to verify if can interface is UP or DOWN.
+ *
+ *  @param can_socket Pointer to store the number of socket.
+ *  @param interface Pointer to char interface
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_interface_status(int *can_socket, const char *interface)
 {
     struct ifreq socket_info; // Initialize the struct ifreq to hold the interface information
@@ -152,7 +223,14 @@ uint8_t can_interface_status(int *can_socket, const char *interface)
     }
 }
 
-// Armed with the interface index, we can now bind the socket to the CAN Interface:
+/**
+ *  @brief Armed with the interface index, we can now bind the socket to the CAN Interface:
+ *
+ *  @param can_socket Pointer to store the number of socket.
+ *  @param interface Pointer to char interface
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_bind_socket(int *can_socket, const char *interface)
 {
     struct ifreq ifr;
@@ -171,7 +249,14 @@ uint8_t can_bind_socket(int *can_socket, const char *interface)
     return SUCCESS;
 }
 
-// function to send frames on CAN BUS
+/**
+ *  @brief function to send frames on CAN BUS.
+ *
+ *  @param can_socket Pointer to store the number of socket.
+ *  @param frame Pointer to frame that will be send to can.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_send(int *can_socket, struct can_frame *frame)
 {
     if (write(*can_socket, frame, sizeof(struct can_frame)) != sizeof(struct can_frame))
@@ -182,7 +267,14 @@ uint8_t can_send(int *can_socket, struct can_frame *frame)
     return SUCCESS;
 }
 
-// function to read frames on CAN - this will block execution until a frame is received
+/**
+ *  @brief function to read frames on CAN - this will block execution until a frame is received.
+ *
+ *  @param can_socket Pointer to store the number of socket.
+ *  @param frame Pointer to frame that will be read from can.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_read(int *can_socket, struct can_frame *frame)
 {
     // this will block until frame avaliable
@@ -195,6 +287,14 @@ uint8_t can_read(int *can_socket, struct can_frame *frame)
     return SUCCESS;
 }
 
+/**
+ *  @brief function that open SOCKET CAN.
+ *
+ *  @param my_vcan Pointer to store the number of socket.
+ *  @param interface Pointer to store the char interface.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_start(int *my_vcan, const char *interface)
 {
     if (can_socket_open(my_vcan) == FAIL)
@@ -215,7 +315,13 @@ uint8_t can_start(int *my_vcan, const char *interface)
     return SUCCESS;
 }
 
-// send can frame in vcan0
+/**
+ *  @brief function that send frame CAN to vcan0 of LINUX
+ *
+ *  @param frame Pointer of frame can that will be send.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_send_vcan0(struct can_frame *frame)
 {
     if (can_send(&my_vcan, frame) == FAIL)
@@ -225,7 +331,13 @@ uint8_t can_send_vcan0(struct can_frame *frame)
     return SUCCESS;
 }
 
-// read frame in vcan0 - will block until frame is received
+/**
+ *  @brief function that will read frame can coming from vcan0 of LINUX
+ *
+ *  @param frame Pointer of frame can that will be send.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_read_vcan0(struct can_frame *frame)
 {
     if (can_read(&my_vcan, frame) == FAIL)
@@ -235,6 +347,12 @@ uint8_t can_read_vcan0(struct can_frame *frame)
     return SUCCESS;
 }
 
+/**
+ *  @brief function that initialize Socket CAN Linux.
+ *
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_init()
 {
     if (can_start(&my_vcan, interface) == FAIL)
@@ -244,11 +362,23 @@ uint8_t can_init()
     return SUCCESS;
 }
 
+/**
+ *  @brief function that close Socket CAN Linux.
+ *
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t can_close()
 {
     can_socket_close(&my_vcan);
     return SUCCESS;
 }
+
+/**
+ *  @brief Show in terminal LOG Message.
+ *  @param errorStr Pointer to the charr array of message.
+ *  @requir SwHLR_F_16.
+ */
 void show_log(char logStr[])
 {
     if (SHOW_LOG == 1)

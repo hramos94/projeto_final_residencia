@@ -45,6 +45,8 @@ uint8_t can_read_vcan0(struct can_frame *frame);
 uint8_t can_init();
 uint8_t can_close();
 
+uint8_t can_start(int *my_vcan, const char *interface);
+
 void show_log(char logStr[]);
 
 #endif

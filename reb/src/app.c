@@ -6,6 +6,10 @@
 
 static volatile uint8_t flag_reb_canceled = REB_RUNNING;
 
+/**
+ * @brief Initializes the application by configuring drivers.
+ * @return SUCCESS(0); FAIL(1).
+ */
 uint8_t application_init()
 {
 
@@ -22,6 +26,13 @@ uint8_t application_init()
     return SUCCESS;
 }
 
+/**
+ * @brief Handle terminal PIN inputs
+ *
+ * @note This function handle set pins by terminal
+ * ex: "pin 1 0"  set the pin number 1 to status 0
+ *
+ */
 uint8_t read_input()
 {
     while (1)
@@ -33,6 +44,11 @@ uint8_t read_input()
     }
 }
 
+/**
+ * @brief Handle messages received from CAN BUS
+ * @return SUCCESS(0); FAIL(1).
+ * @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ */
 uint8_t monitor_read_can()
 {
     while (1)
@@ -43,6 +59,7 @@ uint8_t monitor_read_can()
 
         if (can_read_vcan0(&frame) != FAIL)
         {
+            // Handle message received from Telematic Control Unit(TCU)
             if (frame.can_id == TCU_REB_ID)
             {
                 handle_tcu_can(frame.data);
@@ -56,15 +73,22 @@ uint8_t monitor_read_can()
     }
 }
 
+/**
+ * @brief Handle the deactivating REB
+ * @return SUCCESS(0); FAIL(1).
+ * @requir SwHLR_F_8.
+ */
 uint8_t cancel_reb()
 {
     flag_reb_canceled = REB_CANCELED;
+    // Send by CAN to IPC the Caceled REB status
     if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
     {
         show_error("cancel_reb.reb_can_send_ipc FAIL\n");
         return FAIL;
     }
 
+    // Send by CAN to Engine Control Unit the Caceled REB status
     if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
     {
         show_error("cancel_reb.reb_can_send_ecu FAIL\n");
@@ -75,6 +99,11 @@ uint8_t cancel_reb()
     return SUCCESS;
 }
 
+/**
+ * @brief Handle the activating REB
+ * @return SUCCESS(0); FAIL(1).
+ * @requir SwHLR_F_8, SwHLR_F_12.
+ */
 uint8_t start_reb()
 {
     clock_t start_time, current_time;
@@ -87,6 +116,7 @@ uint8_t start_reb()
     start_time = clock();
 
     show_log("Start REB counting and send can to IPC");
+    // send by CAN to IPC the start REB counting
     if (reb_can_send_ipc(IPC_REB_START) == FAIL)
     {
         show_error("start_reb.reb_can_send_ipc FAIL\n");

@@ -4,6 +4,11 @@
 #include <pins.h>
 #include <unistd.h>
 
+/**
+ * @brief Function check if Hazard button is pressed or not
+ * @return SUCCESS(0); FAIL(1).
+ * @param status Pointer to store the status Button {0 or 1}
+ */
 uint8_t get_hazard_button_status(uint8_t *status)
 {
     if (read_pin_status(status, HAZARD_BUTTON_PIN) == FAIL)
@@ -14,6 +19,11 @@ uint8_t get_hazard_button_status(uint8_t *status)
     return SUCCESS;
 }
 
+/**
+ * @brief Function change status of Hazard button
+ * @return SUCCESS(0); FAIL(1).
+ * @param status Pointer to store the status Button {0 or 1}
+ */
 uint8_t set_hazard_light(uint8_t status)
 {
     if (set_pin_status(status, HAZARD_LIGHTS_PIN) == FAIL)
@@ -24,6 +34,11 @@ uint8_t set_hazard_light(uint8_t status)
     return SUCCESS;
 }
 
+/**
+ * @brief Function check if REB ON button is pressed or not
+ * @return SUCCESS(0); FAIL(1).
+ * @param status Pointer to store the status Button {0 or 1}
+ */
 uint8_t get_tcu_start_reb(uint8_t *status)
 {
     if (read_pin_status(status, REB_ACTIVATE_PIN) == FAIL)
@@ -34,6 +49,11 @@ uint8_t get_tcu_start_reb(uint8_t *status)
     return SUCCESS;
 }
 
+/**
+ * @brief Function change status of REB ON Button
+ * @return SUCCESS(0); FAIL(1).
+ * @param status Pointer to store the status Button {0 or 1}
+ */
 uint8_t set_tcu_start_reb(uint8_t status)
 {
     if (set_pin_status(status, REB_ACTIVATE_PIN) == FAIL)
@@ -44,6 +64,11 @@ uint8_t set_tcu_start_reb(uint8_t status)
     return SUCCESS;
 }
 
+/**
+ * @brief Function change status of REB OFF Button
+ * @return SUCCESS(0); FAIL(1).
+ * @param status Pointer to store the status Button {0 or 1}
+ */
 uint8_t set_tcu_cancel_reb(uint8_t status)
 {
     if (set_pin_status(status, REB_DEACTIVATE) == FAIL)
@@ -54,6 +79,11 @@ uint8_t set_tcu_cancel_reb(uint8_t status)
     return SUCCESS;
 }
 
+/**
+ * @brief Function check if REB OFF button is pressed or not
+ * @return SUCCESS(0); FAIL(1).
+ * @param status Pointer to store the status Button {0 or 1}
+ */
 uint8_t get_tcu_cancel_reb(uint8_t *status)
 {
     if (read_pin_status(status, REB_DEACTIVATE) == FAIL)
@@ -64,6 +94,13 @@ uint8_t get_tcu_cancel_reb(uint8_t *status)
     return SUCCESS;
 }
 
+/**
+ *  @brief Send a can message to REB
+ *
+ *  @param status 1 to send frame data 0x01(ON);  2 to send frame data 0x02(OFF).
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_8.
+ */
 uint8_t tcu_can_send_reb(uint8_t status)
 {
     struct can_frame frame = {.can_id = TCU_REB_ID, .can_dlc = 8, .data = {0}};
@@ -71,12 +108,14 @@ uint8_t tcu_can_send_reb(uint8_t status)
     if (status == REB_START)
     {
         show_log("send can to REB to start REB");
+        // Activate REB
         frame.data[0] = 0x01;
     }
 
     if (status == REB_CANCEL)
     {
         show_log("send can to REB to stop REB");
+        // Deactivate REB
         frame.data[0] = 0x02;
     }
 
@@ -87,9 +126,18 @@ uint8_t tcu_can_send_reb(uint8_t status)
     return SUCCESS;
 }
 
+/**
+ *  @brief handle messages received from REB to Egine Control Unit
+ *
+ *  @param data Pointer to frame message receive from REB Can.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_3, SysHLR_9.
+ */
 uint8_t handle_ecu_can(unsigned char *data)
 {
+    // Get first byte.
     unsigned char signalREB = data[0];
+    // Signal from REB to block engine
     if (signalREB == 0x01)
     {
         if (block_engine() == FAIL)
@@ -99,6 +147,7 @@ uint8_t handle_ecu_can(unsigned char *data)
         }
     }
 
+    // Signal from REB to unblock engine
     if (signalREB == 0x02)
     {
         if (unblock_engine() == FAIL)
@@ -111,6 +160,12 @@ uint8_t handle_ecu_can(unsigned char *data)
     return SUCCESS;
 }
 
+/**
+ *  @brief function that iniciate engine block
+ *
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_12.
+ */
 uint8_t block_engine()
 {
 
@@ -138,6 +193,12 @@ uint8_t block_engine()
     return SUCCESS;
 }
 
+/**
+ *  @brief function that iniciate engine unblock
+ *
+ *  @return 0 on success, 1 on failure.
+ *  @requir SwHLR_F_12.
+ */
 uint8_t unblock_engine()
 {
     show_log("unblock engine started");
@@ -163,9 +224,19 @@ uint8_t unblock_engine()
     return SUCCESS;
 }
 
+/**
+ *  @brief handle messages received from REB to instrument painel control
+ *
+ *  @param data Pointer to frame message receive from REB Can.
+ *  @return 0 on success, 1 on failure.
+ *  @requir SysHLR_8.
+ */
 uint8_t handle_ipc_can(unsigned char *data)
 {
+    // Get first byte.
     unsigned char signalREB = data[0];
+
+    // Signal from REB that REB is ON
     if (signalREB == 0x01)
     {
         show_log("Receive from REB ipc to start");
@@ -176,6 +247,7 @@ uint8_t handle_ipc_can(unsigned char *data)
         }
     }
 
+    // Signal from REB that REB is OFF
     if (signalREB == 0x02)
     {
         show_log("Receive from REB ipc to cancel");
@@ -189,6 +261,11 @@ uint8_t handle_ipc_can(unsigned char *data)
     return SUCCESS;
 }
 
+/**
+ * @brief Function change status of REB Warning of IPC
+ * @return SUCCESS(0); FAIL(1).
+ * @param status Pointer to store the status Button {0 or 1}
+ */
 uint8_t set_reb_warning(uint8_t status)
 {
     // Remove driver notification (pin 3)

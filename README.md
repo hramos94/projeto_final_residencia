@@ -54,8 +54,6 @@ This project is intended for Linux distributions. To install and run it, ensure 
 
 ```
 apt-get install -y build-essential
-apt-get install libglew-dev
-apt-get install libglfw3 libglfw3-dev
 apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 ```
 

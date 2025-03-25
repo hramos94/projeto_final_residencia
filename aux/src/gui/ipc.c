@@ -125,8 +125,8 @@ int16_t ipc_runner()
     uint8_t reb_deactivate = 0;
     uint8_t reb_imobilize_procedure = 0;
     uint8_t reb_vehicle_imobilized = 0;
-    uint8_t accelerator_percentage=0;
-    uint8_t brake_percentage=0;
+    uint16_t accelerator_percentage=0;
+    uint16_t brake_percentage=0;
     uint8_t hazard_lights_state=0;
     uint8_t hazard_light=0;
     float vehicle_speed_float=0;

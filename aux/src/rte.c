@@ -1,6 +1,5 @@
 #include <app.h>
 #include <ecu.h>
-#include <gui.h>
 #include <ipc.h>
 #include <mcal.h>
 

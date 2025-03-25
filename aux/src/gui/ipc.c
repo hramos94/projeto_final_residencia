@@ -66,6 +66,7 @@ int16_t terminal_read_can()
     
     while(1)
     { 
+        pthread_testcancel(); 
         struct can_frame frame;
         char last_frame[150];
         struct timeval tv;
@@ -77,11 +78,9 @@ int16_t terminal_read_can()
         //get the timestamp of when the message was read
         gettimeofday(&tv, NULL);
         tm_info = localtime(&tv.tv_sec); 
-        long millisec = tv.tv_usec / 1000; 
-    
 
         //Write Timestam and CAN ID in the string
-        int offset = snprintf(last_frame, sizeof(last_frame), "%02d:%02d:%02d:    [0x%X]   ",
+        uint32_t offset = snprintf(last_frame, sizeof(last_frame), "%02d:%02d:%02d:    [0x%X]   ",
         tm_info->tm_hour, tm_info->tm_min, tm_info->tm_sec, frame.can_id);
 
         //Write Can message in the string
@@ -121,8 +120,6 @@ int16_t ipc_runner()
 {
     //local variables
     uint8_t reb_fault_warning = 0;
-    uint8_t reb_activate = 0;
-    uint8_t reb_deactivate = 0;
     uint8_t reb_imobilize_procedure = 0;
     uint8_t reb_vehicle_imobilized = 0;
     uint16_t accelerator_percentage=0;
@@ -171,6 +168,7 @@ int16_t ipc_runner()
 
     // Start thread for reading CAN for mini terminal
     pthread_t terminal_read_can_th = new_thread(terminal_read_can);
+
 
     //Vehicle Control Buttons
     const int16_t button1_x0 = 60;
@@ -457,6 +455,7 @@ int16_t ipc_runner()
     }
 
     // cleanup resorces
+    pthread_cancel(terminal_read_can_th);
     TTF_CloseFont(font);
     ipc_render_cleanup(&window, &renderer); 
 

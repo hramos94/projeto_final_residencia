@@ -7,6 +7,7 @@
 #include <pins.h>
 #include <ipc_functions.h>
 #include <ipc.h>
+#include <sys/time.h>
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 1000
@@ -25,6 +26,92 @@ uint8_t accelerator_percentage=0;
 uint8_t brake_percentage=0;
 float vehicle_speed_float=0;
 
+char terminal_frame_str[6][150]; // Buffer para armazenar a string
+
+int16_t terminal_read_can()
+{
+    const char *interface = "vcan0";
+    int my_vcan_2;
+    uint8_t status = 0;
+    for (int i = 0; i <= 6; i++) 
+    {
+        terminal_frame_str[i][0] = ' ';  
+    }
+
+    if (can_socket_open(&my_vcan_2) == FAIL)
+    {
+        perror("Can socket open Error: ");
+        status = FAIL;
+    }
+    if (can_interface_status(&my_vcan_2, interface) == FAIL)
+    {
+        perror("Can interface Error: ");
+        status = FAIL;
+    }
+    if (can_bind_socket(&my_vcan_2, interface) == FAIL)
+    {
+        perror("Can bind Error: ");
+        status = FAIL;
+    }
+    int line_counter=0;
+    if(status == FAIL )
+    {
+        strcpy(terminal_frame_str[0], "CAN OFFLINE");
+    }
+    else
+    {
+        strcpy(terminal_frame_str[0], "CAN ONLINE");
+    }
+
+    
+    while(1)
+    { 
+        struct can_frame frame;
+        char frame_str[150]; // Buffer para armazenar a string
+        struct timeval tv;
+        struct tm *tm_info;
+
+        can_read(&my_vcan_2,&frame);
+
+        gettimeofday(&tv, NULL);
+        tm_info = localtime(&tv.tv_sec); // Converte para tempo local
+        
+        long millisec = tv.tv_usec / 1000;  // Converte microssegundos para milissegundos
+    
+
+        // Escreve o CAN ID e DLC na strings
+        int offset = snprintf(frame_str, sizeof(frame_str), "%02d:%02d:%02d:    [0x%X]   ",
+        tm_info->tm_hour, tm_info->tm_min, tm_info->tm_sec, frame.can_id);
+
+        //int offset = snprintf(frame_str, sizeof(frame_str), " [0x%X] ", frame.can_id, frame.can_dlc);
+
+        // Adiciona os dados ao buffer
+        for (int i = 0; i < frame.can_dlc && offset < sizeof(frame_str) - 3; i++) {
+            offset += snprintf(frame_str + offset, sizeof(frame_str) - offset, "%02X ", frame.data[i]);
+        }
+
+        if(line_counter<6)
+        {
+            strcpy(terminal_frame_str[line_counter], frame_str);
+            line_counter++;
+        }
+        else
+        {
+            for(int i=0;i<5;i++)
+            {
+                strcpy(terminal_frame_str[i],terminal_frame_str[i+1]);
+            }
+            strcpy(terminal_frame_str[5], frame_str);
+        }
+        
+    
+        // Imprime a string formatada
+        printf("%s\n", frame_str);
+
+    }
+}
+
+
 int16_t ipc_runner() 
 {
     //SDL Inititalization
@@ -36,7 +123,7 @@ int16_t ipc_runner()
     }
 
     //Font Initialization
-    TTF_Font *font, *font2, *font3;
+    TTF_Font *font, *font2, *font3, *font4;
     if(initialize_font(&font,"./aux/img/aptos.ttf", 64) == FAIL)
     {
         printf("Font Error: %s\n", TTF_GetError());
@@ -56,6 +143,19 @@ int16_t ipc_runner()
         ipc_render_cleanup(&window, &renderer);
         return FAIL;
     }
+
+    if(initialize_font(&font4,"./aux/img/aptos.ttf", 22) == FAIL)
+    {
+        printf("Font Error: %s\n", TTF_GetError());
+        ipc_render_cleanup(&window, &renderer);
+        return FAIL;
+    }
+
+
+    // Start thread for reading CAN for mini terminal
+
+    pthread_t terminal_read_can_th = new_thread(terminal_read_can);
+
 
     // Loop principal -- Responsável por fazer o movimento das coisas
     SDL_Event e;
@@ -101,42 +201,6 @@ int16_t ipc_runner()
         }
     }
 
-    //Vehicle Fautl Simulation Buttons
-    const int16_t button2_x0 = 765;
-    const int16_t button2_y0 = 735;
-    const int16_t button2_height=50;
-    const int16_t button2_width=175;
-    const int16_t button2_v_space=25;
-    const int16_t button2_h_space=20;
-    #define NUM_BUTTONS2 6
-    #define NUM_ROWS2 2
-    #define NUM_BUTTONS_PER_ROW2 3
-    const char* labels2[NUM_BUTTONS2] = {"Can Fault"," ","Server Fault"," "," "," "};
-    Button buttons2[NUM_BUTTONS2];
-
-    int8_t rowcounter2=0, linecounter2=0; 
-    for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
-    {
-        buttons2[i].rect.x = button2_x0 + (rowcounter2 * (button2_width + button2_h_space));
-        buttons2[i].rect.y = button2_y0 + (linecounter2 * (button2_height + button2_v_space));
-
-        buttons2[i].rect.w = button2_width;
-        buttons2[i].rect.h = button2_height;
-        buttons2[i].last_click = 1;
-        buttons2[i].clicked = 0;
-        buttons2[i].label = labels2[i];
-
-        if((linecounter2+1) == NUM_BUTTONS_PER_ROW2)
-        {
-            rowcounter2++;
-            linecounter2=0;
-        }
-        else
-        {
-            linecounter2++;
-        }
-    }
-
     //Accelerator and Brake buttons
     Button accelarator = {{625, 750, 199*0.25, 519*0.25}, 1, 0, " "};// 199 × 519
     Button brake = {{530, 788, 264*0.25, 364*0.25}, 1, 0, " "};// 264 × 346 
@@ -145,8 +209,10 @@ int16_t ipc_runner()
     SDL_Color white = {255,255,255,255};
     SDL_Color background_rectangle = {45, 45, 45, 255};
     SDL_Color red = {255, 0, 0, 255};  
+    SDL_Color yellow = {255, 165, 0, 255};  
     SDL_Color button_clicked = {72, 143, 49, 255};
     SDL_Color button_not_clicked = {110, 110, 110, 110};
+    SDL_Color terminal_color = {48, 10, 36, 255};
 
 
     while (!quit) {
@@ -163,16 +229,9 @@ int16_t ipc_runner()
                 {
                     handle_button_click(&buttons1[i], mouseX, mouseY);
                 }
-                for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
-                {
-                    handle_button_click(&buttons2[i], mouseX, mouseY);
-                }
-
                 handle_pedal_press(&accelarator, mouseX, mouseY,&accelerator_percentage,10);
                 handle_pedal_press(&brake, mouseX, mouseY,&brake_percentage,10);
-            
             }
-
         }
 
         //clear Window
@@ -183,7 +242,8 @@ int16_t ipc_runner()
         draw_rectangle(renderer,40,50,1120,550,background_rectangle);
         draw_rectangle(renderer,40,650,415,300,background_rectangle);
         draw_rectangle(renderer,475,650,250,300,background_rectangle);
-        draw_rectangle(renderer,745,650,415,300,background_rectangle);
+        draw_rectangle(renderer,745,650,415,300,terminal_color);
+        draw_rectangle(renderer,745,650,415,50,background_rectangle);
         draw_image(renderer, "./aux/img/ipc_background.png", 120,100,1280*0.75,720*0.75);
 
         //Rectangle Titles
@@ -197,7 +257,7 @@ int16_t ipc_runner()
         snprintf(tit3, sizeof(tit3), "Vehicle Control");
         draw_text(renderer, font3, tit3, 600,680,white);
         char tit4[50];
-        snprintf(tit4, sizeof(tit4), "Fault Simulation");
+        snprintf(tit4, sizeof(tit4), "CAN Comunications");
         draw_text(renderer, font3, tit4, 952,680,white);
 
 
@@ -218,15 +278,40 @@ int16_t ipc_runner()
         int16_t finalY = centerY - (int16_t)(Radius * sin(radians));
         draw_line(renderer,centerX, centerY, finalX, finalY,  red);
 
-        //buttons1
+        //accelerator
+        draw_image_button(renderer, &accelarator, "./aux/img/accelerator.png");
+        char accelerator_perc_text[50];
+        snprintf(accelerator_perc_text, sizeof(accelerator_perc_text), "%d %%",accelerator_percentage);
+        draw_text(renderer, font3, accelerator_perc_text, 660,900,white);
+
+        //brake
+        draw_image_button(renderer, &brake, "./aux/img/brake.png");
+        char brake_perc_text[50];
+        snprintf(brake_perc_text, sizeof(brake_perc_text), "%d %%",brake_percentage);
+        draw_text(renderer, font3, brake_perc_text, 570,900,white);
+
+
+        //buttons of the first panel - vehicle controls
         for (int16_t i = 0; i < NUM_BUTTONS1; i++) 
         {
             SDL_Color buttonColor = buttons1[i].clicked ? button_clicked : button_not_clicked;
             draw_button(renderer, &buttons1[i], buttonColor, font3);
         }
 
-        //REB ON Button - if true write to pin
+        //Ignition ON Button
+        if(buttons1[0].clicked == 1 && buttons1[0].last_click == 0)
+        {
+            //set_pin_status(1, PIN);
+            buttons1[0].last_click = 1;
+            
+        }
+        else if(buttons1[0].clicked == 0 && buttons1[0].last_click == 1)
+        {
+            //set_pin_status(0, PIN);
+            buttons1[0].last_click = 0;
+        }
 
+        //REB ON Button
         if(buttons1[1].clicked == 1 && buttons1[1].last_click == 0)
         {
             set_pin_status(1, REB_ACTIVATE_PIN);
@@ -239,30 +324,26 @@ int16_t ipc_runner()
             buttons1[1].last_click = 0;
         }
 
+        //REB OFF Button
+        if(buttons1[2].clicked == 1 && buttons1[2].last_click == 0)
+        {
+            set_pin_status(1, REB_DEACTIVATE);
+            buttons1[2].last_click = 1;
+           
+        }
+        else if(buttons1[2].clicked == 0 && buttons1[2].last_click == 1)
+        {
+            set_pin_status(0, REB_DEACTIVATE);
+            buttons1[2].last_click = 0;
+        }
+
+
+        //Pins Reading
         read_pin_status(&hazard_lights_state,HAZARD_BUTTON_PIN);
         read_pin_status(&hazard_light,HAZARD_LIGHTS_PIN);
         read_pin_status(&reb_imobilize_procedure,REB_IPC_WARNING);
         read_pin_status(&reb_fault_warning,REB_IPC_FAULT_PIN);
         read_pin_status(&reb_vehicle_imobilized,ENGINE_REB_MODE);
-
-        //buttons2
-        for (int16_t i = 0; i < NUM_BUTTONS2; i++) 
-        {
-            SDL_Color buttonColor = buttons2[i].clicked ? button_clicked : button_not_clicked;
-            draw_button(renderer, &buttons2[i], buttonColor, font3);
-        }
-
-        //accelerator
-        draw_image_button(renderer, &accelarator, "./aux/img/accelerator.png");
-        char accelerator_perc_text[50];
-        snprintf(accelerator_perc_text, sizeof(accelerator_perc_text), "%d %%",accelerator_percentage);
-        draw_text(renderer, font3, accelerator_perc_text, 660,900,white);
-
-        draw_image_button(renderer, &brake, "./aux/img/brake.png");
-        char brake_perc_text[50];
-        snprintf(brake_perc_text, sizeof(brake_perc_text), "%d %%",brake_percentage);
-        draw_text(renderer, font3, brake_perc_text, 570,900,white);
-
         
         if(reb_fault_warning==1)
         {
@@ -321,6 +402,16 @@ int16_t ipc_runner()
 
         //draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
 
+
+        char buffer[11];  // Buffer para armazenar os primeiros 10 caracteres + '\0'
+        for(uint8_t i=0;i<6;i++)
+        {
+            draw_text_top_right(renderer, font4,terminal_frame_str[i], 750,740+40*i,white);
+            strncpy(buffer, terminal_frame_str[i], 10);  // Copia apenas os primeiros 10 caracteres
+            buffer[10] = '\0';  // Garante terminação da string
+        
+            draw_text_top_right(renderer, font4, buffer, 750, 740 + 40 * i, yellow);
+        }
 
         
         frame_counter = (frame_counter % 10000) + 1; // Contador de 1 a 100

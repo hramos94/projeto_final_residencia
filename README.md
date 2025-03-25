@@ -44,8 +44,7 @@ These instructions will help you get a copy of the project running on your local
 This project consists of two programs:
 
 - **REB**: The core engine blocker module.
-- **AUX**: An auxiliary module that communicates with REB via Virtual CAN (Linux) and interfaces with the GUI through digital I/O.
-- **GUI**: A graphical user interface containing buttons and an instrument panel to demonstrate the operation of the REB.
+- **AUX**: An auxiliary module that communicates with REB via Virtual CAN (Linux) and interfaces with the **GUI** through digital I/O. Aux contains Telematics (where you can interact through the buttons), Instrument Painel and Engine functionnality.
 
 ![System Architecture](./project.png)
 
@@ -54,7 +53,6 @@ This project consists of two programs:
 This project is intended for Linux distributions. To install and run it, ensure you have the following dependencies:
 
 ```
-apt-get update
 apt-get install -y build-essential
 apt-get install libglew-dev
 apt-get install libglfw3 libglfw3-dev
@@ -111,7 +109,7 @@ make aux
 
 - **André Roetger** - [GitHub](https://github.com/andremgbr) - [LinkedIn](https://www.linkedin.com/in/andre-roetger/)
 - **DENNIS PAULINO IRINEU** - [GitHub](https://github.com/DennisIrineu) - [LinkedIn](https://www.linkedin.com/in/dirineu/)
-- **FÁBIO MARQUES HENRIQUE** - [GitHub](https://github.com/fabiohennr) - [LinkedIn](https://www.linkedin.com/in/andre-roetger/)
+- **FÁBIO MARQUES HENRIQUE** - [GitHub](https://github.com/fabiohennr) - [LinkedIn](https://www.linkedin.com/in/engenheirofabiohenrique/)
 - **HEITOR LEITE RAMOS** - [GitHub](https://github.com/hramos94) - [LinkedIn](https://www.linkedin.com/in/heitorlramos/)
 - **TERENCE MYREN KUTZNER** - [GitHub](https://github.com/TerenceKutzner) - [LinkedIn](https://www.linkedin.com/in/terence-myren-kutzner/)
 

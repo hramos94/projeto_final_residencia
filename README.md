@@ -1,127 +1,118 @@
-# Título do projeto
+# Remote Engine Blocker - SW2
 
-Um parágrafo da descrição do projeto vai aqui
+## 📖 Project Overview
 
-## 🚀 Começando
+This project is the final assignment of the SW2 class at UFPE. It consists of developing a Remote Engine Blocker (REB) system.
 
-Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
+## 🔀 Branch and Commit Standardization
 
-Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar o projeto.
+There will be three types of branches:
 
-### Padronização das branches e commits
+- feat: creation of new features
+- fix: bug fixes
+- docs: documentation updates
 
-Existirão 3 tipos de branches:
-- feat : criação de novas funcionalidades
-- fix : correção de bugs
-- docs : atualizar documentação
+For branch creation, the following pattern is established, using Jira card REB-12 as an example:
 
-Para criação de branches no projeto foi estabelecido o seguinte padrao, utilizando o card ENGBLK-12, do trello.
+`(type)/(card-number)_task_description`
 
-```(type)/(card-number)_task_description```
-
-Exemplos de criação de branches (com nomes em ingles):
-```
-feat/engblk-12_update_readme
-
-fix/engblk-12_update_readme
-
-docs/engblk-12_update_readme
-```
-Já para os commits (feitos em ingles), será utilizada uma abordagem semelhante:
-Exemplos:
-
-``` feat: short description of the task functionality ```
-
-``` fix: short description of the task resolution ```
-
-``` docs: short description of the task documentation added/updated ```
-
-### 📋 Pré-requisitos
-
-De que coisas você precisa para instalar o software e como instalá-lo?
+Examples of branch creation (with names in English):
 
 ```
-Dar exemplos
+feat/REB-12_update_readme
+
+fix/REB-12_update_readme
+
+docs/REB-12_update_readme
 ```
 
-### 🔧 Instalação
+For commits (written in English), a similar approach will be used:
+Examples:
 
-Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.
+`feat: short description of the task functionality`
 
-Diga como essa etapa será:
+`fix: short description of the task resolution`
 
-```
-Dar exemplos
-```
+`docs: short description of the task documentation added/updated`
 
-E repita:
+## 🚀 Getting Started
 
-```
-Até finalizar
-```
+These instructions will help you get a copy of the project running on your local machine for development and testing purposes.
 
-Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
+### System Architecture
 
-## ⚙️ Executando os testes
+This project consists of two programs:
 
-Explicar como executar os testes automatizados para este sistema.
+- **REB**: The core engine blocker module.
+- **AUX**: An auxiliary module that communicates with REB via Virtual CAN (Linux) and interfaces with the GUI through digital I/O.
+- **GUI**: A graphical user interface containing buttons and an instrument panel to demonstrate the operation of the REB.
 
-### 🔩 Analise os testes de ponta a ponta
+![System Architecture](./project.png)
 
-Explique que eles verificam esses testes e porquê.
+### 📋 Prerequisites
 
-```
-Dar exemplos
-```
-
-### ⌨️ E testes de estilo de codificação
-
-Explique que eles verificam esses testes e porquê.
+This project is intended for Linux distributions. To install and run it, ensure you have the following dependencies:
 
 ```
-Dar exemplos
+apt-get update
+apt-get install -y build-essential
+apt-get install libglew-dev
+apt-get install libglfw3 libglfw3-dev
+apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 ```
 
-## 📦 Implantação
+#### Optional (for generating Doxygen documentation):
 
-Adicione notas adicionais sobre como implantar isso em um sistema ativo
+```
+apt-get install doxygen
+apt-get install graphviz
+```
 
-## 🛠️ Construído com
+### 🔧 Installation
 
-Mencione as ferramentas que você usou para criar seu projeto
+Before executing the program, you need to activate the virtual CAN network in Linux. This setup is already automated in the Makefile. Use the following commands:
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - O framework web usado
-* [Maven](https://maven.apache.org/) - Gerente de Dependência
-* [ROME](https://rometools.github.io/rome/) - Usada para gerar RSS
+- **Create and activate `vcan0` interface:**
+  ```
+  make can
+  ```
+- **Deactivate `vcan0` interface:**
+  ```
+  make downcan
+  ```
+- **Remove `vcan0` interface:**
+  ```
+  make delcan
+  ```
 
-## 🖇️ Colaborando
+Once the virtual CAN network is set up, build the project by running:
 
-Por favor, leia o [COLABORACAO.md](https://gist.github.com/usuario/linkParaInfoSobreContribuicoes) para obter detalhes sobre o nosso código de conduta e o processo para nos enviar pedidos de solicitação.
+```
+make
+```
 
-## 📌 Versão
+To run the REB module, execute:
 
-Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/suas/tags/do/projeto). 
+```
+make reb
+```
 
-## ✒️ Autores
+To run the AUX module(using another terminal), execute:
 
-Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início
+```
+make aux
+```
 
-* **Um desenvolvedor** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
-* **Fulano De Tal** - *Documentação* - [fulanodetal](https://github.com/linkParaPerfil)
+## ⚙️ Running Tests
 
-Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
+@TODO
 
-## 📄 Licença
+## ✒️ Authors
 
-Este projeto está sob a licença (sua licença) - veja o arquivo [LICENSE.md](https://github.com/usuario/projeto/licenca) para detalhes.
-
-## 🎁 Expressões de gratidão
-
-* Conte a outras pessoas sobre este projeto 📢;
-* Convide alguém da equipe para uma cerveja 🍺;
-* Um agradecimento publicamente 🫂;
-* etc.
+- **André Roetger** - [GitHub](https://github.com/andremgbr) - [LinkedIn](https://www.linkedin.com/in/andre-roetger/)
+- **DENNIS PAULINO IRINEU** - [GitHub](https://github.com/DennisIrineu) - [LinkedIn](https://www.linkedin.com/in/dirineu/)
+- **FÁBIO MARQUES HENRIQUE** - [GitHub](https://github.com/fabiohennr) - [LinkedIn](https://www.linkedin.com/in/andre-roetger/)
+- **HEITOR LEITE RAMOS** - [GitHub](https://github.com/hramos94) - [LinkedIn](https://www.linkedin.com/in/heitorlramos/)
+- **TERENCE MYREN KUTZNER** - [GitHub](https://github.com/TerenceKutzner) - [LinkedIn](https://www.linkedin.com/in/terence-myren-kutzner/)
 
 
----
-⌨️ com ❤️ por [Armstrong Lohãns](https://gist.github.com/lohhans) 😊

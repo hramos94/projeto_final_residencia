@@ -61,3 +61,5 @@ obj/
 .vscode/
 .cache/
 compile_commands.json
+latex/
+html/

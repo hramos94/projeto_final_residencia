@@ -399,7 +399,7 @@ int16_t ipc_runner()
             snprintf(velocidade, sizeof(velocidade), "REB Fault");
             draw_text(renderer, font2, velocidade, 600,420,white);
         }
-        else if (reb_imobilize_procedure == 1 && reb_vehicle_imobilized == 0)
+        else if (reb_imobilize_procedure == 1 && reb_vehicle_imobilized == 0 &&vehicle_speed!=0)
         {
             draw_image(renderer, "./aux/img/reb_yellow.png", 480,284,408/7,227/7);
 
@@ -411,12 +411,20 @@ int16_t ipc_runner()
             snprintf(msg2, sizeof(msg2), "Deactivated in 5 minutes");
             draw_text(renderer, font2, msg2, 600,420,white);
         }
-        else if(reb_vehicle_imobilized == 1)
+        else if(reb_vehicle_imobilized == 1 &&vehicle_speed!=0)
+        {
+            draw_image(renderer, "./aux/img/reb_yellow.png", 480,284,408/7,227/7);
+
+            char msg[50];
+            snprintf(msg, sizeof(msg), "Engine is Stopping");
+            draw_text(renderer, font2, msg, 600,410,white);
+        }
+        else if(reb_vehicle_imobilized == 1 &&vehicle_speed==0)
         {
             draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
 
             char msg[50];
-            snprintf(msg, sizeof(msg), "Engine is Stopping");
+            snprintf(msg, sizeof(msg), "Vehicle is Imobilized");
             draw_text(renderer, font2, msg, 600,410,white);
         }
         else

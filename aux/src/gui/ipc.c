@@ -17,48 +17,44 @@ const uint32_t FPS = 30;
     #define M_PI 3.141592
 #endif
 
-uint8_t reb_fault_warning = 0;
-uint8_t reb_activate = 0;
-uint8_t reb_deactivate = 0;
-uint8_t reb_imobilize_procedure = 0;
-uint8_t reb_vehicle_imobilized = 0;
-uint8_t accelerator_percentage=0;
-uint8_t brake_percentage=0;
-uint8_t hazard_lights_state=0;
-uint8_t hazard_light=0;
-float vehicle_speed_float=0;
-
 char terminal_frame_str[6][150]; // Buffer para armazenar a string
 char timestamp[6][11]; 
 
 int16_t terminal_read_can()
 {
     const char *interface = "vcan0";
-    int my_vcan_2;
-    uint8_t status = 0;
+    int vcan_socket;
+    uint8_t can_status = 0;
+
+    //write a space in array so we dont get zero text width error
     for (int i = 0; i <= 6; i++) 
     {
         terminal_frame_str[i][0] = ' ';
         timestamp[i][0] = ' '; 
     }
 
-    if (can_socket_open(&my_vcan_2) == FAIL)
+    //Can Socket and Interface Initialization for Reading VCAN0;
+    if (can_socket_open(&vcan_socket) == FAIL)
     {
         perror("Can socket open Error: ");
-        status = FAIL;
+        can_status = FAIL;
     }
-    if (can_interface_status(&my_vcan_2, interface) == FAIL)
+    if (can_interface_status(&vcan_socket, interface) == FAIL)
     {
         perror("Can interface Error: ");
-        status = FAIL;
+        can_status = FAIL;
     }
-    if (can_bind_socket(&my_vcan_2, interface) == FAIL)
+    if (can_bind_socket(&vcan_socket, interface) == FAIL)
     {
         perror("Can bind Error: ");
-        status = FAIL;
+        can_status = FAIL;
     }
+
+    //variable to keep track in wich line we are writing
     int line_counter=0;
-    if(status == FAIL )
+    
+    //Write Can Initialization Status 
+    if(can_status == FAIL )
     {
         strcpy(terminal_frame_str[0], "CAN OFFLINE");
     }
@@ -71,32 +67,34 @@ int16_t terminal_read_can()
     while(1)
     { 
         struct can_frame frame;
-        char frame_str[150]; // Buffer para armazenar a string
+        char last_frame[150];
         struct timeval tv;
         struct tm *tm_info;
 
-        can_read(&my_vcan_2,&frame);
+        //read Can Bus and wait until a message arrive
+        can_read(&vcan_socket,&frame);
 
+        //get the timestamp of when the message was read
         gettimeofday(&tv, NULL);
-        tm_info = localtime(&tv.tv_sec); // Converte para tempo local
-        
-        long millisec = tv.tv_usec / 1000;  // Converte microssegundos para milissegundos
+        tm_info = localtime(&tv.tv_sec); 
+        long millisec = tv.tv_usec / 1000; 
     
 
-        // Escreve o CAN ID e DLC na strings
-        int offset = snprintf(frame_str, sizeof(frame_str), "%02d:%02d:%02d:    [0x%X]   ",
+        //Write Timestam and CAN ID in the string
+        int offset = snprintf(last_frame, sizeof(last_frame), "%02d:%02d:%02d:    [0x%X]   ",
         tm_info->tm_hour, tm_info->tm_min, tm_info->tm_sec, frame.can_id);
 
-        //int offset = snprintf(frame_str, sizeof(frame_str), " [0x%X] ", frame.can_id, frame.can_dlc);
-
-        // Adiciona os dados ao timestamp
-        for (int i = 0; i < frame.can_dlc && offset < sizeof(frame_str) - 3; i++) {
-            offset += snprintf(frame_str + offset, sizeof(frame_str) - offset, "%02X ", frame.data[i]);
+        //Write Can message in the string
+        for (int i = 0; i < frame.can_dlc && offset < sizeof(last_frame) - 3; i++) 
+        {
+            offset += snprintf(last_frame + offset, sizeof(last_frame) - offset, "%02X ", frame.data[i]);
         }
 
+        //this will keep track in wich line we are writing and create a scrolling effect whe the maximum
+        //of 6 messages is achieved
         if(line_counter<6)
         {
-            strcpy(terminal_frame_str[line_counter], frame_str);
+            strcpy(terminal_frame_str[line_counter], last_frame);
 
             strncpy(timestamp[line_counter], terminal_frame_str[line_counter], 10);  
             timestamp[line_counter][10] = '\0'; 
@@ -111,17 +109,28 @@ int16_t terminal_read_can()
                 strncpy(timestamp[i], terminal_frame_str[i], 10);  
                 timestamp[i][10] = '\0'; 
             }
-            strcpy(terminal_frame_str[5], frame_str);
+            strcpy(terminal_frame_str[5], last_frame);
             strncpy(timestamp[5], terminal_frame_str[5], 10);  
             timestamp[5][10] = '\0'; 
         }
-        
     }
 }
 
 
 int16_t ipc_runner() 
 {
+    //local variables
+    uint8_t reb_fault_warning = 0;
+    uint8_t reb_activate = 0;
+    uint8_t reb_deactivate = 0;
+    uint8_t reb_imobilize_procedure = 0;
+    uint8_t reb_vehicle_imobilized = 0;
+    uint8_t accelerator_percentage=0;
+    uint8_t brake_percentage=0;
+    uint8_t hazard_lights_state=0;
+    uint8_t hazard_light=0;
+    float vehicle_speed_float=0;
+
     //SDL Inititalization
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
@@ -216,7 +225,8 @@ int16_t ipc_runner()
     int16_t quit = 0;
 
     while (!quit) {
-        while (SDL_PollEvent(&e)) {
+        while (SDL_PollEvent(&e)) 
+        {
             if (e.type == SDL_QUIT) 
             {
                 quit = 1;
@@ -309,7 +319,6 @@ int16_t ipc_runner()
                     //set_pin_status(0, PIN);
                     buttons1[5].last_click = 0;
                 }
-
             }
         }
 
@@ -339,7 +348,7 @@ int16_t ipc_runner()
         snprintf(tit4, sizeof(tit4), "CAN Comunications");
         draw_text(renderer, font3, tit4, 952,680,white);
 
-        //Speedometer and speed simulations
+        //Speed simulation
         if(reb_vehicle_imobilized == 1)
         {
             accelerator_percentage=0;
@@ -347,6 +356,7 @@ int16_t ipc_runner()
         vehicle_speed_float = update_speed(vehicle_speed_float, accelerator_percentage, brake_percentage);
         uint16_t vehicle_speed =(int16_t)(vehicle_speed_float);
 
+        //spedometer Graph
         double angle=-30+ 1*vehicle_speed_float;
         double radians = angle * M_PI / 180.0;
         int16_t Radius=107;
@@ -376,9 +386,6 @@ int16_t ipc_runner()
             draw_button(renderer, &buttons1[i], buttonColor, font3);
         }
 
-    
-
-
         //Pins Reading
         read_pin_status(&hazard_lights_state,HAZARD_BUTTON_PIN);
         read_pin_status(&hazard_light,HAZARD_LIGHTS_PIN);
@@ -388,10 +395,9 @@ int16_t ipc_runner()
         
         if(reb_fault_warning==1)
         {
-            //Upper Alert
             draw_image(renderer, "./aux/img/reb_red.png", 480,284,408/7,227/7);
 
-            char velocidade[50]; //message in place of speed
+            char velocidade[50];
             snprintf(velocidade, sizeof(velocidade), "REB Fault");
             draw_text(renderer, font2, velocidade, 600,420,white);
         }
@@ -406,8 +412,6 @@ int16_t ipc_runner()
             char msg2[50];
             snprintf(msg2, sizeof(msg2), "Deactivated in 5 minutes");
             draw_text(renderer, font2, msg2, 600,420,white);
-            
-
         }
         else if(reb_vehicle_imobilized == 1)
         {
@@ -416,11 +420,9 @@ int16_t ipc_runner()
             char msg[50];
             snprintf(msg, sizeof(msg), "Engine is Stopping");
             draw_text(renderer, font2, msg, 600,410,white);
-
         }
         else
         {
-
             char velocidade[10]; //speed text
             snprintf(velocidade, sizeof(velocidade), "%d", vehicle_speed);
             draw_text(renderer, font, velocidade, 600,400,white);
@@ -428,7 +430,6 @@ int16_t ipc_runner()
             char km_indicator[10]; //km/h text
             snprintf(km_indicator, sizeof(km_indicator), "km/h");
             draw_text(renderer, font2,km_indicator, 600,440,white);
-        
         }
     
         if(hazard_lights_state==1) //Hazard lights
@@ -440,9 +441,6 @@ int16_t ipc_runner()
                 draw_image(renderer, "./aux/img/right_sign.png", 732,278,39,47);
             }
         }
-
-        //draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
-
 
         //terminal text update
         for(uint8_t i=0;i<6;i++)

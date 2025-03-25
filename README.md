@@ -101,6 +101,14 @@ To run the AUX module(using another terminal), execute:
 make aux
 ```
 
+## DoxyFiles Reports
+
+To generate Doxygen reports execute:
+```
+doxygen Doxyfile
+```
+To see reports, execute the docs/html/index.html
+
 ## ⚙️ Running Tests
 
 @TODO

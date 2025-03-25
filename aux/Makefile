@@ -7,7 +7,7 @@ BSWFOLDER = ../bsw/src/
 OBJFOLDER = obj/
 INCLUD = $(shell find ./inc -type d | sed 's/^/-I/')
 INCLUD += $(shell find ../bsw/inc -type d | sed 's/^/-I/')
-LINK = -lGL -lm -lGLU -lGLEW -lglfw -lSDL2 -lSDL2_image -lSDL2_ttf
+LINK = -lm -lSDL2 -lSDL2_image -lSDL2_ttf
 
 # Separa fontes do projeto (reb/src) e BSW (bsw/src)
 REB_SRCFILES := $(shell find $(SRCFOLDER) -type f -name '*.c')

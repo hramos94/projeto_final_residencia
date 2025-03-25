@@ -399,7 +399,7 @@ int16_t ipc_runner()
             snprintf(velocidade, sizeof(velocidade), "REB Fault");
             draw_text(renderer, font2, velocidade, 600,420,white);
         }
-        else if (reb_imobilize_procedure == 1 && reb_vehicle_imobilized == 0 &&vehicle_speed!=0)
+        else if (reb_imobilize_procedure == 1 && reb_vehicle_imobilized == 0)
         {
             draw_image(renderer, "./aux/img/reb_yellow.png", 480,284,408/7,227/7);
 

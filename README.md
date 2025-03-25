@@ -107,7 +107,7 @@ make aux
 
 ## ✒️ Authors
 
-- **André Roetger** - [GitHub](https://github.com/andremgbr) - [LinkedIn](https://www.linkedin.com/in/andre-roetger/)
+- **ANDRÉ ROETGER** - [GitHub](https://github.com/andremgbr) - [LinkedIn](https://www.linkedin.com/in/andre-roetger/)
 - **DENNIS PAULINO IRINEU** - [GitHub](https://github.com/DennisIrineu) - [LinkedIn](https://www.linkedin.com/in/dirineu/)
 - **FÁBIO MARQUES HENRIQUE** - [GitHub](https://github.com/fabiohennr) - [LinkedIn](https://www.linkedin.com/in/engenheirofabiohenrique/)
 - **HEITOR LEITE RAMOS** - [GitHub](https://github.com/hramos94) - [LinkedIn](https://www.linkedin.com/in/heitorlramos/)

@@ -23,20 +23,20 @@
 uint8_t ipc_render_init(SDL_Window **window, SDL_Renderer **renderer, uint16_t window_width,int16_t window_height) {
     // start SDL - Initialize Simple DiretMedia layer - Allows for Audio videos and events
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL init Fail: %s\n", SDL_GetError());
+        printf("SDL init fail: %s\n", SDL_GetError());
         return FAIL;
     }
 
     // start SDL_image - allows to load images
     if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
-        printf("Erro ao inicializar o SDL_image: %s\n", IMG_GetError());
+        printf("SDL_image init fail: %s\n", IMG_GetError());
         SDL_Quit();
         return FAIL;
     }
 
     // Inicializar SDL_ttf - allows to use letter fonts
     if (TTF_Init() == -1) {
-        printf("Erro ao inicializar o SDL_ttf: %s\n", TTF_GetError());
+        printf("SDL_ttf init fail: %s\n", TTF_GetError());
         IMG_Quit();
         SDL_Quit();
         return FAIL;
@@ -47,7 +47,7 @@ uint8_t ipc_render_init(SDL_Window **window, SDL_Renderer **renderer, uint16_t w
                                SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                window_width, window_height, SDL_WINDOW_RESIZABLE);
     if (!*window) {
-        printf("Erro ao criar a janela: %s\n", SDL_GetError());
+        printf("SDL_window create fail: %s\n", SDL_GetError());
         TTF_Quit();
         IMG_Quit();
         SDL_Quit();
@@ -58,7 +58,7 @@ uint8_t ipc_render_init(SDL_Window **window, SDL_Renderer **renderer, uint16_t w
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"); // Ativa interpolação linear
     *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
     if (!*renderer) {
-        printf("Erro ao criar o renderer: %s\n", SDL_GetError());
+        printf("SDL_renderer create fail: %s\n", SDL_GetError());
         SDL_DestroyWindow(*window);
         TTF_Quit();
         IMG_Quit();
@@ -107,7 +107,7 @@ uint8_t initialize_font(TTF_Font **font, char* font_path, uint16_t font_size)
    *font = TTF_OpenFont(font_path, font_size); 
    if (*font == 0) 
    {
-       printf("Erro ao carregar a fonte: %s\n", TTF_GetError());
+       printf("Font load fail: %s\n", TTF_GetError());
        return FAIL;
    }
    
@@ -133,7 +133,7 @@ void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int16_t
     // Create surface with text
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
     if (!textSurface) {
-        printf("Error rendering text: %s\n", TTF_GetError());
+        printf("Text render fail: %s\n", TTF_GetError());
         return;
     }
 
@@ -142,7 +142,7 @@ void draw_text(SDL_Renderer* renderer, TTF_Font* font, const char* text, int16_t
     SDL_FreeSurface(textSurface); 
 
     if (!textTexture) {
-        printf("Error to create text texture: %s\n", SDL_GetError());
+        printf("Texture render fail: %s\n", SDL_GetError());
         return;
     }
 
@@ -179,7 +179,7 @@ void draw_text_top_right(SDL_Renderer* renderer, TTF_Font* font, const char* tex
     // Create surface with text
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
     if (!textSurface) {
-        printf("Error rendering text: %s\n", TTF_GetError());
+        printf("Text render fail: %s\n", TTF_GetError());
         return;
     }
 
@@ -188,7 +188,7 @@ void draw_text_top_right(SDL_Renderer* renderer, TTF_Font* font, const char* tex
     SDL_FreeSurface(textSurface);
 
     if (!textTexture) {
-        printf("Error to create text texture: %s\n", SDL_GetError());
+        printf("Texture render fail: %s\n", SDL_GetError());
         return;
     }
 
@@ -225,7 +225,7 @@ void draw_image(SDL_Renderer* renderer, const char* image_path, int16_t x, int16
     // Load image
     SDL_Surface* imageSurface = IMG_Load(image_path);
     if (!imageSurface) {
-        printf("Erro loading image %s\n", IMG_GetError());
+        printf("Image load fail: %s\n", IMG_GetError());
         return;
     }
 
@@ -234,7 +234,7 @@ void draw_image(SDL_Renderer* renderer, const char* image_path, int16_t x, int16
     SDL_FreeSurface(imageSurface);  // Liberar a superfície após criar a textura
 
     if (!imageTexture) {
-        printf("Erro ao criar a textura da imagem: %s\n", SDL_GetError());
+        printf("Texture render fail: %s\n", SDL_GetError());
         return;
     }
 
@@ -317,7 +317,7 @@ void draw_button(SDL_Renderer* renderer, Button* button, SDL_Color color, TTF_Fo
 void draw_image_button(SDL_Renderer* renderer, Button* button, const char* image_path) {
     SDL_Surface* imageSurface = IMG_Load(image_path);
     if (!imageSurface) {
-        printf("Error loading button: %s\n", IMG_GetError());
+        printf("Button load fail: %s\n", IMG_GetError());
         return;
     }
 
@@ -325,7 +325,7 @@ void draw_image_button(SDL_Renderer* renderer, Button* button, const char* image
     SDL_FreeSurface(imageSurface);  
 
     if (!imageTexture) {
-        printf("Erro creating button texture: %s\n", SDL_GetError());
+        printf("Texture render fail: %s\n", SDL_GetError());
         return;
     }
 

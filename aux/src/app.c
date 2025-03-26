@@ -181,10 +181,6 @@ uint8_t monitor_tcu()
     }
 }
 
-//Frames to check communication CAN between REB e AUX modules
-struct can_frame test_frame = {.can_id = AUX_COM_ID, .can_dlc = 1, .data = {AUX_COM_SIG}};
-struct can_frame response_frame = {.can_id = REB_COM_ID, .can_dlc = 1, .data = {REB_COM_SIG}};
-
 /**
  * @brief Check communication CAN between REB e AUX modules sending a frame and receving a response.
  * @return SUCCESS(0); FAIL(1).
@@ -193,6 +189,9 @@ struct can_frame response_frame = {.can_id = REB_COM_ID, .can_dlc = 1, .data = {
  */ 
 uint8_t check_can_communication()
 {
+    //Frames to check communication CAN between REB e AUX modules
+    struct can_frame test_frame = {.can_id = AUX_COM_ID, .can_dlc = 1, .data = {AUX_COM_SIG}};
+
     while (1)
     {
         reb_con = 0;

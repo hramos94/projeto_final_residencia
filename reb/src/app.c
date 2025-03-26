@@ -81,7 +81,7 @@ uint8_t monitor_read_can()
 uint8_t cancel_reb()
 {
     flag_reb_canceled = REB_CANCELED;
-    printf("Valor do REB_CANCELED = %d\n", flag_reb_canceled);
+    //printf("Valor do REB_CANCELED = %d\n", flag_reb_canceled);
     // Send by CAN to IPC the Caceled REB status
     if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
     {
@@ -110,7 +110,6 @@ uint8_t start_reb()
 
     // Reset flag when start reb
     flag_reb_canceled = REB_RUNNING;
-    countdown_activate = 1;
 
 
     show_log("Start REB counting and send can to IPC");

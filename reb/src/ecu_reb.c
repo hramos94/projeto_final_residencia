@@ -49,6 +49,7 @@ uint8_t handle_tcu_can(unsigned char *data)
     // Signal from TCU to cancel REB
     if (signalREB == 0x02)
     {
+        countdown_activate=0;
         show_error("Deactivating REB.\n");
         if (cancel_reb() == FAIL)
         {
@@ -61,6 +62,7 @@ uint8_t handle_tcu_can(unsigned char *data)
     // Signal from TCU to start REB
     if (signalREB == 0x01)
     {
+        countdown_activate=1;
         if (start_reb() == FAIL)
         {
             show_error("tcu_can.start_reb FAIL\n");

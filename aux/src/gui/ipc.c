@@ -9,8 +9,8 @@
 #include <ipc.h>
 #include <sys/time.h>
 
-#define WINDOW_WIDTH 1200
-#define WINDOW_HEIGHT 1000
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 820
 const uint32_t FPS = 30;
 
 #ifndef M_PI
@@ -171,16 +171,16 @@ int16_t ipc_runner()
 
 
     //Vehicle Control Buttons
-    const int16_t button1_x0 = 60;
-    const int16_t button1_y0 = 725;
+    const int16_t button1_x0 = 30;
+    const int16_t button1_y0 = 585;
     const int16_t button1_height=50;
     const int16_t button1_width=175;
     const int16_t button1_v_space=25;
     const int16_t button1_h_space=20;
-    #define NUM_BUTTONS1 6
-    #define NUM_ROWS1 2
+    #define NUM_BUTTONS1 3
+    #define NUM_ROWS1 1
     #define NUM_BUTTONS_PER_ROW1 3
-    const char* labels1[NUM_BUTTONS1] = {"Ignition On", "REB On", "REB Off","Scenario 1","Scenario 2","Scenario 3"};
+    const char* labels1[NUM_BUTTONS1] = {"REB On", "REB Off","Filter CAN"};
     Button buttons1[NUM_BUTTONS1];
 
     int8_t rowcounter1=0, linecounter1=0; 
@@ -207,8 +207,8 @@ int16_t ipc_runner()
     }
 
     //Accelerator and Brake buttons
-    Button accelarator = {{625, 750, 199*0.25, 519*0.25}, 1, 0, " "};// 199 × 519
-    Button brake = {{530, 788, 264*0.25, 364*0.25}, 1, 0, " "};// 264 × 346 
+    Button accelarator = {{385, 610, 199*0.25, 519*0.25}, 1, 0, " "};// 199 × 519
+    Button brake = {{290, 648, 264*0.25, 364*0.25}, 1, 0, " "};// 264 × 346 
 
     //color definition
     SDL_Color white = {255,255,255,255};
@@ -240,83 +240,45 @@ int16_t ipc_runner()
                 handle_pedal_press(&accelarator, mouseX, mouseY,&accelerator_percentage,10);
                 handle_pedal_press(&brake, mouseX, mouseY,&brake_percentage,10);
 
-                //Ignition ON Button
+                //REB ON Button
                 if(buttons1[0].clicked == 1 && buttons1[0].last_click == 0)
                 {
-                    //set_pin_status(1, PIN);
+                    set_pin_status(1, REB_ACTIVATE_PIN);
                     buttons1[0].last_click = 1;
                     
                 }
                 else if(buttons1[0].clicked == 0 && buttons1[0].last_click == 1)
                 {
-                    //set_pin_status(0, PIN);
+                    set_pin_status(0, REB_ACTIVATE_PIN);
                     buttons1[0].last_click = 0;
                 }
 
-                //REB ON Button
+                //REB OFF Button
                 if(buttons1[1].clicked == 1 && buttons1[1].last_click == 0)
                 {
-                    set_pin_status(1, REB_ACTIVATE_PIN);
+                    set_pin_status(1, REB_DEACTIVATE);
                     buttons1[1].last_click = 1;
                     
                 }
                 else if(buttons1[1].clicked == 0 && buttons1[1].last_click == 1)
                 {
-                    set_pin_status(0, REB_ACTIVATE_PIN);
+                    set_pin_status(0, REB_DEACTIVATE);
                     buttons1[1].last_click = 0;
                 }
 
-                //REB OFF Button
+                //Filter CAN Button
                 if(buttons1[2].clicked == 1 && buttons1[2].last_click == 0)
                 {
-                    set_pin_status(1, REB_DEACTIVATE);
+                    //set_pin_status(1, PIN);
                     buttons1[2].last_click = 1;
                     
                 }
                 else if(buttons1[2].clicked == 0 && buttons1[2].last_click == 1)
                 {
-                    set_pin_status(0, REB_DEACTIVATE);
+                    //set_pin_status(0, PIN);
                     buttons1[2].last_click = 0;
                 }
 
-                //Scenario 1 Button
-                if(buttons1[3].clicked == 1 && buttons1[3].last_click == 0)
-                {
-                    //set_pin_status(1, PIN);
-                    buttons1[3].last_click = 1;
-                    
-                }
-                else if(buttons1[3].clicked == 0 && buttons1[3].last_click == 1)
-                {
-                    //set_pin_status(0, PIN);
-                    buttons1[3].last_click = 0;
-                }
-
-                //Scenario 2 Button
-                if(buttons1[4].clicked == 1 && buttons1[4].last_click == 0)
-                {
-                    //set_pin_status(1, PIN);
-                    buttons1[4].last_click = 1;
-                    
-                }
-                else if(buttons1[4].clicked == 0 && buttons1[4].last_click == 1)
-                {
-                    //set_pin_status(0, PIN);
-                    buttons1[4].last_click = 0;
-                }
-
-                //Scenario 3 Button
-                if(buttons1[5].clicked == 1 && buttons1[5].last_click == 0)
-                {
-                    //set_pin_status(1, PIN);
-                    buttons1[5].last_click = 1;
-                    
-                }
-                else if(buttons1[5].clicked == 0 && buttons1[5].last_click == 1)
-                {
-                    //set_pin_status(0, PIN);
-                    buttons1[5].last_click = 0;
-                }
             }
         }
 
@@ -325,26 +287,26 @@ int16_t ipc_runner()
         SDL_RenderClear(renderer);
         
         //Gray Background Rectangles and Speedometer Image
-        draw_rectangle(renderer,40,50,1120,550,background_rectangle);
-        draw_rectangle(renderer,40,650,415,300,background_rectangle);
-        draw_rectangle(renderer,475,650,250,300,background_rectangle);
-        draw_rectangle(renderer,745,650,415,300,terminal_color);
-        draw_rectangle(renderer,745,650,415,50,background_rectangle);
-        draw_image(renderer, "./aux/img/ipc_background.png", 120,100,1280*0.75,720*0.75);
+        draw_rectangle(renderer,10,20,980,470,background_rectangle);
+        draw_rectangle(renderer,10,510,215,300,background_rectangle);
+        draw_rectangle(renderer,235,510,250,300,background_rectangle);//475 650 -240 -140
+        draw_rectangle(renderer,495,510,495,300,terminal_color);
+        draw_rectangle(renderer,495,510,495,50,background_rectangle);//745 650 -250 -140
+        draw_image(renderer, "./aux/img/ipc_background.png", 20,-30,1280*0.75,720*0.75);//(120,100)
 
         //Rectangle Titles
-        char tit1[50];
-        snprintf(tit1, sizeof(tit1), "Instrument Cluster Panel");
-        draw_text(renderer, font3, tit1, 600,110,white);
+        // char tit1[50];
+        // snprintf(tit1, sizeof(tit1), "Instrument Cluster Panel");
+        // draw_text(renderer, font3, tit1, 600,110,white);
         char tit2[50];
         snprintf(tit2, sizeof(tit2), "Vehicle Control");
-        draw_text(renderer, font3, tit2, 257,680,white);
+        draw_text(renderer, font3, tit2, 112,540,white);
         char tit3[50];
-        snprintf(tit3, sizeof(tit3), "Vehicle Control");
-        draw_text(renderer, font3, tit3, 600,680,white);
+        snprintf(tit3, sizeof(tit3), "Pedal Control");
+        draw_text(renderer, font3, tit3, 360,540,white);
         char tit4[50];
-        snprintf(tit4, sizeof(tit4), "CAN Comunications");
-        draw_text(renderer, font3, tit4, 952,680,white);
+        snprintf(tit4, sizeof(tit4), "CAN BUS Monitor");
+        draw_text(renderer, font3, tit4, 742,540,white);
 
         //Speed simulation
         if(reb_vehicle_imobilized == 1)
@@ -358,8 +320,8 @@ int16_t ipc_runner()
         double angle=-30+ 1*vehicle_speed_float;
         double radians = angle * M_PI / 180.0;
         int16_t Radius=107;
-        int16_t centerX=888;
-        int16_t centerY=408;
+        int16_t centerX=788;
+        int16_t centerY=278;
         int16_t finalX = centerX - (int16_t)(Radius * cos(radians));
         int16_t finalY = centerY - (int16_t)(Radius * sin(radians));
         draw_line(renderer,centerX, centerY, finalX, finalY,  red);
@@ -368,13 +330,13 @@ int16_t ipc_runner()
         draw_image_button(renderer, &accelarator, "./aux/img/accelerator.png");
         char accelerator_perc_text[50];
         snprintf(accelerator_perc_text, sizeof(accelerator_perc_text), "%d %%",accelerator_percentage);
-        draw_text(renderer, font3, accelerator_perc_text, 660,900,white);
+        draw_text(renderer, font3, accelerator_perc_text, 420,760,white);
 
         //brake
         draw_image_button(renderer, &brake, "./aux/img/brake.png");
         char brake_perc_text[50];
         snprintf(brake_perc_text, sizeof(brake_perc_text), "%d %%",brake_percentage);
-        draw_text(renderer, font3, brake_perc_text, 570,900,white);
+        draw_text(renderer, font3, brake_perc_text, 330,760,white);
 
 
         //buttons of the first panel - vehicle controls
@@ -393,58 +355,58 @@ int16_t ipc_runner()
         
         if(reb_fault_warning==1)
         {
-            draw_image(renderer, "./aux/img/reb_red.png", 480,284,408/7,227/7);
+            draw_image(renderer, "./aux/img/reb_red.png", 480,254,408/7,227/7);
 
             char velocidade[50];
             snprintf(velocidade, sizeof(velocidade), "REB Fault");
-            draw_text(renderer, font2, velocidade, 600,420,white);
+            draw_text(renderer, font2, velocidade, 500,260,white);
         }
         else if (reb_imobilize_procedure == 1 && reb_vehicle_imobilized == 0)
         {
-            draw_image(renderer, "./aux/img/reb_yellow.png", 480,284,408/7,227/7);
+            draw_image(renderer, "./aux/img/reb_yellow.png", 380,154,408/7,227/7);
 
             char msg[50];
             snprintf(msg, sizeof(msg), "Engine Will be Gradually");
-            draw_text(renderer, font2, msg, 600,400,white);
+            draw_text(renderer, font2, msg, 500,270,white);
 
             char msg2[50];
             snprintf(msg2, sizeof(msg2), "Deactivated in 5 minutes");
-            draw_text(renderer, font2, msg2, 600,420,white);
+            draw_text(renderer, font2, msg2, 500,290,white);
         }
         else if(reb_vehicle_imobilized == 1 &&vehicle_speed!=0)
         {
-            draw_image(renderer, "./aux/img/reb_yellow.png", 480,284,408/7,227/7);
+            draw_image(renderer, "./aux/img/reb_yellow.png", 380,154,408/7,227/7);
 
             char msg[50];
             snprintf(msg, sizeof(msg), "Engine is Stopping");
-            draw_text(renderer, font2, msg, 600,410,white);
+            draw_text(renderer, font2, msg, 500,280,white);
         }
         else if(reb_vehicle_imobilized == 1 &&vehicle_speed==0)
         {
-            draw_image(renderer, "./aux/img/reb_green.png", 480,284,408/7,227/7);
+            draw_image(renderer, "./aux/img/reb_green.png", 380,154,408/7,227/7);
 
             char msg[50];
             snprintf(msg, sizeof(msg), "Vehicle is Imobilized");
-            draw_text(renderer, font2, msg, 600,410,white);
+            draw_text(renderer, font2, msg, 500,280,white);
         }
         else
         {
             char velocidade[10]; //speed text
             snprintf(velocidade, sizeof(velocidade), "%d", vehicle_speed);
-            draw_text(renderer, font, velocidade, 600,400,white);
+            draw_text(renderer, font, velocidade, 500,270,white);
 
             char km_indicator[10]; //km/h text
             snprintf(km_indicator, sizeof(km_indicator), "km/h");
-            draw_text(renderer, font2,km_indicator, 600,440,white);
+            draw_text(renderer, font2,km_indicator, 500,310,white);
         }
     
         if(hazard_lights_state==1) //Hazard lights
         {
-            draw_image(renderer, "./aux/img/hazard_warning.png", 685,284,92/2.5,85/2.5);
+            draw_image(renderer, "./aux/img/hazard_warning.png", 585,154,92/2.5,85/2.5);
             if(hazard_light==1)
             {
-                draw_image(renderer, "./aux/img/left_sign.png", 428,278,39,47);
-                draw_image(renderer, "./aux/img/right_sign.png", 732,278,39,47);
+                draw_image(renderer, "./aux/img/left_sign.png", 328,148,39,47);
+                draw_image(renderer, "./aux/img/right_sign.png", 632,148,39,47);
             }
         }
 
@@ -452,10 +414,10 @@ int16_t ipc_runner()
         for(uint8_t i=0;i<6;i++)
         {
             //data in white
-            draw_text_top_right(renderer, font4,terminal_frame_str[i], 750,740+40*i,white);
+            draw_text_top_right(renderer, font4,terminal_frame_str[i], 500,600+40*i,white);
             
             //timestamp in yellow
-            draw_text_top_right(renderer, font4, timestamp[i], 750, 740 + 40 * i, yellow); 
+            draw_text_top_right(renderer, font4, timestamp[i], 500, 600 + 40 * i, yellow); 
         }
 
         SDL_RenderPresent(renderer); // Atualizar a tela

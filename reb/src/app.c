@@ -3,8 +3,9 @@
 #include <ecu_reb.h>
 #include <mcal.h>
 #include <time.h>
+#include <pins.h>
 
-static volatile uint8_t flag_reb_canceled = REB_RUNNING;
+uint8_t flag_reb_canceled = REB_RUNNING;
 
 /**
  * @brief Initializes the application by configuring drivers.
@@ -81,6 +82,7 @@ uint8_t monitor_read_can()
 uint8_t cancel_reb()
 {
     flag_reb_canceled = REB_CANCELED;
+    //printf("Valor do REB_CANCELED = %d\n", flag_reb_canceled);
     // Send by CAN to IPC the Caceled REB status
     if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
     {
@@ -106,14 +108,10 @@ uint8_t cancel_reb()
  */
 uint8_t start_reb()
 {
-    clock_t start_time, current_time;
-    double elapsed_time = 0;
 
     // Reset flag when start reb
     flag_reb_canceled = REB_RUNNING;
 
-    // start the counting to 5 min
-    start_time = clock();
 
     show_log("Start REB counting and send can to IPC");
     // send by CAN to IPC the start REB counting
@@ -124,22 +122,47 @@ uint8_t start_reb()
     }
 
     // TODO create another thread? probably a mutex?
-    while (1)
-    {
-        current_time = clock();
-        elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
+       //printf("Reb canceled entrou %d==%d\n", REB_CANCELED, flag_reb_canceled);
 
-        if (elapsed_time >= REB_TIMEOUT)
-        {
-            reb_can_send_ecu(ECU_REB_START);
-            return SUCCESS;
-        }
         if (flag_reb_canceled == REB_CANCELED)
         {
             show_error("REB canceled before timeout\n");
             return SUCCESS;
         }
-    }
 
     return SUCCESS;
+}
+
+/**
+ * @brief Handle the activating REB countdown
+ * @return SUCCESS(0); FAIL(1).
+ * @requir{SysHLR_3}
+ * @requir{SwHLR_F_12}
+ * @requir{SwHLR_F_14}
+ */
+uint8_t countdown_reb(){
+       
+    while (1)
+    {
+        clock_t start_time, current_time;
+        double elapsed_time = 0;
+        uint8_t reb_countdown_active = 0;
+
+        start_time = clock();
+        read_pin_status(&reb_countdown_active,REB_COUNTDOWN_PIN);
+
+        while(reb_countdown_active == 1)
+        {
+            current_time = clock();
+            elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
+            
+            if (elapsed_time >= REB_TIMEOUT)
+            {
+                reb_can_send_ecu(ECU_REB_START);
+                return SUCCESS;
+            }
+        }   
+        go_sleep(1);
+    }
+    
 }

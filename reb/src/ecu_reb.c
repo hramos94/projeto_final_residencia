@@ -2,6 +2,7 @@
 #include <ecu.h>
 #include <ecu_reb.h>
 #include <mcal.h>
+#include <pins.h>
 #include <unistd.h>
 
 /**
@@ -44,29 +45,30 @@ uint8_t handle_tcu_can(unsigned char *data)
 {
     // Get first byte.
     unsigned char signalREB = data[0];
+    // Signal from TCU to cancel REB
+    if (signalREB == 0x02)
+    {
+        // Deactivate pin for countdown
+        set_pin_status(S_OFF, REB_COUNTDOWN_PIN);
+        show_error("Deactivating REB.\n");
+        if (cancel_reb() == FAIL)
+        {
+            show_error("tcu_can.cancel_reb FAIL\n");
+            return FAIL;
+        }
+    }
 
     // Signal from TCU to start REB
     if (signalREB == 0x01)
     {
+        // Activate pin for countdown
+        set_pin_status(S_ON, REB_COUNTDOWN_PIN);
         if (start_reb() == FAIL)
         {
             show_error("tcu_can.start_reb FAIL\n");
             return FAIL;
         }
     }
-
-    // Signal from TCU to cancel REB
-    if (signalREB == 0x02)
-    {
-        show_error("Deactivating REB.\n");
-        if (cancel_reb() == FAIL)
-        {
-            // Need dennis task for naming
-            show_error("tcu_can.cancel_reb FAIL\n");
-            return FAIL;
-        }
-    }
-
     return SUCCESS;
 }
 

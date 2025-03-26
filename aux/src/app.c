@@ -3,8 +3,8 @@
 #include <ecu_aux.h>
 #include <mcal.h>
 #include <pins.h>
-#include <pthread.h>
-#include <errno.h>
+
+uint8_t reb_con = 0;
 
 /**
  * @brief Initializes the application by configuring drivers.
@@ -106,6 +106,11 @@ uint8_t monitor_read_can()
             {
                 handle_ipc_can(frame.data);
             }
+            if (frame.can_id == 0x015 && frame.data[0] == 0x10)
+            {
+                show_log("Comunicação CAN OK\n");
+                reb_con = 1;
+            }
         }
         else
         {
@@ -176,70 +181,37 @@ uint8_t monitor_tcu()
     }
 }
 
-
+//@TODO - deixar isso no DEFINE
 struct can_frame test_frame = {.can_id = 0x013, .can_dlc = 1, .data = {0xFA}};
 struct can_frame response_frame = {.can_id = 0x015, .can_dlc = 1, .data = {0x10}};
 
-// void* send_can_messages()
-// {
-//     while (1)
-//     {
-
-//         go_sleep(1); // Envia mensagem a cada 1 segundo
-//     }
-//     return NULL;
-// }
-
-void* receive_can_responses()
+//@TODO - deixar um comentário padrão, verificar se tem requisitos, colocar como @requir{XX_YYY}
+uint8_t check_can_communication()
 {
-    clock_t start_time = clock();
-    double elapsed_time;
     while (1)
     {
+        reb_con = 0;
+        int cont = 0;
+
         if (can_send_vcan0(&test_frame) == FAIL)
         {
             show_error("Erro ao enviar mensagem de teste\n");
         }
-        go_sleep(2);
-        show_log("Tentado ler resposta\n");
-        if (can_read_vcan0(&response_frame) != FAIL)
+
+        while (reb_con == 0)
         {
-
-            show_log("Li a resposta\n");
-            if (response_frame.can_id == 0x015 && response_frame.data[0] == 0x10)
+            if (cont >= 5)
             {
-                show_log("Comunicação CAN OK\n");
-                return SUCCESS;
-            }
-        }
-    }
-}
-
-uint8_t check_can_communication()
-{    
-    pthread_t sender_thread, receiver_thread;
-
-    while(1)
-    {
-        //pthread_create(&sender_thread, NULL, send_can_messages, NULL);
-        pthread_create(&receiver_thread, NULL, receive_can_responses, NULL);
-        
-        int status = pthread_tryjoin_np(receive_can_responses, NULL);
-        int cont = 0;
-
-        while (status == EBUSY)
-        {
-            if (cont >= 1000)
-            {
-                pthread_cancel(receiver_thread);
                 set_pin_status(1, REB_IPC_FAULT_PIN);
-                return 0;
+                if (can_send_vcan0(&test_frame) == FAIL)
+                {
+                    show_error("Erro ao enviar mensagem de teste\n");
+                }
+                cont = 0;
             }
             go_sleep(1);
             cont++;
         }
-
-        //pthread_join(sender_thread, NULL);
-        pthread_join(receiver_thread, NULL);
+        set_pin_status(0, REB_IPC_FAULT_PIN);
     }
 }

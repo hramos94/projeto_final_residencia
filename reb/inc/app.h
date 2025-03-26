@@ -19,6 +19,5 @@ uint8_t monitor_read_can();
 uint8_t monitor_tcu();
 uint8_t start_reb();
 uint8_t cancel_reb();
-uint8_t respond_to_can_test();
 
 #endif

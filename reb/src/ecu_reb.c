@@ -2,9 +2,8 @@
 #include <ecu.h>
 #include <ecu_reb.h>
 #include <mcal.h>
+#include <pins.h>
 #include <unistd.h>
-
-uint8_t countdown_activate = 0;
 
 /**
  *  @brief Send a CAN Message to turn ON or OF the hazard light
@@ -49,11 +48,11 @@ uint8_t handle_tcu_can(unsigned char *data)
     // Signal from TCU to cancel REB
     if (signalREB == 0x02)
     {
-        countdown_activate=0;
+        // Deactivate pin for countdown
+        set_pin_status(S_OFF, REB_COUNTDOWN_PIN);
         show_error("Deactivating REB.\n");
         if (cancel_reb() == FAIL)
         {
-            // Need dennis task for naming
             show_error("tcu_can.cancel_reb FAIL\n");
             return FAIL;
         }
@@ -62,39 +61,15 @@ uint8_t handle_tcu_can(unsigned char *data)
     // Signal from TCU to start REB
     if (signalREB == 0x01)
     {
-        countdown_activate=1;
+        // Activate pin for countdown
+        set_pin_status(S_ON, REB_COUNTDOWN_PIN);
         if (start_reb() == FAIL)
         {
             show_error("tcu_can.start_reb FAIL\n");
             return FAIL;
         }
     }
-
-
     return SUCCESS;
-}
-
-uint8_t countdown_reb(){
-       
-    while (1)
-    {
-        clock_t start_time, current_time;
-        double elapsed_time = 0;
-
-        start_time = clock();
-
-            while(countdown_activate==1){
-                current_time = clock();
-                elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
-                
-                if (elapsed_time >= REB_TIMEOUT)
-                {
-                    reb_can_send_ecu(ECU_REB_START);
-                    return SUCCESS;
-                }
-            }   sleep(1);
-    }
-    
 }
 
 /**

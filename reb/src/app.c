@@ -3,6 +3,7 @@
 #include <ecu_reb.h>
 #include <mcal.h>
 #include <time.h>
+#include <pins.h>
 
 uint8_t flag_reb_canceled = REB_RUNNING;
 
@@ -130,4 +131,38 @@ uint8_t start_reb()
         }
 
     return SUCCESS;
+}
+
+/**
+ * @brief Handle the activating REB countdown
+ * @return SUCCESS(0); FAIL(1).
+ * @requir{SysHLR_3}
+ * @requir{SwHLR_F_12}
+ * @requir{SwHLR_F_14}
+ */
+uint8_t countdown_reb(){
+       
+    while (1)
+    {
+        clock_t start_time, current_time;
+        double elapsed_time = 0;
+        uint8_t reb_countdown_active = 0;
+
+        start_time = clock();
+        read_pin_status(&reb_countdown_active,REB_COUNTDOWN_PIN);
+
+        while(reb_countdown_active == 1)
+        {
+            current_time = clock();
+            elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
+            
+            if (elapsed_time >= REB_TIMEOUT)
+            {
+                reb_can_send_ecu(ECU_REB_START);
+                return SUCCESS;
+            }
+        }   
+        go_sleep(1);
+    }
+    
 }

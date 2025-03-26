@@ -43,7 +43,7 @@ pthread_t new_thread(void *func)
 /**
  *  @brief Show in terminal ERROR Message.
  *  @param errorStr Pointer to the charr array of message.
- *  @requir SwHLR_F_16.
+ *  @requir{SwHLR_F_16}
  */
 void show_error(char errorStr[]) { printf("%s", errorStr); }
 
@@ -52,8 +52,9 @@ void show_error(char errorStr[]) { printf("%s", errorStr); }
  *
  *  @param p_pin Pointer of PIN number to be read.
  *  @param p_ststus Pointer to store the read status of the PIN (0 or 1).
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_13, SysHLR_6.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_13}
+ *  @requir{SysHLR_6}
  */
 uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 {
@@ -82,7 +83,7 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 /**
  *  @brief Inicializate the PINs status.
  *
- *  @return 0 on success, 1 on failure.
+ *  @return SUCCESS(0), FAIL(1)
  */
 uint8_t mcal_init()
 {
@@ -101,8 +102,9 @@ uint8_t mcal_init()
  *
  *  @param status Pointer to store the read status of the PIN (0 or 1).
  *  @param pin Pointer of PIN number to be read.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_13, SysHLR_6.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_13}
+ *  @requir{SysHLR_6}
  */
 uint8_t read_pin_status(uint8_t *status, uint8_t pin)
 {
@@ -116,8 +118,9 @@ uint8_t read_pin_status(uint8_t *status, uint8_t pin)
  *
  *  @param status Pointer to store the status of the PIN (0 or 1).
  *  @param pin Pointer of PIN number to be read.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_13, SysHLR_6.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_13}
+ *  @requir{SysHLR_6}
  */
 uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
 {
@@ -130,7 +133,7 @@ uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
  *  @brief Sleep thread POSIX.
  *
  *  @param seconds How many seconds to sleep.
- *  @requir SysHLR_12.
+ *  @requir{SysHLR_12}
  */
 void go_sleep(uint8_t seconds) { sleep(seconds); }
 
@@ -142,8 +145,11 @@ void go_sleep(uint8_t seconds) { sleep(seconds); }
  *  @brief Opens Can socket - does not depend on VCAN interface.
  *
  *  @param can_socket Pointer to store the number of socket.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_socket_open(int *can_socket)
 {
@@ -159,8 +165,11 @@ uint8_t can_socket_open(int *can_socket)
  *  @brief Closes CAN socket - does not depend on VCAN interface.
  *
  *  @param can_socket Pointer to store the number of socket.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_socket_close(int *can_socket)
 {
@@ -176,8 +185,11 @@ uint8_t can_socket_close(int *can_socket)
  *  @brief Function to verify if can socket exists.
  *
  *  @param interface Pointer to char interface
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_interface_verify(const char *interface)
 {
@@ -197,8 +209,11 @@ uint8_t can_interface_verify(const char *interface)
  *
  *  @param can_socket Pointer to store the number of socket.
  *  @param interface Pointer to char interface
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_interface_status(int *can_socket, const char *interface)
 {
@@ -228,8 +243,11 @@ uint8_t can_interface_status(int *can_socket, const char *interface)
  *
  *  @param can_socket Pointer to store the number of socket.
  *  @param interface Pointer to char interface
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_bind_socket(int *can_socket, const char *interface)
 {
@@ -254,8 +272,11 @@ uint8_t can_bind_socket(int *can_socket, const char *interface)
  *
  *  @param can_socket Pointer to store the number of socket.
  *  @param frame Pointer to frame that will be send to can.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_send(int *can_socket, struct can_frame *frame)
 {
@@ -272,8 +293,11 @@ uint8_t can_send(int *can_socket, struct can_frame *frame)
  *
  *  @param can_socket Pointer to store the number of socket.
  *  @param frame Pointer to frame that will be read from can.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_read(int *can_socket, struct can_frame *frame)
 {
@@ -292,8 +316,11 @@ uint8_t can_read(int *can_socket, struct can_frame *frame)
  *
  *  @param my_vcan Pointer to store the number of socket.
  *  @param interface Pointer to store the char interface.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_start(int *my_vcan, const char *interface)
 {
@@ -319,8 +346,11 @@ uint8_t can_start(int *my_vcan, const char *interface)
  *  @brief function that send frame CAN to vcan0 of LINUX
  *
  *  @param frame Pointer of frame can that will be send.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_send_vcan0(struct can_frame *frame)
 {
@@ -335,8 +365,11 @@ uint8_t can_send_vcan0(struct can_frame *frame)
  *  @brief function that will read frame can coming from vcan0 of LINUX
  *
  *  @param frame Pointer of frame can that will be send.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_read_vcan0(struct can_frame *frame)
 {
@@ -350,8 +383,11 @@ uint8_t can_read_vcan0(struct can_frame *frame)
 /**
  *  @brief function that initialize Socket CAN Linux.
  *
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_init()
 {
@@ -365,8 +401,11 @@ uint8_t can_init()
 /**
  *  @brief function that close Socket CAN Linux.
  *
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_9}
+ *  @requir{SwHLR_F_6}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_15}
  */
 uint8_t can_close()
 {
@@ -377,7 +416,7 @@ uint8_t can_close()
 /**
  *  @brief Show in terminal LOG Message.
  *  @param errorStr Pointer to the charr array of message.
- *  @requir SwHLR_F_16.
+ *  @requir{SwHLR_F_16}
  */
 void show_log(char logStr[])
 {

@@ -1,0 +1,27 @@
+/*! \page system_requirements System Requirements
+\section engine_reqs Engine Requirements
+
+\anchor SwHLR_F_12
+\requir{SwHLR_F_12}
+The system shall initialize the engine block within 500ms.  
+- **Safety Level**: ASIL-B  
+- **Error Codes**:  
+  - `0`: Success  
+  - `1`: CAN Bus Failure  
+
+\anchor SwHLR_F_3
+\requir{SwHLR_F_3}
+The system shall monitor the engine temperature and trigger an alert if it exceeds 120°C.  
+- **Safety Level**: ASIL-B  
+- **Error Codes**:  
+  - `0`: Success  
+  - `2`: Overheat Warning  
+
+\anchor SysHLR_9
+\requir{SysHLR_9}
+The system shall ensure that the engine shutdown procedure is completed within 2 seconds.  
+- **Safety Level**: ASIL-B  
+- **Error Codes**:  
+  - `0`: Success  
+  - `3`: Shutdown Timeout  
+*/

@@ -48,7 +48,10 @@ uint8_t read_input()
 /**
  * @brief Handle messages received from CAN BUS
  * @return SUCCESS(0); FAIL(1).
- * @requir SwHLR_F_9, SwHLR_F_6, SwHLR_F_10, SwHLR_F_15.
+ * @requir{SwHLR_F_9}
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ * @requir{SwHLR_F_15}
  */
 uint8_t monitor_read_can()
 {
@@ -88,7 +91,7 @@ uint8_t monitor_read_can()
 /**
  * @brief Handle the deactivating REB
  * @return SUCCESS(0); FAIL(1).
- * @requir SwHLR_F_8.
+ * @requir{SwHLR_F_8}
  */
 uint8_t cancel_reb()
 {
@@ -115,7 +118,8 @@ uint8_t cancel_reb()
 /**
  * @brief Handle the activating REB
  * @return SUCCESS(0); FAIL(1).
- * @requir SwHLR_F_8, SwHLR_F_12.
+ * @requir{SwHLR_F_8}
+ * @requir{SwHLR_F_12}
  */
 uint8_t start_reb()
 {

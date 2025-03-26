@@ -4,7 +4,7 @@
 
 /**
  *  @brief function get by console the status and number of the PIN set it.
- *  @return 0 on success, 1 on failure.
+ *  @return SUCCESS(0), FAIL(1)
  */
 
 uint8_t read_console()

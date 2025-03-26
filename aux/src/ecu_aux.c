@@ -98,8 +98,8 @@ uint8_t get_tcu_cancel_reb(uint8_t *status)
  *  @brief Send a can message to REB
  *
  *  @param status 1 to send frame data 0x01(ON);  2 to send frame data 0x02(OFF).
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_8.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_8}
  */
 uint8_t tcu_can_send_reb(uint8_t status)
 {
@@ -130,8 +130,8 @@ uint8_t tcu_can_send_reb(uint8_t status)
  *  @brief handle messages received from REB to Egine Control Unit
  *
  *  @param data Pointer to frame message receive from REB Can.
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_3, SysHLR_9.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_3}
  */
 uint8_t handle_ecu_can(unsigned char *data)
 {
@@ -163,8 +163,8 @@ uint8_t handle_ecu_can(unsigned char *data)
 /**
  *  @brief function that iniciate engine block
  *
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_12.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_12}
  */
 uint8_t block_engine()
 {
@@ -196,8 +196,8 @@ uint8_t block_engine()
 /**
  *  @brief function that iniciate engine unblock
  *
- *  @return 0 on success, 1 on failure.
- *  @requir SwHLR_F_12.
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_12}
  */
 uint8_t unblock_engine()
 {
@@ -228,8 +228,7 @@ uint8_t unblock_engine()
  *  @brief handle messages received from REB to instrument painel control
  *
  *  @param data Pointer to frame message receive from REB Can.
- *  @return 0 on success, 1 on failure.
- *  @requir SysHLR_8.
+ *  @return SUCCESS(0), FAIL(1)
  */
 uint8_t handle_ipc_can(unsigned char *data)
 {

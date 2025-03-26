@@ -39,7 +39,6 @@ uint8_t can_send_hazard_light(uint8_t status)
  *  @param data Pointer to frame message receive from TCU Can.
  *  @return SUCCESS(0), FAIL(1)
  *  @requir{SwHLR_F_3}
- *  @requir{SysHLR_9}
  */
 uint8_t handle_tcu_can(unsigned char *data)
 {

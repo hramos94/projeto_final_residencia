@@ -132,7 +132,6 @@ uint8_t tcu_can_send_reb(uint8_t status)
  *  @param data Pointer to frame message receive from REB Can.
  *  @return SUCCESS(0), FAIL(1)
  *  @requir{SwHLR_F_3}
- *  @requir{SysHLR_9}
  */
 uint8_t handle_ecu_can(unsigned char *data)
 {
@@ -230,7 +229,6 @@ uint8_t unblock_engine()
  *
  *  @param data Pointer to frame message receive from REB Can.
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SysHLR_8}
  */
 uint8_t handle_ipc_can(unsigned char *data)
 {

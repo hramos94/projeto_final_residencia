@@ -54,7 +54,6 @@ void show_error(char errorStr[]) { printf("%s", errorStr); }
  *  @param p_ststus Pointer to store the read status of the PIN (0 or 1).
  *  @return SUCCESS(0), FAIL(1)
  *  @requir{SwHLR_F_13}
- *  @requir{SysHLR_6}
  */
 uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 {
@@ -104,7 +103,6 @@ uint8_t mcal_init()
  *  @param pin Pointer of PIN number to be read.
  *  @return SUCCESS(0), FAIL(1)
  *  @requir{SwHLR_F_13}
- *  @requir{SysHLR_6}
  */
 uint8_t read_pin_status(uint8_t *status, uint8_t pin)
 {
@@ -120,7 +118,6 @@ uint8_t read_pin_status(uint8_t *status, uint8_t pin)
  *  @param pin Pointer of PIN number to be read.
  *  @return SUCCESS(0), FAIL(1)
  *  @requir{SwHLR_F_13}
- *  @requir{SysHLR_6}
  */
 uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
 {
@@ -133,7 +130,6 @@ uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
  *  @brief Sleep thread POSIX.
  *
  *  @param seconds How many seconds to sleep.
- *  @requir{SysHLR_12}
  */
 void go_sleep(uint8_t seconds) { sleep(seconds); }
 

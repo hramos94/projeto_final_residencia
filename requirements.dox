@@ -1,0 +1,67 @@
+/*! \page system_requirements Software Requirements
+\section engine_reqs Engine Requirements
+
+\anchor SwHLR_F_1
+\requir{SwHLR_F_1}
+The Software shall be capable of remotely immobilizing the vehicle if engine blocker is activated and the car is not in movement
+
+\anchor SwHLR_F_2
+\requir{SwHLR_F_2}
+The Software shall start engine immobilizing procedure if engine blocker is activated and the car is in movement
+
+\anchor SwHLR_F_3
+\requir{SwHLR_F_3}
+The Software shall process command instructions if they are received over CAN from the Telematics Unit
+
+\anchor SwHLR_F_4
+\requir{SwHLR_F_4}
+The Software shall send a message to disable fuel pump, ignition coil and injectors if the vehicle is immobilized
+
+\anchor SwHLR_F_5
+\requir{SwHLR_F_5}
+The Software shall send a message to enable fuel pump, ignition coil and injectors if it receives a disable command from the remote server
+
+\anchor SwHLR_F_6
+\requir{SwHLR_F_6}
+The Software shall verify if CAN communication is working when the ignition is turned on
+
+\anchor SwHLR_F_7
+\requir{SwHLR_F_7}
+The Software shall go into standby mode when the ignition is turned off
+
+\anchor SwHLR_F_8
+\requir{SwHLR_F_8}
+The Software shall provide a warning message on the instrument cluster panel if the engine immobilizing procedure is activated
+
+\anchor SwHLR_F_9
+\requir{SwHLR_F_9}
+The Software shall receive data over CAN from speed, acceleration and braking sensors if the engine blocker is activated
+
+\anchor SwHLR_F_10
+\requir{SwHLR_F_10}
+The Software shall send a CAN message to turn on the hazard lights if the engine immobilizing procedure is activated
+
+\anchor SwHLR_F_11
+\requir{SwHLR_F_11}
+The Software shall request GPS coordinates, date, and time over CAN from the GPS system if these data are required
+
+\anchor SwHLR_F_12
+\requir{SwHLR_F_12}
+The Software shall send a CAN message to the ECM to gradually reduce engine speed if the engine immobilizing procedure is activated
+
+\anchor SwHLR_F_13
+\requir{SwHLR_F_13}
+The Software shall provide a warning on the instrument cluster panel with the message "REB not available" if the system encounters any failure in GPS, internet, or CAN
+
+\anchor SwHLR_F_14
+\requir{SwHLR_F_14}
+The Software shall wait 5 minutes to immobilize the vehicle after the Engine Immobilizing Procedure is started
+
+\anchor SwHLR_F_15
+\requir{SwHLR_F_15}
+The Software shall trigger a CAN Busy Error when failing to send a CAN message 10 times in a row
+
+\anchor SwHLR_F_16
+\requir{SwHLR_F_16}
+The Software shall generate a log entry when an error occurs
+*/

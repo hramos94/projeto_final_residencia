@@ -118,5 +118,3 @@ To see reports, execute the docs/html/index.html
 - **FÁBIO MARQUES HENRIQUE** - [GitHub](https://github.com/fabiohennr) - [LinkedIn](https://www.linkedin.com/in/engenheirofabiohenrique/)
 - **HEITOR LEITE RAMOS** - [GitHub](https://github.com/hramos94) - [LinkedIn](https://www.linkedin.com/in/heitorlramos/)
 - **TERENCE MYREN KUTZNER** - [GitHub](https://github.com/TerenceKutzner) - [LinkedIn](https://www.linkedin.com/in/terence-myren-kutzner/)
-
-

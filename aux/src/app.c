@@ -2,6 +2,9 @@
 #include <ecu.h>
 #include <ecu_aux.h>
 #include <mcal.h>
+#include <pins.h>
+
+uint8_t reb_con = 0;
 
 /**
  * @brief Initializes the application by configuring drivers.
@@ -103,6 +106,11 @@ uint8_t monitor_read_can()
             {
                 handle_ipc_can(frame.data);
             }
+            if (frame.can_id == 0x015 && frame.data[0] == 0x10)
+            {
+                // Return as ok the communication between REB x AUX
+                reb_con = 1;
+            }
         }
         else
         {
@@ -170,5 +178,46 @@ uint8_t monitor_tcu()
         {
             go_sleep(2);
         }
+    }
+}
+
+/**
+ * @brief Check communication CAN between REB e AUX modules sending a frame and receving a response.
+ * @return SUCCESS(0); FAIL(1).
+ * @requir {SwHLR_F_13}
+ * @requir {SwHLR_F_15}
+ */ 
+uint8_t check_can_communication()
+{
+    //Frames to check communication CAN between REB e AUX modules
+    struct can_frame test_frame = {.can_id = AUX_COM_ID, .can_dlc = 1, .data = {AUX_COM_SIG}};
+
+    while (1)
+    {
+        reb_con = 0;
+        int cont_tries = 0;
+
+        if (can_send_vcan0(&test_frame) == FAIL)
+        {
+            show_error("check_can_communication: Error to send communication test\n");
+        }
+
+        while (reb_con == 0)
+        {
+            if (cont_tries >= 10)
+            {
+                //Try 10 times the communication test {SwHLR_F_15}
+                set_pin_status(1, REB_IPC_FAULT_PIN);
+                if (can_send_vcan0(&test_frame) == FAIL)
+                {
+                    show_error("check_can_communication: Timeout CAN communication\n");
+                }
+                cont_tries = 0;
+            }
+            // Verify communication each 10 seconds 
+            go_sleep(10);
+            cont_tries++;
+        }
+        set_pin_status(0, REB_IPC_FAULT_PIN);
     }
 }

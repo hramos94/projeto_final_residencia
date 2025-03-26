@@ -122,6 +122,6 @@ Este projeto está sob a licença (sua licença) - veja o arquivo [LICENSE.md](h
 * Um agradecimento publicamente 🫂;
 * etc.
 
-
+## 🔩 Referências
 ---
 ⌨️ com ❤️ por [Armstrong Lohãns](https://gist.github.com/lohhans) 😊

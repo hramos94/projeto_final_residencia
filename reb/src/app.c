@@ -143,3 +143,40 @@ uint8_t start_reb()
 
     return SUCCESS;
 }
+
+
+/**
+ * @brief Monitora e responde ao teste de comunicação CAN do REB.
+ * @return SUCCESS(0); FAIL(1).
+ */
+ uint8_t respond_to_can_test()
+ {
+     while (1)
+     {
+         struct can_frame frame = { 
+             .can_id = 0x013, .can_dlc = 1, .data = {0xFF} };
+         
+         show_log("Test loop aux\n");
+         if (can_read_vcan0(&frame) != FAIL)
+         {            
+             if (frame.can_id == 0x013 && frame.data[0] == 0xFA)
+             {
+                 struct can_frame response = {
+                     .can_id = 0x015,
+                     .can_dlc = 1,
+                     .data = {0x10}
+                 };
+                
+                 if (can_send_vcan0(&response) == FAIL)
+                 {
+                     show_error("respond_to_can_test: Erro ao enviar resposta CAN\n");
+                     return FAIL;
+                 }
+ 
+                 show_log("respond_to_can_test: Resposta enviada com sucesso\n");
+             }
+         }
+         
+         //sleep(1); // Aguarda 1 segundo antes de tentar novamente
+     }
+ }

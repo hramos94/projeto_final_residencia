@@ -108,7 +108,7 @@ uint8_t monitor_read_can()
             }
             if (frame.can_id == 0x015 && frame.data[0] == 0x10)
             {
-                show_log("Comunicação CAN OK\n");
+                // Return as ok the communication between REB x AUX
                 reb_con = 1;
             }
         }
@@ -181,36 +181,43 @@ uint8_t monitor_tcu()
     }
 }
 
-//@TODO - deixar isso no DEFINE
-struct can_frame test_frame = {.can_id = 0x013, .can_dlc = 1, .data = {0xFA}};
-struct can_frame response_frame = {.can_id = 0x015, .can_dlc = 1, .data = {0x10}};
+//Frames to check communication CAN between REB e AUX modules
+struct can_frame test_frame = {.can_id = AUX_COM_ID, .can_dlc = 1, .data = {AUX_COM_SIG}};
+struct can_frame response_frame = {.can_id = REB_COM_ID, .can_dlc = 1, .data = {REB_COM_SIG}};
 
-//@TODO - deixar um comentário padrão, verificar se tem requisitos, colocar como @requir{XX_YYY}
+/**
+ * @brief Check communication CAN between REB e AUX modules sending a frame and receving a response.
+ * @return SUCCESS(0); FAIL(1).
+ * @requir {SwHLR_F_13}
+ * @requir {SwHLR_F_15}
+ */ 
 uint8_t check_can_communication()
 {
     while (1)
     {
         reb_con = 0;
-        int cont = 0;
+        int cont_tries = 0;
 
         if (can_send_vcan0(&test_frame) == FAIL)
         {
-            show_error("Erro ao enviar mensagem de teste\n");
+            show_error("check_can_communication: Error to send communication test\n");
         }
 
         while (reb_con == 0)
         {
-            if (cont >= 5)
+            if (cont_tries >= 10)
             {
+                //Try 10 times the communication test {SwHLR_F_15}
                 set_pin_status(1, REB_IPC_FAULT_PIN);
                 if (can_send_vcan0(&test_frame) == FAIL)
                 {
-                    show_error("Erro ao enviar mensagem de teste\n");
+                    show_error("check_can_communication: Timeout CAN communication\n");
                 }
-                cont = 0;
+                cont_tries = 0;
             }
-            go_sleep(1);
-            cont++;
+            // Verify communication each 10 seconds 
+            go_sleep(10);
+            cont_tries++;
         }
         set_pin_status(0, REB_IPC_FAULT_PIN);
     }

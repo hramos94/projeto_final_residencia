@@ -64,14 +64,14 @@ uint8_t monitor_read_can()
             {
                 handle_tcu_can(frame.data);
             }
-            if (frame.can_id == 0x013 && frame.data[0] == 0xFA)
+            if (frame.can_id == AUX_COM_ID && frame.data[0] == AUX_COM_SIG)
             {
-                //@TODO - tornar isso uma DEFINE - como por ecemplo o TCU_REB_ID e TCU_REB_SIG
-                struct can_frame response = {.can_id = 0x015, .can_dlc = 1, .data = {0x10}};
+                // Check REB x AUX Communication and send response as ok
+                struct can_frame response = {.can_id = REB_COM_ID, .can_dlc = 1, .data = {REB_COM_SIG}};
 
                 if (can_send_vcan0(&response) == FAIL)
                 {
-                    show_error("respond_to_can_test: Erro ao enviar resposta CAN\n");
+                    show_error("respond_to_can_test: Error to send response\n");
                     return FAIL;
                 }
             }

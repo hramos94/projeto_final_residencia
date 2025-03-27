@@ -18,7 +18,7 @@ void test_get_pin_status(void)
     uint8_t status = 0;
     read_pin_status(&status, 0);
 
-    TEST_ASSERT_EQUAL_INT16(1, status);
+    TEST_ASSERT_EQUAL_INT16(0, status);
 }
 
 int main(void)

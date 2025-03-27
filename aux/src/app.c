@@ -233,5 +233,4 @@ uint8_t check_can_communication()
         }    
     }
     return SUCCESS;
-
 }

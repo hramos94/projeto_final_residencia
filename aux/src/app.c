@@ -192,7 +192,7 @@ uint8_t monitor_tcu()
  */ 
 uint8_t check_can_communication()
 {
-    //Frames to check communication CAN between REB e AUX modules
+    //Frames to check cSommunication CAN between REB e AUX modules
     struct can_frame test_frame = {.can_id = AUX_COM_ID, .can_dlc = 1, .data = {AUX_COM_SIG}};
 
     while (1)
@@ -204,23 +204,33 @@ uint8_t check_can_communication()
         {
             show_error("check_can_communication: Error to send communication test\n");
         }
+        uint8_t current_ipc_fault_pin_status = 0;
 
         while (reb_con == 0)
         {
             if (cont_tries >= 10)
             {
                 //Try 10 times the communication test {SwHLR_F_15}
-                set_pin_status(1, REB_IPC_FAULT_PIN);
+                read_pin_status(&current_ipc_fault_pin_status,REB_IPC_FAULT_PIN);
+                if(current_ipc_fault_pin_status!=1)
+                {
+                    set_pin_status(1, REB_IPC_FAULT_PIN);
+                }
                 if (can_send_vcan0(&test_frame) == FAIL)
                 {
                     show_error("check_can_communication: Timeout CAN communication\n");
                 }
                 cont_tries = 0;
             }
-            // Verify communication each 10 seconds 
-            go_sleep(10);
+            // Verify communication each 11 seconds 
+            go_sleep(1);
             cont_tries++;
         }
-        set_pin_status(0, REB_IPC_FAULT_PIN);
+        read_pin_status(&current_ipc_fault_pin_status,REB_IPC_FAULT_PIN);
+        if(current_ipc_fault_pin_status!=0)
+        {
+            set_pin_status(0, REB_IPC_FAULT_PIN);
+        }    
     }
+    return SUCCESS;
 }

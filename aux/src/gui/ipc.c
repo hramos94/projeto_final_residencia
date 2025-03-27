@@ -19,7 +19,7 @@ const uint32_t FPS = 30;
 
 char terminal_frame_str[6][150]; // Buffer para armazenar a string
 char timestamp[6][11];
-uint8_t filter_can=0;
+
 #define filtered_ID1 0x13
 #define filtered_ID2 0x15
 
@@ -75,11 +75,13 @@ int16_t terminal_read_can()
         struct tm *tm_info;
 
         uint8_t ignore_frame = 0;
+        uint8_t can_filter = 0;
 
         // read Can Bus and wait until a message arrive
         can_read(&vcan_socket, &frame);
+        read_pin_status(&can_filter,CAN_FILTER_PIN);
     
-        if(filter_can == 1)
+        if(can_filter == 1)
         {
             if(frame.can_id == filtered_ID1 || frame.can_id == filtered_ID2)
             {
@@ -144,7 +146,6 @@ int16_t ipc_runner()
     uint8_t hazard_lights_state = 0;
     uint8_t hazard_light = 0;
     float vehicle_speed_float = 0;
-    filter_can=0;
 
     // SDL Inititalization
     SDL_Window *window = NULL;
@@ -283,12 +284,12 @@ int16_t ipc_runner()
                 // Filter CAN Button
                 if (buttons1[2].clicked == 1 && buttons1[2].last_click == 0)
                 {
-                    filter_can = 1;
+                    set_pin_status(1, CAN_FILTER_PIN);
                     buttons1[2].last_click = 1;
                 }
                 else if (buttons1[2].clicked == 0 && buttons1[2].last_click == 1)
                 {
-                    filter_can = 0;
+                    set_pin_status(0, CAN_FILTER_PIN);
                     buttons1[2].last_click = 0;
                 }
             }
@@ -369,11 +370,11 @@ int16_t ipc_runner()
 
         if (reb_fault_warning == 1)
         {
-            draw_image(renderer, "./aux/img/reb_red.png", 480, 254, 408 / 7, 227 / 7);
+            draw_image(renderer, "./aux/img/reb_red.png", 380, 154, 408 / 7, 227 / 7);
 
             char velocidade[50];
             snprintf(velocidade, sizeof(velocidade), "REB Fault");
-            draw_text(renderer, font2, velocidade, 500, 260, white);
+            draw_text(renderer, font2, velocidade, 500, 280, white);
         }
         else if (reb_imobilize_procedure == 1 && reb_vehicle_imobilized == 0)
         {

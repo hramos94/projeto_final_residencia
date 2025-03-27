@@ -146,6 +146,7 @@ int16_t ipc_runner()
     uint8_t hazard_lights_state = 0;
     uint8_t hazard_light = 0;
     float vehicle_speed_float = 0;
+    set_pin_status(0, CAN_FILTER_PIN);
 
     // SDL Inititalization
     SDL_Window *window = NULL;
@@ -207,7 +208,7 @@ int16_t ipc_runner()
 
         buttons1[i].rect.w = button1_width;
         buttons1[i].rect.h = button1_height;
-        buttons1[i].last_click = 1;
+        buttons1[i].last_click = 0;
         buttons1[i].clicked = 0;
         buttons1[i].label = labels1[i];
 
@@ -289,7 +290,7 @@ int16_t ipc_runner()
                 }
                 else if (buttons1[2].clicked == 0 && buttons1[2].last_click == 1)
                 {
-                    set_pin_status(0, CAN_FILTER_PIN);
+                    set_pin_status(1, CAN_FILTER_PIN);
                     buttons1[2].last_click = 0;
                 }
             }

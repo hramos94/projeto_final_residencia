@@ -8,6 +8,7 @@
 // pin 4 - REB deactivate                Pino para desativação do REB 
 // pin 5 - Engine REB mode               Pino para controlar o modo de REB do motor
 // pin 6 - REB IPC fault pin             Pino para sinal de falha do IPC no sistema REB 
+// pin 7 - IPC Can Filter                Pino para ativar/destivar filtro da CAN no IPC
 
 
 #define HAZARD_LIGHTS_PIN 0     
@@ -17,6 +18,8 @@
 #define REB_DEACTIVATE 4
 #define ENGINE_REB_MODE 5
 #define REB_IPC_FAULT_PIN 6
+
+#define CAN_FILTER_PIN 7
 
 
 #endif

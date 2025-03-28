@@ -4,6 +4,7 @@
 #include <mcal.h>
 #include <time.h>
 #include <pins.h>
+#include <stdio.h>
 
 uint8_t flag_reb_canceled = REB_RUNNING;
 
@@ -155,29 +156,36 @@ uint8_t start_reb()
  * @requir{SwHLR_F_12}
  * @requir{SwHLR_F_14}
  */
-uint8_t countdown_reb(){
-       
+ uint8_t countdown_reb(void)
+{
     while (1)
     {
-        clock_t start_time, current_time;
+        struct timespec start_time, current_time;
         double elapsed_time = 0;
         uint8_t reb_countdown_active = 0;
 
-        start_time = clock();
-        read_pin_status(&reb_countdown_active,REB_COUNTDOWN_PIN);
+        clock_gettime(CLOCK_MONOTONIC, &start_time);
 
-        while(reb_countdown_active == 1)
+        // Verify the status of the pin
+        read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN);
+
+        while (reb_countdown_active == 1)
         {
-            current_time = clock();
-            elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
-            
+            clock_gettime(CLOCK_MONOTONIC, &current_time);
+
+            elapsed_time =
+                (current_time.tv_sec - start_time.tv_sec) +
+                ((double)(current_time.tv_nsec - start_time.tv_nsec) / 1e9);
+
             if (elapsed_time >= REB_TIMEOUT)
             {
-                reb_can_send_ecu(ECU_REB_START);
-                return SUCCESS;
+                reb_can_send_ecu(ECU_REB_START);                
             }
-        }   
+
+            // Verify the status of the pin again
+            read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN);
+        }
+
         go_sleep(1);
     }
-    
 }

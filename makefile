@@ -39,3 +39,7 @@ delcan:
 	@echo "Deleting vcan0 interface"
 	sudo ip link delete vcan0 type vcan || true
 	@echo "vcan0 has been removed."
+
+doc:
+	doxygen Doxyfile
+	xdg-open docs/html/index.html

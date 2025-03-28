@@ -151,7 +151,6 @@ uint8_t start_reb()
 
 /**
  * @brief Handle the activating REB countdown
- * @return SUCCESS(0); FAIL(1).
  * @requir{SysHLR_3}
  * @requir{SwHLR_F_12}
  * @requir{SwHLR_F_14}
@@ -179,7 +178,8 @@ uint8_t start_reb()
 
             if (elapsed_time >= REB_TIMEOUT)
             {
-                reb_can_send_ecu(ECU_REB_START);                
+                reb_can_send_ecu(ECU_REB_START);      
+                set_pin_status(S_OFF, REB_COUNTDOWN_PIN);   
             }
 
             // Verify the status of the pin again

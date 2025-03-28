@@ -15,6 +15,7 @@ CFLAGS += -Wextra
 #CFLAGS += -Wstrict-prototypes
 #CFLAGS += -Wundef
 #CFLAGS += -Wold-style-definition
+CFLAGS += -coverage
 
 INCLUDES = -I../unity/inc -I../../bsw/inc -I../../aux/inc
 

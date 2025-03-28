@@ -1,4 +1,4 @@
-.PHONY: all clean reb aux can delcan downcan
+.PHONY: all clean reb aux can delcan downcan test cov
 
 
 REB_DIR = reb
@@ -39,3 +39,9 @@ delcan:
 	@echo "Deleting vcan0 interface"
 	sudo ip link delete vcan0 type vcan || true
 	@echo "vcan0 has been removed."
+
+test:
+	make -C test
+
+cov:
+	make -C test cov

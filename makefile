@@ -42,8 +42,14 @@ delcan:
 	sudo ip link delete vcan0 type vcan || true
 	@echo "vcan0 has been removed."
 
+
 test:
 	@make -C test
 
 cov:
 	make -C test cov
+
+doc:
+	doxygen Doxyfile
+	xdg-open docs/html/index.html
+

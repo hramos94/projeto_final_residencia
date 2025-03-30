@@ -105,7 +105,13 @@ To generate Doxygen reports execute:
 ```
 doxygen Doxyfile
 ```
-To see reports, execute the docs/html/index.html
+
+To see reports, execute the docs/html/index.html or
+
+**Create `Doc` and show the html:**
+  ```
+  make doc
+  ```
 
 ## ⚙️ Running Tests
 

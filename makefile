@@ -1,5 +1,5 @@
-.PHONY: all clean reb aux can delcan downcan
-
+.PHONY: all clean reb aux can delcan downcan test cov
+MAKEFLAGS += --no-print-directory
 
 REB_DIR = reb
 AUX_DIR = aux
@@ -12,9 +12,11 @@ all:
 
 clean:
 	@echo "\nCleaning REB\n"
-	$(MAKE) -C $(REB_DIR) clean
+	@$(MAKE) -C $(REB_DIR) clean
 	@echo "\nCleaning AUX\n"
-	$(MAKE) -C $(AUX_DIR) clean
+	@$(MAKE) -C $(AUX_DIR) clean
+	@echo "\nCleaning TEST/Cov\n"
+	@make -C test clean
 
 
 reb:
@@ -40,6 +42,14 @@ delcan:
 	sudo ip link delete vcan0 type vcan || true
 	@echo "vcan0 has been removed."
 
+
+test:
+	@make -C test
+
+cov:
+	make -C test cov
+
 doc:
 	doxygen Doxyfile
 	xdg-open docs/html/index.html
+

@@ -63,3 +63,4 @@ obj/
 compile_commands.json
 latex/
 html/
+cov/

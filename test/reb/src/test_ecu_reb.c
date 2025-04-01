@@ -1,0 +1,37 @@
+/* =========================================================================
+    Unity - A Test Framework for C
+    ThrowTheSwitch.org
+    Copyright (c) 2007-25 Mike Karlesky, Mark VanderVoord, & Greg Williams
+    SPDX-License-Identifier: MIT
+========================================================================= */
+
+#include "ecu_reb.h"
+#include "unity.h"
+#include "unity_fixture.h"
+
+TEST_GROUP(ecu_reb);
+
+// sometimes you may want to get at local data in a module.
+// for example: If you plan to pass by reference, this could be useful
+// however, it should often be avoided
+extern int Counter;
+
+TEST_SETUP(ecu_reb)
+{
+    // This is run before EACH TEST
+}
+
+TEST_TEAR_DOWN(ecu_reb) {}
+
+// uint8_t can_send_hazard_light(uint8_t status);
+// uint8_t handle_tcu_can(unsigned char data[]);
+// uint8_t reb_can_send_ecu(uint8_t status);
+// uint8_t reb_can_send_ipc(uint8_t status);
+TEST(ecu_reb, get_status_pin_0)
+{
+    // All of these should pass
+    uint8_t status = 0;
+    read_pin_status(&status, 0);
+
+    TEST_ASSERT_EQUAL_INT16(0, status);
+}

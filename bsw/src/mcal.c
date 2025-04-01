@@ -1,3 +1,4 @@
+#include "can_utils.h"
 #include <ecu.h>
 #include <mcal.h>
 
@@ -217,7 +218,7 @@ uint8_t can_interface_status(int *can_socket, const char *interface)
     strncpy(socket_info.ifr_name, interface, IFNAMSIZ);
 
     // check if the interface exist getting the status using ioctl
-    if (ioctl(*can_socket, SIOCGIFFLAGS, &socket_info) < 0)
+    if (can_ioctl(*can_socket, SIOCGIFFLAGS, &socket_info) < 0)
     {
         perror("Error getting interface flags");
         return FAIL;

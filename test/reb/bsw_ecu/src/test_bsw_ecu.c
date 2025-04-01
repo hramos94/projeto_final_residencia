@@ -5,29 +5,40 @@
     SPDX-License-Identifier: MIT
 ========================================================================= */
 
+#include "ecu.h"
 #include "mcal.h"
 #include "unity.h"
 #include "unity_fixture.h"
+#include <stdint.h>
+#include <string.h>
 
-TEST_GROUP(mcal);
+TEST_GROUP(bsw_ecu);
 
 // sometimes you may want to get at local data in a module.
 // for example: If you plan to pass by reference, this could be useful
 // however, it should often be avoided
-extern int Counter;
 
-TEST_SETUP(mcal)
+TEST_SETUP(bsw_ecu)
 {
     // This is run before EACH TEST
 }
 
-TEST_TEAR_DOWN(mcal) {}
+TEST_TEAR_DOWN(bsw_ecu) {}
 
-TEST(mcal, get_status_pin_0)
+TEST(bsw_ecu, read_pint_status_valid_input)
 {
-    // All of these should pass
-    uint8_t status = 0;
-    read_pin_status(&status, 0);
+    char input_data[] = "pin 1 1\n";
+    FILE *mock_stdin = fmemopen(input_data, strlen(input_data), "r");
 
-    TEST_ASSERT_EQUAL_INT16(0, status);
+    FILE *original_stdin = stdin;
+    stdin = mock_stdin;
+
+    uint8_t status;
+    read_console();
+    read_pin_status(&status, 1);
+
+    stdin = original_stdin;
+    fclose(mock_stdin);
+
+    TEST_ASSERT_EQUAL_UINT(1, status);
 }

@@ -8,4 +8,4 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-TEST_GROUP_RUNNER(mcal) { RUN_TEST_CASE(mcal, get_status_pin_0); }
+TEST_GROUP_RUNNER(bsw_ecu) { RUN_TEST_CASE(bsw_ecu, read_pint_status_valid_input); }

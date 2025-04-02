@@ -3,14 +3,14 @@
 CC = gcc
 CFLAGS += -coverage
 
-INCLUDES = -I../../unity/inc -I../../../bsw/inc -Imocks
+INCLUDES = -I../../unity/inc -I../../../bsw/inc -I../mocks
 
 BSW_DIR = ../../../bsw/src
 TEST_DIR = src
 TEST_RUN_DIR = src/test_runners
 OBJ_DIR = obj
 BIN_DIR = bin
-MOCK_DIR = mocks
+MOCK_DIR = ../mocks
 TARGET_REB = $(BIN_DIR)/run_test_bsw_mcal
 UNITY_DIR = ../../unity/src
 

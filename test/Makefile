@@ -8,12 +8,7 @@ all:
 	@echo "\n========== AUX TEST =========="
 	@make -C ./aux 
 	@echo "=============================="
-	@echo "\n\n========== BSW_MCAL TEST =========="
-	@make -C ./reb/bsw_mcal
-	@echo "=============================="
-	@echo "\n\n========== BSW_ECU TEST =========="
-	@make -C ./reb/bsw_ecu
-	@echo "=============================="
+	@make -C ./reb
 
 $(shell mkdir -p cov)
 $(shell mkdir -p cov/main)

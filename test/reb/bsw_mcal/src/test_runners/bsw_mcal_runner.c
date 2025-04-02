@@ -11,5 +11,7 @@
 TEST_GROUP_RUNNER(mcal)
 {
     RUN_TEST_CASE(mcal, get_status_pin_0);
-    RUN_TEST_CASE(mcal, can_interface_status_OK);
+    RUN_TEST_CASE(mcal, can_interface_status_UP);
+    RUN_TEST_CASE(mcal, can_interface_status_DOWN);
+    RUN_TEST_CASE(mcal, can_interface_status_DOES_NOT_EXIST);
 }

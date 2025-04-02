@@ -32,10 +32,22 @@ TEST(mcal, get_status_pin_0)
     TEST_ASSERT_EQUAL_INT16(0, status);
 }
 
-TEST(mcal, can_interface_status_OK)
+TEST(mcal, can_interface_status_UP)
 {
-
     int can_socket = 1;
-    uint8_t result = can_interface_status(&can_socket, "vcano");
+    uint8_t result = can_interface_status(&can_socket, "vcan0");
     TEST_ASSERT_EQUAL_INT16(0, result);
+}
+TEST(mcal, can_interface_status_DOWN)
+{
+    int can_socket = 2;
+    uint8_t result = can_interface_status(&can_socket, "vcan0");
+    TEST_ASSERT_EQUAL_INT16(1, result);
+}
+
+TEST(mcal, can_interface_status_DOES_NOT_EXIST)
+{
+    int can_socket = -1;
+    uint8_t result = can_interface_status(&can_socket, "vcan0");
+    TEST_ASSERT_EQUAL_INT16(1, result);
 }

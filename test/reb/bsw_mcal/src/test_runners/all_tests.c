@@ -7,6 +7,6 @@
 
 #include "unity_fixture.h"
 
-static void RunAllTests(void) { RUN_TEST_GROUP(mcal); }
+static void RunAllTests(void) { RUN_TEST_GROUP(mcal_can); }
 
 int main(int argc, const char *argv[]) { return UnityMain(argc, argv, RunAllTests); }

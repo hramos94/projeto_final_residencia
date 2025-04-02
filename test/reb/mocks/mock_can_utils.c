@@ -3,15 +3,39 @@
 #include "mcal.h"
 #include "stdio.h"
 #include <net/if.h> // struct ifreq, IFNAMSIZ
+#include <sys/socket.h>
 
 int mock_can_write_return = 0;
 
 int can_ioctl(int fd, unsigned long request, void *args)
 {
-    int fake_ioctl_retur_value = 1;
-    struct ifreq *ifr = (struct ifreq *)args;
-    ifr->ifr_flags = fake_ioctl_retur_value;
-    return 0;
+    if(fd == 1)
+    {
+        int fake_ioctl_return_value = 1;
+        struct ifreq *ifr = (struct ifreq *)args;
+        ifr->ifr_flags = fake_ioctl_return_value;
+        return 0;
+    }
+    else if(fd == -1)
+    {
+        return -1;
+    }
+    else
+    {
+        return 0;
+    }
+    
+}
+int can_bind(int fd, struct sockaddr *addr, socklen_t addrlen)
+{
+    if(fd == 0)
+    {
+        return 0;
+    }
+    else 
+    {
+        return -1;
+    }
 }
 
 int can_write(int *can_socket, struct can_frame *frame)

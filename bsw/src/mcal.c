@@ -250,13 +250,13 @@ uint8_t can_bind_socket(int *can_socket, const char *interface)
 {
     struct ifreq ifr;
     strcpy(ifr.ifr_name, interface);
-    ioctl(*can_socket, SIOCGIFINDEX, &ifr);
+    can_ioctl(*can_socket, SIOCGIFINDEX, &ifr);
 
     struct sockaddr_can addr;
     memset(&addr, 0, sizeof(addr));
     addr.can_family = AF_CAN;
     addr.can_ifindex = ifr.ifr_ifindex;
-    if (bind(*can_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+    if (can_bind(*can_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
         perror("Bind");
         return FAIL;

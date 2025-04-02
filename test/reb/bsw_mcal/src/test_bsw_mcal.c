@@ -9,21 +9,15 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-TEST_GROUP(mcal);
+TEST_GROUP(mcal_can);
 
-// sometimes you may want to get at local data in a module.
-// for example: If you plan to pass by reference, this could be useful
-// however, it should often be avoided
 extern int Counter;
 
-TEST_SETUP(mcal)
-{
-    // This is run before EACH TEST
-}
+TEST_SETUP(mcal_can) {}
 
-TEST_TEAR_DOWN(mcal) {}
+TEST_TEAR_DOWN(mcal_can) {}
 
-TEST(mcal, get_status_pin_0)
+TEST(mcal_can, get_status_pin_0)
 {
     // All of these should pass
     uint8_t status = 0;
@@ -31,23 +25,37 @@ TEST(mcal, get_status_pin_0)
 
     TEST_ASSERT_EQUAL_INT16(0, status);
 }
-
-TEST(mcal, can_interface_status_UP)
+//tets can interface
+TEST(mcal_can, can_interface_status_UP)
 {
     int can_socket = 1;
     uint8_t result = can_interface_status(&can_socket, "vcan0");
     TEST_ASSERT_EQUAL_INT16(0, result);
 }
-TEST(mcal, can_interface_status_DOWN)
+TEST(mcal_can, can_interface_status_DOWN)
 {
     int can_socket = 2;
     uint8_t result = can_interface_status(&can_socket, "vcan0");
     TEST_ASSERT_EQUAL_INT16(1, result);
 }
 
-TEST(mcal, can_interface_status_DOES_NOT_EXIST)
+TEST(mcal_can, can_interface_status_DOES_NOT_EXIST)
 {
     int can_socket = -1;
     uint8_t result = can_interface_status(&can_socket, "vcan0");
+    TEST_ASSERT_EQUAL_INT16(1, result);
+}
+
+// can bind socket
+TEST(mcal_can, can_bind_socket_SUCCESS)
+{
+    int can_socket = 0;
+    uint8_t result = can_bind_socket(&can_socket, "vcan0");
+    TEST_ASSERT_EQUAL_INT16(0, result);
+}
+TEST(mcal_can, can_bind_socket_FAIL)
+{
+    int can_socket = 2;
+    uint8_t result = can_bind_socket(&can_socket, "vcan0");
     TEST_ASSERT_EQUAL_INT16(1, result);
 }

@@ -16,9 +16,5 @@ clean:
 		$(MAKE) -C $$dir clean; \
 	done
 
-cov:
-	@for covname in $(SUBDIRS); do \
-		lcov -c -d $$covname/obj -o ../cov/$$covname.info --ignore-errors=mismatch --rc lcov_branch_coverage=1; \
-	done
 
 

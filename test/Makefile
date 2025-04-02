@@ -18,12 +18,8 @@ $(shell mkdir -p cov/main)
 cov:
 	$(MAKE) clean
 	$(MAKE) all
-	@make -C ./reb cov
-	for file in $(INFO_FILES); do \
-		echo $$file; \
-		lcov -o cov/main/main_coverage.info -a "$$file" --rc branch_coverage=1; \
-	done
-	lcov -o cov/main/main_coverage.info --rc branch_coverage=1 -r cov/main/main_coverage.info /test/
+	@lcov -o cov/main/main_coverage.info -c -d . --ignore-errors=mismatch --rc branch_coverage=1
+	@lcov -o cov/main/main_coverage.info --rc branch_coverage=1 -r cov/main/main_coverage.info /test/
 	@genhtml cov/main/main_coverage.info -o cov/out --branch-coverage
 	@xdg-open cov/out/index.html
 

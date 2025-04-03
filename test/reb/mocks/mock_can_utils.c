@@ -6,6 +6,13 @@
 #include <sys/socket.h>
 
 
+int reb_ipc_id = 0;
+
+void set_reb_ipc_id(int id)
+{
+    reb_ipc_id  = id;
+}
+
 int mock_can_ioctl_return = 0;
 int mock_can_bind_return = 0;
 int mock_can_write_return = 0;
@@ -71,6 +78,17 @@ int can_bind(int fd, struct sockaddr *addr, socklen_t addrlen)
 
 int can_write(int *can_socket, struct can_frame *frame)
 {
+    if (reb_ipc_id == 1)
+    {
+        if (frame->data[0] == 0x01 && frame->can_id == REB_IPC_ID)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
+    }
     if (mock_can_write_return == 0)
     {
         return 0;

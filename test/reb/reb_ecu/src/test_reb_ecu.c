@@ -9,7 +9,7 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-extern int mock_can_write_return;
+extern int reb_ipc_id;
 
 TEST_GROUP(reb_ecu);
 
@@ -26,7 +26,7 @@ TEST_TEAR_DOWN(reb_ecu) {}
 
 TEST(reb_ecu, reb_can_send_ipc_status_IPC_REB_START)
 {
-    mock_can_write_return = IPC_REB_START;
-    int result_ok = reb_can_send_ipc(IPC_REB_START);
+    reb_ipc_id = 1;
+    int result_ok = reb_can_send_ipc(1);
     TEST_ASSERT_EQUAL(0, result_ok);
 }

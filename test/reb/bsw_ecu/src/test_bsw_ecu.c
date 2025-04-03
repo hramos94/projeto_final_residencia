@@ -42,3 +42,20 @@ TEST(bsw_ecu, read_pint_status_valid_input)
 
     TEST_ASSERT_EQUAL_UINT(1, status);
 }
+
+TEST(bsw_ecu, read_pint_status_invalid_input)
+{
+    char input_data[] = "pin 3 3\n";
+    FILE *mock_stdin = fmemopen(input_data, strlen(input_data), "r");
+
+    FILE *original_stdin = stdin;
+    stdin = mock_stdin;
+
+    uint8_t result = 0;
+    result = read_console();
+
+    stdin = original_stdin;
+    fclose(mock_stdin);
+
+    TEST_ASSERT_EQUAL_UINT(1, result);
+}

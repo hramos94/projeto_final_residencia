@@ -4,6 +4,7 @@
 #include "mcal.h"
 #include <sys/socket.h>
 
+void set_mock_return_values(int ioctl_ret, int bind_ret, int write_ret, int read_ret, int open_ret, int close_ret);
 int socket_create(int domain, int type, int protocol);
 int socket_close(int can_socket);
 int can_ioctl(int fd, unsigned long request, void *args);

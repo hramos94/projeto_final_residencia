@@ -12,6 +12,8 @@
 #include <stdint.h>
 #include <string.h>
 
+extern int flag_fail_set_pin;
+
 TEST_GROUP(bsw_ecu);
 
 // sometimes you may want to get at local data in a module.
@@ -46,6 +48,25 @@ TEST(bsw_ecu, read_pint_status_valid_input)
 TEST(bsw_ecu, read_pint_status_invalid_input)
 {
     char input_data[] = "pin 3 3\n";
+    FILE *mock_stdin = fmemopen(input_data, strlen(input_data), "r");
+
+    FILE *original_stdin = stdin;
+    stdin = mock_stdin;
+
+    uint8_t result = 0;
+    result = read_console();
+
+    stdin = original_stdin;
+    fclose(mock_stdin);
+
+    TEST_ASSERT_EQUAL_UINT(1, result);
+}
+
+TEST(bsw_ecu, read_pint_status_invalid_erro_set_pin)
+{
+    flag_fail_set_pin = 1;
+
+    char input_data[] = "pin 3 0\n";
     FILE *mock_stdin = fmemopen(input_data, strlen(input_data), "r");
 
     FILE *original_stdin = stdin;

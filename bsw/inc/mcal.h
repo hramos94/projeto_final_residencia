@@ -33,7 +33,6 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status);
 
 uint8_t can_socket_open(int *can_socket);
 uint8_t can_socket_close(int *can_socket);
-uint8_t can_interface_verify(const char *interface);
 uint8_t can_interface_status(int *can_socket, const char *interface);
 uint8_t can_bind_socket(int *can_socket, const char *interface);
 uint8_t can_send(int *can_socket, struct can_frame *frame);

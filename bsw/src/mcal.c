@@ -179,29 +179,6 @@ uint8_t can_socket_close(int *can_socket)
 }
 
 /**
- *  @brief Function to verify if can socket exists.
- *
- *  @param interface Pointer to char interface
- *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
- *  @requir{SwHLR_F_6}
- *  @requir{SwHLR_F_10}
- *  @requir{SwHLR_F_15}
- */
-uint8_t can_interface_verify(const char *interface)
-{
-    char verify_can_command[100];
-    sprintf(verify_can_command, "ip link show %s > /dev/null 2>&1", interface);
-
-    // return FAIL if interface doesn not exists
-    if (system(verify_can_command) != 0)
-    {
-        return FAIL;
-    }
-    return SUCCESS;
-}
-
-/**
  *  @brief Function to verify if can interface is UP or DOWN.
  *
  *  @param can_socket Pointer to store the number of socket.

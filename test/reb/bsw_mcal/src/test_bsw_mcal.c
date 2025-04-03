@@ -19,7 +19,25 @@ TEST_SETUP(mcal_others) {}
 
 TEST_TEAR_DOWN(mcal_others) {}
 
-TEST(mcal_others, read_pint_status_SUCCESS)
+TEST(mcal_others, read_pint_status_SUCCESS_STATUS_0)
+{    uint8_t pin = 0, status = 0;
+
+    // Simula uma entrada válida com status 0
+    FILE *mock_stdin = fmemopen("pin 5 0\n", 8, "r");
+    stdin = mock_stdin;
+
+    uint8_t result = read_pint_status(&pin, &status);
+
+    fclose(mock_stdin);
+
+    // Esperamos que o resultado seja SUCCESS e os valores corretos
+    TEST_ASSERT_EQUAL_UINT8(0, result);
+    TEST_ASSERT_EQUAL_UINT8(5, pin);
+    TEST_ASSERT_EQUAL_UINT8(0, status);
+}
+
+
+TEST(mcal_others, read_pint_status_SUCCESS_STATUS_1)
 {
     uint8_t pin = 0, status = 0;
 
@@ -111,9 +129,6 @@ TEST(mcal_others, read_pint_status_FAIL_EDGE_CASE)
 
     TEST_ASSERT_EQUAL_UINT8(1, result);
 }
-
-
-
 
 TEST(mcal_others, mcal_init_SUCCESS)
 {

@@ -37,7 +37,12 @@ TEST_GROUP_RUNNER(mcal_can)
 
 TEST_GROUP_RUNNER(mcal_others)
 {
-    RUN_TEST_CASE(mcal_others, get_status_pin_0);
+    RUN_TEST_CASE(mcal_others, read_pint_status_SUCCESS);
+    RUN_TEST_CASE(mcal_others, read_pint_status_FAIL_GETLINE);
+    RUN_TEST_CASE(mcal_others, read_pint_status_FAIL_WRONG_PREFIX);
+    RUN_TEST_CASE(mcal_others, read_pint_status_FAIL_INVALID_STATUS);
+    RUN_TEST_CASE(mcal_others, read_pint_status_FAIL_SSCANF);
+    RUN_TEST_CASE(mcal_others, read_pint_status_FAIL_EDGE_CASE);
     RUN_TEST_CASE(mcal_others, mcal_init_SUCCESS);
     RUN_TEST_CASE(mcal_others, go_sleep_1);
     RUN_TEST_CASE(mcal_others, show_error_TEXT); 

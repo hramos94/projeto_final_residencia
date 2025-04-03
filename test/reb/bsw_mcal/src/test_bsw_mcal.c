@@ -6,6 +6,7 @@
 ========================================================================= */
 
 #include "mcal.h"
+#include <stdio.h>
 #include "unity.h"
 #include "unity_fixture.h"
 #include "mock_can_utils.h"
@@ -18,14 +19,101 @@ TEST_SETUP(mcal_others) {}
 
 TEST_TEAR_DOWN(mcal_others) {}
 
-TEST(mcal_others, get_status_pin_0)
+TEST(mcal_others, read_pint_status_SUCCESS)
 {
-    // All of these should pass
-    uint8_t status = 0;
-    read_pin_status(&status, 0);
+    uint8_t pin = 0, status = 0;
 
-    TEST_ASSERT_EQUAL_UINT8(0, status);
+    // Abre um mock de entrada
+    FILE *mock_stdin = fmemopen("pin 5 1\n", 8, "r");
+    
+    // Substitui stdin temporariamente
+    FILE *original_stdin = stdin;
+    stdin = mock_stdin;
+
+    uint8_t result = read_pint_status(&pin, &status);
+
+    // Restaura stdin para evitar problemas
+    stdin = original_stdin;
+
+    fclose(mock_stdin);  // Fecha apenas o mock
+
+    TEST_ASSERT_EQUAL_UINT8(0, result);
+    TEST_ASSERT_EQUAL_UINT8(5, pin);
+    TEST_ASSERT_EQUAL_UINT8(1, status);
 }
+TEST(mcal_others, read_pint_status_FAIL_GETLINE)
+{
+    uint8_t pin = 0, status = 0;
+
+    // Simula falha no getline fechando stdin
+    fclose(stdin); 
+
+    uint8_t result = read_pint_status(&pin, &status);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+}
+TEST(mcal_others, read_pint_status_FAIL_WRONG_PREFIX)
+{
+    uint8_t pin = 0, status = 0;
+    
+    // Simula entrada inválida (não começa com "pin")
+    FILE *mock_stdin = fmemopen("wrong 5 1\n", 10, "r");
+    stdin = mock_stdin;
+
+    uint8_t result = read_pint_status(&pin, &status);
+    
+    fclose(mock_stdin);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+}
+TEST(mcal_others, read_pint_status_FAIL_INVALID_STATUS)
+{
+    uint8_t pin = 0, status = 0;
+    
+    // Simula entrada com status inválido
+    FILE *mock_stdin = fmemopen("pin 5 99\n", 10, "r");
+    stdin = mock_stdin;
+
+    uint8_t result = read_pint_status(&pin, &status);
+    
+    fclose(mock_stdin);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+}
+TEST(mcal_others, read_pint_status_FAIL_SSCANF)
+{
+    uint8_t pin = 0, status = 0;
+    
+    // Simula entrada inválida para sscanf
+    FILE *mock_stdin = fmemopen("pin abc xyz\n", 13, "r");
+    stdin = mock_stdin;
+
+    uint8_t result = read_pint_status(&pin, &status);
+    
+    fclose(mock_stdin);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+}
+TEST(mcal_others, read_pint_status_FAIL_EDGE_CASE)
+{
+    uint8_t pin = 0, status = 0;
+    
+    // Simula um caso com um espaço extra ou erro sutil
+    FILE *mock_stdin = fmemopen("pin 5 \n", 8, "r");  // Status ausente
+    
+    FILE *original_stdin = stdin;
+    stdin = mock_stdin;
+
+    uint8_t result = read_pint_status(&pin, &status);
+
+    stdin = original_stdin;
+    fclose(mock_stdin);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+}
+
+
+
 
 TEST(mcal_others, mcal_init_SUCCESS)
 {
@@ -243,6 +331,7 @@ TEST(mcal_can, can_start_SOCKET_FAIL)
 TEST(mcal_can, can_start_INTERFACE_FAIL)
 {
     int can_socket = -1;
+    set_mock_return_values(1, 0, 0, 0, 0, 0);
     uint8_t result = can_start(&can_socket, "vcan0");
     TEST_ASSERT_EQUAL_UINT8(1, result);
 }

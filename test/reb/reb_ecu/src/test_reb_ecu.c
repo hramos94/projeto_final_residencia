@@ -9,29 +9,24 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-TEST_GROUP(ecu_reb);
+extern int reb_ipc_id;
+
+TEST_GROUP(reb_ecu);
 
 // sometimes you may want to get at local data in a module.
 // for example: If you plan to pass by reference, this could be useful
 // however, it should often be avoided
-extern int Counter;
 
-TEST_SETUP(ecu_reb)
+TEST_SETUP(reb_ecu)
 {
     // This is run before EACH TEST
 }
 
-TEST_TEAR_DOWN(ecu_reb) {}
+TEST_TEAR_DOWN(reb_ecu) {}
 
-// uint8_t can_send_hazard_light(uint8_t status);
-// uint8_t handle_tcu_can(unsigned char data[]);
-// uint8_t reb_can_send_ecu(uint8_t status);
-// uint8_t reb_can_send_ipc(uint8_t status);
-TEST(ecu_reb, get_status_pin_0)
+TEST(reb_ecu, reb_can_send_ipc_status_IPC_REB_START)
 {
-    // All of these should pass
-    uint8_t status = 0;
-    read_pin_status(&status, 0);
-
-    TEST_ASSERT_EQUAL_INT16(0, status);
+    reb_ipc_id = 1;
+    int result_ok = reb_can_send_ipc(1);
+    TEST_ASSERT_EQUAL(0, result_ok);
 }

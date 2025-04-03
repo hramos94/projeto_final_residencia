@@ -8,4 +8,4 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-TEST_GROUP_RUNNER(ecu_reb) { RUN_TEST_CASE(ecu_reb, get_status_pin_0); }
+TEST_GROUP_RUNNER(reb_ecu) { RUN_TEST_CASE(reb_ecu, reb_can_send_ipc_status_IPC_REB_START); }

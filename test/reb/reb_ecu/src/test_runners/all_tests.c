@@ -7,10 +7,6 @@
 
 #include "unity_fixture.h"
 
-static void RunAllTests(void)
-{
-    RUN_TEST_GROUP(mcal);
-    RUN_TEST_GROUP(ecu_reb);
-}
+static void RunAllTests(void) { RUN_TEST_GROUP(reb_ecu); }
 
 int main(int argc, const char *argv[]) { return UnityMain(argc, argv, RunAllTests); }

@@ -16,7 +16,7 @@ uint8_t can_send_hazard_light(uint8_t status)
 {
     struct can_frame frame = {.can_id = 0x400, .can_dlc = 8, .data = {0}};
 
-    if (status)
+    if (status == 0)
     {
         // Send TURN ON signal
         frame.data[0] = 0x01;

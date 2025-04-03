@@ -6,6 +6,9 @@
 #include <sys/socket.h>
 
 int mock_can_write_return = 0;
+int mock_can_read_return = 0;
+int mock_can_open_return = 0;
+int mock_can_close_return = 0;
 
 int can_ioctl(int fd, unsigned long request, void *args)
 {
@@ -40,12 +43,60 @@ int can_bind(int fd, struct sockaddr *addr, socklen_t addrlen)
 
 int can_write(int *can_socket, struct can_frame *frame)
 {
-    if (mock_can_write_return == IPC_REB_START)
+    if (mock_can_write_return == 0)
     {
-        if (frame->data[0] == 0x01 && frame->can_id == REB_IPC_ID)
-        {
-            return 0;
-        }
+        mock_can_write_return ++;
+        return 0;
+        
     }
-    return 1;
+    else
+    {
+        mock_can_write_return --;
+        return 1;
+    }
+    
+}
+
+int socket_create(int domain, int type, int protocol) 
+{
+    if(mock_can_open_return == 0)
+    {
+        mock_can_open_return ++;
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+
+}
+
+int socket_close(int can_socket) 
+{
+    if(mock_can_close_return == 0)
+    {
+        mock_can_close_return ++;
+        return 0;
+    }
+    else 
+    {
+        mock_can_close_return --;
+        return -1;
+    }
+}
+
+
+int can_read_socket(int fd, void *buf, size_t count)
+{
+    if (mock_can_read_return == 0)
+    {
+        mock_can_read_return ++;
+        return 4;
+        
+    }
+    else
+    {
+        mock_can_read_return --;
+        return -1;
+    }
 }

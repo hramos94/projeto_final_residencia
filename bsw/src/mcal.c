@@ -150,7 +150,7 @@ void go_sleep(uint8_t seconds) { sleep(seconds); }
  */
 uint8_t can_socket_open(int *can_socket)
 {
-    if ((*can_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
+    if ((*can_socket = socket_create(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
     {
         perror("Socket Open Failed: ");
         return FAIL;
@@ -170,7 +170,7 @@ uint8_t can_socket_open(int *can_socket)
  */
 uint8_t can_socket_close(int *can_socket)
 {
-    if (close(*can_socket) < 0)
+    if (socket_close(*can_socket) < 0)
     {
         perror("Socket Close Failed:");
         return FAIL;
@@ -299,7 +299,7 @@ uint8_t can_send(int *can_socket, struct can_frame *frame)
 uint8_t can_read(int *can_socket, struct can_frame *frame)
 {
     // this will block until frame avaliable
-    int nbytes = read(*can_socket, frame, sizeof(struct can_frame));
+    int nbytes = can_read_socket(*can_socket, frame, sizeof(struct can_frame));
     if (nbytes < 0)
     {
         perror("Can Read Error: ");
@@ -351,11 +351,7 @@ uint8_t can_start(int *my_vcan, const char *interface)
  */
 uint8_t can_send_vcan0(struct can_frame *frame)
 {
-    if (can_send(&my_vcan, frame) == FAIL)
-    {
-        return FAIL;
-    }
-    return SUCCESS;
+    return can_send(&my_vcan, frame);
 }
 
 /**
@@ -370,11 +366,7 @@ uint8_t can_send_vcan0(struct can_frame *frame)
  */
 uint8_t can_read_vcan0(struct can_frame *frame)
 {
-    if (can_read(&my_vcan, frame) == FAIL)
-    {
-        return FAIL;
-    }
-    return SUCCESS;
+    return can_read(&my_vcan, frame);
 }
 
 /**
@@ -388,11 +380,7 @@ uint8_t can_read_vcan0(struct can_frame *frame)
  */
 uint8_t can_init()
 {
-    if (can_start(&my_vcan, interface) == FAIL)
-    {
-        return FAIL;
-    }
-    return SUCCESS;
+    return can_start(&my_vcan, interface);
 }
 
 /**
@@ -406,8 +394,7 @@ uint8_t can_init()
  */
 uint8_t can_close()
 {
-    can_socket_close(&my_vcan);
-    return SUCCESS;
+    return can_socket_close(&my_vcan);
 }
 
 /**

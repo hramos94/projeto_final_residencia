@@ -322,7 +322,7 @@ TEST(mcal_can, can_start_SUCCESS)
 
 TEST(mcal_can, can_start_SOCKET_FAIL)
 {
-    set_mock_return_values(-1, 0, 0, 0, 0, 0);
+    set_mock_return_values(2, 0, 0, 0, -1, 0);
     int can_socket = -1;
     uint8_t result = can_start(&can_socket, "vcan0");
     TEST_ASSERT_EQUAL_UINT8(1, result);
@@ -338,11 +338,22 @@ TEST(mcal_can, can_start_INTERFACE_FAIL)
 
 TEST(mcal_can, can_start_BIND_FAIL)
 {
-    set_mock_return_values(0, -1, 0, 0, 0, 0);
+    set_mock_return_values(2, -1, 0, 0, 0, 0);
     int can_socket = -1;
     uint8_t result = can_start(&can_socket, "vcan0");
     TEST_ASSERT_EQUAL_UINT8(1, result);
 }
+
+// TEST(mcal_can, can_start_SOCKET_AND_INTERFACE_FAIL)
+// {
+//     set_mock_return_values(-1, -1, 0, 0, 0, 0);
+//     int can_socket = -1;
+//     uint8_t result = can_start(&can_socket, "vcan0");
+//     TEST_ASSERT_EQUAL_UINT8(1, result);
+// }
+
+
+
 
 TEST(mcal_can, can_init_SUCCESS)
 {

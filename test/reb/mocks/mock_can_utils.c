@@ -47,6 +47,8 @@ int can_ioctl(int fd, unsigned long request, void *args)
     }
     else if(mock_can_ioctl_return == 1)
     {
+        struct ifreq *ifr = (struct ifreq *)args;
+        ifr->ifr_flags = 0; // Interface DOWN
         return 0;
     }
     else

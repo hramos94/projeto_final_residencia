@@ -30,6 +30,7 @@ TEST_GROUP_RUNNER(mcal_can)
     RUN_TEST_CASE(mcal_can, can_start_SOCKET_FAIL);
     RUN_TEST_CASE(mcal_can, can_start_INTERFACE_FAIL);
     RUN_TEST_CASE(mcal_can, can_start_BIND_FAIL);
+    // RUN_TEST_CASE(mcal_can, can_start_SOCKET_AND_INTERFACE_FAIL);
 
     RUN_TEST_CASE(mcal_can, can_init_SUCCESS);
 

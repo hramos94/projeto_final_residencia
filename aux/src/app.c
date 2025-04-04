@@ -16,11 +16,13 @@ uint8_t application_init()
     if (mcal_init() == FAIL)
     {
         show_error("mcal_init FAIL\n");
+        return FAIL;
     }
 
     if (can_init() == FAIL)
     {
         show_error("can_init FAIL\n");
+        return FAIL;
     }
 
     return SUCCESS;
@@ -189,10 +191,10 @@ uint8_t monitor_tcu()
  * @return SUCCESS(0); FAIL(1).
  * @requir {SwHLR_F_13}
  * @requir {SwHLR_F_15}
- */ 
+ */
 uint8_t check_can_communication()
 {
-    //Frames to check cSommunication CAN between REB e AUX modules
+    // Frames to check cSommunication CAN between REB e AUX modules
     struct can_frame test_frame = {.can_id = AUX_COM_ID, .can_dlc = 1, .data = {AUX_COM_SIG}};
 
     while (1)
@@ -210,9 +212,9 @@ uint8_t check_can_communication()
         {
             if (cont_tries >= 10)
             {
-                //Try 10 times the communication test {SwHLR_F_15}
-                read_pin_status(&current_ipc_fault_pin_status,REB_IPC_FAULT_PIN);
-                if(current_ipc_fault_pin_status!=1)
+                // Try 10 times the communication test {SwHLR_F_15}
+                read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN);
+                if (current_ipc_fault_pin_status != 1)
                 {
                     set_pin_status(1, REB_IPC_FAULT_PIN);
                 }
@@ -222,15 +224,15 @@ uint8_t check_can_communication()
                 }
                 cont_tries = 0;
             }
-            // Verify communication each 11 seconds 
+            // Verify communication each 11 seconds
             go_sleep(1);
             cont_tries++;
         }
-        read_pin_status(&current_ipc_fault_pin_status,REB_IPC_FAULT_PIN);
-        if(current_ipc_fault_pin_status!=0)
+        read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN);
+        if (current_ipc_fault_pin_status != 0)
         {
             set_pin_status(0, REB_IPC_FAULT_PIN);
-        }    
+        }
     }
     return SUCCESS;
 }

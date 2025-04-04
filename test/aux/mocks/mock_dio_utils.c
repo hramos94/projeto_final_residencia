@@ -27,8 +27,7 @@ uint8_t dio_set_pin(uint8_t status, uint8_t pin, dIO io[])
     io[pin].status = status;
     printf(">>> Set pin%d = %d\n", pin, status);
 
-    if (status == 1)
-    {
+    if(status == 1){
         flag_cout_set_pin[pin]++;
     }
 

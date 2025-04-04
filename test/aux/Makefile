@@ -17,7 +17,7 @@ UNITY_DIR = ../unity/src
 MOCK_DIR = ./mocks
 
 
-BSW_FILES = $(BSW_DIR)/mcal.c $(BSW_DIR)/ecu.c  $(BSW_DIR)/dio_utils.c
+BSW_FILES = $(BSW_DIR)/mcal.c $(BSW_DIR)/ecu.c  
 
 MOCK_FILES = $(wildcard $(MOCK_DIR)/*c)
 

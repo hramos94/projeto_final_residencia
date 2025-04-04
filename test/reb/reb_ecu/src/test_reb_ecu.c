@@ -6,6 +6,7 @@
 ========================================================================= */
 
 #include "ecu_reb.h"
+#include "mock_can_utils.h"
 #include "unity.h"
 #include "unity_fixture.h"
 
@@ -56,14 +57,14 @@ TEST(reb_ecu, reb_can_send_ecu_status_ECU_REB_CANCEL)
 TEST(reb_ecu, reb_can_send_harzard_status_TURN_ON)
 {
     uint8_t reb_ecu_harzard_status = 0;
-    int result_ok = can_send_hazard_light(reb_ecu_id);
+    int result_ok = can_send_hazard_light(reb_ecu_harzard_status);
     TEST_ASSERT_EQUAL(0, result_ok);
 }
 
 TEST(reb_ecu, reb_can_send_harzard_status_TURN_OFF)
 {
     uint8_t reb_ecu_harzard_status = 2;
-    int result_ok = can_send_hazard_light(reb_ecu_id);
+    int result_ok = can_send_hazard_light(reb_ecu_harzard_status);
     TEST_ASSERT_EQUAL(0, result_ok);
 }
 
@@ -81,4 +82,46 @@ TEST(reb_ecu, reb_handle_tcu_can_START_REB)
 
     int result_ok = handle_tcu_can(data_first_byte_1);
     TEST_ASSERT_EQUAL(0, result_ok);
+}
+
+TEST(reb_ecu, reb_handle_tcu_can_CANCEL_REB_FAIL)
+{
+    set_mock_return_values(0, 0, -1, 0, 0, 0);
+    uint8_t data_first_byte_2[8] = {0x02, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+    int result_ok = handle_tcu_can(data_first_byte_2);
+    TEST_ASSERT_EQUAL(1, result_ok);
+}
+
+TEST(reb_ecu, reb_handle_tcu_can_START_REB_FAIL)
+{
+    set_mock_return_values(0, 0, -1, 0, 0, 0);
+    uint8_t data_first_byte_1[8] = {0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+    int result_ok = handle_tcu_can(data_first_byte_1);
+    TEST_ASSERT_EQUAL(1, result_ok);
+}
+
+TEST(reb_ecu, reb_can_send_ecu_CAN_SEND_VCAN_FAIL)
+{
+    set_mock_return_values(0, 0, -1, 0, 0, 0);
+    reb_ecu_id = 2;
+    int result_ok = reb_can_send_ecu(reb_ecu_id);
+    TEST_ASSERT_EQUAL(1, result_ok);
+}
+
+TEST(reb_ecu, reb_can_send_ipc_CAN_SEND_VCAN_FAIL)
+{
+    set_mock_return_values(0, 0, -1, 0, 0, 0);
+    reb_ipc_id = 2;
+    int result_ok = reb_can_send_ipc(reb_ipc_id);
+    TEST_ASSERT_EQUAL(1, result_ok);
+}
+
+TEST(reb_ecu, reb_can_send_harzard_CAN_SEND_VCAN_FAIL)
+{
+    set_mock_return_values(0, 0, -1, 0, 0, 0);
+    uint8_t reb_ecu_harzard_status = 2;
+    int result_ok = can_send_hazard_light(reb_ecu_id);
+    TEST_ASSERT_EQUAL(1, result_ok);
 }

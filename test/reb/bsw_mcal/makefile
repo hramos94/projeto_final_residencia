@@ -15,7 +15,7 @@ TARGET_REB = $(BIN_DIR)/run_test_bsw_mcal
 UNITY_DIR = ../../unity/src
 
 
-BSW_FILES = $(BSW_DIR)/mcal.c $(BSW_DIR)/dio_utils.c
+BSW_FILES = $(BSW_DIR)/mcal.c 
 
 MOCK_FILES = $(wildcard $(MOCK_DIR)/*c)
 

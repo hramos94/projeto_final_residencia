@@ -8,4 +8,6 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-TEST_GROUP_RUNNER(reb_app) { RUN_TEST_CASE(reb_app, test_read_console_pin_01); }
+TEST_GROUP_RUNNER(reb_app) { 
+    RUN_TEST_CASE(reb_app, test_read_console_pin_01);
+    RUN_TEST_CASE(reb_app, application_init_OK); }

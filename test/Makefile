@@ -19,7 +19,7 @@ cov:
 	$(MAKE) clean
 	$(MAKE) all
 	@lcov -o cov/main/main_coverage.info -c -d . --ignore-errors=mismatch --rc branch_coverage=1
-	@lcov -o cov/main/main_coverage.info --rc branch_coverage=1 -r cov/main/main_coverage.info /test/
+	@lcov -o cov/main/main_coverage.info --ignore-errors=mismatch --rc branch_coverage=1 -r cov/main/main_coverage.info /test/
 	@genhtml cov/main/main_coverage.info -o cov/out --branch-coverage
 	@xdg-open cov/out/index.html
 

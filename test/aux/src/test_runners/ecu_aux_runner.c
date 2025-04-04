@@ -10,5 +10,16 @@
 
 TEST_GROUP_RUNNER(ecu_aux)
 {
-  RUN_TEST_CASE(ecu_aux, tempTestQualquer);
+    RUN_TEST_CASE(ecu_aux, test_get_hazard_button_status);
+    RUN_TEST_CASE(ecu_aux, test_set_hazard_light);
+    RUN_TEST_CASE(ecu_aux, test_get_tcu_start_reb);
+    RUN_TEST_CASE(ecu_aux, test_set_tcu_start_reb);
+    RUN_TEST_CASE(ecu_aux, test_set_tcu_cancel_reb);
+    RUN_TEST_CASE(ecu_aux, test_get_tcu_cancel_reb);
+    RUN_TEST_CASE(ecu_aux, test_tcu_can_send_reb);
+    RUN_TEST_CASE(ecu_aux, test_handle_ecu_can);
+    RUN_TEST_CASE(ecu_aux, test_block_engine);
+    RUN_TEST_CASE(ecu_aux, test_unblock_engine);
+    RUN_TEST_CASE(ecu_aux, test_handle_ipc_can);
+    RUN_TEST_CASE(ecu_aux, test_set_reb_warning);
 }

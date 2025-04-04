@@ -1,7 +1,10 @@
 .PHONY: clean reb aux
 
 CC = gcc
+CFLAGS = -g
 CFLAGS += -coverage
+CFLAGS += -fprofile-update=atomic
+
 
 INCLUDES = -I../unity/inc -I../../bsw/inc -I../../aux/inc -I./mocks
 

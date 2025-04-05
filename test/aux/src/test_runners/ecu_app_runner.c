@@ -18,4 +18,8 @@ TEST_GROUP_RUNNER(ecu_app)
     RUN_TEST_CASE(ecu_app, monitor_read_can_get_handle_REB_AUX_communication_Diff_data_0x02);
     RUN_TEST_CASE(ecu_app, monitor_read_can_get_handle_FAIL_CAN);
     RUN_TEST_CASE(ecu_app, monitor_tcu_set_reb_start_button);
+    RUN_TEST_CASE(ecu_app, monitor_tcu_set_reb_cancel_button);
+    RUN_TEST_CASE(ecu_app, monitor_tcu_get_reb_button_FAIL);
+    RUN_TEST_CASE(ecu_app, monitor_tcu_get_set_button_FAIL);
+    RUN_TEST_CASE(ecu_app, monitor_tcu_can_send_reb_FAIL);
 }

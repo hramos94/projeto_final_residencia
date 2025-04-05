@@ -24,6 +24,7 @@ extern int flag_fail_get_pin;
 extern int flag_cout_set_pin[10];
 extern int flag_status_pin[10];
 extern int mock_can_read_return;
+extern int mock_can_write_return;
 
 extern uint8_t reb_con;
 extern int flag_can_REB_IPC_count;
@@ -45,6 +46,7 @@ TEST_SETUP(ecu_app)
     flag_fail_set_pin = 0;
     flag_fail_get_pin = 0;
     mock_can_read_return = 0;
+    mock_can_write_return = 0;
 
     reb_con = 0;
     flag_can_REB_IPC_count = 0;
@@ -364,4 +366,100 @@ TEST(ecu_app, monitor_tcu_set_reb_start_button)
     // Shoud send signal and returned button to 0
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_ACTIVATE_PIN]);
     TEST_ASSERT_GREATER_THAN(0, flag_can_REB_IPC_count);
+}
+
+TEST(ecu_app, monitor_tcu_set_reb_cancel_button)
+{
+
+    flag_reb_id = 1;
+    uint8_t status = 0;
+    status = set_pin_status(1, REB_DEACTIVATE);
+
+    TEST_ASSERT_EQUAL(0, status);
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud send signal and returned button to 0
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_DEACTIVATE]);
+    TEST_ASSERT_GREATER_THAN(0, flag_can_REB_IPC_count);
+}
+
+TEST(ecu_app, monitor_tcu_get_reb_button_FAIL)
+{
+
+    uint8_t status = 0;
+    status = set_pin_status(1, REB_ACTIVATE_PIN);
+
+    TEST_ASSERT_EQUAL(0, status);
+
+    flag_fail_get_pin = 1;
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud not send signal ;
+    TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
+}
+
+TEST(ecu_app, monitor_tcu_get_set_button_FAIL)
+{
+
+    uint8_t status = 0;
+
+    status = set_pin_status(1, REB_ACTIVATE_PIN);
+    TEST_ASSERT_EQUAL(0, status);
+
+    flag_fail_set_pin = 1;
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud not send signal ;
+    TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
+    // should stay ON, error trying to SET 0
+    TEST_ASSERT_EQUAL(1, flag_status_pin[REB_ACTIVATE_PIN]);
+}
+
+TEST(ecu_app, monitor_tcu_can_send_reb_FAIL)
+{
+
+    uint8_t status = 0;
+
+    status = set_pin_status(1, REB_ACTIVATE_PIN);
+    TEST_ASSERT_EQUAL(0, status);
+
+    mock_can_write_return = 1;
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud not send signal ;
+    TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
+    // should turned off
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_ACTIVATE_PIN]);
 }

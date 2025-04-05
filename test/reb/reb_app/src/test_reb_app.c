@@ -28,15 +28,9 @@ extern int flag_fail_get_pin;
 extern int flag_cout_set_pin[10];
 extern int flag_status_pin[10];
 
-// Declaração da função read_input que já existe
 extern uint8_t read_input();  
+extern uint8_t flag_reb_canceled;
 
-// Wrapper que chama read_input() e retorna NULL para compatibilidade com pthread_create
-void* read_input_wrapper(void* arg)
-{
-    read_input();  // Chama sua função original
-    return NULL;   // Retorna NULL para atender à assinatura esperada por pthread_create
-}
 
 
 TEST_GROUP(reb_app);
@@ -70,11 +64,71 @@ TEST(reb_app, application_init_OK)
     TEST_ASSERT_EQUAL(SUCCESS, status);
 }
 
+TEST(reb_app, application_init_FAIL)
+{
+    uint8_t status = 0;
+    mock_can_ioctl_return = 2;
+    mock_can_open_return = 1;
+    status = application_init();
+    TEST_ASSERT_EQUAL(FAIL, status);
+}
+
+
+TEST(reb_app, cancel_reb_success)
+{
+    mock_can_write_return = 0;
+
+    uint8_t result = cancel_reb();
+
+    TEST_ASSERT_EQUAL(SUCCESS, result);
+    TEST_ASSERT_EQUAL(REB_CANCELED, flag_reb_canceled);
+}
+
+TEST(reb_app, cancel_reb_fail_ipc)
+{
+    mock_can_write_return = 1;
+
+    uint8_t result = cancel_reb();
+
+    TEST_ASSERT_EQUAL(FAIL, result);
+    TEST_ASSERT_EQUAL(REB_CANCELED, flag_reb_canceled);
+}
+
+TEST(reb_app, start_reb_success)
+{
+    flag_reb_canceled = REB_RUNNING;
+    mock_can_write_return = SUCCESS;
+
+    uint8_t result = start_reb();
+
+    TEST_ASSERT_EQUAL(SUCCESS, result);
+    TEST_ASSERT_EQUAL(REB_RUNNING, flag_reb_canceled);
+}
+
+TEST(reb_app, start_reb_fail_send_can)
+{
+    flag_reb_canceled = REB_RUNNING;
+    mock_can_write_return = FAIL;
+
+    uint8_t result = start_reb();
+
+    TEST_ASSERT_EQUAL(FAIL, result);
+}
+
+TEST(reb_app, start_reb_was_canceled_before_timeout)
+{
+    flag_reb_canceled = REB_CANCELED;
+    mock_can_write_return = SUCCESS;
+
+    uint8_t result = start_reb();
+
+    TEST_ASSERT_EQUAL(SUCCESS, result);
+}
 
 TEST(reb_app, test_read_console_pin_01)
 {
     pthread_t read_input_th;
-    pthread_create(&read_input_th, NULL, read_input_wrapper, NULL);  
+    pthread_create(&read_input_th, NULL, (void*)read_input, NULL);  
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
 
     int pipefd[2];

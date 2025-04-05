@@ -5,10 +5,10 @@
     SPDX-License-Identifier: MIT
 ========================================================================= */
 
+#include "ecu.h"
+#include "ecu_aux.h"
 #include "unity.h"
 #include "unity_fixture.h"
-#include <ecu_aux.h>
-#include <ecu.h>
 
 TEST_GROUP(ecu_aux);
 
@@ -22,7 +22,7 @@ TEST_SETUP(ecu_aux)
     // This is run before EACH TEST
 }
 
-TEST_TEAR_DOWN(ecu_aux) 
+TEST_TEAR_DOWN(ecu_aux)
 {
     // Cleanup after tests
 }
@@ -45,15 +45,9 @@ TEST(ecu_aux, test_get_tcu_start_reb)
     TEST_ASSERT_EQUAL(SUCCESS, get_tcu_start_reb(&status));
 }
 
-TEST(ecu_aux, test_set_tcu_start_reb)
-{
-    TEST_ASSERT_EQUAL(SUCCESS, set_tcu_start_reb(1));
-}
+TEST(ecu_aux, test_set_tcu_start_reb) { TEST_ASSERT_EQUAL(SUCCESS, set_tcu_start_reb(1)); }
 
-TEST(ecu_aux, test_set_tcu_cancel_reb)
-{
-    TEST_ASSERT_EQUAL(SUCCESS, set_tcu_cancel_reb(0));
-}
+TEST(ecu_aux, test_set_tcu_cancel_reb) { TEST_ASSERT_EQUAL(SUCCESS, set_tcu_cancel_reb(0)); }
 
 TEST(ecu_aux, test_get_tcu_cancel_reb)
 {
@@ -71,30 +65,23 @@ TEST(ecu_aux, test_handle_ecu_can)
 {
     unsigned char data[1] = {0x01};
     TEST_ASSERT_EQUAL(SUCCESS, handle_ecu_can(data));
-    
+
     unsigned char data_unblock[1] = {0x02};
     TEST_ASSERT_EQUAL(SUCCESS, handle_ecu_can(data_unblock));
-    
-    //unsigned char invalid_data[1] = {0xFF};
-    //TEST_ASSERT_EQUAL(1, handle_ecu_can(invalid_data));
 
+    // unsigned char invalid_data[1] = {0xFF};
+    // TEST_ASSERT_EQUAL(1, handle_ecu_can(invalid_data));
 }
 
-TEST(ecu_aux, test_block_engine)
-{
-    TEST_ASSERT_EQUAL(SUCCESS, block_engine());
-}
+TEST(ecu_aux, test_block_engine) { TEST_ASSERT_EQUAL(SUCCESS, block_engine()); }
 
-TEST(ecu_aux, test_unblock_engine)
-{
-    TEST_ASSERT_EQUAL(SUCCESS, unblock_engine());
-}
+TEST(ecu_aux, test_unblock_engine) { TEST_ASSERT_EQUAL(SUCCESS, unblock_engine()); }
 
 TEST(ecu_aux, test_handle_ipc_can)
 {
     unsigned char data_start[1] = {0x01};
     TEST_ASSERT_EQUAL(SUCCESS, handle_ipc_can(data_start));
-    
+
     unsigned char data_cancel[1] = {0x02};
     TEST_ASSERT_EQUAL(SUCCESS, handle_ipc_can(data_cancel));
 }

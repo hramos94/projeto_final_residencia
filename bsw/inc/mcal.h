@@ -6,6 +6,8 @@
 #include <pthread.h>
 #include <stdint.h>
 
+#define IOPINS 10
+
 typedef struct
 {
     uint8_t pinNumber;

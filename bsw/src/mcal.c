@@ -1,4 +1,5 @@
 #include "can_utils.h"
+#include "dio_utils.h"
 #include <ecu.h>
 #include <mcal.h>
 
@@ -14,7 +15,7 @@
 #include <sys/types.h>     // Tipos de dados do sistema
 #include <unistd.h>        // close, write
 
-dIO pins[10];
+dIO pins[IOPINS];
 // pin 0 - luz de pisca alerta
 // pin 1 - botão do pisca alerta
 // pin 2 - Server envia bloqueio REB
@@ -88,11 +89,11 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 uint8_t mcal_init()
 {
 
-    pins[0].pinNumber = 0;
-    pins[0].status = 0;
-
-    pins[1].pinNumber = 1;
-    pins[1].status = 0;
+    for (int i = 0; i < IOPINS; i++)
+    {
+        pins[i].pinNumber = i;
+        pins[i].status = 0;
+    }
 
     return SUCCESS;
 }
@@ -107,9 +108,11 @@ uint8_t mcal_init()
  */
 uint8_t read_pin_status(uint8_t *status, uint8_t pin)
 {
-    *status = pins[pin].status;
-
-    return SUCCESS;
+    if (pin < IOPINS)
+    {
+        return dio_get_pin(status, pin, pins);
+    }
+    return FAIL;
 }
 
 /**
@@ -122,9 +125,11 @@ uint8_t read_pin_status(uint8_t *status, uint8_t pin)
  */
 uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
 {
-    pins[p_pin].status = p_status;
-    printf(">>> Set pin%d = %d\n", p_pin, p_status);
-    return SUCCESS;
+    if (p_pin < IOPINS)
+    {
+        return dio_set_pin(p_status, p_pin, pins);
+    }
+    return FAIL;
 }
 
 /**
@@ -326,10 +331,7 @@ uint8_t can_start(int *my_vcan, const char *interface)
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
  */
-uint8_t can_send_vcan0(struct can_frame *frame)
-{
-    return can_send(&my_vcan, frame);
-}
+uint8_t can_send_vcan0(struct can_frame *frame) { return can_send(&my_vcan, frame); }
 
 /**
  *  @brief function that will read frame can coming from vcan0 of LINUX
@@ -341,10 +343,7 @@ uint8_t can_send_vcan0(struct can_frame *frame)
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
  */
-uint8_t can_read_vcan0(struct can_frame *frame)
-{
-    return can_read(&my_vcan, frame);
-}
+uint8_t can_read_vcan0(struct can_frame *frame) { return can_read(&my_vcan, frame); }
 
 /**
  *  @brief function that initialize Socket CAN Linux.
@@ -355,10 +354,7 @@ uint8_t can_read_vcan0(struct can_frame *frame)
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
  */
-uint8_t can_init()
-{
-    return can_start(&my_vcan, interface);
-}
+uint8_t can_init() { return can_start(&my_vcan, interface); }
 
 /**
  *  @brief function that close Socket CAN Linux.
@@ -369,10 +365,7 @@ uint8_t can_init()
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
  */
-uint8_t can_close()
-{
-    return can_socket_close(&my_vcan);
-}
+uint8_t can_close() { return can_socket_close(&my_vcan); }
 
 /**
  *  @brief Show in terminal LOG Message.

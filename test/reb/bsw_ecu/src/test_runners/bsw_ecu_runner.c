@@ -8,4 +8,9 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-TEST_GROUP_RUNNER(bsw_ecu) { RUN_TEST_CASE(bsw_ecu, read_pint_status_valid_input); }
+TEST_GROUP_RUNNER(bsw_ecu)
+{
+    RUN_TEST_CASE(bsw_ecu, read_pint_status_valid_input);
+    RUN_TEST_CASE(bsw_ecu, read_pint_status_invalid_input);
+    RUN_TEST_CASE(bsw_ecu, read_pint_status_invalid_erro_set_pin);
+}

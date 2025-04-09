@@ -1,7 +1,6 @@
 .PHONY: clean
 
-SUBDIRS =  bsw_mcal bsw_ecu reb_ecu 
-#reb_app 
+SUBDIRS =  bsw_mcal bsw_ecu reb_ecu reb_app 
 
 all:
 	@for dir in $(SUBDIRS); do \

@@ -18,11 +18,13 @@ uint8_t application_init()
     if (mcal_init() == FAIL)
     {
         show_error("mcal_init FAIL\n");
+        return FAIL;
     }
 
     if (can_init() == FAIL)
     {
         show_error("can_init FAIL\n");
+        return FAIL;
     }
 
     return SUCCESS;

@@ -74,10 +74,12 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
             {
                 *p_pin = pin;
                 *p_status = status;
+                free(line);
                 return SUCCESS;
             }
         }
     }
+    free(line);
     return FAIL;
 }
 

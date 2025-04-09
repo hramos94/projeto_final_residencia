@@ -13,10 +13,8 @@
 #define CAN_RESPONSE_ID 0x101
 
 uint8_t application_init();
-uint8_t hazard_lights_blink();
 uint8_t read_input();
 uint8_t monitor_read_can();
-uint8_t monitor_tcu();
 uint8_t start_reb();
 uint8_t cancel_reb();
 uint8_t countdown_reb();

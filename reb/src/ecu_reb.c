@@ -6,35 +6,6 @@
 #include <unistd.h>
 
 /**
- *  @brief Send a CAN Message to turn ON or OF the hazard light
- *
- *  @param status 0 to send frame data 0x01(ON);  2 to send frame data 0x02(OFF).
- *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_10}
- */
-uint8_t can_send_hazard_light(uint8_t status)
-{
-    struct can_frame frame = {.can_id = 0x400, .can_dlc = 8, .data = {0}};
-
-    if (status)
-    {
-        // Send TURN ON signal
-        frame.data[0] = 0x01;
-    }
-    else
-    {
-        // Send TURN OFF signal
-        frame.data[0] = 0x02;
-    }
-
-    if (can_send_vcan0(&frame) == FAIL)
-    {
-        return FAIL;
-    }
-    return SUCCESS;
-}
-
-/**
  *  @brief Handle TCU signal received from can
  *
  *  @param data Pointer to frame message receive from TCU Can.
@@ -50,7 +21,6 @@ uint8_t handle_tcu_can(unsigned char *data)
     {
         // Deactivate pin for countdown
         set_pin_status(S_OFF, REB_COUNTDOWN_PIN);
-        show_error("Deactivating REB.\n");
         if (cancel_reb() == FAIL)
         {
             show_error("tcu_can.cancel_reb FAIL\n");

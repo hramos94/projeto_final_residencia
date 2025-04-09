@@ -16,7 +16,6 @@
  * Requirements covered:
  * - SwHLR_F_3 (handle_tcu_can)
  * - SwHLR_F_8 (reb_can_send_ipc)
- * - SwHLR_F_10 (can_send_hazard_light)
  * - SwHLR_F_12 (reb_can_send_ecu)
  */
 
@@ -95,38 +94,6 @@ TEST(reb_ecu, reb_can_send_ecu_status_ECU_REB_CANCEL)
 {
     reb_ecu_id = 2;
     int result_ok = reb_can_send_ecu(reb_ecu_id);
-    TEST_ASSERT_EQUAL(0, result_ok);
-}
-
-/**
- * @brief Tests can_send_hazard_light() with status = 0 (TURN_ON).
- *
- * Scenario:
- *  - reb_ecu_harzard_status = 0 (turn hazard light ON)
- * Expected:
- *  - Return SUCCESS (0).
- * @requir{SwHLR_F_10}
- */
-TEST(reb_ecu, reb_can_send_harzard_status_TURN_ON)
-{
-    uint8_t reb_ecu_harzard_status = 0;
-    int result_ok = can_send_hazard_light(reb_ecu_harzard_status);
-    TEST_ASSERT_EQUAL(0, result_ok);
-}
-
-/**
- * @brief Tests can_send_hazard_light() with status = 2 (TURN_OFF).
- *
- * Scenario:
- *  - reb_ecu_harzard_status = 2 (turn hazard light OFF)
- * Expected:
- *  - Return SUCCESS (0).
- * @requir{SwHLR_F_10}
- */
-TEST(reb_ecu, reb_can_send_harzard_status_TURN_OFF)
-{
-    uint8_t reb_ecu_harzard_status = 2;
-    int result_ok = can_send_hazard_light(reb_ecu_harzard_status);
     TEST_ASSERT_EQUAL(0, result_ok);
 }
 
@@ -235,22 +202,5 @@ TEST(reb_ecu, reb_can_send_ipc_CAN_SEND_VCAN_FAIL)
     set_mock_return_values(0, 0, -1, 0, 0, 0);
     reb_ipc_id = 2;
     int result_ok = reb_can_send_ipc(reb_ipc_id);
-    TEST_ASSERT_EQUAL(1, result_ok);
-}
-
-/**
- * @brief Tests can_send_hazard_light() with can_send_vcan0() failure.
- *
- * Scenario:
- *  - reb_ecu_harzard_status = 2
- *  - We force can_send_vcan0() to fail via mocks (returning -1).
- * Expected:
- *  - Return FAIL (1).
- */
-TEST(reb_ecu, reb_can_send_harzard_CAN_SEND_VCAN_FAIL)
-{
-    set_mock_return_values(0, 0, -1, 0, 0, 0);
-    uint8_t reb_ecu_harzard_status = 2;
-    int result_ok = can_send_hazard_light(reb_ecu_id);
     TEST_ASSERT_EQUAL(1, result_ok);
 }

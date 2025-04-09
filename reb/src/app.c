@@ -2,9 +2,9 @@
 #include <ecu.h>
 #include <ecu_reb.h>
 #include <mcal.h>
-#include <time.h>
 #include <pins.h>
 #include <stdio.h>
+#include <time.h>
 
 uint8_t flag_reb_canceled = REB_RUNNING;
 
@@ -72,7 +72,8 @@ uint8_t monitor_read_can()
             if (frame.can_id == AUX_COM_ID && frame.data[0] == AUX_COM_SIG)
             {
                 // Check REB x AUX Communication and send response as ok
-                struct can_frame response = {.can_id = REB_COM_ID, .can_dlc = 1, .data = {REB_COM_SIG}};
+                struct can_frame response = {
+                    .can_id = REB_COM_ID, .can_dlc = 1, .data = {REB_COM_SIG}};
 
                 if (can_send_vcan0(&response) == FAIL)
                 {
@@ -97,8 +98,8 @@ uint8_t monitor_read_can()
 uint8_t cancel_reb()
 {
     flag_reb_canceled = REB_CANCELED;
-    //printf("Valor do REB_CANCELED = %d\n", flag_reb_canceled);
-    // Send by CAN to IPC the Caceled REB status
+    // printf("Valor do REB_CANCELED = %d\n", flag_reb_canceled);
+    //  Send by CAN to IPC the Caceled REB status
     if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
     {
         show_error("cancel_reb.reb_can_send_ipc FAIL\n");
@@ -112,7 +113,6 @@ uint8_t cancel_reb()
         return FAIL;
     }
 
-    show_error("REB deactivate with success.\n");
     return SUCCESS;
 }
 
@@ -128,7 +128,6 @@ uint8_t start_reb()
     // Reset flag when start reb
     flag_reb_canceled = REB_RUNNING;
 
-
     show_log("Start REB counting and send can to IPC");
     // send by CAN to IPC the start REB counting
     if (reb_can_send_ipc(IPC_REB_START) == FAIL)
@@ -138,13 +137,13 @@ uint8_t start_reb()
     }
 
     // TODO create another thread? probably a mutex?
-       //printf("Reb canceled entrou %d==%d\n", REB_CANCELED, flag_reb_canceled);
+    // printf("Reb canceled entrou %d==%d\n", REB_CANCELED, flag_reb_canceled);
 
-        if (flag_reb_canceled == REB_CANCELED)
-        {
-            show_error("REB canceled before timeout\n");
-            return SUCCESS;
-        }
+    if (flag_reb_canceled == REB_CANCELED)
+    {
+        show_error("REB canceled before timeout\n");
+        return SUCCESS;
+    }
 
     return SUCCESS;
 }
@@ -155,7 +154,7 @@ uint8_t start_reb()
  * @requir{SwHLR_F_12}
  * @requir{SwHLR_F_14}
  */
- uint8_t countdown_reb(void)
+uint8_t countdown_reb(void)
 {
     while (1)
     {
@@ -172,14 +171,13 @@ uint8_t start_reb()
         {
             clock_gettime(CLOCK_MONOTONIC, &current_time);
 
-            elapsed_time =
-                (current_time.tv_sec - start_time.tv_sec) +
-                ((double)(current_time.tv_nsec - start_time.tv_nsec) / 1e9);
+            elapsed_time = (current_time.tv_sec - start_time.tv_sec) +
+                           ((double)(current_time.tv_nsec - start_time.tv_nsec) / 1e9);
 
             if (elapsed_time >= REB_TIMEOUT)
             {
-                reb_can_send_ecu(ECU_REB_START);      
-                set_pin_status(S_OFF, REB_COUNTDOWN_PIN);   
+                reb_can_send_ecu(ECU_REB_START);
+                set_pin_status(S_OFF, REB_COUNTDOWN_PIN);
             }
 
             // Verify the status of the pin again

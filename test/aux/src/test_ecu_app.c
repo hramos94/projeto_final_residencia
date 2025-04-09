@@ -7,11 +7,11 @@
 
 #include "app.h"
 #include "ecu.h"
-#include "ecu_aux.h"
 #include "mcal.h"
 #include "pins.h"
 #include "unity.h"
 #include "unity_fixture.h"
+#include "unity_internals.h"
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,6 +27,7 @@ extern int mock_can_read_return;
 extern int mock_can_write_return;
 
 extern uint8_t reb_con;
+
 extern int flag_can_REB_IPC_count;
 extern int flag_reb_id;
 
@@ -34,6 +35,8 @@ TEST_GROUP(ecu_app);
 
 TEST_SETUP(ecu_app)
 {
+
+    mcal_init();
 
     for (int i = 0; i < 10; i++)
     {
@@ -78,7 +81,6 @@ TEST(ecu_app, application_init_FAIL)
 
 TEST(ecu_app, read_input_sucess)
 {
-    mcal_init();
 
     pthread_t th_read_input;
     pthread_create(&th_read_input, NULL, (void *)read_input, NULL);
@@ -108,8 +110,6 @@ TEST(ecu_app, read_input_fail)
 {
     flag_fail_set_pin = 1;
 
-    mcal_init();
-
     pthread_t th_read_input;
     pthread_create(&th_read_input, NULL, (void *)read_input, NULL);
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
@@ -137,7 +137,6 @@ TEST(ecu_app, read_input_fail)
 
 TEST(ecu_app, hazard_lights_blink_BUTTON_OFF)
 {
-    mcal_init();
 
     pthread_t th_hazard_lights_blink;
     pthread_create(&th_hazard_lights_blink, NULL, (void *)hazard_lights_blink, NULL);
@@ -152,7 +151,6 @@ TEST(ecu_app, hazard_lights_blink_BUTTON_OFF)
 
 TEST(ecu_app, hazard_lights_blink_BUTTON_ON)
 {
-    mcal_init();
 
     pthread_t th_hazard_lights_blink;
     pthread_create(&th_hazard_lights_blink, NULL, (void *)hazard_lights_blink, NULL);
@@ -173,8 +171,6 @@ TEST(ecu_app, hazard_lights_blink_BUTTON_ON)
 
 TEST(ecu_app, hazard_lights_blink_get_hazard_button_FAIL)
 {
-
-    mcal_init();
 
     uint8_t status = 0;
     status = set_pin_status(1, HAZARD_BUTTON_PIN);
@@ -199,8 +195,6 @@ TEST(ecu_app, hazard_lights_blink_get_hazard_button_FAIL)
 TEST(ecu_app, hazard_lights_blink_set_hazard_light_ON_FAIL)
 {
 
-    mcal_init();
-
     uint8_t status = 0;
     status = set_pin_status(1, HAZARD_BUTTON_PIN);
     TEST_ASSERT_EQUAL(0, status);
@@ -223,8 +217,6 @@ TEST(ecu_app, hazard_lights_blink_set_hazard_light_ON_FAIL)
 
 TEST(ecu_app, hazard_lights_blink_set_hazard_light_OFF_FAIL)
 {
-
-    mcal_init();
 
     uint8_t status = 0;
     status = set_pin_status(1, HAZARD_BUTTON_PIN);
@@ -462,4 +454,92 @@ TEST(ecu_app, monitor_tcu_can_send_reb_FAIL)
     TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
     // should turned off
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_ACTIVATE_PIN]);
+}
+
+TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
+{
+
+    mock_can_write_return = 0;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    // informing that received response OK from REB
+    reb_con = 1;
+    sleep(1);
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN not FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_FAULT)
+{
+
+    mock_can_write_return = 0;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    for (int i = 0; i <= 15; i++)
+    {
+        printf(
+            "check_can_communication_SEND_OK_RECEIVE_FAIL waiting for fault %d seconds remaining\n",
+            15 - i);
+        if (flag_status_pin[REB_IPC_FAULT_PIN] == 1)
+        {
+            break;
+        }
+        sleep(1);
+    }
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN FAULT
+    TEST_ASSERT_EQUAL(1, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+TEST(ecu_app, check_can_communication_SEND_CAN_FAIL)
+{
+
+    mock_can_write_return = 1;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    for (int i = 0; i <= 15; i++)
+    {
+        printf("check_can_communication_SEND_CAN_FAIL waiting for fault %d seconds remaining\n",
+               15 - i);
+        sleep(1);
+        if (flag_status_pin[REB_IPC_FAULT_PIN] == 1)
+        {
+            printf("check_can_communication_SEND_CAN_FAIL waiting 3 seconds\n");
+            sleep(3);
+            break;
+        }
+    }
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN FAULT
+    TEST_ASSERT_EQUAL(1, flag_status_pin[REB_IPC_FAULT_PIN]);
 }

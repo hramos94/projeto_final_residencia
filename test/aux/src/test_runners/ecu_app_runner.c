@@ -22,4 +22,7 @@ TEST_GROUP_RUNNER(ecu_app)
     RUN_TEST_CASE(ecu_app, monitor_tcu_get_reb_button_FAIL);
     RUN_TEST_CASE(ecu_app, monitor_tcu_get_set_button_FAIL);
     RUN_TEST_CASE(ecu_app, monitor_tcu_can_send_reb_FAIL);
+    RUN_TEST_CASE(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK);
+    RUN_TEST_CASE(ecu_app, check_can_communication_SEND_OK_RECEIVE_FAULT);
+    RUN_TEST_CASE(ecu_app, check_can_communication_SEND_CAN_FAIL);
 }

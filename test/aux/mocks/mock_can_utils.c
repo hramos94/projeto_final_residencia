@@ -95,6 +95,11 @@ int can_write(int *can_socket, struct can_frame *frame)
         {
             flag_can_REB_IPC_count++;
         }
+
+        if (frame->data[0] == 0x02 && frame->can_id == TCU_REB_ID)
+        {
+            flag_can_REB_IPC_count++;
+        }
     }
 
     if (mock_can_write_return == 0)

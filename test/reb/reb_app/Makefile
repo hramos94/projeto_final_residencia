@@ -1,7 +1,8 @@
 .PHONY: clean reb aux all
 
 CC = gcc
-CFLAGS += -coverage
+CFLAGS += -coverage -fcondition-coverage
+
 
 INCLUDES = -I../../unity/inc -I../../../bsw/inc -I../mocks -I../../../reb/inc
 

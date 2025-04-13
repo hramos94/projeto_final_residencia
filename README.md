@@ -49,36 +49,37 @@ These instructions will help you get a copy of the project running on your local
 This project consists of two programs:
 
 - **REB**: The core engine blocker module.
-- **AUX**: An auxiliary module that communicates with REB via Virtual CAN (Linux) and interfaces with the **GUI** through digital I/O. Aux contains Telematics (where you can interact through the buttons), Instrument Painel and Engine functionnality.
+- **AUX**: An auxiliary module that communicates with REB via Virtual CAN (Linux) and interfaces with the **GUI** through digital I/O. Aux contains Telematics (where you can interact through the buttons), Instrument Panel and Engine functionality.
 
 ![System Architecture](./project.png)
 
-Each program has an architecture based on AUTOSAR according to image below:
+Each program has an architecture based on AUTOSAR as shown below:
 
 ![System Architecture](./project_architecture.png)
 
 ### 📋 Requirements
 
-This project is intended for Linux distributions. To install and run it, ensure you have the following dependencies:
+To run this project the following requirements must be met:
+- Linux Operating System
+- Build-essentials package;
+- gcc version 14.2 or higher;
+- lcov version 1.3.1 or higher;
+- SDL packages;
+- Doxygen and graphviz packages for documentation.
 
+### Installation of SDL and build-essentials packages
+
+To install SDL and build-essentials packages, run:
 ```
 apt-get install -y build-essential
 apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 ```
 
-#### Optional (for generating Doxygen documentation):
+### Installation of lcov 2.3.1 
 
-```
-apt-get install doxygen
-apt-get install graphviz
-```
-
-### Instalation of lcov 2.3.1 (for MCDC test coverage)
-
-To install lcov 2.3.1 execute the following commands:
+To install the required version of lcov, run:
   ```
-  sudo apt remove lcov
-  sudo apt remove gcov
+  sudo apt remove lcov gcov
   sudo apt update
   sudo apt install git make perl
   git clone https://github.com/linux-test-project/lcov.git
@@ -87,18 +88,18 @@ To install lcov 2.3.1 execute the following commands:
   sudo make install
   ```
 
-After instalation execute:
+After installation, create a symbolic link for gcov-14:
   ```
   sudo ln -s $(which gcov-14) /usr/bin/gcov
   ```
 
-To check lcov version execute:
+Verify the versions with:
   ```
   lcov --version
   gcov --version 
   ```
 
-### Instalation of gcc 14.2 (for MCDC test coverage)
+### Installation of gcc 14.2 
 To install gcc 14.2 execute the following commands:
   ```
   sudo apt remove gcc
@@ -108,7 +109,7 @@ To install gcc 14.2 execute the following commands:
   gcc-14 --version 
   ```
 
-After instalation execute:
+After installation, set it as the default gcc::
   ```
   sudo ln -s /usr/bin/gcc-14 /usr/bin/gcc
   ```
@@ -117,6 +118,12 @@ To check gcc version execute:
   ```
   gcc --version 
   ```
+#### Intallation of Doxygen:
+
+```
+apt-get install doxygen
+apt-get install graphviz
+```
 
 
 ### 🔧 Installation
@@ -163,7 +170,7 @@ doxygen Doxyfile
 
 To see reports, execute the docs/html/index.html or
 
-**Create `Doc` and show the html:**
+**Create `Doc` and view the html:**
   ```
   make doc
   ```

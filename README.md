@@ -140,9 +140,10 @@ To see test coverage execute:
 
 ### Instalation of lcov 2.3.1
 
-To intall lcov 2.3.1 execute the following commands:
+To install lcov 2.3.1 execute the following commands:
   ```
   sudo apt remove lcov
+  sudo apt remove gcov
   sudo apt update
   sudo apt install git make perl
   git clone https://github.com/linux-test-project/lcov.git
@@ -150,13 +151,20 @@ To intall lcov 2.3.1 execute the following commands:
   git checkout v2.3.1
   sudo make install
   ```
+
+After instalation execute:
+  ```
+  sudo ln -s $(which gcov-14) /usr/bin/gcov
+  ```
+
 To check lcov version execute:
   ```
-  lcov --version 
+  lcov --version
+  gcov --version 
   ```
 
 ### Instalation of gcc 14.2
-To intall gcc 14.2 execute the following commands:
+To install gcc 14.2 execute the following commands:
   ```
   sudo apt remove gcc
   sudo add-apt-repository universe
@@ -165,16 +173,16 @@ To intall gcc 14.2 execute the following commands:
   gcc-14 --version 
   ```
 
-To check gcc version execute:
-  ```
-  gcc-14 --version 
-  ```
-
 After instalation execute:
   ```
   sudo ln -s /usr/bin/gcc-14 /usr/bin/gcc
-  sudo ln -s $(which gcov-14) /usr/bin/gcov
   ```
+
+To check gcc version execute:
+  ```
+  gcc --version 
+  ```
+
 
 ## ✒️ Authors
 

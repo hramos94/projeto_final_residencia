@@ -57,7 +57,7 @@ Each program has an architecture based on AUTOSAR according to image below:
 
 ![System Architecture](./project_architecture.png)
 
-### 📋 Prerequisites
+### 📋 Requirements
 
 This project is intended for Linux distributions. To install and run it, ensure you have the following dependencies:
 
@@ -72,6 +72,52 @@ apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 apt-get install doxygen
 apt-get install graphviz
 ```
+
+### Instalation of lcov 2.3.1 (for MCDC test coverage)
+
+To install lcov 2.3.1 execute the following commands:
+  ```
+  sudo apt remove lcov
+  sudo apt remove gcov
+  sudo apt update
+  sudo apt install git make perl
+  git clone https://github.com/linux-test-project/lcov.git
+  cd lcov
+  git checkout v2.3.1
+  sudo make install
+  ```
+
+After instalation execute:
+  ```
+  sudo ln -s $(which gcov-14) /usr/bin/gcov
+  ```
+
+To check lcov version execute:
+  ```
+  lcov --version
+  gcov --version 
+  ```
+
+### Instalation of gcc 14.2 (for MCDC test coverage)
+To install gcc 14.2 execute the following commands:
+  ```
+  sudo apt remove gcc
+  sudo add-apt-repository universe
+  sudo apt update
+  sudo apt install gcc-14
+  gcc-14 --version 
+  ```
+
+After instalation execute:
+  ```
+  sudo ln -s /usr/bin/gcc-14 /usr/bin/gcc
+  ```
+
+To check gcc version execute:
+  ```
+  gcc --version 
+  ```
+
 
 ### 🔧 Installation
 
@@ -136,51 +182,6 @@ To run test by executing:
 To see test coverage execute:
   ```
   make cov
-  ```
-
-### Instalation of lcov 2.3.1
-
-To install lcov 2.3.1 execute the following commands:
-  ```
-  sudo apt remove lcov
-  sudo apt remove gcov
-  sudo apt update
-  sudo apt install git make perl
-  git clone https://github.com/linux-test-project/lcov.git
-  cd lcov
-  git checkout v2.3.1
-  sudo make install
-  ```
-
-After instalation execute:
-  ```
-  sudo ln -s $(which gcov-14) /usr/bin/gcov
-  ```
-
-To check lcov version execute:
-  ```
-  lcov --version
-  gcov --version 
-  ```
-
-### Instalation of gcc 14.2
-To install gcc 14.2 execute the following commands:
-  ```
-  sudo apt remove gcc
-  sudo add-apt-repository universe
-  sudo apt update
-  sudo apt install gcc-14
-  gcc-14 --version 
-  ```
-
-After instalation execute:
-  ```
-  sudo ln -s /usr/bin/gcc-14 /usr/bin/gcc
-  ```
-
-To check gcc version execute:
-  ```
-  gcc --version 
   ```
 
 

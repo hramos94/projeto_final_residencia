@@ -53,6 +53,10 @@ This project consists of two programs:
 
 ![System Architecture](./project.png)
 
+Each program has an architecture based on AUTOSAR according to image below:
+
+![System Architecture](./project_architecture.png)
+
 ### 📋 Prerequisites
 
 This project is intended for Linux distributions. To install and run it, ensure you have the following dependencies:

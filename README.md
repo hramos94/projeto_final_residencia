@@ -174,7 +174,7 @@ To run the test you need to assure that:
 - lcov version is 2.3.1 or higher
 - gcc version is 14.2 or higher
 
-To run test by executing:
+To run test execute:
   ```
   make test
   ```

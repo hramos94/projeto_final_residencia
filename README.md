@@ -10,6 +10,7 @@ There will be three types of branches:
 
 - feat: creation of new features
 - fix: bug fixes
+- test: creation of new tests
 - docs: documentation updates
 
 For branch creation, the following pattern is established, using Jira card REB-12 as an example:
@@ -23,6 +24,8 @@ feat/REB-12_update_readme
 
 fix/REB-12_update_readme
 
+test/REB-12_update_readme
+
 docs/REB-12_update_readme
 ```
 
@@ -32,6 +35,8 @@ Examples:
 `feat: short description of the task functionality`
 
 `fix: short description of the task resolution`
+
+`test: short description of the test`
 
 `docs: short description of the task documentation added/updated`
 
@@ -115,7 +120,57 @@ To see reports, execute the docs/html/index.html or
 
 ## ⚙️ Running Tests
 
-@TODO
+To run the test you need to assure that:
+- lcov version is 2.3.1 or higher
+- gcc version is 14.2 or higher
+
+To run test by executing:
+  ```
+  make test
+  ```
+
+To see test coverage execute:
+  ```
+  make cov
+  ```
+
+### Instalation of lcov 2.3.1
+
+To intall lcov 2.3.1 execute the following commands:
+  ```
+  sudo apt remove lcov
+  sudo apt update
+  sudo apt install git make perl
+  git clone https://github.com/linux-test-project/lcov.git
+  cd lcov
+  git checkout v2.3.1
+  sudo make install
+  ```
+To check lcov version execute:
+  ```
+  lcov --version 
+  ```
+
+### Instalation of gcc 14.2
+To intall gcc 14.2 execute the following commands:
+  ```
+  sudo apt remove gcc
+  sudo add-apt-repository universe
+  sudo apt update
+  sudo apt install gcc-14
+  gcc-14 --version 
+  ```
+
+To check gcc version execute:
+  ```
+  gcc-14 --version 
+  ```
+
+After instalation execute:
+  ```
+  sudo ln -s /usr/bin/gcc-14 /usr/bin/gcc
+  sudo ln -s $(which gcov-14) /usr/bin/gcov
+  ```
 
 ## ✒️ Authors
 

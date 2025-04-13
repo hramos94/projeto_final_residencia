@@ -4,6 +4,7 @@ CC = gcc
 CFLAGS = -g
 CFLAGS += -coverage
 CFLAGS += -fprofile-update=atomic
+CFLAGS += -fcondition-coverage
 
 
 INCLUDES = -I../unity/inc -I../../bsw/inc -I../../aux/inc -I./mocks

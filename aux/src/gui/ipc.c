@@ -290,7 +290,7 @@ int16_t ipc_runner()
                 }
                 else if (buttons1[2].clicked == 0 && buttons1[2].last_click == 1)
                 {
-                    set_pin_status(1, CAN_FILTER_PIN);
+                    set_pin_status(0, CAN_FILTER_PIN);
                     buttons1[2].last_click = 0;
                 }
             }

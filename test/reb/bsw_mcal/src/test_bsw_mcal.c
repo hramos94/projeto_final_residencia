@@ -19,6 +19,40 @@ TEST_SETUP(mcal_others) {}
 
 TEST_TEAR_DOWN(mcal_others) {}
 
+TEST(mcal_others, set_pin_status_FAIL_PIN_NUMBER)
+{   
+     uint8_t pin = 10, status = 0;
+
+    uint8_t result = set_pin_status(status, pin);
+
+    // Esperamos que o resultado seja SUCCESS e os valores corretos
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+}
+TEST(mcal_others, set_pin_status_SUCCESS)
+{   
+     uint8_t pin = 1, status = 0;
+
+    uint8_t result = set_pin_status(status, pin);
+
+    // Esperamos que o resultado seja SUCCESS e os valores corretos
+    TEST_ASSERT_EQUAL_UINT8(0, result);
+
+}
+
+TEST(mcal_others, read_pin_status_FAIL_PIN_NUMBER)
+{
+    uint8_t pin = 10, status = 0;
+    uint8_t result = read_pin_status(&status,pin);
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+}
+TEST(mcal_others, read_pin_status_SUCCESS)
+{
+    uint8_t pin = 1, status = 0;
+    uint8_t result = read_pin_status(&status,pin);
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+}
+
+
 TEST(mcal_others, read_pint_status_SUCCESS_STATUS_0)
 {    uint8_t pin = 0, status = 0;
 
@@ -59,6 +93,8 @@ TEST(mcal_others, read_pint_status_SUCCESS_STATUS_1)
     TEST_ASSERT_EQUAL_UINT8(5, pin);
     TEST_ASSERT_EQUAL_UINT8(1, status);
 }
+
+
 TEST(mcal_others, read_pint_status_FAIL_GETLINE)
 {
     uint8_t pin = 0, status = 0;

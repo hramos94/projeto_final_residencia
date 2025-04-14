@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "dtc_codes.h"
+#include "dtc_codes_bsw.h"
 #include "dtc_logger.h"
 
 #define LOG_FILE "dtc_log.txt"

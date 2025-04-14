@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "dtc_codes.h"
+#include "dtc_codes_reb.h"
 #include "dtc_logger.h"
 
 uint8_t flag_reb_canceled = REB_RUNNING;

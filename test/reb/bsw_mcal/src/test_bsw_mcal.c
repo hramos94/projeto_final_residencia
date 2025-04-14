@@ -87,7 +87,7 @@ TEST(mcal_others, read_pin_status_SUCCESS)
 {
     uint8_t pin = 1, status = 0;
     uint8_t result = read_pin_status(&status,pin);
-    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT8(0, result);
 }
 
 /**

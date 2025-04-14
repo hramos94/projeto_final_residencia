@@ -7,9 +7,7 @@
  * It covers success and failure scenarios.
  *
  * Requirements covered:
- * - SwHLR_F_3 (handle_tcu_can)
- * - SwHLR_F_8 (reb_can_send_ipc)
- * - SwHLR_F_12 (reb_can_send_ecu)
+ * - SysHLR_9
  */
 
 #include "mcal.h"
@@ -33,7 +31,6 @@ TEST_TEAR_DOWN(mcal_others) {}
  *  - The pin number is 10, which is higher than the avaliable IO.
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, set_pin_status_FAIL_PIN_NUMBER)
 {   
@@ -49,7 +46,6 @@ TEST(mcal_others, set_pin_status_FAIL_PIN_NUMBER)
  *  - The pin number is 1, which is lower than the avaliable IO.
  * Expected:
  *  - Return SUCCESS (0).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, set_pin_status_SUCCESS)
 {   
@@ -65,7 +61,6 @@ TEST(mcal_others, set_pin_status_SUCCESS)
  *  - The pin number is 10, which is higher than the avaliable IO.
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, read_pin_status_FAIL_PIN_NUMBER)
 {
@@ -81,7 +76,6 @@ TEST(mcal_others, read_pin_status_FAIL_PIN_NUMBER)
  *  - The pin number is 1, which is lower than the avaliable IO.
  * Expected:
  *  - Return SUCCESS (0).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, read_pin_status_SUCCESS)
 {
@@ -99,7 +93,6 @@ TEST(mcal_others, read_pin_status_SUCCESS)
  * Expected:
  *  - Return SUCCESS (0).
  *  - Pin value should be 5, and status should be 0.
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, read_pint_status_SUCCESS_STATUS_0)
 {   
@@ -123,7 +116,6 @@ TEST(mcal_others, read_pint_status_SUCCESS_STATUS_0)
  * Expected:
  *  - Return SUCCESS (0).
  *  - Pin value should be 5, and status should be 1.
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, read_pint_status_SUCCESS_STATUS_1)
 {
@@ -148,7 +140,6 @@ TEST(mcal_others, read_pint_status_SUCCESS_STATUS_1)
  *  - The function should handle the failure gracefully.
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, read_pint_status_FAIL_GETLINE)
 {
@@ -166,7 +157,6 @@ TEST(mcal_others, read_pint_status_FAIL_GETLINE)
  *  - Simulates an invalid input where the line does not start with the expected "pin" prefix.
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, read_pint_status_FAIL_WRONG_PREFIX)
 {
@@ -186,7 +176,6 @@ TEST(mcal_others, read_pint_status_FAIL_WRONG_PREFIX)
  *  - Simulates an input where the status is an invalid value (not 0 or 1).
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, read_pint_status_FAIL_INVALID_STATUS)
 {
@@ -206,7 +195,6 @@ TEST(mcal_others, read_pint_status_FAIL_INVALID_STATUS)
  *  - Simulates an input where sscanf fails to parse the pin and status due to invalid characters.
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, read_pint_status_FAIL_SSCANF)
 {
@@ -230,7 +218,6 @@ TEST(mcal_others, read_pint_status_FAIL_SSCANF)
  *  - Simulates an input where the status value is missing (extra space).
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, read_pint_status_FAIL_EDGE_CASE)
 {
@@ -252,7 +239,6 @@ TEST(mcal_others, read_pint_status_FAIL_EDGE_CASE)
  * Expected:
  *  - All pins initialized with status 0 and corresponding pin numbers.
  *  - Return SUCCESS (0).
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, mcal_init_SUCCESS)
 {
@@ -267,7 +253,6 @@ TEST(mcal_others, mcal_init_SUCCESS)
  *  - go_sleep() is called with a delay of 1 second.
  * Expected:
  *  - The function completes without altering the result variable.
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, go_sleep_1)
 {
@@ -283,7 +268,7 @@ TEST(mcal_others, go_sleep_1)
  *  - A text message is passed to show_error().
  * Expected:
  *  - The function prints the message and does not modify the input result.
- * @requir{SwHLR_F_99}
+ * @requir{SwHLR_F_16}
  */
 TEST(mcal_others, show_error_TEXT)
 {
@@ -306,7 +291,6 @@ void *my_func(void *arg) {
  *  - Thread function is valid and thread creation succeeds.
  * Expected:
  *  - A non-zero thread ID is returned and pthread_join completes without error.
- * @requir{SwHLR_F_99}
  */
 TEST(mcal_others, new_thread_SUCCESS)
 {
@@ -338,7 +322,7 @@ TEST_SETUP(mcal_can)
  * 
  * Expected:
  *  - Mock return values are set to default (0) to ensure no side effects between tests.
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST_TEAR_DOWN(mcal_can) 
 {
@@ -405,7 +389,7 @@ TEST(mcal_can, can_interface_status_DOES_NOT_EXIST)
  *  - All other mocked functions also return success.
  * Expected:
  *  - can_bind_socket() returns SUCCESS (0).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_bind_socket_SUCCESS)
 {
@@ -422,7 +406,7 @@ TEST(mcal_can, can_bind_socket_SUCCESS)
  *  - Mocked can_bind is set to return -1 (failure).
  * Expected:
  *  - can_bind_socket() returns FAIL (1) due to bind failure.
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_bind_socket_FAIL)
 {
@@ -439,7 +423,7 @@ TEST(mcal_can, can_bind_socket_FAIL)
  *  - Mocked socket_create is set to return a valid socket (1).
  * Expected:
  *  - can_socket_open() returns SUCCESS (0).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_socket_open_SUCCESS)
 {
@@ -456,7 +440,7 @@ TEST(mcal_can, can_socket_open_SUCCESS)
  *  - Mocked socket_create is set to return -1 (failure).
  * Expected:
  *  - can_socket_open() returns FAIL (1).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_socket_open_FAIL)
 {
@@ -473,7 +457,7 @@ TEST(mcal_can, can_socket_open_FAIL)
  *  - Mocked socket_close is set to return success (0).
  * Expected:
  *  - can_socket_close() returns SUCCESS (0).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_socket_close_SUCCESS)
 {
@@ -490,7 +474,7 @@ TEST(mcal_can, can_socket_close_SUCCESS)
  *  - Mocked socket_close is set to return -1 (failure).
  * Expected:
  *  - can_socket_close() returns FAIL (1).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_socket_close_FAIL)
 {
@@ -507,7 +491,7 @@ TEST(mcal_can, can_socket_close_FAIL)
  *  - Mocked can_socket_close is set to return success (0).
  * Expected:
  *  - can_close() returns SUCCESS (0).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_close_SUCCESS)
 {
@@ -523,7 +507,7 @@ TEST(mcal_can, can_close_SUCCESS)
  *  - Mocked can_write is set to return success (0).
  * Expected:
  *  - can_send() returns SUCCESS (0).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_send_SUCCESS)
 {
@@ -541,7 +525,7 @@ TEST(mcal_can, can_send_SUCCESS)
  *  - Mocked can_write is set to return -1 (failure).
  * Expected:
  *  - can_send() returns FAIL (1).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_send_FAIL)
 {
@@ -559,7 +543,7 @@ TEST(mcal_can, can_send_FAIL)
  *  - Mocked can_send is set to return success (0).
  * Expected:
  *  - can_send_vcan0() returns SUCCESS (0).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_send_vcan0_SUCCESS)
 {
@@ -576,7 +560,7 @@ TEST(mcal_can, can_send_vcan0_SUCCESS)
  *  - Mocked can_read_socket is set to return a positive value (indicating data was read successfully).
  * Expected:
  *  - can_read() returns SUCCESS (0).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_read_SUCCESS)
 {
@@ -594,7 +578,7 @@ TEST(mcal_can, can_read_SUCCESS)
  *  - Mocked can_read_socket is set to return -1 (failure).
  * Expected:
  *  - can_read() returns FAIL (1).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_read_FAIL)
 {
@@ -612,7 +596,7 @@ TEST(mcal_can, can_read_FAIL)
  *  - Mocked can_read_socket is set to return a positive value (indicating data was read successfully).
  * Expected:
  *  - can_read_vcan0() returns SUCCESS (0).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_read_vcan0_SUCCESS)
 {
@@ -629,7 +613,7 @@ TEST(mcal_can, can_read_vcan0_SUCCESS)
  *  - can_socket_open, can_interface_status, and can_bind_socket all return successful values.
  * Expected:
  *  - Return SUCCESS (0).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_start_SUCCESS)
 {
@@ -646,7 +630,7 @@ TEST(mcal_can, can_start_SUCCESS)
  *  - can_socket_open returns 1, simulating a failure in socket creation.
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_start_SOCKET_FAIL)
 {
@@ -663,7 +647,7 @@ TEST(mcal_can, can_start_SOCKET_FAIL)
  *  - can_interface_status returns 1, simulating a failure in the interface status check.
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_start_INTERFACE_FAIL)
 {
@@ -680,7 +664,7 @@ TEST(mcal_can, can_start_INTERFACE_FAIL)
  *  - can_bind_socket returns 1, simulating a failure in binding the socket.
  * Expected:
  *  - Return FAILURE (1).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_start_BIND_FAIL)
 {
@@ -697,7 +681,7 @@ TEST(mcal_can, can_start_BIND_FAIL)
  *  - can_socket is successfully initialized.
  * Expected:
  *  - Return SUCCESS (1).
- * @requir{SwHLR_F_99}
+ * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_init_SUCCESS)
 {

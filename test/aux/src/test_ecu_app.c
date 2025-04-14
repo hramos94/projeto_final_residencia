@@ -5,13 +5,30 @@
     SPDX-License-Identifier: MIT
 ========================================================================= */
 
+/**
+ * @file test_ecu_app.c
+ * @brief Unit tests for functions in aux/app.c
+ *
+ * This file contains the test suite that validates the main functions of
+ * Remote Engine Blocking, in app.c, focusing on sending and handling CAN messages.
+ * It covers success and failure scenarios, as well as different status/byte values.
+ *
+ * This file contains the test suite that validates the runnables of auxiliar application
+ * in file aux/app.c, that is used to communicate with Remote Engine Blocker.
+ *
+ * Requirements covered:
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
+
 #include "app.h"
 #include "ecu.h"
 #include "mcal.h"
 #include "pins.h"
 #include "unity.h"
 #include "unity_fixture.h"
-#include "unity_internals.h"
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
@@ -61,6 +78,15 @@ TEST_TEAR_DOWN(ecu_app)
     // Cleanup after tests
 }
 
+/**
+ * @brief Tests application_init() with return status OK
+ *
+ * Scenario:
+ *  - mcal_init() = SUCCESS
+ *  - can_init() = SUCCESS
+ * Expected:
+ *  - Return SUCCESS (0).
+ */
 TEST(ecu_app, application_init_OK)
 {
     uint8_t status = 0;
@@ -70,6 +96,15 @@ TEST(ecu_app, application_init_OK)
     TEST_ASSERT_EQUAL_INT(SUCCESS, status);
 }
 
+/**
+ * @brief Tests application_init() with return status FAIL
+ *
+ * Scenario:
+ *  - mcal_init() = SUCCESS
+ *  - can_init() = FAIL
+ * Expected:
+ *  - Return FAIL (1).
+ */
 TEST(ecu_app, application_init_FAIL)
 {
     uint8_t status = 0;
@@ -79,6 +114,16 @@ TEST(ecu_app, application_init_FAIL)
     TEST_ASSERT_EQUAL_INT(FAIL, status);
 }
 
+/**
+ * @brief Tests read_input() with return status SUCCESS
+ *
+ * Scenario:
+ *  - read_console() = SUCCESS.
+ *  - insert input "pin 1 1".
+ * Expected:
+ *  - status of pin 1 changed from 0 to 1.
+ *  - Return SUCCESS (0).
+ */
 TEST(ecu_app, read_input_sucess)
 {
 
@@ -106,6 +151,14 @@ TEST(ecu_app, read_input_sucess)
     TEST_ASSERT_EQUAL_INT(SUCCESS, result);
 }
 
+/**
+ * @brief Tests read_input() with return status FAIL.
+ *
+ * Scenario:
+ *  - pin unavailable to change status.
+ * Expected:
+ *  - Return FAIL (1).
+ */
 TEST(ecu_app, read_input_fail)
 {
     flag_fail_set_pin = 1;
@@ -135,6 +188,15 @@ TEST(ecu_app, read_input_fail)
     TEST_ASSERT_EQUAL_INT(0, status);
 }
 
+/**
+ * @brief Tests hazard_lights_blink() to check if buttons is OFF.
+ *
+ * Scenario:
+ *  - the applications is on the initial stage.
+ * Expected:
+ *  - PIN 0 (Button Hazard Light) stage = DOWN.
+ *  - Hazard light not blink.
+ */
 TEST(ecu_app, hazard_lights_blink_BUTTON_OFF)
 {
 
@@ -149,6 +211,15 @@ TEST(ecu_app, hazard_lights_blink_BUTTON_OFF)
     TEST_ASSERT_EQUAL(0, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
 }
 
+/**
+ * @brief Tests hazard_lights_blink() to check if buttons is ON.
+ *
+ * Scenario:
+ *  - the applications is on the initial stage an then the button is set to HIGH.
+ * Expected:
+ *  - PIN 0 (Button Hazard Light) stage = HIGH
+ *  - Hazard Light blink.
+ */
 TEST(ecu_app, hazard_lights_blink_BUTTON_ON)
 {
 
@@ -169,6 +240,15 @@ TEST(ecu_app, hazard_lights_blink_BUTTON_ON)
     TEST_ASSERT_GREATER_THAN(0, flag_cout_set_pin[HAZARD_LIGHTS_PIN]);
 }
 
+/**
+ * @brief Tests hazard_lights_blink() to FAIL reading button pin.
+ *
+ * Scenario:
+ *  - Trying to read a status BUTTON hazard light that is unavailable.
+ * Expected:
+ *  - Hazard Light not blink.
+ *  - Hazard Light button is HIGH.
+ */
 TEST(ecu_app, hazard_lights_blink_get_hazard_button_FAIL)
 {
 
@@ -192,6 +272,14 @@ TEST(ecu_app, hazard_lights_blink_get_hazard_button_FAIL)
     TEST_ASSERT_EQUAL(0, flag_cout_set_pin[HAZARD_LIGHTS_PIN]);
 }
 
+/** @brief Tests hazard_lights_blink() to FAIL.
+ *
+ * Scenario:
+ *  - Trying to set hazard ligh pin to HIGH that is unavailable.
+ * Expected:
+ *  - Hazard Light not blink.
+ *  - Hazard Light button is HIGH.
+ */
 TEST(ecu_app, hazard_lights_blink_set_hazard_light_ON_FAIL)
 {
 
@@ -215,6 +303,14 @@ TEST(ecu_app, hazard_lights_blink_set_hazard_light_ON_FAIL)
     TEST_ASSERT_EQUAL(0, flag_cout_set_pin[HAZARD_LIGHTS_PIN]);
 }
 
+/** @brief Tests hazard_lights_blink() to FAIL.
+ *
+ * Scenario:
+ *  - Trying to set hazard ligh pin to DOWN that is unavailable.
+ * Expected:
+ *  - Hazard Light not blink.
+ *  - Hazard Light button is HIGH.
+ */
 TEST(ecu_app, hazard_lights_blink_set_hazard_light_OFF_FAIL)
 {
 
@@ -242,6 +338,17 @@ TEST(ecu_app, hazard_lights_blink_set_hazard_light_OFF_FAIL)
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[HAZARD_LIGHTS_PIN]);
 }
 
+/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+ *
+ * Scenario:
+ *  - Received a message to block engine from can network.
+ * Expected:
+ *  - The hazard button is HIGH.
+ *  - The engine start the Bloking Mode.
+ *  - The IPC start warning that REB is activated.
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ */
 TEST(ecu_app, monitor_read_can_get_handle_ecu_can)
 {
 
@@ -262,6 +369,15 @@ TEST(ecu_app, monitor_read_can_get_handle_ecu_can)
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
+/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+ *
+ * Scenario:
+ *  - Received a message from CAN to warning driver that Engine will be blocked.
+ * Expected:
+ *  - The IPC start warning that REB will be activated.
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ */
 TEST(ecu_app, monitor_reac_can_get_handle_ipc_can)
 {
 
@@ -280,6 +396,15 @@ TEST(ecu_app, monitor_reac_can_get_handle_ipc_can)
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
+/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+ *
+ * Scenario:
+ *  - Received a message from CAN to check communication with Remote Engine Blocker.
+ * Expected:
+ *  - The IPC not show warning REB FAULT.
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ */
 TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication)
 {
 
@@ -298,6 +423,16 @@ TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication)
     TEST_ASSERT_EQUAL(1, reb_con);
 }
 
+/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+ *
+ * Scenario:
+ *  - Received a message from CAN to check communication with Remote Engine Blocker with invalid
+ * data.
+ * Expected:
+ *  - The IPC show warning REB FAULT.
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ */
 TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication_Diff_data_0x02)
 {
 
@@ -316,6 +451,15 @@ TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication_Diff_data_0x02)
     TEST_ASSERT_EQUAL(0, reb_con);
 }
 
+/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+ *
+ * Scenario:
+ *  - CAN is not available.
+ * Expected:
+ *  - IPC does not show any warning, and Engine still running.
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ */
 TEST(ecu_app, monitor_read_can_get_handle_FAIL_CAN)
 {
 
@@ -337,6 +481,13 @@ TEST(ecu_app, monitor_read_can_get_handle_FAIL_CAN)
     TEST_ASSERT_EQUAL(0, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
+/** @brief Tests monitor_tcu() function.
+ *
+ * Scenario:
+ *  - Set Activated REB button to HIGH.
+ * Expected:
+ *  - A message CAN is sent to Remote Engine Blocker to activate REB.
+ */
 TEST(ecu_app, monitor_tcu_set_reb_start_button)
 {
 
@@ -360,6 +511,13 @@ TEST(ecu_app, monitor_tcu_set_reb_start_button)
     TEST_ASSERT_GREATER_THAN(0, flag_can_REB_IPC_count);
 }
 
+/** @brief Tests monitor_tcu() function.
+ *
+ * Scenario:
+ *  - Set Deactivated REB button to HIGH.
+ * Expected:
+ *  - A message CAN is sent to Remote Engine Blocker to deactivate REB.
+ */
 TEST(ecu_app, monitor_tcu_set_reb_cancel_button)
 {
 
@@ -383,6 +541,13 @@ TEST(ecu_app, monitor_tcu_set_reb_cancel_button)
     TEST_ASSERT_GREATER_THAN(0, flag_can_REB_IPC_count);
 }
 
+/** @brief Tests monitor_tcu() function to FAIL.
+ *
+ * Scenario:
+ *  - Reb Activate Pin is unavailable to access.
+ * Expected:
+ *  - A message CAN should not to be send.
+ */
 TEST(ecu_app, monitor_tcu_get_reb_button_FAIL)
 {
 
@@ -406,6 +571,13 @@ TEST(ecu_app, monitor_tcu_get_reb_button_FAIL)
     TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
 }
 
+/** @brief Tests monitor_tcu() function to FAIL.
+ *
+ * Scenario:
+ *  - Reb Activate Pin is unavailable to set.
+ * Expected:
+ *  - A message CAN should not to be send.
+ */
 TEST(ecu_app, monitor_tcu_get_set_button_FAIL)
 {
 
@@ -431,6 +603,13 @@ TEST(ecu_app, monitor_tcu_get_set_button_FAIL)
     TEST_ASSERT_EQUAL(1, flag_status_pin[REB_ACTIVATE_PIN]);
 }
 
+/** @brief Tests monitor_tcu() function to FAIL.
+ *
+ * Scenario:
+ *  - CAN is unavailable.
+ * Expected:
+ *  - A message CAN should not to be send.
+ */
 TEST(ecu_app, monitor_tcu_can_send_reb_FAIL)
 {
 
@@ -456,6 +635,15 @@ TEST(ecu_app, monitor_tcu_can_send_reb_FAIL)
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_ACTIVATE_PIN]);
 }
 
+/** @brief Tests check_can_communication() function.
+ *
+ * Scenario:
+ *  - Send a message to check communication with REB.
+ * Expected:
+ *  - Receive from REB a CAN message response with status OK.
+ * @requir {SwHLR_F_13}
+ * @requir {SwHLR_F_15}
+ */
 TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
 {
 
@@ -481,6 +669,16 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
 }
 
+/** @brief Tests check_can_communication() function.
+ *
+ * Scenario:
+ *  - Send a message to check communication with REB.
+ * Expected:
+ *  - not receive from REB a CAN message response with status OK.
+ *  - IPC painel show REB FAULT lamp.
+ * @requir {SwHLR_F_13}
+ * @requir {SwHLR_F_15}
+ */
 TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_FAULT)
 {
 
@@ -512,6 +710,16 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_FAULT)
     TEST_ASSERT_EQUAL(1, flag_status_pin[REB_IPC_FAULT_PIN]);
 }
 
+/** @brief Tests check_can_communication() function.
+ *
+ * Scenario:
+ *  - CAN unavailable.
+ * Expected:
+ *  - not receive from REB a CAN message response with status OK.
+ *  - IPC painel show REB FAULT lamp.
+ * @requir {SwHLR_F_13}
+ * @requir {SwHLR_F_15}
+ */
 TEST(ecu_app, check_can_communication_SEND_CAN_FAIL)
 {
 

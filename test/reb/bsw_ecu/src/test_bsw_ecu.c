@@ -5,6 +5,16 @@
     SPDX-License-Identifier: MIT
 ========================================================================= */
 
+/**
+ * @file ecu.c
+ * @brief Unit tests for functions in ecu.c
+ *
+ * This file contains the test suite that validates the main functions of
+ * Base Software for ECU
+ * It covers success and failure scenarios, as well as different status/byte values.
+ *
+ */
+
 #include "ecu.h"
 #include "mcal.h"
 #include "unity.h"
@@ -16,17 +26,18 @@ extern int flag_fail_set_pin;
 
 TEST_GROUP(bsw_ecu);
 
-// sometimes you may want to get at local data in a module.
-// for example: If you plan to pass by reference, this could be useful
-// however, it should often be avoided
-
-TEST_SETUP(bsw_ecu)
-{
-    // This is run before EACH TEST
-}
+TEST_SETUP(bsw_ecu) {}
 
 TEST_TEAR_DOWN(bsw_ecu) {}
 
+/**
+ * @brief Tests for read_console function
+ *
+ * Scenario:
+ *  - User write pin 1 1 into the terminal.
+ * Expected:
+ *  - Return SUCCESS (0).
+ */
 TEST(bsw_ecu, read_pint_status_valid_input)
 {
     char input_data[] = "pin 1 1\n";
@@ -45,6 +56,14 @@ TEST(bsw_ecu, read_pint_status_valid_input)
     TEST_ASSERT_EQUAL_UINT(1, status);
 }
 
+/**
+ * @brief Tests for read_console, setting status diff from 0 or 1.
+ *
+ * Scenario:
+ *  - User write pin 3 3 into the terminal.
+ * Expected:
+ *  - Return FAIL (0).
+ */
 TEST(bsw_ecu, read_pint_status_invalid_input)
 {
     char input_data[] = "pin 3 3\n";
@@ -62,6 +81,14 @@ TEST(bsw_ecu, read_pint_status_invalid_input)
     TEST_ASSERT_EQUAL_UINT(1, result);
 }
 
+/**
+ * @brief Tests for read_console function, setting when a pin is unavailable.
+ *
+ * Scenario:
+ *  - User write pin 3 0 into the terminal.
+ * Expected:
+ *  - Return FAIL (1).
+ */
 TEST(bsw_ecu, read_pint_status_invalid_erro_set_pin)
 {
     flag_fail_set_pin = 1;

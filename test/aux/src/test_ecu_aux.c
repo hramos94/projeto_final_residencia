@@ -19,8 +19,6 @@
  * - SwHLR_F_12 (reb_can_send_ecu)
  */
 
-#define UNITY_STOP_ON_FAIL
-
 #include "ecu.h"
 #include "ecu_aux.h"
 #include "unity.h"

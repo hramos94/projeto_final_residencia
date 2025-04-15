@@ -113,7 +113,7 @@ misra-reb:
 			--output-file=$$OUTPUT_FILE; \
 	done
 
-clean-misra:
+misra-clean:
 	rm -f $(REB_REPORT_DIR)/*_misra.txt
 	rm -f $(BSW_REPORT_DIR)/*_misra.txt
 	rm -f $(AUX_REPORT_DIR)/*_misra.txt

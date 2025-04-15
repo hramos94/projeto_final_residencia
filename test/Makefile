@@ -9,7 +9,7 @@ all:
 	@make -C ./reb clean
 	@echo "\n========== AUX TEST =========="
 	@make -C ./aux 
-	@echo "=============================="
+	@echo "\n============ REB TEST =========="
 	@make -C ./reb
 
 $(shell mkdir -p cov)

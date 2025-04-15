@@ -5,6 +5,9 @@
 #include <pins.h>
 #include <unistd.h>
 
+#include "dtc_codes_reb.h"
+#include "dtc_logger.h"
+
 /**
  *  @brief Handle TCU signal received from can
  *
@@ -23,7 +26,7 @@ uint8_t handle_tcu_can(unsigned char *data)
         set_pin_status(S_OFF, REB_COUNTDOWN_PIN);
         if (cancel_reb() == FAIL)
         {
-            show_error("tcu_can.cancel_reb FAIL\n");
+            REPORT_ERROR("tcu_can.cancel_reb FAIL\n", DTC_TCU_CANCEL_REB_FAIL);
             return FAIL;
         }
     }
@@ -35,7 +38,7 @@ uint8_t handle_tcu_can(unsigned char *data)
         set_pin_status(S_ON, REB_COUNTDOWN_PIN);
         if (start_reb() == FAIL)
         {
-            show_error("tcu_can.start_reb FAIL\n");
+            REPORT_ERROR("tcu_can.start_reb FAIL\n", DTC_TCU_START_REB_FAIL);
             return FAIL;
         }
     }

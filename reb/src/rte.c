@@ -2,6 +2,8 @@
 #include <ecu.h>
 #include <mcal.h>
 
+#include "dtc_codes_reb.h"
+#include "dtc_logger.h"
 #include <ecu_reb.h>
 
 int main(int argc, char *argv[])
@@ -11,7 +13,7 @@ int main(int argc, char *argv[])
 
     if (application_init() != SUCCESS)
     {
-        show_error("application_init error\n");
+        REPORT_ERROR("application_init error\n", DTC_RTE_INIT_FAIL);
     }
 
     pthread_t read_input_th = new_thread(read_input);

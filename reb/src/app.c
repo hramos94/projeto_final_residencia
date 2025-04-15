@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include <time.h>
 
+#include "dtc_codes_reb.h"
+#include "dtc_logger.h"
+
 uint8_t flag_reb_canceled = REB_RUNNING;
 
 /**
@@ -17,13 +20,13 @@ uint8_t application_init()
 
     if (mcal_init() == FAIL)
     {
-        show_error("mcal_init FAIL\n");
+        REPORT_ERROR("mcal_init FAIL\n", DTC_MCAL_INIT_FAIL);
         return FAIL;
     }
 
     if (can_init() == FAIL)
     {
-        show_error("can_init FAIL\n");
+        REPORT_ERROR("can_init FAIL\n", DTC_CAN_INIT_FAIL);
         return FAIL;
     }
 
@@ -43,7 +46,7 @@ uint8_t read_input()
     {
         if (read_console() == FAIL)
         {
-            show_error("app.read_console FAIL\n");
+            REPORT_ERROR("app.read_console FAIL\n", DTC_READ_INPUT_FAIL);
         }
     }
 }
@@ -79,14 +82,15 @@ uint8_t monitor_read_can()
 
                 if (can_send_vcan0(&response) == FAIL)
                 {
-                    show_error("respond_to_can_test: Error to send response\n");
+                    REPORT_ERROR("respond_to_can_test: Error to send response\n",
+                                 DTC_CAN_RESPONSE_FAIL);
                     return FAIL;
                 }
             }
         }
         else
         {
-            show_error("Error monitor_read_can\n");
+            REPORT_ERROR("Error monitor_read_can\n", DTC_MONITOR_READ_CAN_FAIL);
             go_sleep(2);
         }
     }
@@ -104,14 +108,14 @@ uint8_t cancel_reb()
     //  Send by CAN to IPC the Caceled REB status
     if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
     {
-        show_error("cancel_reb.reb_can_send_ipc FAIL\n");
+        REPORT_ERROR("cancel_reb.reb_can_send_ipc FAIL\n", DTC_REB_CAN_IPC_CANCEL_FAIL);
         return FAIL;
     }
 
     // Send by CAN to Engine Control Unit the Caceled REB status
     if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
     {
-        show_error("cancel_reb.reb_can_send_ecu FAIL\n");
+        REPORT_ERROR("cancel_reb.reb_can_send_ecu FAIL\n", DTC_REB_CAN_ECU_CANCEL_FAIL);
         return FAIL;
     }
 
@@ -134,7 +138,7 @@ uint8_t start_reb()
     // send by CAN to IPC the start REB counting
     if (reb_can_send_ipc(IPC_REB_START) == FAIL)
     {
-        show_error("start_reb.reb_can_send_ipc FAIL\n");
+        REPORT_ERROR("start_reb.reb_can_send_ipc FAIL\n", DTC_REB_CAN_IPC_START_FAIL);
         return FAIL;
     }
 
@@ -143,7 +147,7 @@ uint8_t start_reb()
 
     if (flag_reb_canceled == REB_CANCELED)
     {
-        show_error("REB canceled before timeout\n");
+        REPORT_ERROR("REB canceled before timeout\n", DTC_REB_CANCELLED_TIMEOUT);
         return SUCCESS;
     }
 

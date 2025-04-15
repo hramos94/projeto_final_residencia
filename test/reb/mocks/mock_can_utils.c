@@ -4,9 +4,14 @@
 #include "stdio.h"
 #include <net/if.h> // struct ifreq, IFNAMSIZ
 #include <sys/socket.h>
+#include <unistd.h>
+#include <string.h>
+
 
 
 int reb_ipc_id = 0;
+int flag_send_ecu = 0;
+int flag_send_ecu_count = 0;
 
 void set_reb_ipc_id(int id)
 {
@@ -78,6 +83,14 @@ int can_bind(int fd, struct sockaddr *addr, socklen_t addrlen)
 
 int can_write(int *can_socket, struct can_frame *frame)
 {
+    if (flag_send_ecu == 1)
+    {  
+        if (frame->data[0] == 0x01 && frame->can_id == REB_ECU_ID)
+        {
+            flag_send_ecu_count++;
+        }
+        return 0;
+    }
     if (reb_ipc_id == 1)
     {
         if (frame->data[0] == 0x01 && frame->can_id == REB_IPC_ID)
@@ -129,9 +142,47 @@ int socket_close(int can_socket)
 
 int can_read_socket(int fd, void *buf, size_t count)
 {
+
+    can_frame frame;
+
+    if (mock_can_read_return == -1)
+    {
+        sleep(5);
+    }
     if (mock_can_read_return == 0)
     {
         return 4;   
+    }
+    else if (mock_can_read_return == 1)
+    {
+        frame.can_id = TCU_REB_ID;
+        frame.data[0] = 0x01;
+        frame.can_dlc = 8;
+
+        memcpy(buf, &frame, sizeof(frame));
+
+        mock_can_read_return = -1;
+        return 0;
+    }
+    else if (mock_can_read_return == 2){
+        mock_can_read_return = -1;
+        return -1;
+    }
+    else if (mock_can_read_return == 3)
+    {
+        frame.can_id = AUX_COM_ID;
+        frame.data[0] = AUX_COM_SIG;
+        frame.can_dlc = 8;
+
+        memcpy(buf, &frame, sizeof(frame));
+
+        mock_can_read_return = -1;
+        return 0;
+    }
+    else if (mock_can_read_return == 4)
+    {
+        mock_can_read_return = -1;
+        return -1;
     }
     else
     {

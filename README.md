@@ -65,12 +65,14 @@ To run this project the following requirements must be met:
 - gcc version 14.2 or higher;
 - lcov version 1.3.1 or higher;
 - SDL packages;
+- cppcheck package;
 - Doxygen and graphviz packages for documentation.
 
-### Installation of SDL and build-essentials packages
+### Installation of SDL, build-essentials and CPPCheck packages
 
-To install SDL and build-essentials packages, run:
+To install SDL, CPPCheck and build-essentials packages, run:
 ```
+apt install cppcheck
 apt-get install -y build-essential
 apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 ```
@@ -169,6 +171,30 @@ doxygen Doxyfile
 ```
 
 To see reports, execute the docs/html/index.html or
+
+**Create `Doc` and view the html:**
+  ```
+  make doc
+  ```
+
+
+## Static Misra Analysis Reports
+
+To generate Misra reports for all project files execute:
+  ```
+  make misra
+  ```
+To see reports, go to misra folder. There will be a file for each C file with the misra violation report. Alternatively you may generate individual report for aux, bsw and reb with the following commands:
+  ```
+  make misra-aux
+  make misra-bsw
+  make misra-reb
+  ```
+to clean the folder use
+  ```
+  make misra-clean
+  ```
+
 
 **Create `Doc` and view the html:**
   ```

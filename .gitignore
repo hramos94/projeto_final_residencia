@@ -65,3 +65,4 @@ compile_commands.json
 latex/
 html/
 cov/
+misra/

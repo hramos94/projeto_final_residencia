@@ -1,8 +1,26 @@
-.PHONY: all clean reb aux can delcan downcan test cov
+.PHONY: all clean reb aux can delcan downcan test cov misra misra-aux misra-bsw misra-reb misra-clean
 MAKEFLAGS += --no-print-directory
 
 REB_DIR = reb
 AUX_DIR = aux
+
+AUX_REPORT_DIR = misra/aux
+BSW_REPORT_DIR = misra/bsw
+REB_REPORT_DIR = misra/reb
+
+AUXSRCFOLDER = ./aux/src
+AUXINCFOLDER = ./aux/inc
+
+BSWSRCFOLDER = ./bsw/src
+BSWINCFOLDER = ./bsw/inc
+
+REBSRCFOLDER = ./reb/src
+REBINCFOLDER = ./reb/inc
+
+AUX_SRC_FILES = $(wildcard $(AUXSRCFOLDER)/*.c) 
+BSW_SRC_FILES = $(wildcard $(BSWSRCFOLDER)/*.c) 
+REB_SRC_FILES = $(wildcard $(REBSRCFOLDER)/*.c) 
+
 
 all:
 	@echo "Compiling REB\n"
@@ -53,3 +71,49 @@ doc:
 	doxygen Doxyfile
 	xdg-open docs/html/index.html
 
+
+misra:
+	make misra-clean
+	make misra-aux
+	make misra-bsw
+	make misra-reb
+
+misra-aux:
+	@mkdir -p misra
+	@mkdir -p $(AUX_REPORT_DIR)
+	@for file in $(AUX_SRC_FILES); do \
+		FILENAME=$$(basename $$file); \
+		OUTPUT_FILE=$(AUX_REPORT_DIR)/$$(basename $$FILENAME .c)_misra.txt; \
+		cppcheck --enable=all --addon=misra --library=posix --force \
+			-I $(AUXINCFOLDER) -I $(BSWINCFOLDER) \
+			$$file \
+			--output-file=$$OUTPUT_FILE; \
+	done
+
+misra-bsw:
+	@mkdir -p $(BSW_REPORT_DIR)
+	@for file in $(BSW_SRC_FILES); do \
+		FILENAME=$$(basename $$file); \
+		OUTPUT_FILE=$(BSW_REPORT_DIR)/$$(basename $$FILENAME .c)_misra.txt; \
+		cppcheck --enable=all --addon=misra --library=posix --force \
+			-I $(BSWINCFOLDER) \
+			$$file \
+			--output-file=$$OUTPUT_FILE; \
+	done
+
+
+misra-reb:
+	@mkdir -p $(REB_REPORT_DIR)
+	@for file in $(REB_SRC_FILES); do \
+		FILENAME=$$(basename $$file); \
+		OUTPUT_FILE=$(REB_REPORT_DIR)/$$(basename $$FILENAME .c)_misra.txt; \
+		cppcheck --enable=all --addon=misra --library=posix --force \
+			-I $(REBINCFOLDER) -I $(BSWINCFOLDER) \
+			$$file \
+			--output-file=$$OUTPUT_FILE; \
+	done
+
+misra-clean:
+	rm -f $(REB_REPORT_DIR)/*_misra.txt
+	rm -f $(BSW_REPORT_DIR)/*_misra.txt
+	rm -f $(AUX_REPORT_DIR)/*_misra.txt

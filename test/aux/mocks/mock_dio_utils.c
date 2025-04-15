@@ -7,12 +7,23 @@ int flag_fail_set_pin = 0;
 
 int flag_cout_set_pin[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int flag_status_pin[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int count_success = 0;
+int count = 0;
 
 uint8_t dio_get_pin(uint8_t *status, uint8_t pin, dIO io[])
 {
     if (flag_fail_get_pin == 1)
     {
         return FAIL;
+    }
+
+    if (flag_fail_get_pin == 2)
+    {
+        count_success++;
+        if (count_success >= count)
+        {
+            return FAIL;
+        }
     }
     *status = io[pin].status;
     return SUCCESS;
@@ -27,7 +38,8 @@ uint8_t dio_set_pin(uint8_t status, uint8_t pin, dIO io[])
     io[pin].status = status;
     printf(">>> Set pin%d = %d\n", pin, status);
 
-    if(status == 1){
+    if (status == 1)
+    {
         flag_cout_set_pin[pin]++;
     }
 

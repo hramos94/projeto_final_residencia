@@ -47,6 +47,8 @@ extern uint8_t reb_con;
 
 extern int flag_can_REB_IPC_count;
 extern int flag_reb_id;
+extern int count_success;
+extern int count;
 
 TEST_GROUP(ecu_app);
 
@@ -71,6 +73,8 @@ TEST_SETUP(ecu_app)
     reb_con = 0;
     flag_can_REB_IPC_count = 0;
     flag_reb_id = 0;
+    count_success = 0;
+    count = 0;
 }
 
 TEST_TEAR_DOWN(ecu_app)
@@ -571,6 +575,96 @@ TEST(ecu_app, monitor_tcu_get_reb_button_FAIL)
     TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
 }
 
+/** @brief Tests monitor_tcu() function to FAIL.
+ *
+ * Scenario:
+ *  - Reb Deactivate Pin is unavailable to access.
+ * Expected:
+ *  - A message CAN should not to be send.
+ */
+TEST(ecu_app, monitor_tcu_get_reb_OFF_button_FAIL)
+{
+
+    uint8_t status = 0;
+    status = set_pin_status(0, REB_ACTIVATE_PIN);
+
+    TEST_ASSERT_EQUAL(0, status);
+
+    flag_fail_get_pin = 2;
+    count = 2;
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud not send signal ;
+    TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
+}
+
+/** @brief Tests monitor_tcu() function to FAIL.
+ *
+ * Scenario:
+ *  - Reb Deactivate Pin is unavailable to access.
+ * Expected:
+ *  - A message CAN should not to be send.
+ */
+TEST(ecu_app, monitor_tcu_set_reb_OFF_button_FAIL)
+{
+
+    uint8_t status = 0;
+    status = set_pin_status(1, REB_DEACTIVATE);
+
+    TEST_ASSERT_EQUAL(0, status);
+
+    flag_fail_set_pin = 1;
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud not send signal ;
+    TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
+}
+
+/** @brief Tests monitor_tcu() function to FAIL.
+ *
+ * Scenario:
+ *  - CAN is unavailable when send cancel reb messsage
+ * Expected:
+ *  - A message CAN should not to be send.
+ */
+TEST(ecu_app, monitor_tcu_can_send_cancel_reb_FAIL)
+{
+
+    uint8_t status = 0;
+    status = set_pin_status(1, REB_DEACTIVATE);
+
+    TEST_ASSERT_EQUAL(0, status);
+
+    mock_can_write_return = 1;
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud not send signal ;
+    TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
+}
 /** @brief Tests monitor_tcu() function to FAIL.
  *
  * Scenario:

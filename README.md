@@ -10,6 +10,7 @@ There will be three types of branches:
 
 - feat: creation of new features
 - fix: bug fixes
+- test: creation of new tests
 - docs: documentation updates
 
 For branch creation, the following pattern is established, using Jira card REB-12 as an example:
@@ -23,6 +24,8 @@ feat/REB-12_update_readme
 
 fix/REB-12_update_readme
 
+test/REB-12_update_readme
+
 docs/REB-12_update_readme
 ```
 
@@ -32,6 +35,8 @@ Examples:
 `feat: short description of the task functionality`
 
 `fix: short description of the task resolution`
+
+`test: short description of the test`
 
 `docs: short description of the task documentation added/updated`
 
@@ -44,25 +49,82 @@ These instructions will help you get a copy of the project running on your local
 This project consists of two programs:
 
 - **REB**: The core engine blocker module.
-- **AUX**: An auxiliary module that communicates with REB via Virtual CAN (Linux) and interfaces with the **GUI** through digital I/O. Aux contains Telematics (where you can interact through the buttons), Instrument Painel and Engine functionnality.
+- **AUX**: An auxiliary module that communicates with REB via Virtual CAN (Linux) and interfaces with the **GUI** through digital I/O. Aux contains Telematics (where you can interact through the buttons), Instrument Panel and Engine functionality.
 
 ![System Architecture](./project.png)
 
-### 📋 Prerequisites
+Each program has an architecture based on AUTOSAR as shown below:
 
-This project is intended for Linux distributions. To install and run it, ensure you have the following dependencies:
+![System Architecture](./project_architecture.png)
 
+### 📋 Requirements
+
+To run this project the following requirements must be met:
+- Linux Operating System
+- Build-essentials package;
+- gcc version 14.2 or higher;
+- lcov version 1.3.1 or higher;
+- SDL packages;
+- Doxygen and graphviz packages for documentation.
+
+### Installation of SDL and build-essentials packages
+
+To install SDL and build-essentials packages, run:
 ```
 apt-get install -y build-essential
 apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 ```
 
-#### Optional (for generating Doxygen documentation):
+### Installation of lcov 2.3.1 
+
+To install the required version of lcov, run:
+  ```
+  sudo apt remove lcov gcov
+  sudo apt update
+  sudo apt install git make perl
+  git clone https://github.com/linux-test-project/lcov.git
+  cd lcov
+  git checkout v2.3.1
+  sudo make install
+  ```
+
+After installation, create a symbolic link for gcov-14:
+  ```
+  sudo ln -s $(which gcov-14) /usr/bin/gcov
+  ```
+
+Verify the versions with:
+  ```
+  lcov --version
+  gcov --version 
+  ```
+
+### Installation of gcc 14.2 
+To install gcc 14.2 execute the following commands:
+  ```
+  sudo apt remove gcc
+  sudo add-apt-repository universe
+  sudo apt update
+  sudo apt install gcc-14
+  gcc-14 --version 
+  ```
+
+After installation, set it as the default gcc::
+  ```
+  sudo ln -s /usr/bin/gcc-14 /usr/bin/gcc
+  ```
+
+To check gcc version execute:
+  ```
+  gcc --version 
+  ```
+#### Intallation of Doxygen:
 
 ```
 apt-get install doxygen
 apt-get install graphviz
 ```
+
 
 ### 🔧 Installation
 
@@ -108,14 +170,27 @@ doxygen Doxyfile
 
 To see reports, execute the docs/html/index.html or
 
-**Create `Doc` and show the html:**
+**Create `Doc` and view the html:**
   ```
   make doc
   ```
 
 ## ⚙️ Running Tests
 
-@TODO
+To run the test you need to assure that:
+- lcov version is 2.3.1 or higher
+- gcc version is 14.2 or higher
+
+To run test execute:
+  ```
+  make test
+  ```
+
+To see test coverage execute:
+  ```
+  make cov
+  ```
+
 
 ## ✒️ Authors
 

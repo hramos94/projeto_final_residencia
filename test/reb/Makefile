@@ -16,7 +16,7 @@ TARGET_REB = $(BIN_DIR)/run_test_reb
 UNITY_DIR = ../unity/src
 
 
-BSW_FILES = $(BSW_DIR)/mcal.c $(BSW_DIR)/ecu.c  
+BSW_FILES = $(BSW_DIR)/mcal.c $(BSW_DIR)/ecu.c  $(BSW_DIR)/dtc_logger.c
 
 REB_FILES = $(REB_DIR)/ecu_reb.c $(REB_DIR)/app.c
 

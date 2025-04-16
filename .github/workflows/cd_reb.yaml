@@ -19,7 +19,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev doxygen graphviz git make perl software-properties-common
-          sudo apt-get remove -y lcov gcov gcc
+          sudo apt-get remove -y lcov gcc
           sudo add-apt-repository -y universe
           sudo apt-get update
           sudo apt-get install -y gcc-14 g++-14

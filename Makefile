@@ -84,7 +84,7 @@ misra-aux:
 	@for file in $(AUX_SRC_FILES); do \
 		FILENAME=$$(basename $$file); \
 		OUTPUT_FILE=$(AUX_REPORT_DIR)/$$(basename $$FILENAME .c)_misra.txt; \
-		cppcheck --enable=style --addon=./misra.json --library=posix --force \
+		cppcheck --enable=style --addon=./misra.json --library=posix --force --template="[{file}:{line}]: => [{severity} - {id}]: {message}\n {code}" \
 			-I $(AUXINCFOLDER) -I $(BSWINCFOLDER) \
 			$$file \
 			--output-file=$$OUTPUT_FILE; \
@@ -95,7 +95,7 @@ misra-bsw:
 	@for file in $(BSW_SRC_FILES); do \
 		FILENAME=$$(basename $$file); \
 		OUTPUT_FILE=$(BSW_REPORT_DIR)/$$(basename $$FILENAME .c)_misra.txt; \
-		cppcheck --enable=style --addon=./misra.json --library=posix --force \
+		cppcheck --enable=style --addon=./misra.json --library=posix --force --template="[{file}:{line}]: => [{severity} - {id}]: {message}\n {code}" \
 			-I $(BSWINCFOLDER) \
 			$$file \
 			--output-file=$$OUTPUT_FILE; \
@@ -107,7 +107,7 @@ misra-reb:
 	@for file in $(REB_SRC_FILES); do \
 		FILENAME=$$(basename $$file); \
 		OUTPUT_FILE=$(REB_REPORT_DIR)/$$(basename $$FILENAME .c)_misra.txt; \
-		cppcheck --enable=style  --addon=./misra.json --library=posix --force \
+		cppcheck --enable=style  --addon=./misra.json --library=posix --force --template="[{file}:{line}]: => [{severity} - {id}]: {message}\n {code}" \
 			-I $(REBINCFOLDER) -I $(BSWINCFOLDER) \
 			$$file \
 			--output-file=$$OUTPUT_FILE; \

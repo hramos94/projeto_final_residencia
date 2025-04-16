@@ -5,6 +5,94 @@
 #include <unistd.h>
 
 /**
+ *  @brief function that iniciate engine block
+ *
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_12}
+ */
+#ifdef UNIT_TEST
+uint8_t block_engine(void)
+#else
+static uint8_t block_engine(void)
+#endif
+{
+
+    uint8_t ret = SUCCESS;
+    show_log("block Engine Started");
+    // Send command ON to pin 1 (hazard Light)
+    if (set_pin_status(S_ON, HAZARD_BUTTON_PIN) == FAIL)
+    {
+        show_error("ECU.set_pin_status FAIL (hazard Light)\n");
+        ret = FAIL;
+    }
+
+    if (ret == SUCCESS)
+    {
+        // Send command ON to pin 5 (block engine)
+        if (set_pin_status(S_ON, ENGINE_REB_MODE) == FAIL)
+        {
+            show_error("ECU.set_pin_status FAIL (engine block)\n");
+            ret = FAIL;
+        }
+    }
+
+    if (ret == SUCCESS)
+    {
+        // Send command ON to pin 3 (driver notification)
+        if (set_pin_status(S_ON, REB_IPC_WARNING) == FAIL)
+        {
+            show_error("ECU.set_pin_status FAIL (driver notification)\n");
+            ret = FAIL;
+        }
+    }
+    return ret;
+}
+
+/**
+ *  @brief function that iniciate engine unblock
+ *
+ *  @return SUCCESS(0), FAIL(1)
+ *  @requir{SwHLR_F_12}
+ */
+#ifdef UNIT_TEST
+uint8_t unblock_engine(void)
+#else
+static uint8_t unblock_engine(void)
+#endif
+{
+    uint8_t ret = SUCCESS;
+    show_log("unblock engine started");
+    // change pin 1 to off
+    if (set_pin_status(S_OFF, HAZARD_BUTTON_PIN) == FAIL)
+    {
+        show_error("ECU.set_pin_status FAIL (turn off block request)\n");
+        ret = FAIL;
+    }
+
+    if (ret == SUCCESS)
+    {
+        // Send unblock engine command (pin 5)
+        if (set_pin_status(S_OFF, ENGINE_REB_MODE) == FAIL)
+        {
+            show_error("ECU.set_pin_status FAIL (engine unblock)\n");
+            ret = FAIL;
+        }
+    }
+
+    if (ret == SUCCESS)
+    {
+
+        // Remove driver notification (pin 3)
+        if (set_pin_status(S_OFF, REB_IPC_WARNING) == FAIL)
+        {
+            show_error("ECU.set_pin_status FAIL (remove driver notification)\n");
+            ret = FAIL;
+        }
+    }
+    return ret;
+}
+
+/**
  * @brief Function check if Hazard button is pressed or not
  * @return SUCCESS(0); FAIL(1).
  * @param status Pointer to store the status Button {0 or 1}
@@ -168,94 +256,6 @@ uint8_t handle_ecu_can(const unsigned char *data)
         }
     }
 
-    return ret;
-}
-
-/**
- *  @brief function that iniciate engine block
- *
- *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_12}
- */
-#ifdef UNIT_TEST
-uint8_t block_engine(void)
-#else
-static uint8_t block_engine(void)
-#endif
-{
-
-    uint8_t ret = SUCCESS;
-    show_log("block Engine Started");
-    // Send command ON to pin 1 (hazard Light)
-    if (set_pin_status(S_ON, HAZARD_BUTTON_PIN) == FAIL)
-    {
-        show_error("ECU.set_pin_status FAIL (hazard Light)\n");
-        ret = FAIL;
-    }
-
-    if (ret == SUCCESS)
-    {
-        // Send command ON to pin 5 (block engine)
-        if (set_pin_status(S_ON, ENGINE_REB_MODE) == FAIL)
-        {
-            show_error("ECU.set_pin_status FAIL (engine block)\n");
-            ret = FAIL;
-        }
-    }
-
-    if (ret == SUCCESS)
-    {
-        // Send command ON to pin 3 (driver notification)
-        if (set_pin_status(S_ON, REB_IPC_WARNING) == FAIL)
-        {
-            show_error("ECU.set_pin_status FAIL (driver notification)\n");
-            ret = FAIL;
-        }
-    }
-    return ret;
-}
-
-/**
- *  @brief function that iniciate engine unblock
- *
- *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_12}
- */
-#ifdef UNIT_TEST
-uint8_t unblock_engine(void)
-#else
-static uint8_t unblock_engine(void)
-#endif
-{
-    uint8_t ret = SUCCESS;
-    show_log("unblock engine started");
-    // change pin 1 to off
-    if (set_pin_status(S_OFF, HAZARD_BUTTON_PIN) == FAIL)
-    {
-        show_error("ECU.set_pin_status FAIL (turn off block request)\n");
-        ret = FAIL;
-    }
-
-    if (ret == SUCCESS)
-    {
-        // Send unblock engine command (pin 5)
-        if (set_pin_status(S_OFF, ENGINE_REB_MODE) == FAIL)
-        {
-            show_error("ECU.set_pin_status FAIL (engine unblock)\n");
-            ret = FAIL;
-        }
-    }
-
-    if (ret == SUCCESS)
-    {
-
-        // Remove driver notification (pin 3)
-        if (set_pin_status(S_OFF, REB_IPC_WARNING) == FAIL)
-        {
-            show_error("ECU.set_pin_status FAIL (remove driver notification)\n");
-            ret = FAIL;
-        }
-    }
     return ret;
 }
 

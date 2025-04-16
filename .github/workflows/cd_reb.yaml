@@ -43,7 +43,8 @@ jobs:
       - name: Prepare release artifacts
         run: |
           mkdir -p release_artifacts
-          cp -r bin/* release_artifacts/
+          cp -r reb/bin/* release_artifacts/
+          cp -r aux/bin/* release_artifacts/
           tar -czf reb_release.tar.gz -C release_artifacts .
 
       - name: Create GitHub Release

@@ -1,7 +1,8 @@
 .PHONY: clean reb aux all
 
 CC = gcc
-CFLAGS += -coverage -fcondition-coverage
+CFLAGS += -g 
+COVFLAGS = -coverage -fcondition-coverage
 
 INCLUDES = -I../unity/inc -I../../bsw/inc -Imocks -I../../reb/inc
 
@@ -37,6 +38,9 @@ OBJS_REB = $(patsubst $(REB_DIR)/%.c, $(OBJ_DIR)/%.o, $(REB_FILES))
 $(shell mkdir -p $(OBJ_DIR) $(BIN_DIR))
 
 all:$(TARGET_REB)
+
+cov:
+	$(MAKE) CFLAGS="$(CFLAGS) $(COVFLAGS)" all
 
 run:
 	@./$(TARGET_REB) -v

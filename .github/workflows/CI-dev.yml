@@ -28,7 +28,6 @@ jobs:
           make clean
           make
           
-      #- name: Run tests
-      #  run: |
-      #    make test
-          # Quando tiver alguma build de teste que rode com "make test"
+      - name: Run tests
+        run: |
+          make test  

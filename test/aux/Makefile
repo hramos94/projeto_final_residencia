@@ -5,6 +5,7 @@ CFLAGS = -g
 CFLAGS += -coverage
 CFLAGS += -fprofile-update=atomic
 CFLAGS += -fcondition-coverage
+CFLAGS += -DUNIT_TEST
 
 
 INCLUDES = -I../unity/inc -I../../bsw/inc -I../../aux/inc -I./mocks

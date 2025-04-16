@@ -10,7 +10,7 @@
  *  @return SUCCESS(0), FAIL(1)
  */
 
-uint8_t read_console()
+uint8_t read_console(void)
 {
     uint8_t pin = 0, status = 0;
     if (read_pint_status(&pin, &status) == FAIL)

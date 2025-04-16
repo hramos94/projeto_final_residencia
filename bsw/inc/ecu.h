@@ -20,6 +20,6 @@
 
 #define SHOW_LOG 1
 
-uint8_t read_console();
+uint8_t read_console(void);
 
 #endif

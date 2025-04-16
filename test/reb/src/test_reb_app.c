@@ -5,6 +5,23 @@
     SPDX-License-Identifier: MIT
 ========================================================================= */
 
+/**
+ * @file test_reb_app.c
+ * @brief Unit tests for functions in reb/app.c
+ *
+ * This file contains the test suite that validates the main functions of
+ * Remote Engine Blocking, in app.c, inicializacion, activation and deactivation of REB and handling CAN messages.
+ * It covers success and failure scenarios, as well as different status/byte values.
+ *
+ * Requirements covered:
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_8}
+ * @requir{SwHLR_F_10}
+ * @requir{SwHLR_F_12}
+ * @requir{SwHLR_F_14}
+ * @requir{SwHLR_F_15}
+ */
+
 #include "ecu.h"
 #include "pins.h"
 #include <pthread.h>
@@ -67,6 +84,16 @@ TEST_TEAR_DOWN(reb_app)
     // Cleanup after tests
 }
 
+/**
+ * @brief Tests application_init() with return status OK
+ *
+ * Scenario:
+ *  - mcal_init() = SUCCESS
+ *  - can_init() = SUCCESS
+ * Expected:
+ *  - Return SUCCESS (0).
+ */
+
 TEST(reb_app, application_init_OK)
 {
     uint8_t status = 0;
@@ -76,15 +103,33 @@ TEST(reb_app, application_init_OK)
     TEST_ASSERT_EQUAL(SUCCESS, status);
 }
 
+/**
+ * @brief Tests application_init() with return status FAIL
+ *
+ * Scenario:
+ *  - mcal_init() = SUCCESS
+ *  - can_init() = FAIL
+ * Expected:
+ *  - Return FAIL (1).
+ */
+
 TEST(reb_app, application_init_FAIL)
 {
     uint8_t status = 0;
     mock_can_ioctl_return = 2;
     mock_can_open_return = 1;
     status = application_init();
-    TEST_ASSERT_EQUAL(FAIL, status);
+    TEST_ASSERT_EQUAL_INT(FAIL, status);
 }
 
+/**
+ * @brief Tests cancel_reb() function.
+ *
+ * Scenario:
+ *  - Set REB_CANCELED to high.
+ * Expected:
+ *  - Return SUCCESS (0).
+ */
 
 TEST(reb_app, cancel_reb_success)
 {
@@ -96,6 +141,15 @@ TEST(reb_app, cancel_reb_success)
     TEST_ASSERT_EQUAL(REB_CANCELED, flag_reb_canceled);
 }
 
+/**
+ * @brief Tests cancel_reb() function.
+ *
+ * Scenario:
+ *  - CAN is unavailable when send cancel reb messsage.
+ * Expected:
+ *  - Return FAIL (1).
+ */
+
 TEST(reb_app, cancel_reb_fail_ipc)
 {
     mock_can_write_return = 1;
@@ -105,6 +159,15 @@ TEST(reb_app, cancel_reb_fail_ipc)
     TEST_ASSERT_EQUAL(FAIL, result);
     TEST_ASSERT_EQUAL(REB_CANCELED, flag_reb_canceled);
 }
+
+/**
+ * @brief Tests start_reb() function.
+ *
+ * Scenario:
+ *  - Set the activating REB to HIGH.
+ * Expected:
+ *  - Return SUCCESS (0).
+ */
 
 TEST(reb_app, start_reb_success)
 {
@@ -117,6 +180,15 @@ TEST(reb_app, start_reb_success)
     TEST_ASSERT_EQUAL(REB_RUNNING, flag_reb_canceled);
 }
 
+/**
+ * @brief Tests start_reb() function.
+ *
+ * Scenario:
+ *  - CAN is unavailable when send start reb messsage.
+ * Expected:
+ *  - Return FAIL (1).
+ */
+
 TEST(reb_app, start_reb_fail_send_can)
 {
     flag_reb_canceled = REB_RUNNING;
@@ -126,6 +198,15 @@ TEST(reb_app, start_reb_fail_send_can)
 
     TEST_ASSERT_EQUAL(FAIL, result);
 }
+
+/**
+ * @brief Tests start_reb() function.
+ *
+ * Scenario:
+ *  - Set flag to stop the counting of start reb
+ * Expected:
+ *  - Return SUCCESS (0).
+ */
 
 TEST(reb_app, start_reb_was_canceled_before_timeout)
 {
@@ -137,7 +218,16 @@ TEST(reb_app, start_reb_was_canceled_before_timeout)
     TEST_ASSERT_EQUAL(SUCCESS, result);
 }
 
-TEST(reb_app, test_read_console_pin_01)
+/**
+ * @brief Tests read_input() function.
+ *
+ * Scenario:
+ *  - insert input "pin 1 1".
+ * Expected:
+ *  - Return SUCCESS (0).
+ */
+
+TEST(reb_app, read_console)
 {
     pthread_t read_input_th;
     pthread_create(&read_input_th, NULL, (void*)read_input, NULL);  
@@ -166,6 +256,44 @@ TEST(reb_app, test_read_console_pin_01)
     TEST_ASSERT_EQUAL(0, result);
 }
 
+/**
+ * @brief Tests read_input() function.
+ *
+ * Scenario:
+ *  - Pin unavailable to change status.
+ * Expected:
+ *  - Return FAIL (1).
+ */
+
+TEST(reb_app, read_console_fail)
+{
+    flag_fail_set_pin = 1;
+
+    pthread_t th_read_input;
+    pthread_create(&th_read_input, NULL, (void *)read_input, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    int pipefd[2];
+    pipe(pipefd);
+
+    char input[] = "pin 1 1\n";
+
+    write(pipefd[1], input, strlen(input));
+
+    dup2(pipefd[0], STDIN_FILENO);
+    close(pipefd[0]);
+
+    uint8_t status = 0;
+    status = flag_status_pin[1];
+
+    sleep(1);
+    pthread_cancel(th_read_input);
+
+    // Status should stay 0;
+    TEST_ASSERT_EQUAL_INT(0, status);
+}
+
 TEST(reb_app, monitor_read_can_get_handle_tcu)
 {
 
@@ -182,6 +310,14 @@ TEST(reb_app, monitor_read_can_get_handle_tcu)
 
     TEST_ASSERT_EQUAL(1, flag_status_pin[REB_COUNTDOWN_PIN]);
 }
+
+/** @brief Tests monitor_read_can() function to FAIL.
+ *
+ * Scenario:
+ *  - Reb Activate Pin is set.
+ * Expected:
+ *  - A message CAN should be send.
+ */
 
 TEST(reb_app, monitor_read_can_get_handle_tcu_fail)
 {
@@ -234,6 +370,14 @@ TEST(reb_app, monitor_read_can_check_REB_AUX_comunication)
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_COUNTDOWN_PIN]);
 }
 
+/** @brief Tests countdown_reb() function to FAIL.
+ *
+ * Scenario:
+ *  - With the activation of REB, the countdown should not start.
+ * Expected:
+ *  - Should not inicialize the counting.
+ */
+
 TEST(reb_app, countdown_reb_not_inicialize)
 {
 
@@ -249,6 +393,14 @@ TEST(reb_app, countdown_reb_not_inicialize)
 
     TEST_ASSERT_EQUAL(0, flag_send_ecu_count);
 }
+
+/** @brief Tests countdown_reb() function to SUCCESS.
+ *
+ * Scenario:
+ *  - With the activation of REB, the countdown should start.
+ * Expected:
+ *  - Inicialize the counting.
+ */
 
 TEST(reb_app, countdown_reb_inicialize)
 {

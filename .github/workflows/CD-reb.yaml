@@ -1,9 +1,9 @@
-name: CD REB
+name: CD
 
 on:
   push:
-    #branches:
-      #- main
+    branches:
+      - main
     tags:
       - 'v*.*'
 

@@ -150,7 +150,6 @@ void go_sleep(uint8_t seconds) { sleep(seconds); }
  *
  *  @param can_socket Pointer to store the number of socket.
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -170,7 +169,6 @@ uint8_t can_socket_open(int *can_socket)
  *
  *  @param can_socket Pointer to store the number of socket.
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -191,7 +189,6 @@ uint8_t can_socket_close(int *can_socket)
  *  @param can_socket Pointer to store the number of socket.
  *  @param interface Pointer to char interface
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -225,7 +222,6 @@ uint8_t can_interface_status(int *can_socket, const char *interface)
  *  @param can_socket Pointer to store the number of socket.
  *  @param interface Pointer to char interface
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -254,7 +250,6 @@ uint8_t can_bind_socket(int *can_socket, const char *interface)
  *  @param can_socket Pointer to store the number of socket.
  *  @param frame Pointer to frame that will be send to can.
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -275,7 +270,6 @@ uint8_t can_send(int *can_socket, struct can_frame *frame)
  *  @param can_socket Pointer to store the number of socket.
  *  @param frame Pointer to frame that will be read from can.
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -298,7 +292,6 @@ uint8_t can_read(int *can_socket, struct can_frame *frame)
  *  @param my_vcan Pointer to store the number of socket.
  *  @param interface Pointer to store the char interface.
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -328,7 +321,6 @@ uint8_t can_start(int *my_vcan, const char *interface)
  *
  *  @param frame Pointer of frame can that will be send.
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -340,7 +332,6 @@ uint8_t can_send_vcan0(struct can_frame *frame) { return can_send(&my_vcan, fram
  *
  *  @param frame Pointer of frame can that will be send.
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -351,7 +342,6 @@ uint8_t can_read_vcan0(struct can_frame *frame) { return can_read(&my_vcan, fram
  *  @brief function that initialize Socket CAN Linux.
  *
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}
@@ -362,7 +352,6 @@ uint8_t can_init() { return can_start(&my_vcan, interface); }
  *  @brief function that close Socket CAN Linux.
  *
  *  @return SUCCESS(0), FAIL(1)
- *  @requir{SwHLR_F_9}
  *  @requir{SwHLR_F_6}
  *  @requir{SwHLR_F_10}
  *  @requir{SwHLR_F_15}

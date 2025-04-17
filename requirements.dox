@@ -25,6 +25,10 @@ The Software shall provide a warning message on the instrument cluster panel if 
 \requir{SwHLR_F_10}
 The Software shall send a CAN message to turn on the hazard lights if the engine immobilizing procedure is activated
 
+\anchor SwHLR_F_12
+\requir{SwHLR_F_12}
+The Software shall send CAN message to ECM to gradually reduce the engine speed if engine immobilizing procedure is activated
+
 \anchor SwHLR_F_13
 \requir{SwHLR_F_13}
 The Software shall provide a warning on the instrument cluster panel with the message "REB not available" if the system encounters any failure in GPS, internet, or CAN

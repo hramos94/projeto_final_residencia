@@ -23,7 +23,7 @@ uint8_t application_init(void)
         status = FAIL;
     }
 
-    if (can_init() == status)
+    if (can_init() == FAIL)
     {
         REPORT_ERROR("can_init FAIL\n", DTC_CAN_INIT_FAIL);
         status = FAIL;

@@ -66,3 +66,7 @@ latex/
 html/
 cov/
 misra/
+
+
+# NOT IGNORE
+!misra/misra_deviations.txt

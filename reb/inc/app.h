@@ -9,11 +9,13 @@
 #define REB_RUNNING 0x01U
 #define REB_CANCELED 0x00U
 
-uint8_t application_init();
-uint8_t read_input();
-uint8_t monitor_read_can();
-uint8_t start_reb();
-uint8_t cancel_reb();
-uint8_t countdown_reb();
+extern uint8_t flag_reb_canceled;
+
+uint8_t application_init(void);
+uint8_t read_input(void);
+uint8_t monitor_read_can(void);
+uint8_t start_reb(void);
+uint8_t cancel_reb(void);
+uint8_t countdown_reb(void);
 
 #endif

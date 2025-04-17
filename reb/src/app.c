@@ -54,7 +54,6 @@ uint8_t read_input()
 /**
  * @brief Handle messages received from CAN BUS
  * @return SUCCESS(0); FAIL(1).
- * @requir{SwHLR_F_9}
  * @requir{SwHLR_F_6}
  * @requir{SwHLR_F_10}
  * @requir{SwHLR_F_15}

@@ -2,9 +2,9 @@
 
 CC = gcc
 CFLAGS = -g
-CFLAGS += -coverage
-CFLAGS += -fprofile-update=atomic
-CFLAGS += -fcondition-coverage
+CFLAGS += -DUNIT_TEST
+
+COVFLAGS = -coverage -fcondition-coverage
 
 
 INCLUDES = -I../unity/inc -I../../bsw/inc -I../../aux/inc -I./mocks
@@ -43,6 +43,10 @@ OBJS_MOCK = $(patsubst $(MOCK_DIR)/%.c, $(OBJ_DIR)/%.o, $(MOCK_FILES))
 $(shell mkdir -p $(OBJ_DIR) $(BIN_DIR))
 
 all:$(TARGET_AUX)
+
+cov:
+	$(MAKE) CFLAGS="$(CFLAGS) $(COVFLAGS)" all
+
 
 run:
 	@./$(TARGET_AUX) -v

@@ -2,8 +2,8 @@
 #include <mcal.h>
 #include <unistd.h>
 
-#include "dtc_logger.h"
 #include "dtc_codes_bsw.h"
+#include "dtc_logger.h"
 
 /**
  *  @brief function get by console the status and number of the PIN set it.

@@ -9,7 +9,8 @@
 #include "unity_fixture.h"
 
 TEST_GROUP_RUNNER(reb_app) { 
-    RUN_TEST_CASE(reb_app, test_read_console_pin_01);
+    RUN_TEST_CASE(reb_app, read_console);
+    RUN_TEST_CASE(reb_app, read_console_fail);
     RUN_TEST_CASE(reb_app, application_init_OK); 
     RUN_TEST_CASE(reb_app, application_init_FAIL);
     RUN_TEST_CASE(reb_app, cancel_reb_success);

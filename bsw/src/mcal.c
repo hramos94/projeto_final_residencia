@@ -38,7 +38,7 @@ const char *interface = "vcan0";
 pthread_t new_thread(void *func)
 {
     pthread_t nthread;
-    (void) pthread_create(&nthread, NULL, func, NULL);
+    (void)pthread_create(&nthread, NULL, func, NULL);
     return nthread;
 }
 
@@ -48,17 +48,16 @@ pthread_t new_thread(void *func)
  *  @requir{SwHLR_F_16}
  *  @return SUCCESS(0), FAIL(1)
  */
-uint8_t show_error(const char errorStr[]) 
-{ 
+uint8_t show_error(const char errorStr[])
+{
     uint8_t return_status = SUCCESS;
-    int value = printf("%s", errorStr); 
-    if(value<0)
+    int value = printf("%s", errorStr);
+    if (value < 0)
     {
         return_status = FAIL;
     }
     return return_status;
 }
-
 
 /**
  *  @brief Set the status of PIN by terminal
@@ -72,27 +71,42 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 {
     char *line = NULL;
     size_t len = 0;
+    uint8_t ret = SUCCESS;
     if (getline(&line, &len, stdin) == -1)
     {
-        return FAIL;
+        ret = FAIL;
     }
-    if (memcmp(line, "pin", 3) == 0)
+    if (ret == SUCCESS)
     {
-        int pin;
-        int status;
-        if (sscanf(line + 4, "%d %d", &pin, &status) == 2)
+        if (memcmp(line, "pin", 3) == 0)
         {
-            if ((status == 0) || (status == 1))
+            int pin;
+            int status;
+            if (sscanf(line + 4, "%d %d", &pin, &status) == 2)
             {
-                *p_pin = pin;
-                *p_status = status;
-                free(line);
-                return SUCCESS;
+                if ((status == 0) || (status == 1))
+                {
+                    *p_pin = pin;
+                    *p_status = status;
+                    ret = SUCCESS;
+                }
+                else
+                {
+                    ret = FAIL;
+                }
             }
+            else
+            {
+                ret = FAIL;
+            }
+        }
+        else
+        {
+            ret = FAIL;
         }
     }
     free(line);
-    return FAIL;
+    return ret;
 }
 
 /**
@@ -153,10 +167,7 @@ uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
  *
  *  @param seconds How many seconds to sleep.
  */
-void go_sleep(uint8_t seconds) 
-{ 
-    (void) sleep(seconds); 
-}
+void go_sleep(uint8_t seconds) { (void)sleep(seconds); }
 
 //======================================================================
 //======================== CAN =========================================
@@ -217,7 +228,7 @@ uint8_t can_interface_status(int *can_socket, const char *interface)
 {
     uint8_t return_status = SUCCESS;
     struct ifreq socket_info; // Initialize the struct ifreq to hold the interface information
-    (void) strncpy(socket_info.ifr_name, interface, IFNAMSIZ);
+    (void)strncpy(socket_info.ifr_name, interface, IFNAMSIZ);
 
     // check if the interface exist getting the status using ioctl
     if (can_ioctl(*can_socket, SIOCGIFFLAGS, &socket_info) < 0)
@@ -252,11 +263,11 @@ uint8_t can_bind_socket(int *can_socket, const char *interface)
 {
     uint8_t return_status = SUCCESS;
     struct ifreq ifr;
-    (void) strcpy(ifr.ifr_name, interface);
-    (void) can_ioctl(*can_socket, SIOCGIFINDEX, &ifr);
+    (void)strcpy(ifr.ifr_name, interface);
+    (void)can_ioctl(*can_socket, SIOCGIFINDEX, &ifr);
 
     struct sockaddr_can addr;
-    (void) memset(&addr, 0, sizeof(addr));
+    (void)memset(&addr, 0, sizeof(addr));
     addr.can_family = AF_CAN;
     addr.can_ifindex = ifr.ifr_ifindex;
     if (can_bind(*can_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0)
@@ -388,7 +399,7 @@ uint8_t can_close(void) { return can_socket_close(&my_vcan); }
  *  @brief Show in terminal LOG Message.
  *  @param errorStr Pointer to the charr array of message.
  *  @requir{SwHLR_F_16}
-*  @return SUCCESS(0), FAIL(1)
+ *  @return SUCCESS(0), FAIL(1)
  */
 uint8_t show_log(const char logStr[])
 {
@@ -396,7 +407,7 @@ uint8_t show_log(const char logStr[])
     if (SHOW_LOG == 1)
     {
         int value = printf("%s\n", logStr);
-        if(value<0)
+        if (value < 0)
         {
             return_status = FAIL;
         }

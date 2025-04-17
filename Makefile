@@ -84,22 +84,28 @@ misra-aux:
 	@for file in $(AUX_SRC_FILES); do \
 		FILENAME=$$(basename $$file); \
 		OUTPUT_FILE=$(AUX_REPORT_DIR)/$$(basename $$FILENAME .c)_misra.txt; \
-		cppcheck --enable=style --addon=./misra.json --library=posix --force --template="[{file}:{line}]: => [{severity} - {id}]: {message}\n {code}" \
+		cppcheck --enable=style --addon=./misra.json --library=posix --force --template="[{file}:{line}]: => [{severity} - {id}]: {message}\t {code}" \
 			-I $(AUXINCFOLDER) -I $(BSWINCFOLDER) \
 			$$file \
 			--output-file=$$OUTPUT_FILE; \
 	done
+	@echo "Formatting Report"
+	@python3 Misra_Formatter.py misra/aux
+	@echo "Done"
 
 misra-bsw:
 	@mkdir -p $(BSW_REPORT_DIR)
 	@for file in $(BSW_SRC_FILES); do \
 		FILENAME=$$(basename $$file); \
 		OUTPUT_FILE=$(BSW_REPORT_DIR)/$$(basename $$FILENAME .c)_misra.txt; \
-		cppcheck --enable=style --addon=./misra.json --library=posix --force --template="[{file}:{line}]: => [{severity} - {id}]: {message}\n {code}" \
+		cppcheck --enable=style --addon=./misra.json --library=posix --force --template="[{file}:{line}]: => [{severity} - {id}]: {message}\t {code}" \
 			-I $(BSWINCFOLDER) \
 			$$file \
 			--output-file=$$OUTPUT_FILE; \
 	done
+	@echo "Formatting Report"
+	@python3 Misra_Formatter.py misra/bsw
+	@echo "Done"
 
 
 misra-reb:
@@ -107,11 +113,14 @@ misra-reb:
 	@for file in $(REB_SRC_FILES); do \
 		FILENAME=$$(basename $$file); \
 		OUTPUT_FILE=$(REB_REPORT_DIR)/$$(basename $$FILENAME .c)_misra.txt; \
-		cppcheck --enable=style  --addon=./misra.json --library=posix --force --template="[{file}:{line}]: => [{severity} - {id}]: {message}\n {code}" \
+		cppcheck --enable=style  --addon=./misra.json --library=posix --force --template="[{file}:{line}]: => [{severity} - {id}]: {message}\t {code}" \
 			-I $(REBINCFOLDER) -I $(BSWINCFOLDER) \
 			$$file \
 			--output-file=$$OUTPUT_FILE; \
 	done
+	@echo "Formatting Report"
+	@python3 Misra_Formatter.py misra/reb
+	@echo "Done"
 
 misra-clean:
 	rm -f $(REB_REPORT_DIR)/*_misra.txt

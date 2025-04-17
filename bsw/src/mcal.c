@@ -59,7 +59,6 @@ void show_error(char errorStr[]) { printf("%s", errorStr); }
  */
 uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 {
-    uint8_t status = SUCCESS;
     char *line = NULL;
     size_t len = 0;
     if (getline(&line, &len, stdin) == -1)
@@ -111,16 +110,16 @@ uint8_t mcal_init(void)
  */
 uint8_t read_pin_status(uint8_t *status, uint8_t pin)
 {
-    uint8_t status = SUCCESS;
+    uint8_t return_status = SUCCESS;
     if (pin < IOPINS)
     {
-        status = dio_get_pin(status, pin, pins);
+        return_status = dio_get_pin(status, pin, pins);
     }
     else
     {
-        status = FAIL;
+        return_status = FAIL;
     }
-    return status;
+    return return_status;
 }
 
 /**
@@ -329,12 +328,12 @@ uint8_t can_start(int *my_vcan, const char *interface)
         perror("Can socket open Error: ");
         status = FAIL;
     }
-    if (can_interface_status(my_vcan, interface) == FAIL && status == SUCCESS) 
+    if ((can_interface_status(my_vcan, interface) == FAIL) && (status == SUCCESS)) 
     {
         perror("Can interface Error: ");
         status = FAIL;
     }
-    if (can_bind_socket(my_vcan, interface) == FAIL && status == SUCCESS)
+    if ((can_bind_socket(my_vcan, interface) == FAIL) && (status == SUCCESS))
     {
         perror("Can bind Error: ");
         status = FAIL;

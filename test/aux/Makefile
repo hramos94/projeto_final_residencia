@@ -2,6 +2,7 @@
 
 CC = gcc
 CFLAGS = -g
+CFLAGS += -DUNIT_TEST
 
 COVFLAGS = -coverage -fcondition-coverage
 

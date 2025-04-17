@@ -77,6 +77,10 @@ misra:
 	make misra-aux
 	make misra-bsw
 	make misra-reb
+	@echo "Generating Summary Report"
+	@python3 Misra_Report.py
+	@echo "Done"
+
 
 misra-aux:
 	@mkdir -p misra

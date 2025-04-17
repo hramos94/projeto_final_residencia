@@ -1,8 +1,9 @@
 #include <stdint.h>
+// cppcheck-suppress misra-c2012-21.6
 #include <stdio.h>
+// cppcheck-suppress misra-c2012-21.10
 #include <time.h>
 
-#include "dtc_codes_bsw.h"
 #include "dtc_logger.h"
 
 #define LOG_FILE "dtc_log.txt"
@@ -23,18 +24,36 @@
 
 void log_dtc(uint32_t dtc_id)
 {
+    int ret = 0;
     FILE *fp = fopen(LOG_FILE, "a");
-    if (fp == 0)
+    if (fp == NULL)
     {
         perror("log_dtc fopen failed.\n");
-        return;
+        ret = 1;
     }
 
-    time_t now = time(NULL);
-    struct tm *t = localtime(&now);
+    if (ret == 0)
+    {
+        time_t now = time(NULL);
+        struct tm t;
+        if (localtime_r(&now, &t) == NULL)
+        {
+            perror("log_dtc localtime_r failed.\n");
+            ret = 1;
+        }
 
-    fprintf(fp, "[%04d-%02d-%02d %02d:%02d:%02d] DTC 0x%08X\n", t->tm_year + 1900, t->tm_mon + 1,
-            t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, dtc_id);
+        if (ret == 0)
+        {
 
-    fclose(fp);
+            if (fprintf(fp, "[%04d-%02d-%02d %02d:%02d:%02d] DTC 0x%08X\n", t.tm_year + 1900,
+                        t.tm_mon + 1, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec, dtc_id) < 0)
+            {
+                perror("log_dtc fprintf failed.\n");
+            }
+        }
+        if (fclose(fp) != 0)
+        {
+            perror("log_dtc fclose failed.\n");
+        }
+    }
 }

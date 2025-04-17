@@ -38,7 +38,7 @@ const char *interface = "vcan0";
 pthread_t new_thread(void *func)
 {
     pthread_t nthread;
-    pthread_create(&nthread, NULL, func, NULL);
+    (void) pthread_create(&nthread, NULL, func, NULL);
     return nthread;
 }
 
@@ -46,8 +46,19 @@ pthread_t new_thread(void *func)
  *  @brief Show in terminal ERROR Message.
  *  @param errorStr Pointer to the charr array of message.
  *  @requir{SwHLR_F_16}
+ *  @return SUCCESS(0), FAIL(1)
  */
-void show_error(const char errorStr[]) { printf("%s", errorStr); }
+uint8_t show_error(const char errorStr[]) 
+{ 
+    uint8_t return_status = SUCCESS;
+    int value = printf("%s", errorStr); 
+    if(value<0)
+    {
+        return_status = FAIL;
+    }
+    return return_status;
+}
+
 
 /**
  *  @brief Set the status of PIN by terminal
@@ -67,10 +78,11 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
     }
     if (memcmp(line, "pin", 3) == 0)
     {
-        int pin, status;
+        int pin;
+        int status;
         if (sscanf(line + 4, "%d %d", &pin, &status) == 2)
         {
-            if (status == 0 || status == 1)
+            if ((status == 0) || (status == 1))
             {
                 *p_pin = pin;
                 *p_status = status;
@@ -91,7 +103,7 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 uint8_t mcal_init(void)
 {
 
-    for (int i = 0; i < IOPINS; i++)
+    for (uint8_t i = 0; i < IOPINS; i++)
     {
         pins[i].pinNumber = i;
         pins[i].status = 0;
@@ -110,14 +122,10 @@ uint8_t mcal_init(void)
  */
 uint8_t read_pin_status(uint8_t *status, uint8_t pin)
 {
-    uint8_t return_status = SUCCESS;
+    uint8_t return_status = FAIL;
     if (pin < IOPINS)
     {
         return_status = dio_get_pin(status, pin, pins);
-    }
-    else
-    {
-        return_status = FAIL;
     }
     return return_status;
 }
@@ -132,16 +140,12 @@ uint8_t read_pin_status(uint8_t *status, uint8_t pin)
  */
 uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
 {
-    uint8_t status = SUCCESS;
+    uint8_t return_status = FAIL;
     if (p_pin < IOPINS)
     {
-        status = dio_set_pin(p_status, p_pin, pins);
+        return_status = dio_set_pin(p_status, p_pin, pins);
     }
-    else
-    {
-        status = FAIL;
-    }
-    return status;
+    return return_status;
 }
 
 /**
@@ -149,7 +153,10 @@ uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin)
  *
  *  @param seconds How many seconds to sleep.
  */
-void go_sleep(uint8_t seconds) { sleep(seconds); }
+void go_sleep(uint8_t seconds) 
+{ 
+    (void) sleep(seconds); 
+}
 
 //======================================================================
 //======================== CAN =========================================
@@ -166,13 +173,14 @@ void go_sleep(uint8_t seconds) { sleep(seconds); }
  */
 uint8_t can_socket_open(int *can_socket)
 {
-    uint8_t status = SUCCESS;
-    if ((*can_socket = socket_create(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
+    uint8_t return_status = SUCCESS;
+    *can_socket = socket_create(PF_CAN, SOCK_RAW, CAN_RAW);
+    if (*can_socket < 0)
     {
         perror("Socket Open Failed: ");
-        status = FAIL;
+        return_status = FAIL;
     }
-    return status;
+    return return_status;
 }
 
 /**
@@ -186,13 +194,13 @@ uint8_t can_socket_open(int *can_socket)
  */
 uint8_t can_socket_close(int *can_socket)
 {
-    uint8_t status = SUCCESS;
+    uint8_t return_status = SUCCESS;
     if (socket_close(*can_socket) < 0)
     {
         perror("Socket Close Failed:");
-        status = FAIL;
+        return_status = FAIL;
     }
-    return status;
+    return return_status;
 }
 
 /**
@@ -207,27 +215,27 @@ uint8_t can_socket_close(int *can_socket)
  */
 uint8_t can_interface_status(int *can_socket, const char *interface)
 {
-    uint8_t status = SUCCESS;
+    uint8_t return_status = SUCCESS;
     struct ifreq socket_info; // Initialize the struct ifreq to hold the interface information
-    strncpy(socket_info.ifr_name, interface, IFNAMSIZ);
+    (void) strncpy(socket_info.ifr_name, interface, IFNAMSIZ);
 
     // check if the interface exist getting the status using ioctl
     if (can_ioctl(*can_socket, SIOCGIFFLAGS, &socket_info) < 0)
     {
         perror("Error getting interface flags");
-        status = FAIL;
+        return_status = FAIL;
     }
 
     // Check if the interface is up - IFF_UP is a flag that indicate if interface is UP
-    if (socket_info.ifr_flags & IFF_UP && status == SUCCESS)
+    if (socket_info.ifr_flags & IFF_UP)
     {
-        status = SUCCESS;
+        return_status = SUCCESS;
     }
     else
     {
-        status = FAIL;
+        return_status = FAIL;
     }
-    return status;
+    return return_status;
 }
 
 /**
@@ -242,21 +250,21 @@ uint8_t can_interface_status(int *can_socket, const char *interface)
  */
 uint8_t can_bind_socket(int *can_socket, const char *interface)
 {
-    uint8_t status = SUCCESS;
+    uint8_t return_status = SUCCESS;
     struct ifreq ifr;
-    strcpy(ifr.ifr_name, interface);
-    can_ioctl(*can_socket, SIOCGIFINDEX, &ifr);
+    (void) strcpy(ifr.ifr_name, interface);
+    (void) can_ioctl(*can_socket, SIOCGIFINDEX, &ifr);
 
     struct sockaddr_can addr;
-    memset(&addr, 0, sizeof(addr));
+    (void) memset(&addr, 0, sizeof(addr));
     addr.can_family = AF_CAN;
     addr.can_ifindex = ifr.ifr_ifindex;
     if (can_bind(*can_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
         perror("Bind");
-        status = FAIL;
+        return_status = FAIL;
     }
-    return status;
+    return return_status;
 }
 
 /**
@@ -271,13 +279,13 @@ uint8_t can_bind_socket(int *can_socket, const char *interface)
  */
 uint8_t can_send(int *can_socket, struct can_frame *frame)
 {
-    uint8_t status = SUCCESS;
-    if (can_write(can_socket, frame) == FAIL)
+    uint8_t return_status = SUCCESS;
+    if (can_write(can_socket, frame) == (int)FAIL)
     {
         perror("Can Write error: ");
-        status = FAIL;
+        return_status = FAIL;
     }
-    return status;
+    return return_status;
 }
 
 /**
@@ -292,15 +300,15 @@ uint8_t can_send(int *can_socket, struct can_frame *frame)
  */
 uint8_t can_read(int *can_socket, struct can_frame *frame)
 {
-    uint8_t status = SUCCESS;
+    uint8_t return_status = SUCCESS;
     // this will block until frame avaliable
     int nbytes = can_read_socket(*can_socket, frame, sizeof(struct can_frame));
     if (nbytes < 0)
     {
         perror("Can Read Error: ");
-        status = FAIL;
+        return_status = FAIL;
     }
-    return status;
+    return return_status;
 }
 
 /**
@@ -315,23 +323,23 @@ uint8_t can_read(int *can_socket, struct can_frame *frame)
  */
 uint8_t can_start(int *my_vcan, const char *interface)
 {
-    uint8_t status = SUCCESS;
+    uint8_t return_status = SUCCESS;
     if (can_socket_open(my_vcan) == FAIL)
     {
         perror("Can socket open Error: ");
-        status = FAIL;
+        return_status = FAIL;
     }
-    if ((can_interface_status(my_vcan, interface) == FAIL) && (status == SUCCESS)) 
+    if ((can_interface_status(my_vcan, interface) == FAIL) && (return_status == SUCCESS))
     {
         perror("Can interface Error: ");
-        status = FAIL;
+        return_status = FAIL;
     }
-    if ((can_bind_socket(my_vcan, interface) == FAIL) && (status == SUCCESS))
+    if ((can_bind_socket(my_vcan, interface) == FAIL) && (return_status == SUCCESS))
     {
         perror("Can bind Error: ");
-        status = FAIL;
+        return_status = FAIL;
     }
-    return status;
+    return return_status;
 }
 
 /**
@@ -380,11 +388,18 @@ uint8_t can_close(void) { return can_socket_close(&my_vcan); }
  *  @brief Show in terminal LOG Message.
  *  @param errorStr Pointer to the charr array of message.
  *  @requir{SwHLR_F_16}
+*  @return SUCCESS(0), FAIL(1)
  */
-void show_log(const char logStr[])
+uint8_t show_log(const char logStr[])
 {
+    uint8_t return_status = SUCCESS;
     if (SHOW_LOG == 1)
     {
-        printf("%s\n", logStr);
+        int value = printf("%s\n", logStr);
+        if(value<0)
+        {
+            return_status = FAIL;
+        }
     }
+    return return_status;
 }

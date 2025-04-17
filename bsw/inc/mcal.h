@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <stdint.h>
 
-#define IOPINS 10
+#define IOPINS 10U
 
 typedef struct
 {
@@ -25,9 +25,10 @@ typedef struct
 } can_frame;
 
 extern const char *interface;
+extern int my_vcan;
 
 
-void show_error(const char errorStr[]);
+uint8_t show_error(const char errorStr[]);
 uint8_t mcal_init(void);
 uint8_t read_pin_status(uint8_t *status, uint8_t pin);
 uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin);
@@ -51,6 +52,6 @@ uint8_t can_close(void);
 
 uint8_t can_start(int *my_vcan, const char *interface);
 
-void show_log(const char logStr[]);
+uint8_t show_log(const char logStr[]);
 
 #endif

@@ -24,7 +24,7 @@ typedef struct
     __u8 data[8] __attribute__((aligned(8)));
 } can_frame;
 
-void show_error(char errorStr[]);
+void show_error(const char errorStr[]);
 uint8_t mcal_init();
 uint8_t read_pin_status(uint8_t *status, uint8_t pin);
 uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin);
@@ -48,6 +48,6 @@ uint8_t can_close();
 
 uint8_t can_start(int *my_vcan, const char *interface);
 
-void show_log(char logStr[]);
+void show_log(const char logStr[]);
 
 #endif

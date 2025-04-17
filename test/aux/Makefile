@@ -2,7 +2,10 @@
 
 CC = gcc
 CFLAGS = -g
+CFLAGS += -DUNIT_TEST
+
 COVFLAGS = -coverage -fcondition-coverage
+
 
 INCLUDES = -I../unity/inc -I../../bsw/inc -I../../aux/inc -I./mocks
 

@@ -47,7 +47,7 @@ pthread_t new_thread(void *func)
  *  @param errorStr Pointer to the charr array of message.
  *  @requir{SwHLR_F_16}
  */
-void show_error(char errorStr[]) { printf("%s", errorStr); }
+void show_error(const char errorStr[]) { printf("%s", errorStr); }
 
 /**
  *  @brief Set the status of PIN by terminal
@@ -363,7 +363,7 @@ uint8_t can_close() { return can_socket_close(&my_vcan); }
  *  @param errorStr Pointer to the charr array of message.
  *  @requir{SwHLR_F_16}
  */
-void show_log(char logStr[])
+void show_log(const char logStr[])
 {
     if (SHOW_LOG == 1)
     {

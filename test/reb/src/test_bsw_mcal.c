@@ -18,10 +18,29 @@
 
 extern int Counter;
 extern int flag_fail_set_pin;
+extern int mock_can_write_return;
+extern int mock_can_read_return;
+extern int mock_can_ioctl_return;
+extern int mock_can_open_return;
+extern int flag_fail_set_pin;
+extern int flag_fail_get_pin;
+extern int flag_send_ecu;
+extern int flag_send_ecu_count;
 
 TEST_GROUP(mcal_others);
 
-TEST_SETUP(mcal_others) {}
+TEST_SETUP(mcal_others)
+{
+    set_mock_return_values(0, 0, 0, 0, 0, 0);
+    mock_can_write_return = 0;
+    mock_can_read_return = 0;
+    mock_can_ioctl_return = 0;
+    mock_can_open_return = 0;
+    flag_fail_set_pin = 0;
+    flag_fail_get_pin = 0;
+    flag_send_ecu = 0;
+    flag_send_ecu_count = 0;
+}
 
 TEST_TEAR_DOWN(mcal_others) {}
 
@@ -312,7 +331,18 @@ extern int Counter;
  *  - Before each test in the mcal_can suite, the mock return values are set to default (0).
  * Expected:
  */
-TEST_SETUP(mcal_can) { set_mock_return_values(0, 0, 0, 0, 0, 0); }
+TEST_SETUP(mcal_can)
+{
+    set_mock_return_values(0, 0, 0, 0, 0, 0);
+    mock_can_write_return = 0;
+    mock_can_read_return = 0;
+    mock_can_ioctl_return = 0;
+    mock_can_open_return = 0;
+    flag_fail_set_pin = 0;
+    flag_fail_get_pin = 0;
+    flag_send_ecu = 0;
+    flag_send_ecu_count = 0;
+}
 
 /**
  * @brief Resets mock return values after each test in the mcal_can suite.

@@ -10,8 +10,8 @@
  * @brief Unit tests for functions in reb/app.c
  *
  * This file contains the test suite that validates the main functions of
- * Remote Engine Blocking, in app.c, inicializacion, activation and deactivation of REB and handling CAN messages.
- * It covers success and failure scenarios, as well as different status/byte values.
+ * Remote Engine Blocking, in app.c, inicializacion, activation and deactivation of REB and handling
+ * CAN messages. It covers success and failure scenarios, as well as different status/byte values.
  *
  * Requirements covered:
  * @requir{SwHLR_F_6}
@@ -22,23 +22,22 @@
  * @requir{SwHLR_F_15}
  */
 
+#include "app.h"
 #include "ecu.h"
+#include "ecu_reb.h"
+#include "mcal.h"
+#include "mock_can_utils.h"
 #include "pins.h"
+#include "pthread.h"
+#include "string.h"
+#include "unity.h"
+#include "unity_fixture.h"
+#include <net/if.h> // struct ifreq, IFNAMSIZ
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include "ecu_reb.h"
-#include "unity.h"
-#include "unity_fixture.h"
-#include "app.h"
-#include "pthread.h"
-#include "string.h"
-#include "mcal.h"
-#include "mock_can_utils.h"
-#include <net/if.h> // struct ifreq, IFNAMSIZ
-#include <string.h>
 #include <sys/socket.h>
+#include <unistd.h>
 
 extern int mock_can_write_return;
 extern int mock_can_open_return;
@@ -51,10 +50,8 @@ extern int mock_can_read_return;
 extern int flag_send_ecu;
 extern int flag_send_ecu_count;
 
-extern uint8_t read_input();  
+extern uint8_t read_input();
 extern uint8_t flag_reb_canceled;
-
-
 
 TEST_GROUP(reb_app);
 
@@ -230,27 +227,24 @@ TEST(reb_app, start_reb_was_canceled_before_timeout)
 TEST(reb_app, read_console)
 {
     pthread_t read_input_th;
-    pthread_create(&read_input_th, NULL, (void*)read_input, NULL);  
+    pthread_create(&read_input_th, NULL, (void *)read_input, NULL);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
 
     int pipefd[2];
     pipe(pipefd);
 
-    FILE *original_stdin = stdin;
-    stdin = fdopen(pipefd[0], "r");
-
     char input_data[] = "pin 1 1\n";
     write(pipefd[1], input_data, strlen(input_data));
 
-    uint8_t status = 0;
+    dup2(pipefd[0], STDIN_FILENO);
+    close(pipefd[0]);
+
     sleep(1);
+    uint8_t status = 0;
+    uint8_t result = read_pin_status(&status, 1);
 
-    uint8_t result = read_pin_status(&status , 1);
-
-    stdin = original_stdin;
     pthread_cancel(read_input_th);
-
-    close(pipefd[1]);
 
     TEST_ASSERT_EQUAL(1, status);
     TEST_ASSERT_EQUAL(0, result);
@@ -381,7 +375,6 @@ TEST(reb_app, monitor_read_can_check_REB_AUX_comunication)
 TEST(reb_app, countdown_reb_not_inicialize)
 {
 
-    
     pthread_t th_countdown_reb;
     pthread_create(&th_countdown_reb, NULL, (void *)countdown_reb, NULL);
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
@@ -406,8 +399,8 @@ TEST(reb_app, countdown_reb_inicialize)
 {
     uint8_t status = 0;
     flag_send_ecu = 1;
-    status = set_pin_status(1,REB_COUNTDOWN_PIN);
-    TEST_ASSERT_EQUAL(0,status);
+    status = set_pin_status(1, REB_COUNTDOWN_PIN);
+    TEST_ASSERT_EQUAL(0, status);
     printf("Reb countdown waiting 20 seconds\n");
     pthread_t th_countdown_reb;
     pthread_create(&th_countdown_reb, NULL, (void *)countdown_reb, NULL);

@@ -1,5 +1,6 @@
 #include <ecu.h>
 #include <mcal.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 #include "dtc_codes_bsw.h"
@@ -12,18 +13,23 @@
 
 uint8_t read_console(void)
 {
-    uint8_t pin = 0, status = 0;
+    uint8_t pin = 0;
+    uint8_t status = 0;
+    uint8_t ret = SUCCESS;
     if (read_pint_status(&pin, &status) == FAIL)
     {
         REPORT_ERROR("read_pin_status FAIL\n", DTC_READ_PIN_FAIL);
-        return FAIL;
+        ret = FAIL;
     }
 
-    if (set_pin_status(status, pin) == FAIL)
+    if (ret == SUCCESS)
     {
-        REPORT_ERROR("read_console.set_pin_status FAIL\n", DTC_READ_CONSOLE_FAIL);
-        return FAIL;
+        if (set_pin_status(status, pin) == FAIL)
+        {
+            REPORT_ERROR("read_console.set_pin_status FAIL\n", DTC_READ_CONSOLE_FAIL);
+            ret = FAIL;
+        }
     }
 
-    return SUCCESS;
+    return ret;
 }

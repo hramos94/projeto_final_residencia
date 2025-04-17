@@ -1,0 +1,21 @@
+===============================================================================
+MISRA C:2012 Deviation Report
+===============================================================================
+
+ID: R_000001
+Rule: 21.6
+File: bsw/src/dtc_logger.c
+Line: 3
+Justification:
+    Use of <stdio.h> for logging during development and testing environments.
+
+
+--------------------------------------------------------------------------------
+
+
+ID: R_000002
+Rule: 21.10
+File: bsw/src/dtc_logger.c
+Line: 5
+Justification:
+    Use of <time.h> for generating time log.

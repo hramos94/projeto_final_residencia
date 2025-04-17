@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <stdint.h>
 
-#define IOPINS 10
+#define IOPINS 10U
 
 typedef struct
 {
@@ -24,8 +24,12 @@ typedef struct
     __u8 data[8] __attribute__((aligned(8)));
 } can_frame;
 
-void show_error(const char errorStr[]);
-uint8_t mcal_init();
+extern const char *interface;
+extern int my_vcan;
+
+
+uint8_t show_error(const char errorStr[]);
+uint8_t mcal_init(void);
 uint8_t read_pin_status(uint8_t *status, uint8_t pin);
 uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin);
 void go_sleep(uint8_t seconds);
@@ -43,11 +47,11 @@ uint8_t can_read(int *can_socket, struct can_frame *frame);
 uint8_t can_send_vcan0(struct can_frame *frame);
 uint8_t can_read_vcan0(struct can_frame *frame);
 
-uint8_t can_init();
-uint8_t can_close();
+uint8_t can_init(void);
+uint8_t can_close(void);
 
 uint8_t can_start(int *my_vcan, const char *interface);
 
-void show_log(const char logStr[]);
+uint8_t show_log(const char logStr[]);
 
 #endif

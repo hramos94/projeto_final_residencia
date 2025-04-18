@@ -23,10 +23,13 @@ uint8_t application_init(void)
         status = FAIL;
     }
 
-    if (can_init() == FAIL)
+    if (status == SUCCESS)
     {
-        REPORT_ERROR("can_init FAIL\n", DTC_CAN_INIT_FAIL);
-        status = FAIL;
+        if (can_init() == FAIL)
+        {
+            REPORT_ERROR("can_init FAIL\n", DTC_CAN_INIT_FAIL);
+            status = FAIL;
+        }
     }
 
     return status;
@@ -110,13 +113,15 @@ uint8_t cancel_reb(void)
         status =  FAIL;
     }
 
-    // Send by CAN to Engine Control Unit the Caceled REB status
-    if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
+    if (status == SUCCESS)
     {
-        REPORT_ERROR("cancel_reb.reb_can_send_ecu FAIL\n", DTC_REB_CAN_ECU_CANCEL_FAIL);
-        status =  FAIL;
+        // Send by CAN to Engine Control Unit the Caceled REB status
+        if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
+        {
+            REPORT_ERROR("cancel_reb.reb_can_send_ecu FAIL\n", DTC_REB_CAN_ECU_CANCEL_FAIL);
+            status =  FAIL;
+        }
     }
-
     return status;
 }
 
@@ -141,12 +146,14 @@ uint8_t start_reb(void)
         status = FAIL;
     }
 
-    if (flag_reb_canceled == REB_CANCELED)
+    if (status == SUCCESS)
     {
-        REPORT_ERROR("REB canceled before timeout\n", DTC_REB_CANCELLED_TIMEOUT);
-        status = SUCCESS;
+        if (flag_reb_canceled == REB_CANCELED)
+        {
+            REPORT_ERROR("REB canceled before timeout\n", DTC_REB_CANCELLED_TIMEOUT);
+            status = SUCCESS;
+        }
     }
-
     return status;
 }
 

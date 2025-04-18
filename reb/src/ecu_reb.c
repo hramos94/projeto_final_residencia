@@ -56,14 +56,14 @@ uint8_t reb_can_send_ecu(uint8_t status)
 {
     struct can_frame frame = {.can_id = REB_ECU_ID, .can_dlc = 8, .data = {0}};
 
-    if (status == (uint8_t)ECU_REB_START)
+    if (status == ECU_REB_START)
     {
         show_log("send can to ECU to stop vehicle");
         // block engine signal
         frame.data[0] = 0x01;
     }
 
-    if (status == (uint8_t)ECU_REB_CANCEL)
+    if (status == ECU_REB_CANCEL)
     {
         show_log("send can to ECU to remove reb blocking");
         // unblock engine signal
@@ -88,14 +88,14 @@ uint8_t reb_can_send_ipc(uint8_t status)
 {
     struct can_frame frame = {.can_id = REB_IPC_ID, .can_dlc = 8, .data = {0}};
 
-    if (status == (uint8_t)IPC_REB_START)
+    if (status == IPC_REB_START)
     {
         show_log("Send can to IPC to start reb");
         // Reb is activated
         frame.data[0] = 0x01;
     }
 
-    if (status == (uint8_t)IPC_REB_CANCEL)
+    if (status == IPC_REB_CANCEL)
     {
         show_log("Send can to IPC to stop reb");
         // Reb is deactivated

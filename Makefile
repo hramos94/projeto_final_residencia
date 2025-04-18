@@ -78,7 +78,7 @@ misra:
 	make misra-bsw
 	make misra-reb
 	@echo "Generating Summary Report"
-	@python3 Misra_Report.py
+	@python3 misra/src/misra_report.py
 	@echo "Done"
 
 
@@ -94,7 +94,7 @@ misra-aux:
 			--output-file=$$OUTPUT_FILE; \
 	done
 	@echo "Formatting Report"
-	@python3 Misra_Formatter.py misra/aux
+	@python3 misra/src/misra_formatter.py  misra/aux
 	@echo "Done"
 
 misra-bsw:
@@ -108,7 +108,7 @@ misra-bsw:
 			--output-file=$$OUTPUT_FILE; \
 	done
 	@echo "Formatting Report"
-	@python3 Misra_Formatter.py misra/bsw
+	@python3 misra/src/misra_formatter.py misra/bsw
 	@echo "Done"
 
 
@@ -123,7 +123,7 @@ misra-reb:
 			--output-file=$$OUTPUT_FILE; \
 	done
 	@echo "Formatting Report"
-	@python3 Misra_Formatter.py misra/reb
+	@python3 misra/src/misra_formatter.py  misra/reb
 	@echo "Done"
 
 misra-clean:

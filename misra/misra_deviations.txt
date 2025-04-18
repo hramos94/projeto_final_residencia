@@ -1,21 +1,32 @@
 ===============================================================================
 MISRA C:2012 Deviation Report
 ===============================================================================
+#Here we have the Misra Deviation Report - All Required misra rule violations that won't be fixed will be here 
 
 ID: R_000001
 Rule: 21.6
 File: bsw/src/dtc_logger.c
 Line: 3
-Justification:
+code: #include <stdio.h>
+Status: Pending Approval
+Date: 18/04/2024
+Reason: 
     Use of <stdio.h> for logging during development and testing environments.
+    Project requires some sort of output since physical hardware is not avaliable,
 
 
 --------------------------------------------------------------------------------
 
-
 ID: R_000002
-Rule: 21.10
+Rule: 21.6
 File: bsw/src/dtc_logger.c
-Line: 5
-Justification:
-    Use of <time.h> for generating time log.
+Line: 3
+code: #include <time.h>
+Status: Pending Approval
+Date: 18/04/2024
+Reason: 
+    Use of <time.h> for logging during development and testing environments.
+    Project requires some sort of output since physical hardware is not avaliable,
+
+
+--------------------------------------------------------------------------------

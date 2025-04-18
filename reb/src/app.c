@@ -3,7 +3,6 @@
 #include <ecu_reb.h>
 #include <mcal.h>
 #include <pins.h>
-#include <stdio.h>
 #include <time.h>
 
 #include "dtc_codes_reb.h"
@@ -15,22 +14,25 @@ uint8_t flag_reb_canceled = REB_RUNNING;
  * @brief Initializes the application by configuring drivers.
  * @return SUCCESS(0); FAIL(1).
  */
-uint8_t application_init()
+uint8_t application_init(void)
 {
-
+    uint8_t status = SUCCESS;
     if (mcal_init() == FAIL)
     {
         REPORT_ERROR("mcal_init FAIL\n", DTC_MCAL_INIT_FAIL);
-        return FAIL;
+        status = FAIL;
     }
 
-    if (can_init() == FAIL)
+    if (status == SUCCESS)
     {
-        REPORT_ERROR("can_init FAIL\n", DTC_CAN_INIT_FAIL);
-        return FAIL;
+        if (can_init() == FAIL)
+        {
+            REPORT_ERROR("can_init FAIL\n", DTC_CAN_INIT_FAIL);
+            status = FAIL;
+        }
     }
 
-    return SUCCESS;
+    return status;
 }
 
 /**
@@ -40,7 +42,7 @@ uint8_t application_init()
  * ex: "pin 1 0"  set the pin number 1 to status 0
  *
  */
-uint8_t read_input()
+uint8_t read_input(void)
 {
     while (1)
     {
@@ -58,7 +60,7 @@ uint8_t read_input()
  * @requir{SwHLR_F_10}
  * @requir{SwHLR_F_15}
  */
-uint8_t monitor_read_can()
+uint8_t monitor_read_can(void)
 {
     while (1)
     {
@@ -73,7 +75,7 @@ uint8_t monitor_read_can()
             {
                 handle_tcu_can(frame.data);
             }
-            if (frame.can_id == AUX_COM_ID && frame.data[0] == AUX_COM_SIG)
+            if ((frame.can_id == AUX_COM_ID) && (frame.data[0] == AUX_COM_SIG))
             {
                 // Check REB x AUX Communication and send response as ok
                 struct can_frame response = {
@@ -100,25 +102,27 @@ uint8_t monitor_read_can()
  * @return SUCCESS(0); FAIL(1).
  * @requir{SwHLR_F_8}
  */
-uint8_t cancel_reb()
+uint8_t cancel_reb(void)
 {
+    uint8_t status = SUCCESS;
     flag_reb_canceled = REB_CANCELED;
-    // printf("Valor do REB_CANCELED = %d\n", flag_reb_canceled);
     //  Send by CAN to IPC the Caceled REB status
     if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
     {
         REPORT_ERROR("cancel_reb.reb_can_send_ipc FAIL\n", DTC_REB_CAN_IPC_CANCEL_FAIL);
-        return FAIL;
+        status =  FAIL;
     }
 
-    // Send by CAN to Engine Control Unit the Caceled REB status
-    if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
+    if (status == SUCCESS)
     {
-        REPORT_ERROR("cancel_reb.reb_can_send_ecu FAIL\n", DTC_REB_CAN_ECU_CANCEL_FAIL);
-        return FAIL;
+        // Send by CAN to Engine Control Unit the Caceled REB status
+        if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
+        {
+            REPORT_ERROR("cancel_reb.reb_can_send_ecu FAIL\n", DTC_REB_CAN_ECU_CANCEL_FAIL);
+            status =  FAIL;
+        }
     }
-
-    return SUCCESS;
+    return status;
 }
 
 /**
@@ -127,8 +131,9 @@ uint8_t cancel_reb()
  * @requir{SwHLR_F_8}
  * @requir{SwHLR_F_12}
  */
-uint8_t start_reb()
+uint8_t start_reb(void)
 {
+    uint8_t status = SUCCESS;
 
     // Reset flag when start reb
     flag_reb_canceled = REB_RUNNING;
@@ -138,19 +143,18 @@ uint8_t start_reb()
     if (reb_can_send_ipc(IPC_REB_START) == FAIL)
     {
         REPORT_ERROR("start_reb.reb_can_send_ipc FAIL\n", DTC_REB_CAN_IPC_START_FAIL);
-        return FAIL;
+        status = FAIL;
     }
 
-    // TODO create another thread? probably a mutex?
-    // printf("Reb canceled entrou %d==%d\n", REB_CANCELED, flag_reb_canceled);
-
-    if (flag_reb_canceled == REB_CANCELED)
+    if (status == SUCCESS)
     {
-        REPORT_ERROR("REB canceled before timeout\n", DTC_REB_CANCELLED_TIMEOUT);
-        return SUCCESS;
+        if (flag_reb_canceled == REB_CANCELED)
+        {
+            REPORT_ERROR("REB canceled before timeout\n", DTC_REB_CANCELLED_TIMEOUT);
+            status = SUCCESS;
+        }
     }
-
-    return SUCCESS;
+    return status;
 }
 
 /**
@@ -163,8 +167,8 @@ uint8_t countdown_reb(void)
 {
     while (1)
     {
-        struct timespec start_time, current_time;
-        double elapsed_time = 0;
+        struct timespec start_time;
+        struct timespec current_time;
         uint8_t reb_countdown_active = 0;
 
         clock_gettime(CLOCK_MONOTONIC, &start_time);
@@ -172,14 +176,15 @@ uint8_t countdown_reb(void)
         // Verify the status of the pin
         read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN);
 
-        while (reb_countdown_active == 1)
+        while (reb_countdown_active != 0U)
         {
+            double elapsed_time = 0.0;
             clock_gettime(CLOCK_MONOTONIC, &current_time);
 
             elapsed_time = (current_time.tv_sec - start_time.tv_sec) +
                            ((double)(current_time.tv_nsec - start_time.tv_nsec) / 1e9);
 
-            if (elapsed_time >= REB_TIMEOUT)
+            if (elapsed_time >= (double)REB_TIMEOUT)
             {
                 reb_can_send_ecu(ECU_REB_START);
                 set_pin_status(S_OFF, REB_COUNTDOWN_PIN);

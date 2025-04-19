@@ -40,6 +40,7 @@
 *.x86_64
 *.hex
 *.txt
+test/test_report.csv
 
 # Debug files
 *.dSYM/

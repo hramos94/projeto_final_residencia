@@ -1,4 +1,4 @@
-.PHONY: all clean reb aux can delcan downcan test cov misra misra-aux misra-bsw misra-reb misra-clean
+.PHONY: all clean reb aux can delcan downcan test cov test-report misra misra-aux misra-bsw misra-reb misra-clean
 MAKEFLAGS += --no-print-directory
 
 REB_DIR = reb
@@ -62,7 +62,7 @@ delcan:
 
 
 test:
-	@make -C test
+	@make -C test 
 
 cov:
 	make -C test cov
@@ -70,6 +70,12 @@ cov:
 doc:
 	doxygen Doxyfile
 	xdg-open docs/html/index.html
+
+test-report:
+	@rm -f test/test_report.csv
+	@echo "Generating test_report.csv"
+	@python3 test/test_report_gen.py || { echo "Erro no script test_report_gen.py"; exit 1; }
+	@echo "Done"
 
 
 misra:

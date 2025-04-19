@@ -28,15 +28,10 @@
 #include "mcal.h"
 #include "mock_can_utils.h"
 #include "pins.h"
-#include "pthread.h"
-#include "string.h"
 #include "unity.h"
 #include "unity_fixture.h"
-#include <net/if.h> // struct ifreq, IFNAMSIZ
 #include <pthread.h>
-#include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
 #include <unistd.h>
 
 extern int mock_can_write_return;

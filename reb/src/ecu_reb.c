@@ -15,12 +15,12 @@
  *  @return SUCCESS(0), FAIL(1)
  *  @requir{SwHLR_F_3}
  */
-uint8_t handle_tcu_can(unsigned char *data)
+uint8_t handle_tcu_can(const unsigned char *data)
 {
     // Get first byte.
     unsigned char signalREB = data[0];
     // Signal from TCU to cancel REB
-    if (signalREB == 0x02)
+    if (signalREB == (uint8_t)0x02U)
     {
         // Deactivate pin for countdown
         set_pin_status(S_OFF, REB_COUNTDOWN_PIN);
@@ -32,7 +32,7 @@ uint8_t handle_tcu_can(unsigned char *data)
     }
 
     // Signal from TCU to start REB
-    if (signalREB == 0x01)
+    if (signalREB == (uint8_t)0x01U)
     {
         // Activate pin for countdown
         set_pin_status(S_ON, REB_COUNTDOWN_PIN);

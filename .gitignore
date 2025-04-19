@@ -65,8 +65,11 @@ compile_commands.json
 latex/
 html/
 cov/
-misra/
+misra/aux
+misra/bsw
+misra/reb
 
 
 # NOT IGNORE
 !misra/misra_deviations.txt
+!misra/src/misra_ignore.txt

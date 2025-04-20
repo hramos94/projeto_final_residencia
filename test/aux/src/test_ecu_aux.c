@@ -102,7 +102,7 @@ TEST(ecu_aux, test_set_tcu_start_reb) { TEST_ASSERT_EQUAL(SUCCESS, set_tcu_start
 /**
  * @brief Tests set_tcu_cancel_reb() with status = 1 and 0
  *
- * Scenarios:
+ * Scenario:
  *  - status = 1 (set REB OFF Button to HIGH)
  *  - status = 0 (set REB OFF Button to LOW)
  * Expected:
@@ -165,7 +165,7 @@ TEST(ecu_aux, test_get_tcu_cancel_reb_FAIL)
 /**
  * @brief Tests tcu_can_send_reb() with Status 1 and 2.
  *
- * Scenarios:
+ * Scenario:
  *  - REB_START = 0x01 - to send frame data 0x01(ON)
  *  - REB_CANCEL = 0x02 - to send frame data 0x02(OFF)
  * Expected:
@@ -184,7 +184,7 @@ TEST(ecu_aux, test_tcu_can_send_reb)
 /**
  * @brief Tests if handle messages received from REB to Egine Control Unit
  *
- * Scenarios:
+ * Scenario:
  *  - signalREB = 0x01 - to send frame data 0x01(ON)
  *  - signalREB = 0x02 - to send frame data 0x02(OFF)
  * Expected:
@@ -283,7 +283,7 @@ TEST(ecu_aux, test_unblock_engine_FAIL)
 /**
  * @brief Tests if handle messages received from REB to instrument painel control
  *
- * Scenarios:
+ * Scenario:
  *  - signalREB = 0x01 - signal of REB = ON
  *  - signalREB = 0x02 - signal of REB = OFF
  * Expected:
@@ -301,7 +301,7 @@ TEST(ecu_aux, test_handle_ipc_can)
 /**
  * @brief Tests of change status of REB Warning of IPC
  *
- * Scenarios:
+ * Scenario:
  *  - status = 1 Pointer to store the status Button ON
  *  - status = 0 Pointer to store the status Button OFF
  * Expected:

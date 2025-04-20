@@ -72,11 +72,17 @@ doc:
 	xdg-open docs/html/index.html
 
 test-report:
-	@rm -f test/test_report.csv
-	@echo "Generating test_report.csv"
-	@python3 test/test_report_gen.py || { echo "Erro no script test_report_gen.py"; exit 1; }
+	@rm -f test/test_report.csv resultados_formatados.txt output.txt resultados_filtrados.txt
 	@echo "Done"
-
+	@python3 test/scripts/test_capture.py 
+	@echo "Done"
+	@python3 test/scripts/test_capture_filter.py test/scripts/test_capture.txt test/scripts/test_capture_filtered.txt
+	@echo "Done"
+	@python3 test/scripts/test_cleaner.py 
+	@echo "Done"
+	@echo "Generating test_report.csv"
+	@python3 test/scripts/test_report_gen.py || { echo "Erro no script test_report_gen.py"; exit 1; }
+	@echo "Done"
 
 misra:
 	make misra-clean

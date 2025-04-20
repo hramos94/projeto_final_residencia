@@ -8,6 +8,10 @@ FOLDERS_TO_SCAN = {
 }
 CSV_FILE = "test/test_report.csv"
 
+# Caminho absoluto para resultados_filtrados.txt dois níveis acima
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+RESULTS_FILE = os.path.join(SCRIPT_DIR, "..","test_results.txt")
+
 # Patterns
 comment_block_pattern = re.compile(r"/\*\*(.*?)\*/", re.DOTALL)
 test_macro_pattern = re.compile(r"(?<!SETUP)(?<!TEAR_DOWN)\bTEST\s*\(\s*([^\s,]+)\s*,\s*([^)]+)\)")
@@ -30,6 +34,15 @@ def extract_multiline_field(block, label):
             else:
                 break
     return " ".join(content).strip()
+
+# Ler os resultados dos testes
+test_results = {}
+with open(RESULTS_FILE, encoding="utf-8") as f:
+    for line in f:
+        match = re.match(r"TEST\(([^,]+),\s*([^)]+)\)\s*(PASS|FAIL)?", line.strip())
+        if match:
+            group, name, result = match.groups()
+            test_results[(group, name)] = result or ""
 
 test_data = []
 
@@ -64,6 +77,14 @@ for folder, origin in FOLDERS_TO_SCAN.items():
                         if not scenario and not expected:
                             continue
 
+                        # Resultado conforme regras
+                        if (test_group, test_name) in test_results:
+                            result = test_results[(test_group, test_name)]
+                            if not result.strip():
+                                result = ""
+                        else:
+                            result = "-"
+
                         test_data.append([
                             origin,
                             file,
@@ -72,15 +93,16 @@ for folder, origin in FOLDERS_TO_SCAN.items():
                             requirements,
                             description,
                             scenario,
-                            expected
+                            expected,
+                            result
                         ])
 
-# Write to CSV
+# Escrever CSV
 with open(CSV_FILE, mode="w", newline='', encoding="utf-8") as csvfile:
     writer = csv.writer(csvfile, delimiter=';')
     writer.writerow([
         "Test_origin", "Test_location", "Test_group", "Test_name",
-        "Requirements", "Description", "Scenario", "Expected Outcome"
+        "Requirements", "Description", "Scenario", "Expected Outcome", "Result"
     ])
     writer.writerows(test_data)
 

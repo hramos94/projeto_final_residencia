@@ -72,7 +72,7 @@ doc:
 	xdg-open docs/html/index.html
 
 test-report:
-	@rm -f test/test_report.csv resultados_formatados.txt output.txt resultados_filtrados.txt
+	@rm -f test/test_report.csv test/test_results.txt test/scripts/test_capture_filtered.txt test/scripts/test_capture.txt 
 	@echo "Done"
 	@python3 test/scripts/test_capture.py 
 	@echo "Done"

@@ -72,9 +72,9 @@ To run this project the following requirements must be met:
 
 To install SDL, CPPCheck and build-essentials packages, run:
 ```
-apt install cppcheck
-apt-get install -y build-essential
-apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+sudo apt install cppcheck
+sudo apt-get install -y build-essential
+sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 ```
 
 ### Installation of lcov 2.3.1 
@@ -123,8 +123,8 @@ To check gcc version execute:
 #### Intallation of Doxygen:
 
 ```
-apt-get install doxygen
-apt-get install graphviz
+sudo apt-get install doxygen
+sudo apt-get install graphviz
 ```
 
 

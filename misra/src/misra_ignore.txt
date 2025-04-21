@@ -1,2 +1,0 @@
-#Here we have Violations that turn out to be false positives if adde here it will be removed form misra.txt
-# [bsw/inc/ecu.h:9] - [style - misra-c2012-2.5] =>

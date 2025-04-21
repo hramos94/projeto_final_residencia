@@ -1,0 +1,26 @@
+[bsw/inc/ecu.h:9]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define TCU_REB_ID 0x150
+[bsw/inc/ecu.h:10]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define REB_ECU_ID 0x200
+[bsw/inc/ecu.h:11]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define REB_IPC_ID 0x300
+[bsw/inc/ecu.h:12]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define AUX_COM_ID 0x013
+[bsw/inc/ecu.h:13]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define REB_COM_ID 0x015
+[bsw/inc/ecu.h:16]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define S_ON 0x01U
+[bsw/inc/ecu.h:17]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define S_OFF 0x00U
+[bsw/inc/ecu.h:18]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define AUX_COM_SIG 0xFA
+[bsw/inc/ecu.h:19]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define REB_COM_SIG 0x10
+[bsw/inc/ecu.h:21]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define SHOW_LOG 1
+
+[bsw/inc/dtc_logger.h:10]: => [style - misra-c2012-2.5]: A project should not contain unused macro definitions		 #define REPORT_ERROR(msg, code)
+
+[bsw/src/mcal.c:18]: => [style - misra-c2012-8.4]: A compatible declaration shall be visible when an object or function with external linkage is defined		 dIO pins[IOPINS];
+[bsw/src/mcal.c:234]: => [error - misra-config]: Variable 'SIOCGIFFLAGS' is unknown	     if (can_ioctl(*can_socket, SIOCGIFFLAGS, &socket_info) < 0)
+[bsw/src/mcal.c:241]: => [error - misra-config]: Variable 'IFF_UP' is unknown	     if (socket_info.ifr_flags & IFF_UP)
+[bsw/inc/mcal.h:17]: => [style - misra-c2012-2.3]: A project should not contain unused type declarations		 typedef struct
+[bsw/src/mcal.c:185]: => [style - misra-c2012-8.7]: Functions and objects should not be defined with external linkage if they are referenced in only one translation unit		 uint8_t can_socket_open(int *can_socket)
+[bsw/src/mcal.c:227]: => [style - misra-c2012-8.7]: Functions and objects should not be defined with external linkage if they are referenced in only one translation unit		 uint8_t can_interface_status(int *can_socket, const char *interface)
+[bsw/src/mcal.c:262]: => [style - misra-c2012-8.7]: Functions and objects should not be defined with external linkage if they are referenced in only one translation unit		 uint8_t can_bind_socket(int *can_socket, const char *interface)
+[bsw/src/mcal.c:291]: => [style - misra-c2012-8.7]: Functions and objects should not be defined with external linkage if they are referenced in only one translation unit		 uint8_t can_send(int *can_socket, struct can_frame *frame)
+[bsw/src/mcal.c:312]: => [style - misra-c2012-8.7]: Functions and objects should not be defined with external linkage if they are referenced in only one translation unit		 uint8_t can_read(int *can_socket, struct can_frame *frame)
+[bsw/src/mcal.c:335]: => [style - misra-c2012-8.7]: Functions and objects should not be defined with external linkage if they are referenced in only one translation unit		 uint8_t can_start(int *my_vcan, const char *interface)
+[bsw/src/mcal.c:206]: => [style - misra-c2012-8.7]: Functions and objects should not be defined with external linkage if they are referenced in only one translation unit		 uint8_t can_socket_close(int *can_socket)
+
+

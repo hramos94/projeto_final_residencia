@@ -48,15 +48,9 @@ pthread_t new_thread(void *func)
  *  @requir{SwHLR_F_16}
  *  @return SUCCESS(0), FAIL(1)
  */
-uint8_t show_error(const char errorStr[])
+void show_error(const char errorStr[])
 {
-    uint8_t return_status = SUCCESS;
-    int value = printf("%s", errorStr);
-    if (value < 0)
-    {
-        return_status = FAIL;
-    }
-    return return_status;
+    (void) printf("%s", errorStr);
 }
 
 /**
@@ -401,16 +395,9 @@ uint8_t can_close(void) { return can_socket_close(&my_vcan); }
  *  @requir{SwHLR_F_16}
  *  @return SUCCESS(0), FAIL(1)
  */
-uint8_t show_log(const char logStr[])
+void show_log(const char logStr[])
 {
-    uint8_t return_status = SUCCESS;
-    if (SHOW_LOG == 1)
-    {
-        int value = printf("%s\n", logStr);
-        if (value < 0)
-        {
-            return_status = FAIL;
-        }
-    }
-    return return_status;
+
+    (void)printf("%s\n", logStr);
+
 }

@@ -72,4 +72,5 @@ misra/reb
 
 # NOT IGNORE
 !misra/misra_deviations.txt
-!misra/src/misra_ignore.txt
+!misra/misra_false_positives_bsw.txt
+!misra/misra_false_positives_reb.txt

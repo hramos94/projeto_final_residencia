@@ -1,24 +1,24 @@
 import sys
 import subprocess
 
-# Comando que queremos executar
-comando = ['make', 'test']
+# Command we want to execute
+command = ['make', 'test']
 
-# Executando o comando no terminal
+# Executing the command in the terminal
 with open('test/scripts/test_capture.txt', 'w') as f:
-    processo = subprocess.Popen(comando, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     
-    # Lendo e capturando a saída do comando
-    for linha in processo.stdout:
-        print(linha, end='')  # Imprimindo no terminal
-        f.write(linha)        # Escrevendo no arquivo
+    # Reading and capturing the command's output
+    for line in process.stdout:
+        print(line, end='')   # Printing to the terminal
+        f.write(line)         # Writing to the file
 
-    # Lendo e capturando os erros, se houver
-    for linha in processo.stderr:
-        print(linha, end='', file=sys.stderr)  # Imprimindo no terminal em caso de erro
-        f.write(linha)        # Escrevendo no arquivo
+    # Reading and capturing errors, if any
+    for line in process.stderr:
+        print(line, end='', file=sys.stderr)  # Printing errors to the terminal
+        f.write(line)         # Writing to the file
 
-    # Esperando o processo terminar
-    processo.wait()
+    # Waiting for the process to finish
+    process.wait()
 
-print("A execução foi concluída. Veja o output em 'output.txt'.")
+print("Execution completed. See the output in 'test_capture.txt'.")

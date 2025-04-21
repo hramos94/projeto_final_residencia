@@ -324,13 +324,6 @@ TEST_GROUP(mcal_can);
 
 extern int Counter;
 
-/**
- * @brief Sets up mock return values before each test in the mcal_can suite.
- *
- * Scenario:
- *  - Before each test in the mcal_can suite, the mock return values are set to default (0).
- * Expected:
- */
 TEST_SETUP(mcal_can)
 {
     set_mock_return_values(0, 0, 0, 0, 0, 0);
@@ -344,13 +337,6 @@ TEST_SETUP(mcal_can)
     flag_send_ecu_count = 0;
 }
 
-/**
- * @brief Resets mock return values after each test in the mcal_can suite.
- *
- * Expected:
- *  - Mock return values are set to default (0) to ensure no side effects between tests.
- * @requir{SysHLR_9}
- */
 TEST_TEAR_DOWN(mcal_can) { set_mock_return_values(0, 0, 0, 0, 0, 0); }
 
 /**

@@ -1,32 +1,64 @@
 ===============================================================================
 MISRA C:2012 Deviation Report
 ===============================================================================
-#Here we have the Misra Deviation Report - All Required misra rule violations that won't be fixed will be here 
 
 ID: R_000001
-Rule: 21.6
-File: bsw/src/dtc_logger.c
-Line: 3
-code: #include <stdio.h>
+Rule: 18.4
+File: bsw/src/mcal.c
+Line: 85
+code: if (sscanf(line + 4, "%d %d", &pin, &status) == 2)
 Status: Pending Approval
-Date: 18/04/2024
+Date: 20/04/2025
 Reason: 
-    Use of <stdio.h> for logging during development and testing environments.
-    Project requires some sort of output since physical hardware is not avaliable,
-
+    The '+' operator is applied to a pointer type expression, violating Rule 18.4 which restricts pointer arithmetic.
+    Usage is intentional due to unavailability of physical hardware.
 
 --------------------------------------------------------------------------------
-
 ID: R_000002
-Rule: 21.6
-File: bsw/src/dtc_logger.c
-Line: 3
-code: #include <time.h>
+Rule: 21.3
+File: bsw/src/mcal.c
+Line: 108
+code: free(line);
 Status: Pending Approval
-Date: 18/04/2024
+Date: 20/04/2025
 Reason: 
-    Use of <time.h> for logging during development and testing environments.
-    Project requires some sort of output since physical hardware is not avaliable,
+    Use of memory deallocation function from <stdlib.h>, which is restricted under Rule 21.3.
+    Usage is intentional due to unavailability of physical hardware.
 
+--------------------------------------------------------------------------------
+ID: R_000003
+Rule: 21.6
+File: bsw/src/mcal.c
+Line: 10
+code: #include <stdio.h>         // printf, perror, sprintf
+Status: Pending Approval
+Date: 20/04/2025
+Reason: 
+    Standard I/O functions from <stdio.h> are included, violating Rule 21.6. 
+    Usage is intentional due to unavailability of physical hardware.
+
+--------------------------------------------------------------------------------
+ID: R_000004
+Rule: 21.14
+File: bsw/src/mcal.c
+Line: 81
+code: if (memcmp(line, "pin", 3) == 0)
+Status: Pending Approval
+Date: 20/04/2025
+Reason: 
+    memcmp is used to compare null-terminated strings, which is not the intended use of the function.
+    Usage is intentional due to unavailability of physical hardware.
+
+--------------------------------------------------------------------------------
+ID: R_000005
+Rule: 21.16
+File: bsw/src/mcal.c
+Line: 81
+code: if (memcmp(line, "pin", 3) == 0)
+Status: Pending Approval
+Date: 20/04/2025
+Reason: 
+    memcmp arguments may not conform to the required pointer types (e.g., pointer, signed, unsigned, bool, enum).
+    Usage is intentional due to unavailability of physical hardware.
 
 --------------------------------------------------------------------------------

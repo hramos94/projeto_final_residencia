@@ -4,7 +4,7 @@ from collections import defaultdict
 
 # Paths
 RULES_PATH = 'misra_c_2012.txt'
-MISRA_DIR = '../'
+MISRA_DIR = 'misra/'
 OUTPUT_PATH = os.path.join(MISRA_DIR, 'misra_summary.txt')
 
 # Custom violation level order

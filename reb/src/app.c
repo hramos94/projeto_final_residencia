@@ -56,8 +56,11 @@ uint8_t read_input(void)
 /**
  * @brief Handle messages received from CAN BUS
  * @return SUCCESS(0); FAIL(1).
+ * @requir{SwHLR_F_1}
+ * @requir{SwHLR_F_3}
  * @requir{SwHLR_F_6}
  * @requir{SwHLR_F_10}
+ * @requir{SwHLR_F_13}
  * @requir{SwHLR_F_15}
  */
 uint8_t monitor_read_can(void)
@@ -110,7 +113,7 @@ uint8_t cancel_reb(void)
     if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
     {
         REPORT_ERROR("cancel_reb.reb_can_send_ipc FAIL\n", DTC_REB_CAN_IPC_CANCEL_FAIL);
-        status =  FAIL;
+        status = FAIL;
     }
 
     if (status == SUCCESS)
@@ -119,7 +122,7 @@ uint8_t cancel_reb(void)
         if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
         {
             REPORT_ERROR("cancel_reb.reb_can_send_ecu FAIL\n", DTC_REB_CAN_ECU_CANCEL_FAIL);
-            status =  FAIL;
+            status = FAIL;
         }
     }
     return status;
@@ -130,6 +133,8 @@ uint8_t cancel_reb(void)
  * @return SUCCESS(0); FAIL(1).
  * @requir{SwHLR_F_8}
  * @requir{SwHLR_F_12}
+ * @requir{SwHLR_F_14}
+ * @requir{SwHLR_F_2}
  */
 uint8_t start_reb(void)
 {
@@ -162,6 +167,7 @@ uint8_t start_reb(void)
  * @requir{SysHLR_3}
  * @requir{SwHLR_F_12}
  * @requir{SwHLR_F_14}
+ * @requir{SwHLR_F_1}
  */
 uint8_t countdown_reb(void)
 {

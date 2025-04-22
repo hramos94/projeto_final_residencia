@@ -735,8 +735,8 @@ TEST(ecu_app, monitor_tcu_can_send_reb_FAIL)
  *  - Send a message to check communication with REB.
  * Expected:
  *  - Receive from REB a CAN message response with status OK.
- * @requir {SwHLR_F_13}
- * @requir {SwHLR_F_15}
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
  */
 TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
 {
@@ -770,8 +770,8 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
  * Expected:
  *  - not receive from REB a CAN message response with status OK.
  *  - IPC painel show REB FAULT lamp.
- * @requir {SwHLR_F_13}
- * @requir {SwHLR_F_15}
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
  */
 TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_FAULT)
 {
@@ -811,8 +811,8 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_FAULT)
  * Expected:
  *  - not receive from REB a CAN message response with status OK.
  *  - IPC painel show REB FAULT lamp.
- * @requir {SwHLR_F_13}
- * @requir {SwHLR_F_15}
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
  */
 TEST(ecu_app, check_can_communication_SEND_CAN_FAIL)
 {

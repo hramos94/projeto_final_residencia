@@ -51,6 +51,9 @@ uint8_t handle_tcu_can(const unsigned char *data)
  *  @param status 1 to send frame data 0x01(Block);  2 to send frame data 0x02(Unblock).
  *  @return SUCCESS(0), FAIL(1)
  *  @requir{SwHLR_F_12}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_2}
+ *  @requir{SwHLR_F_1}
  */
 uint8_t reb_can_send_ecu(uint8_t status)
 {

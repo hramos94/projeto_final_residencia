@@ -121,6 +121,7 @@ TEST(reb_app, application_init_FAIL)
  *  - Set REB_CANCELED to high.
  * Expected:
  *  - Return SUCCESS (0).
+ * @requir{SwHLR_F_8}
  */
 
 TEST(reb_app, cancel_reb_success)
@@ -140,6 +141,7 @@ TEST(reb_app, cancel_reb_success)
  *  - CAN is unavailable when send cancel reb messsage.
  * Expected:
  *  - Return FAIL (1).
+ * @requir{SwHLR_F_8}
  */
 
 TEST(reb_app, cancel_reb_fail_ipc)
@@ -159,10 +161,15 @@ TEST(reb_app, cancel_reb_fail_ipc)
  *  - Set the activating REB to HIGH.
  * Expected:
  *  - Return SUCCESS (0).
+ * @requir{SwHLR_F_8}
+ * @requir{SwHLR_F_12}
+ * @requir{SwHLR_F_14}
+ * @requir{SwHLR_F_2}
  */
 
 TEST(reb_app, start_reb_success)
 {
+
     flag_reb_canceled = REB_RUNNING;
     mock_can_write_return = SUCCESS;
 
@@ -179,6 +186,10 @@ TEST(reb_app, start_reb_success)
  *  - CAN is unavailable when send start reb messsage.
  * Expected:
  *  - Return FAIL (1).
+ * @requir{SwHLR_F_8}
+ * @requir{SwHLR_F_12}
+ * @requir{SwHLR_F_14}
+ * @requir{SwHLR_F_2}
  */
 
 TEST(reb_app, start_reb_fail_send_can)
@@ -198,6 +209,10 @@ TEST(reb_app, start_reb_fail_send_can)
  *  - Set flag to stop the counting of start reb
  * Expected:
  *  - Return SUCCESS (0).
+ * @requir{SwHLR_F_8}
+ * @requir{SwHLR_F_12}
+ * @requir{SwHLR_F_14}
+ * @requir{SwHLR_F_2}
  */
 
 TEST(reb_app, start_reb_was_canceled_before_timeout)
@@ -283,6 +298,14 @@ TEST(reb_app, read_console_fail)
     TEST_ASSERT_EQUAL_INT(0, status);
 }
 
+/** @brief Tests monitor_read_can() function to SUCCESS.
+ *
+ * Scenario:
+ *  - Reb Activate Pin is set.
+ * Expected:
+ *  - A message CAN should be send.
+ *  @requir{SwHLR_F_3}
+ */
 TEST(reb_app, monitor_read_can_get_handle_tcu)
 {
 
@@ -303,11 +326,11 @@ TEST(reb_app, monitor_read_can_get_handle_tcu)
 /** @brief Tests monitor_read_can() function to FAIL.
  *
  * Scenario:
- *  - Reb Activate Pin is set.
+ *  - CAN is busy.
  * Expected:
- *  - A message CAN should be send.
+ *  - function return FAIL status.
+ *  @requir{SwHLR_F_3}
  */
-
 TEST(reb_app, monitor_read_can_get_handle_tcu_fail)
 {
 
@@ -325,6 +348,14 @@ TEST(reb_app, monitor_read_can_get_handle_tcu_fail)
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_COUNTDOWN_PIN]);
 }
 
+/** @brief Tests monitor_read_can() function to FAIL.
+ *
+ * Scenario:
+ *  - Can is busy when check can comunication with aux.
+ * Expected:
+ *  - function return FAIL status.
+ *  @requir{SwHLR_F_3}
+ */
 TEST(reb_app, monitor_read_can_check_fail)
 {
 
@@ -342,6 +373,17 @@ TEST(reb_app, monitor_read_can_check_fail)
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_COUNTDOWN_PIN]);
 }
 
+/** @brief Tests monitor_read_can(), AUX_REB CAN communication.
+ *
+ * Scenario:
+ *  - AUX require response status from REB.
+ * Expected:
+ *  - REB send can message status OK.
+ *  @requir{SwHLR_F_3}
+ *  @requir{SwHLR_F_15}
+ *  @requir{SwHLR_F_13}
+ *  @requir{SwHLR_F_6}
+ */
 TEST(reb_app, monitor_read_can_check_REB_AUX_comunication)
 {
 
@@ -365,6 +407,7 @@ TEST(reb_app, monitor_read_can_check_REB_AUX_comunication)
  *  - With the activation of REB, the countdown should not start.
  * Expected:
  *  - Should not inicialize the counting.
+ *  @requir{SwHLR_F_14}
  */
 
 TEST(reb_app, countdown_reb_not_inicialize)
@@ -388,6 +431,7 @@ TEST(reb_app, countdown_reb_not_inicialize)
  *  - With the activation of REB, the countdown should start.
  * Expected:
  *  - Inicialize the counting.
+ *  @requir{SwHLR_F_14}
  */
 
 TEST(reb_app, countdown_reb_inicialize)

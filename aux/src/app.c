@@ -201,8 +201,8 @@ uint8_t monitor_tcu(void)
 /**
  * @brief Check communication CAN between REB e AUX modules sending a frame and receving a response.
  * @return SUCCESS(0); FAIL(1).
- * @requir {SwHLR_F_13}
- * @requir {SwHLR_F_15}
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
  */
 uint8_t check_can_communication(void)
 {

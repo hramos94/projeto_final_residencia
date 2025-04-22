@@ -72,7 +72,10 @@ TEST(reb_ecu, reb_can_send_ipc_status_IPC_REB_CANCEL)
  *  - reb_ecu_id = 1 (engine block)
  * Expected:
  *  - Return SUCCESS (0).
- * @requir{SwHLR_F_12}
+ *  @requir{SwHLR_F_12}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_2}
+ *  @requir{SwHLR_F_1}
  */
 TEST(reb_ecu, reb_can_send_ecu_status_ECU_REB_START)
 {
@@ -88,7 +91,10 @@ TEST(reb_ecu, reb_can_send_ecu_status_ECU_REB_START)
  *  - reb_ecu_id = 2 (engine unblock)
  * Expected:
  *  - Return SUCCESS (0).
- * @requir{SwHLR_F_12}
+ *  @requir{SwHLR_F_12}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_2}
+ *  @requir{SwHLR_F_1}
  */
 TEST(reb_ecu, reb_can_send_ecu_status_ECU_REB_CANCEL)
 {
@@ -141,6 +147,8 @@ TEST(reb_ecu, reb_handle_tcu_can_START_REB)
  *  - We force cancel_reb() to fail via mocks.
  * Expected:
  *  - Return FAIL (1).
+ * @requir{SwHLR_F_3}
+ * @requir{SwHLR_F_1}
  */
 TEST(reb_ecu, reb_handle_tcu_can_CANCEL_REB_FAIL)
 {
@@ -160,6 +168,8 @@ TEST(reb_ecu, reb_handle_tcu_can_CANCEL_REB_FAIL)
  *  - We force start_reb() to fail via mocks.
  * Expected:
  *  - Return FAIL (1).
+ * @requir{SwHLR_F_3}
+ * @requir{SwHLR_F_1}
  */
 TEST(reb_ecu, reb_handle_tcu_can_START_REB_FAIL)
 {
@@ -179,6 +189,10 @@ TEST(reb_ecu, reb_handle_tcu_can_START_REB_FAIL)
  *  - We force can_send_vcan0() to fail via mocks (returning -1).
  * Expected:
  *  - Return FAIL (1).
+ *  @requir{SwHLR_F_12}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_2}
+ *  @requir{SwHLR_F_1}
  */
 TEST(reb_ecu, reb_can_send_ecu_CAN_SEND_VCAN_FAIL)
 {
@@ -196,6 +210,7 @@ TEST(reb_ecu, reb_can_send_ecu_CAN_SEND_VCAN_FAIL)
  *  - We force can_send_vcan0() to fail via mocks (returning -1).
  * Expected:
  *  - Return FAIL (1).
+ *  @requir{SwHLR_F_8}
  */
 TEST(reb_ecu, reb_can_send_ipc_CAN_SEND_VCAN_FAIL)
 {

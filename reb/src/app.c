@@ -151,14 +151,6 @@ uint8_t start_reb(void)
         status = FAIL;
     }
 
-    if (status == SUCCESS)
-    {
-        if (flag_reb_canceled == REB_CANCELED)
-        {
-            REPORT_ERROR("REB canceled before timeout\n", DTC_REB_CANCELLED_TIMEOUT);
-            status = SUCCESS;
-        }
-    }
     return status;
 }
 

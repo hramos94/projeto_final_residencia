@@ -170,7 +170,6 @@ TEST(reb_app, cancel_reb_fail_ipc)
 TEST(reb_app, start_reb_success)
 {
 
-    flag_reb_canceled = REB_RUNNING;
     mock_can_write_return = SUCCESS;
 
     uint8_t result = start_reb();
@@ -194,35 +193,11 @@ TEST(reb_app, start_reb_success)
 
 TEST(reb_app, start_reb_fail_send_can)
 {
-    flag_reb_canceled = REB_RUNNING;
     mock_can_write_return = FAIL;
 
     uint8_t result = start_reb();
 
     TEST_ASSERT_EQUAL(FAIL, result);
-}
-
-/**
- * @brief Tests start_reb() function.
- *
- * Scenario:
- *  - Set flag to stop the counting of start reb
- * Expected:
- *  - Return SUCCESS (0).
- * @requir{SwHLR_F_8}
- * @requir{SwHLR_F_12}
- * @requir{SwHLR_F_14}
- * @requir{SwHLR_F_2}
- */
-
-TEST(reb_app, start_reb_was_canceled_before_timeout)
-{
-    flag_reb_canceled = REB_CANCELED;
-    mock_can_write_return = SUCCESS;
-
-    uint8_t result = start_reb();
-
-    TEST_ASSERT_EQUAL(SUCCESS, result);
 }
 
 /**

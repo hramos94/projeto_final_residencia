@@ -216,6 +216,10 @@ To see test coverage execute:
   ```
   make cov
   ```
+You may also generate a csv file (test_report.csv) with all test data like test name, requirements, expected test results and actual test results. To do that execute:
+  ```
+  make test-report
+  ```
 
 
 ## ✒️ Authors

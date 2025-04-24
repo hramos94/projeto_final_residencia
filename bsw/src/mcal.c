@@ -106,7 +106,7 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 /**
  *  @brief Inicializate the PINs status.
  *
- *  @return SUCCESS(0), FAIL(1)
+ *  @return void
  */
 void mcal_init(void)
 {

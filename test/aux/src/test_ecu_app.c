@@ -149,6 +149,8 @@ TEST(ecu_app, read_input_sucess)
     uint8_t status = 0, result = 0;
     result = read_pin_status(&status, 1);
 
+    sleep(3);
+
     pthread_cancel(th_read_input);
 
     TEST_ASSERT_EQUAL_INT(SUCCESS, status);
@@ -185,7 +187,7 @@ TEST(ecu_app, read_input_fail)
     uint8_t status = 0;
     status = flag_status_pin[1];
 
-    sleep(1);
+    sleep(3);
     pthread_cancel(th_read_input);
 
     // Status should stay 0;

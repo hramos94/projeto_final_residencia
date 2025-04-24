@@ -331,12 +331,12 @@ uint8_t can_start(int *my_vcan, const char *interface)
         perror("Can socket open Error: ");
         return_status = FAIL;
     }
-    if ((can_interface_status(my_vcan, interface) == FAIL) && (return_status == SUCCESS))
+    else if ((can_interface_status(my_vcan, interface) == FAIL))
     {
         perror("Can interface Error: ");
         return_status = FAIL;
     }
-    if ((can_bind_socket(my_vcan, interface) == FAIL) && (return_status == SUCCESS))
+    else if ((can_bind_socket(my_vcan, interface) == FAIL))
     {
         perror("Can bind Error: ");
         return_status = FAIL;

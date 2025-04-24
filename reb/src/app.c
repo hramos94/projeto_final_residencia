@@ -17,21 +17,13 @@ uint8_t flag_reb_canceled = REB_RUNNING;
 uint8_t application_init(void)
 {
     uint8_t status = SUCCESS;
-    if (mcal_init() == FAIL)
+    mcal_init();
+
+    if (can_init() == FAIL)
     {
-        REPORT_ERROR("mcal_init FAIL\n", DTC_MCAL_INIT_FAIL);
+        REPORT_ERROR("can_init FAIL\n", DTC_CAN_INIT_FAIL);
         status = FAIL;
     }
-
-    if (status == SUCCESS)
-    {
-        if (can_init() == FAIL)
-        {
-            REPORT_ERROR("can_init FAIL\n", DTC_CAN_INIT_FAIL);
-            status = FAIL;
-        }
-    }
-
     return status;
 }
 

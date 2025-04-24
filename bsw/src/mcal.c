@@ -108,16 +108,13 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
  *
  *  @return SUCCESS(0), FAIL(1)
  */
-uint8_t mcal_init(void)
+void mcal_init(void)
 {
-
     for (uint8_t i = 0; i < IOPINS; i++)
     {
         pins[i].pinNumber = i;
         pins[i].status = 0;
     }
-
-    return SUCCESS;
 }
 
 /**

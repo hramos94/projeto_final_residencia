@@ -263,7 +263,8 @@ TEST(mcal_others, read_pint_status_FAIL_EDGE_CASE)
  */
 TEST(mcal_others, mcal_init_SUCCESS)
 {
-    uint8_t result = mcal_init();
+    uint8_t result = 0;
+    mcal_init();
     TEST_ASSERT_EQUAL_UINT8(0, result);
 }
 

@@ -29,7 +29,7 @@ extern int my_vcan;
 
 
 void show_error(const char errorStr[]);
-uint8_t mcal_init(void);
+void mcal_init(void);
 uint8_t read_pin_status(uint8_t *status, uint8_t pin);
 uint8_t set_pin_status(uint8_t p_status, uint8_t p_pin);
 void go_sleep(uint8_t seconds);

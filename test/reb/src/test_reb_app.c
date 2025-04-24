@@ -154,6 +154,28 @@ TEST(reb_app, cancel_reb_fail_ipc)
     TEST_ASSERT_EQUAL(REB_CANCELED, flag_reb_canceled);
 }
 
+
+/**
+ * @brief Tests cancel_reb() function.
+ *
+ * Scenario:
+ *  - CAN is avaliable for ipc messsage.
+ *  - CAN is unavailable for ecu message.
+ * Expected:
+ *  - Return FAIL (1).
+ * @requir{SwHLR_F_8}
+ */
+
+ TEST(reb_app, cancel_reb_fail_ecu)
+ {
+     mock_can_write_return = 2;
+ 
+     uint8_t result = cancel_reb();
+ 
+     TEST_ASSERT_EQUAL(FAIL, result);
+     TEST_ASSERT_EQUAL(REB_CANCELED, flag_reb_canceled);
+ }
+
 /**
  * @brief Tests start_reb() function.
  *
@@ -375,6 +397,64 @@ TEST(reb_app, monitor_read_can_check_REB_AUX_comunication)
 
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_COUNTDOWN_PIN]);
 }
+
+
+/** @brief Tests monitor_read_can(), AUX_REB CAN communication.
+ *
+ * Scenario:
+ *  - AUX require response status from REB.
+ * Expected:
+ *  - REB send can message status OK.
+ *  @requir{SwHLR_F_3}
+ *  @requir{SwHLR_F_15}
+ *  @requir{SwHLR_F_13}
+ *  @requir{SwHLR_F_6}
+ */
+TEST(reb_app, monitor_read_can_check_WRONG_FRAME)
+{
+
+    mock_can_read_return = 5;
+
+    pthread_t th_monitor_read_can;
+    pthread_create(&th_monitor_read_can, NULL, (void *)monitor_read_can, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_read_can);
+
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_COUNTDOWN_PIN]);
+}
+
+
+/** @brief Tests monitor_read_can(), when can_send failed
+ *
+ * Scenario:
+ *  - AUX require response status from REB.
+ * Expected:
+ *  - can_send failed.
+ *  @requir{SwHLR_F_3}
+ *  @requir{SwHLR_F_15}
+ *  @requir{SwHLR_F_13}
+ *  @requir{SwHLR_F_6}
+ */
+ TEST(reb_app, monitor_read_can_CAN_SEND_FAIL)
+ {
+     mock_can_read_return = 3;
+     mock_can_write_return = -1;
+ 
+     pthread_t th_monitor_read_can;
+     pthread_create(&th_monitor_read_can, NULL, (void *)monitor_read_can, NULL);
+     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+ 
+     sleep(1);
+     pthread_cancel(th_monitor_read_can);
+ 
+     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_COUNTDOWN_PIN]);
+ }
+ 
 
 /** @brief Tests countdown_reb() function to FAIL.
  *

@@ -10,6 +10,7 @@
  * - SysHLR_9
  */
 
+#include "dtc_logger.h"
 #include "mcal.h"
 #include "mock_can_utils.h"
 #include "unity.h"
@@ -26,6 +27,14 @@ extern int flag_fail_set_pin;
 extern int flag_fail_get_pin;
 extern int flag_send_ecu;
 extern int flag_send_ecu_count;
+extern int flag_fail_FILE;
+extern int flag_fail_localtime;
+extern int flag_fail_FILE_close;
+extern int flag_fail_fprintf;
+extern int count_file;
+extern int count_localtime;
+extern int count_file_close;
+extern int count_fprintf;
 
 TEST_GROUP(mcal_others);
 
@@ -40,6 +49,14 @@ TEST_SETUP(mcal_others)
     flag_fail_get_pin = 0;
     flag_send_ecu = 0;
     flag_send_ecu_count = 0;
+    flag_fail_FILE = 0;
+    flag_fail_localtime = 0;
+    flag_fail_FILE_close = 0;
+    flag_fail_fprintf = 0;
+    count_file = 0;
+    count_localtime = 0;
+    count_file_close = 0;
+    count_fprintf = 0;
 }
 
 TEST_TEAR_DOWN(mcal_others) {}
@@ -319,6 +336,78 @@ TEST(mcal_others, new_thread_SUCCESS)
     pthread_t result = new_thread(my_func);
     TEST_ASSERT_NOT_EQUAL(0, result);
     pthread_join(result, NULL);
+}
+
+/**
+ * @brief Tests log_dtc fail at file_fopen
+ *
+ * Scenario:
+ *  - Fail to open log FILE
+ * Expected:
+ *  - return a perror ERROR and not generate a file
+ *  @requir{SwHLR_F_16}
+ */
+TEST(mcal_others, log_dtc_fopen_FAIL)
+{
+    flag_fail_FILE = 1;
+
+    log_dtc(0x123);
+
+    TEST_ASSERT_EQUAL_UINT8(0, count_file);
+}
+
+/**
+ * @brief Tests log_dtc fail at file_localtime_r
+ *
+ * Scenario:
+ *  - Fail to get local time
+ * Expected:
+ *  - return a perror ERROR and not generate a file
+ *  @requir{SwHLR_F_16}
+ */
+TEST(mcal_others, log_dtc_localtime_r_FAIL)
+{
+    flag_fail_localtime = 1;
+
+    log_dtc(0x123);
+
+    TEST_ASSERT_EQUAL_UINT8(0, count_localtime);
+}
+
+/**
+ * @brief Tests log_dtc fail at file_fprintf
+ *
+ * Scenario:
+ *  - Fail to format string
+ * Expected:
+ *  - return a perror ERROR and not generate a file
+ *  @requir{SwHLR_F_16}
+ */
+TEST(mcal_others, log_dtc_fprintf_FAIL)
+{
+    flag_fail_fprintf = 1;
+
+    log_dtc(0x123);
+
+    TEST_ASSERT_EQUAL_UINT8(0, count_fprintf);
+}
+
+/**
+ * @brief Tests log_dtc fail at fclose
+ *
+ * Scenario:
+ *  - Fail to close file
+ * Expected:
+ *  - return a perror ERROR and not generate a file
+ *  @requir{SwHLR_F_16}
+ */
+TEST(mcal_others, log_dtc_fclose_FAIL)
+{
+    flag_fail_FILE_close = 1;
+
+    log_dtc(0x123);
+
+    TEST_ASSERT_EQUAL_UINT8(0, count_file_close);
 }
 
 TEST_GROUP(mcal_can);

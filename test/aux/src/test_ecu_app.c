@@ -376,6 +376,39 @@ TEST(ecu_app, monitor_read_can_get_handle_ecu_can)
 /** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
  *
  * Scenario:
+ *  - Received a message to block engine from can network.
+ * Expected:
+ *  - The hazard button is HIGH.
+ *  - The engine start the Bloking Mode.
+ *  - The IPC start warning that REB is activated.
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ */
+TEST(ecu_app, monitor_read_can_get_handle_ecu_can_FAULT)
+{
+
+    mock_can_read_return = 2;
+    flag_fail_set_pin = 1;
+
+    pthread_t th_monitor_read_can;
+    pthread_create(&th_monitor_read_can, NULL, (void *)monitor_read_can, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_read_can);
+
+    // If received the ecu_can, should turOn the Hazard light
+    TEST_ASSERT_EQUAL(0, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
+    TEST_ASSERT_EQUAL(0, flag_cout_set_pin[ENGINE_REB_MODE]);
+    TEST_ASSERT_EQUAL(0, flag_cout_set_pin[REB_IPC_WARNING]);
+}
+
+
+/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+ *
+ * Scenario:
  *  - Received a message from CAN to warning driver that Engine will be blocked.
  * Expected:
  *  - The IPC start warning that REB will be activated.
@@ -398,6 +431,34 @@ TEST(ecu_app, monitor_reac_can_get_handle_ipc_can)
 
     // Check if warning REB is ON;
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[REB_IPC_WARNING]);
+}
+
+/** @brief Tests monitor_read_can() read message from Remote Engine Blocker. TBDTBDTBD
+ *
+ * Scenario:
+ *  - Received a message from CAN to warning driver that Engine will be blocked.
+ * Expected:
+ *  - The IPC start warning that REB will be activated.
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ */
+TEST(ecu_app, monitor_reac_can_get_handle_ipc_can_FAULT)
+{
+
+    mock_can_read_return = 3;
+    flag_fail_set_pin = 1;
+
+    pthread_t th_monitor_read_can;
+    pthread_create(&th_monitor_read_can, NULL, (void *)monitor_read_can, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_read_can);
+
+    // Check if warning REB is ON;
+    TEST_ASSERT_EQUAL(0, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
 /** @brief Tests monitor_read_can() read message from Remote Engine Blocker.

@@ -58,9 +58,9 @@ uint8_t hazard_lights_blink(void)
             show_error("get_hazard_button_status FAIL\n");
             ret = FAIL;
         }
-        if ((ret == SUCCESS) && (status == S_ON))
+        else if ((status == S_ON))
         {
-            if ((ret == SUCCESS) && (set_hazard_light(S_ON) == FAIL))
+            if ((set_hazard_light(S_ON) == FAIL))
             {
                 show_error("set_hazard_light FAIL\n");
                 ret = FAIL;

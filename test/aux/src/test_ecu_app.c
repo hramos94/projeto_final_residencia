@@ -373,7 +373,7 @@ TEST(ecu_app, monitor_read_can_get_handle_ecu_can)
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
-/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+/** @brief Tests monitor_read_can() read message from Remote Engine Blocker. TBDTBDTBD
  *
  * Scenario:
  *  - Received a message to block engine from can network.

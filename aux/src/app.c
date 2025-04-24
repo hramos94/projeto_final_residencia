@@ -90,8 +90,7 @@ uint8_t hazard_lights_blink(void)
  */
 uint8_t monitor_read_can(void)
 {
-    uint8_t ret = SUCCESS;
-    while (ret == SUCCESS)
+    while (1)
     {
 
         struct can_frame frame = {
@@ -128,7 +127,7 @@ uint8_t monitor_read_can(void)
             go_sleep(2);
         }
     }
-    return ret;
+    return SUCCESS;
 }
 
 /**

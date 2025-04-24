@@ -25,6 +25,17 @@ uint8_t dio_get_pin(uint8_t *status, uint8_t pin, dIO io[])
             return FAIL;
         }
     }
+    if (flag_fail_get_pin == 3)
+    {
+        *status = 0x02U;
+        return SUCCESS;
+    }
+    if (flag_fail_get_pin == 4)
+    {
+        *status = 0x01U;
+        return SUCCESS;
+    }
+
     *status = io[pin].status;
     return SUCCESS;
 }

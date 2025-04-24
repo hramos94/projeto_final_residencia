@@ -768,6 +768,96 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
  * Scenario:
  *  - Send a message to check communication with REB.
  * Expected:
+ *  - Receive from REB a CAN message response with status OK.
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
+TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT)
+{
+
+    mock_can_write_return = 0;
+    flag_fail_get_pin = 1;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    // informing that received response OK from REB
+    reb_con = 1;
+    sleep(1);
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN not FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE)
+{
+
+    mock_can_write_return = 0;
+    flag_fail_get_pin = 3;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    // informing that received response OK from REB
+    reb_con = 1;
+    sleep(1);
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN not FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE_PIN_SET_FAIL)
+{
+
+    mock_can_write_return = 0;
+    flag_fail_get_pin = 3;
+    flag_fail_set_pin = 1;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    // informing that received response OK from REB
+    reb_con = 1;
+    sleep(1);
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN not FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+
+
+
+/** @brief Tests check_can_communication() function.
+ *
+ * Scenario:
+ *  - Send a message to check communication with REB.
+ * Expected:
  *  - not receive from REB a CAN message response with status OK.
  *  - IPC painel show REB FAULT lamp.
  * @requir{SwHLR_F_13}
@@ -844,4 +934,103 @@ TEST(ecu_app, check_can_communication_SEND_CAN_FAIL)
 
     // REB CAN FAULT
     TEST_ASSERT_EQUAL(1, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+
+
+
+
+/** @brief Tests check_can_communication() function.
+ *
+ * Scenario:
+ *  - CAN unavailable.
+ * Expected:
+ *  - not receive from REB a CAN message response with status OK.
+ *  - IPC painel show REB FAULT lamp.
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
+TEST(ecu_app, check_can_communication_SEND_PIN_FAIL)
+{
+
+    mock_can_write_return = 1;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    for (int i = 0; i <= 15; i++)
+    {
+        if(i == 5)
+        {
+            flag_fail_get_pin = 1;
+            flag_fail_set_pin = 1;
+        }
+
+        printf("check_can_communication_SEND_PIN_FAIL waiting for fault %d seconds remaining\n",
+               15 - i);
+        sleep(1);
+        if (flag_status_pin[REB_IPC_FAULT_PIN] == 1)
+        {
+            printf("check_can_communication_SEND_PIN_FAIL waiting 3 seconds\n");
+            sleep(3);
+            break;
+        }
+    }
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+/** @brief Tests check_can_communication() function.
+ *
+ * Scenario:
+ *  - CAN unavailable.
+ * Expected:
+ *  - not receive from REB a CAN message response with status OK.
+ *  - IPC painel show REB FAULT lamp.
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
+TEST(ecu_app, check_can_communication_SEND_PIN_FAIL_VALUE)
+{
+
+    mock_can_write_return = 1;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    for (int i = 0; i <= 15; i++)
+    {
+        if(i == 5)
+        {
+            flag_fail_get_pin = 4;
+        }
+
+        printf("check_can_communication_SEND_PIN_FAIL_VALUE waiting for fault %d seconds remaining\n",
+               15 - i);
+        sleep(1);
+        if (flag_status_pin[REB_IPC_FAULT_PIN] == 1)
+        {
+            printf("check_can_communication_SEND_PIN_FAIL_VALUE waiting 3 seconds\n");
+            sleep(3);
+            break;
+        }
+    }
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
 }

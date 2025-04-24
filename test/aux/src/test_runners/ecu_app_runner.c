@@ -22,8 +22,13 @@ TEST_GROUP_RUNNER(ecu_app)
     RUN_TEST_CASE(ecu_app, monitor_tcu_get_set_button_FAIL);
     RUN_TEST_CASE(ecu_app, monitor_tcu_can_send_reb_FAIL);
     RUN_TEST_CASE(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK);
+    RUN_TEST_CASE(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT);
+    RUN_TEST_CASE(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE);
+    RUN_TEST_CASE(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE_PIN_SET_FAIL);
     RUN_TEST_CASE(ecu_app, check_can_communication_SEND_OK_RECEIVE_FAULT);
     RUN_TEST_CASE(ecu_app, check_can_communication_SEND_CAN_FAIL);
+    RUN_TEST_CASE(ecu_app, check_can_communication_SEND_PIN_FAIL);
+    RUN_TEST_CASE(ecu_app, check_can_communication_SEND_PIN_FAIL_VALUE);
     RUN_TEST_CASE(ecu_app, monitor_tcu_get_reb_OFF_button_FAIL);
     RUN_TEST_CASE(ecu_app, monitor_tcu_set_reb_OFF_button_FAIL);
     RUN_TEST_CASE(ecu_app, monitor_tcu_can_send_cancel_reb_FAIL);

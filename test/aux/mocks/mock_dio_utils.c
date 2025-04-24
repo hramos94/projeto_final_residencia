@@ -28,9 +28,23 @@ uint8_t dio_get_pin(uint8_t *status, uint8_t pin, dIO io[])
     *status = io[pin].status;
     return SUCCESS;
 }
+int set_pin_status_fail_counter = 0;
 
 uint8_t dio_set_pin(uint8_t status, uint8_t pin, dIO io[])
 {
+    if (flag_fail_set_pin == 2)
+    {
+        if(set_pin_status_fail_counter == 0)
+        {
+            return FAIL;
+        }
+        else
+        {
+            set_pin_status_fail_counter --;
+            return SUCCESS;
+        }
+
+    }
     if (flag_fail_set_pin == 1)
     {
         return FAIL;

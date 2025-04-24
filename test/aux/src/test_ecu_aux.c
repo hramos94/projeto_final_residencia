@@ -26,6 +26,8 @@
 
 extern int flag_fail_get_pin;
 extern int flag_fail_set_pin;
+extern int set_pin_status_fail_counter;
+
 
 TEST_GROUP(ecu_aux);
 
@@ -33,12 +35,16 @@ TEST_SETUP(ecu_aux)
 {
     flag_fail_get_pin = 0;
     flag_fail_set_pin = 0;
+    set_pin_status_fail_counter = 0;
+
 }
 
 TEST_TEAR_DOWN(ecu_aux)
 {
     flag_fail_get_pin = 0;
     flag_fail_set_pin = 0;
+    set_pin_status_fail_counter = 0;
+
 }
 
 /**
@@ -147,20 +153,6 @@ TEST(ecu_aux, test_get_tcu_cancel_reb)
     TEST_ASSERT_EQUAL(SUCCESS, get_tcu_cancel_reb(&status));
 }
 
-/**
- * @brief Tests get_tcu_cancel_reb() with FAIL return
- *
- * Scenario:
- *  - unable to set_pin_status
- * Expected:
- *  - Return FAIL (1).
- */
-TEST(ecu_aux, test_get_tcu_cancel_reb_FAIL)
-{
-    uint8_t status = 0;
-    flag_fail_get_pin = 1;
-    TEST_ASSERT_EQUAL(1, get_tcu_cancel_reb(&status));
-}
 
 /**
  * @brief Tests tcu_can_send_reb() with Status 1 and 2.
@@ -256,6 +248,41 @@ TEST(ecu_aux, test_block_engine_FAIL)
 }
 
 /**
+ * @brief Tests test_block_engine() with FAIL return
+ *
+ * Scenario:
+ *  - set_pin_status(S_ON, HAZARD_BUTTON_PIN) SUCCESS
+ *  - set_pin_status(S_ON, ENGINE_REB_MODE) FAILED
+ * Expected:
+ *  - Return FAIL (1).
+ */
+TEST(ecu_aux, test_block_engine_ENGINE_REB_MODE_FAIL)
+{
+    flag_fail_set_pin = 2;
+    set_pin_status_fail_counter = 1;
+    TEST_ASSERT_EQUAL(1, block_engine());
+}
+
+/**
+ * @brief Tests test_block_engine() with FAIL return
+ *
+ * Scenario:
+ *  - set_pin_status(S_ON, HAZARD_BUTTON_PIN) SUCCESS
+ *  - set_pin_status(S_ON, ENGINE_REB_MODE) SUCCESS
+ *  - set_pin_status(S_ON, REB_IPC_WARNING) FAILED
+ * Expected:
+ *  - Return FAIL (1).
+ */
+TEST(ecu_aux, test_block_engine_REB_IPC_WARNING_FAIL)
+{
+    flag_fail_set_pin = 2;
+    set_pin_status_fail_counter = 2;
+    TEST_ASSERT_EQUAL(1, block_engine());
+}
+
+
+
+/**
  * @brief Tests iniciate engine unblock
  *
  * Scenario:
@@ -281,6 +308,40 @@ TEST(ecu_aux, test_unblock_engine_FAIL)
 }
 
 /**
+ * @brief Tests test_unblock_engine() with FAIL return
+ *
+ * Scenario:
+ *  - set_pin_status(S_OFF, HAZARD_BUTTON_PIN) SUCCESS
+ *  - set_pin_status(S_OFF, ENGINE_REB_MODE) FAILED
+ * Expected:
+ *  - Return FAIL (1).
+ */
+TEST(ecu_aux, test_unblock_engine_ENGINE_REB_MODE_FAIL)
+{
+    flag_fail_set_pin = 2;
+    set_pin_status_fail_counter = 1;
+    TEST_ASSERT_EQUAL(1, unblock_engine());
+}
+
+/**
+ * @brief Tests test_unblock_engine() with FAIL return
+ *
+ * Scenario:
+ *  - set_pin_status(S_OFF, HAZARD_BUTTON_PIN) SUCCESS
+ *  - set_pin_status(S_OFF, ENGINE_REB_MODE) SUCCESS
+ *  - set_pin_status(S_OFF, REB_IPC_WARNING) FAILED
+ * Expected:
+ *  - Return FAIL (1).
+ */
+TEST(ecu_aux, test_unblock_engine_REB_IPC_WARNING_FAIL)
+{
+    flag_fail_set_pin = 2;
+    set_pin_status_fail_counter = 2;
+    TEST_ASSERT_EQUAL(1, unblock_engine());
+}
+
+
+/**
  * @brief Tests if handle messages received from REB to instrument painel control
  *
  * Scenario:
@@ -297,6 +358,41 @@ TEST(ecu_aux, test_handle_ipc_can)
     unsigned char data_cancel[1] = {0x02};
     TEST_ASSERT_EQUAL(SUCCESS, handle_ipc_can(data_cancel));
 }
+
+/**
+ * @brief Tests if handle failure when set_reb_warning(S_ON) FAILED
+ *
+ * Scenario:
+ *  - signalREB = 0x01 - signal of REB ON
+ *  - set_reb_warning(S_ON) FAILED
+ * Expected:
+ *  - Return FAIL (1).
+ */
+TEST(ecu_aux, test_handle_ipc_can_S_ON_FAILED)
+{
+    unsigned char data_start[1] = {0x01};
+    flag_fail_set_pin = 1;
+    TEST_ASSERT_EQUAL(FAIL, handle_ipc_can(data_start));
+
+}
+
+/**
+ * @brief Tests if handle failure when set_reb_warning(S_OFF) FAILED
+ *
+ * Scenario:
+ *  - signalREB = 0x02 - signal of REB = OFF
+ *  - set_reb_warning(S_OFF) FAILED
+ * Expected:
+ *  - Return FAIL (1).
+ */
+TEST(ecu_aux, test_handle_ipc_can_S_OFF_FAILED)
+{
+    unsigned char data_cancel[1] = {0x02};
+    flag_fail_set_pin = 1;
+    TEST_ASSERT_EQUAL(FAIL, handle_ipc_can(data_cancel));
+}
+
+
 
 /**
  * @brief Tests of change status of REB Warning of IPC

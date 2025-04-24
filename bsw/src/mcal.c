@@ -106,18 +106,15 @@ uint8_t read_pint_status(uint8_t *p_pin, uint8_t *p_status)
 /**
  *  @brief Inicializate the PINs status.
  *
- *  @return SUCCESS(0), FAIL(1)
+ *  @return void
  */
-uint8_t mcal_init(void)
+void mcal_init(void)
 {
-
     for (uint8_t i = 0; i < IOPINS; i++)
     {
         pins[i].pinNumber = i;
         pins[i].status = 0;
     }
-
-    return SUCCESS;
 }
 
 /**
@@ -334,12 +331,12 @@ uint8_t can_start(int *my_vcan, const char *interface)
         perror("Can socket open Error: ");
         return_status = FAIL;
     }
-    if ((can_interface_status(my_vcan, interface) == FAIL) && (return_status == SUCCESS))
+    else if ((can_interface_status(my_vcan, interface) == FAIL))
     {
         perror("Can interface Error: ");
         return_status = FAIL;
     }
-    if ((can_bind_socket(my_vcan, interface) == FAIL) && (return_status == SUCCESS))
+    else if ((can_bind_socket(my_vcan, interface) == FAIL))
     {
         perror("Can bind Error: ");
         return_status = FAIL;

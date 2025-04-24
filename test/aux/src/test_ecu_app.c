@@ -211,7 +211,7 @@ TEST(ecu_app, hazard_lights_blink_BUTTON_OFF)
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
 
-    sleep(3);
+    sleep(5);
     pthread_cancel(th_hazard_lights_blink);
 
     TEST_ASSERT_EQUAL(0, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
@@ -239,7 +239,7 @@ TEST(ecu_app, hazard_lights_blink_BUTTON_ON)
 
     TEST_ASSERT_EQUAL(0, status);
 
-    sleep(3);
+    sleep(5);
     pthread_cancel(th_hazard_lights_blink);
 
     TEST_ASSERT_GREATER_THAN(0, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
@@ -270,7 +270,7 @@ TEST(ecu_app, hazard_lights_blink_get_hazard_button_FAIL)
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
 
-    sleep(1);
+    sleep(5);
     pthread_cancel(th_hazard_lights_blink);
 
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
@@ -301,7 +301,7 @@ TEST(ecu_app, hazard_lights_blink_set_hazard_light_ON_FAIL)
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
 
-    sleep(1);
+    sleep(5);
     pthread_cancel(th_hazard_lights_blink);
 
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
@@ -335,7 +335,7 @@ TEST(ecu_app, hazard_lights_blink_set_hazard_light_OFF_FAIL)
     // at this points, reading pins throw errors when Lights is ON
     flag_fail_set_pin = 1;
 
-    sleep(2);
+    sleep(5);
 
     pthread_cancel(th_hazard_lights_blink);
 

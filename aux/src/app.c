@@ -16,7 +16,7 @@ uint8_t application_init(void)
     uint8_t status = SUCCESS;
     mcal_init();
 
-    if ((status == SUCCESS) && (can_init() == FAIL))
+    if ((can_init() == FAIL))
     {
         show_error("can_init FAIL\n");
         status = FAIL;

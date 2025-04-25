@@ -800,6 +800,7 @@ TEST(ecu_app, monitor_tcu_can_send_reb_FAIL)
  *
  * Scenario:
  *  - Send a message to check communication with REB.
+ *  - can_send_vcan0(&test_frame) SUCCESS
  * Expected:
  *  - Receive from REB a CAN message response with status OK.
  * @requir{SwHLR_F_13}
@@ -830,12 +831,14 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
 }
 
-/** @brief Tests check_can_communication() function.
+/** @brief Tests check_can_communication() function when read_pin_status() failed.
  *
  * Scenario:
  *  - Send a message to check communication with REB.
+ *  - can_send_vcan0(&test_frame) SUCCESS
+ *  - read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN) FAILED
  * Expected:
- *  - Receive from REB a CAN message response with status OK.
+ *  - Show error read_pin_status ERROR.
  * @requir{SwHLR_F_13}
  * @requir{SwHLR_F_15}
  */
@@ -865,12 +868,14 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT)
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
 }
 
-/** @brief Tests check_can_communication() function.
+/** @brief Tests check_can_communication() function when current_ipc_fault_pin_status = 0x02U.
  *
  * Scenario:
- *  - Send a message to check communication with REB.
+ *  - can_send_vcan0(&test_frame) SUCCESS
+ *  - read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN) SUCESS
+ *  - current_ipc_fault_pin_status = 0x02U 
  * Expected:
- *  - Receive from REB a CAN message response with status OK.
+ *  - Expected to not display any errors.
  * @requir{SwHLR_F_13}
  * @requir{SwHLR_F_15}
  */
@@ -901,12 +906,15 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE)
 }
 
 
-/** @brief Tests check_can_communication() function.
+/** @brief Tests check_can_communication() function when current_ipc_fault_pin_status = 0x02U.
  *
  * Scenario:
- *  - Send a message to check communication with REB.
+ *  - can_send_vcan0(&test_frame) SUCCESS
+ *  - read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN) SUCESS
+ *  - current_ipc_fault_pin_status = 0x02U
+ *  - set_pin_status(1, REB_IPC_FAULT_PIN) FAILED
  * Expected:
- *  - Receive from REB a CAN message response with status OK.
+ *  - Expected error message set_pin_status ERROR
  * @requir{SwHLR_F_13}
  * @requir{SwHLR_F_15}
  */
@@ -1023,17 +1031,12 @@ TEST(ecu_app, check_can_communication_SEND_CAN_FAIL)
     TEST_ASSERT_EQUAL(1, flag_status_pin[REB_IPC_FAULT_PIN]);
 }
 
-
-
-
-
-/** @brief Tests check_can_communication() function.
+/** @brief Tests check_can_communication() function when read_pin_status FAILED.
  *
  * Scenario:
- *  - CAN unavailable.
+ *  read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN) FAILED
  * Expected:
- *  - not receive from REB a CAN message response with status OK.
- *  - IPC painel show REB FAULT lamp.
+ *  - Expected read_pin_status ERROR
  * @requir{SwHLR_F_13}
  * @requir{SwHLR_F_15}
  */
@@ -1078,10 +1081,10 @@ TEST(ecu_app, check_can_communication_SEND_PIN_FAIL)
 /** @brief Tests check_can_communication() function.
  *
  * Scenario:
- *  - CAN unavailable.
+ *  - current_ipc_fault_pin_status = 0x01U
+ *  - set_pin_status(0, REB_IPC_FAULT_PIN) FAILED
  * Expected:
- *  - not receive from REB a CAN message response with status OK.
- *  - IPC painel show REB FAULT lamp.
+ *  - Expected error set_pin_status ERROR
  * @requir{SwHLR_F_13}
  * @requir{SwHLR_F_15}
  */

@@ -20,7 +20,23 @@ int main(int argc, char *argv[])
     pthread_t monitor_read_can_th = new_thread(monitor_read_can);
     pthread_t countdown_reb_th = new_thread(countdown_reb);
 
-    pthread_join(read_input_th, NULL);
-    pthread_join(monitor_read_can_th, NULL);
-    pthread_join(countdown_reb_th, NULL);
+    int ret = 0;
+
+    ret = pthread_join(read_input_th, NULL);
+    if (ret != 0)
+    {
+        REPORT_ERROR("Error to join the read_input_th thread\n", DTC_RTE_INIT_FAIL);
+    }
+    
+    ret = pthread_join(monitor_read_can_th, NULL);
+    if (ret != 0)
+    {
+        REPORT_ERROR("Error to join the monitor_read_can_th thread\n", DTC_RTE_INIT_FAIL);
+    }
+
+    ret = pthread_join(countdown_reb_th, NULL);
+    if (ret != 0)
+    {
+        REPORT_ERROR("Error to join the countdown_reb_th thread\n", DTC_RTE_INIT_FAIL);
+    }    
 }

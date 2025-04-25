@@ -348,6 +348,7 @@ TEST(ecu_app, hazard_lights_blink_set_hazard_light_OFF_FAIL)
  *
  * Scenario:
  *  - Received a message to block engine from can network.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID REB_ECU_ID and frame.data[0] = 0x01
  * Expected:
  *  - The hazard button is HIGH.
  *  - The engine start the Bloking Mode.
@@ -375,14 +376,13 @@ TEST(ecu_app, monitor_read_can_get_handle_ecu_can)
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
-/** @brief Tests monitor_read_can() read message from Remote Engine Blocker. TBDTBDTBD
- *
+/** @brief Tests monitor_read_can() with handle_ecu_can() at fault
  * Scenario:
  *  - Received a message to block engine from can network.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID REB_ECU_ID and frame.data[0] = 0x01
+ *  - handle_ecu_can(frame.data) FAILED 
  * Expected:
- *  - The hazard button is HIGH.
- *  - The engine start the Bloking Mode.
- *  - The IPC start warning that REB is activated.
+ *  - Show Error should output handle_ecu_can ERROR
  * @requir{SwHLR_F_6}
  * @requir{SwHLR_F_10}
  */
@@ -412,6 +412,7 @@ TEST(ecu_app, monitor_read_can_get_handle_ecu_can_FAULT)
  *
  * Scenario:
  *  - Received a message from CAN to warning driver that Engine will be blocked.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID REB_IPC_ID and frame.data[0] = 0x01
  * Expected:
  *  - The IPC start warning that REB will be activated.
  * @requir{SwHLR_F_6}
@@ -435,12 +436,14 @@ TEST(ecu_app, monitor_reac_can_get_handle_ipc_can)
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
-/** @brief Tests monitor_read_can() read message from Remote Engine Blocker. TBDTBDTBD
+/** @brief Tests monitor_read_can() with handle_ipc_can() at fault
  *
  * Scenario:
  *  - Received a message from CAN to warning driver that Engine will be blocked.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID REB_IPC_ID and frame.data[0] = 0x01
+ *  - handle_ipc_can(frame.data) FAILED 
  * Expected:
- *  - The IPC start warning that REB will be activated.
+ *   - Show Error should output handle_ipc_can ERROR
  * @requir{SwHLR_F_6}
  * @requir{SwHLR_F_10}
  */
@@ -463,10 +466,11 @@ TEST(ecu_app, monitor_reac_can_get_handle_ipc_can_FAULT)
     TEST_ASSERT_EQUAL(0, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
-/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+/** @brief Tests monitor_read_can() read message to check communication with reb.
  *
  * Scenario:
- *  - Received a message from CAN to check communication with Remote Engine Blocker.
+ *  - Received a message from CAN to warning driver that Engine will be blocked.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID 0x015 and frame.data[0] = 0x10
  * Expected:
  *  - The IPC not show warning REB FAULT.
  * @requir{SwHLR_F_6}
@@ -490,17 +494,17 @@ TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication)
     TEST_ASSERT_EQUAL(1, reb_con);
 }
 
-/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+/** @brief Tests monitor_read_can() read message from reb with unkown data
  *
  * Scenario:
- *  - Received a message from CAN to check communication with Remote Engine Blocker with invalid
- * data.
+ *  - Received a message from CAN to warning driver that Engine will be blocked.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID 0x015 and frame.data[0] = 0x11
  * Expected:
- *  - The IPC show warning REB FAULT.
+ *   - The IPC should show warning REB FAULT.
  * @requir{SwHLR_F_6}
  * @requir{SwHLR_F_10}
  */
-TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication_Diff_data_0x02)
+TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication_Diff_data_0x11)
 {
 
     mock_can_read_return = 5;
@@ -860,6 +864,16 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT)
     // REB CAN not FAULT
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
 }
+
+/** @brief Tests check_can_communication() function.
+ *
+ * Scenario:
+ *  - Send a message to check communication with REB.
+ * Expected:
+ *  - Receive from REB a CAN message response with status OK.
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
 TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE)
 {
 
@@ -886,6 +900,16 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE)
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
 }
 
+
+/** @brief Tests check_can_communication() function.
+ *
+ * Scenario:
+ *  - Send a message to check communication with REB.
+ * Expected:
+ *  - Receive from REB a CAN message response with status OK.
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
 TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE_PIN_SET_FAIL)
 {
 

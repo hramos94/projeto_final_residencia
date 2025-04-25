@@ -3,7 +3,6 @@
 #include <ecu_reb.h>
 #include <mcal.h>
 #include <pins.h>
-#include <time.h>
 
 #include "dtc_codes_reb.h"
 #include "dtc_logger.h"
@@ -161,7 +160,7 @@ uint8_t countdown_reb(void)
         struct timespec current_time;
         uint8_t reb_countdown_active = 0;
 
-        clock_gettime(CLOCK_MONOTONIC, &start_time);
+        get_time(&start_time);
 
         // Verify the status of the pin
         read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN);
@@ -169,7 +168,7 @@ uint8_t countdown_reb(void)
         while (reb_countdown_active != 0U)
         {
             double elapsed_time = 0.0;
-            clock_gettime(CLOCK_MONOTONIC, &current_time);
+            get_time(&current_time);
 
             elapsed_time = (current_time.tv_sec - start_time.tv_sec) +
                            ((double)(current_time.tv_nsec - start_time.tv_nsec) / 1e9);

@@ -14,6 +14,7 @@
 #include <sys/socket.h>    // socket, bind
 #include <sys/types.h>     // Tipos de dados do sistema
 #include <unistd.h>        // close, write
+#include <time.h>          // clock_getime()
 
 dIO pins[IOPINS];
 // pin 0 - luz de pisca alerta
@@ -396,5 +397,12 @@ void show_log(const char logStr[])
 {
 
     (void)printf("%s\n", logStr);
+
+}
+
+
+void get_time(struct timespec *time)
+{
+    clock_gettime(CLOCK_MONOTONIC, time);
 
 }

@@ -54,4 +54,6 @@ uint8_t can_start(int *my_vcan, const char *interface);
 
 void show_log(const char logStr[]);
 
+void get_time(struct timespec *time);
+
 #endif

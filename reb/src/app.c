@@ -56,7 +56,8 @@ uint8_t read_input(void)
  */
 uint8_t monitor_read_can(void)
 {
-    while (1)
+    uint8_t status = SUCCESS;
+    while (status == SUCCESS)
     {
 
         struct can_frame frame = {
@@ -67,19 +68,25 @@ uint8_t monitor_read_can(void)
             // Handle message received from Telematic Control Unit(TCU)
             if (frame.can_id == TCU_REB_ID)
             {
-                handle_tcu_can(frame.data);
+                if (handle_tcu_can(frame.data) == FAIL)
+                {
+                    show_error("handle_tcu_can FAIL\n\n");
+                }
             }
             if ((frame.can_id == AUX_COM_ID) && (frame.data[0] == AUX_COM_SIG))
             {
                 // Check REB x AUX Communication and send response as ok
-                struct can_frame response = {
-                    .can_id = REB_COM_ID, .can_dlc = 1, .data = {REB_COM_SIG}};
+                struct can_frame response;
+                    response.can_id = REB_COM_ID;
+                    response.can_dlc = 1;
+                    response.data[0] = REB_COM_SIG;
 
                 if (can_send_vcan0(&response) == FAIL)
                 {
                     REPORT_ERROR("respond_to_can_test: Error to send response\n",
                                  DTC_CAN_RESPONSE_FAIL);
-                    return FAIL;
+
+                    status = FAIL;
                 }
             }
         }
@@ -89,6 +96,7 @@ uint8_t monitor_read_can(void)
             go_sleep(2);
         }
     }
+    return status;
 }
 
 /**
@@ -163,7 +171,10 @@ uint8_t countdown_reb(void)
         get_time(&start_time);
 
         // Verify the status of the pin
-        read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN);
+        if (read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN) == FAIL)
+        {
+            show_error("read_pin_status ERROR\n");
+        }
 
         while (reb_countdown_active != 0U)
         {
@@ -175,12 +186,22 @@ uint8_t countdown_reb(void)
 
             if (elapsed_time >= (double)REB_TIMEOUT)
             {
-                reb_can_send_ecu(ECU_REB_START);
-                set_pin_status(S_OFF, REB_COUNTDOWN_PIN);
+                if (reb_can_send_ecu(ECU_REB_START) == FAIL)
+                {
+                    show_error("reb_can_send_ecu ERROR\n");
+                }
+                
+                if (set_pin_status(S_OFF, REB_COUNTDOWN_PIN) == FAIL)
+                {
+                    show_error("set_pin_status ERROR\n");
+                }
             }
 
             // Verify the status of the pin again
-            read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN);
+            if (read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN)== FAIL)
+            {
+                show_error("read_pin_status ERROR\n");
+            }
         }
 
         go_sleep(1);

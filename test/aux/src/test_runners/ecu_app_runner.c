@@ -16,7 +16,7 @@ TEST_GROUP_RUNNER(ecu_app)
     RUN_TEST_CASE(ecu_app, monitor_reac_can_get_handle_ipc_can);
     RUN_TEST_CASE(ecu_app, monitor_reac_can_get_handle_ipc_can_FAULT);
     RUN_TEST_CASE(ecu_app, monitor_read_can_get_handle_REB_AUX_communication);
-    RUN_TEST_CASE(ecu_app, monitor_read_can_get_handle_REB_AUX_communication_Diff_data_0x02);
+    RUN_TEST_CASE(ecu_app, monitor_read_can_get_handle_REB_AUX_communication_Diff_data_0x11);
     RUN_TEST_CASE(ecu_app, monitor_read_can_get_handle_FAIL_CAN);
     RUN_TEST_CASE(ecu_app, monitor_tcu_set_reb_start_button);
     RUN_TEST_CASE(ecu_app, monitor_tcu_set_reb_cancel_button);

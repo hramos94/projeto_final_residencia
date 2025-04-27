@@ -323,9 +323,9 @@ TEST(reb_app, monitor_read_can_get_handle_tcu)
 /** @brief Tests monitor_read_can() function to FAIL.
  *
  * Scenario:
- *  - CAN is busy.
+ *  - can_read_vcan0(&frame) FAILED.
  * Expected:
- *  - function return FAIL status.
+ *  - Expected DTC_MONITOR_READ_CAN_FAIL) in Output
  *  @requir{SwHLR_F_3}
  */
 TEST(reb_app, monitor_read_can_get_handle_tcu_fail)
@@ -402,9 +402,9 @@ TEST(reb_app, monitor_read_can_check_REB_AUX_comunication)
 /** @brief Tests monitor_read_can(), AUX_REB CAN communication.
  *
  * Scenario:
- *  - AUX require response status from REB.
+ *  - when can_read_vcan0(&frame) the frame returned is correct ID, but frame.data[0] = 0xFC (Unexpected Frame).
  * Expected:
- *  - REB send can message status OK.
+ *  - Expected DTC_MONITOR_READ_CAN_FAIL in Output.
  *  @requir{SwHLR_F_3}
  *  @requir{SwHLR_F_15}
  *  @requir{SwHLR_F_13}
@@ -431,9 +431,9 @@ TEST(reb_app, monitor_read_can_check_WRONG_FRAME)
 /** @brief Tests monitor_read_can(), when can_send failed
  *
  * Scenario:
- *  - AUX require response status from REB.
+ *  - can_send_vcan0(&response) Failed
  * Expected:
- *  - can_send failed.
+ *  - Expected DTC_CAN_RESPONSE_FAIL
  *  @requir{SwHLR_F_3}
  *  @requir{SwHLR_F_15}
  *  @requir{SwHLR_F_13}

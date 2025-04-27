@@ -40,11 +40,11 @@ jobs:
 
       - name: Generate Documentation (Doxygen)
         run: |
-          make doc
+          make doc_pages
 
       - name: Generate Coverage Report (LCOV)
         run: |
-          make cov
+          make cov_pages
 
       - name: Prepare Pages Directory
         run: |

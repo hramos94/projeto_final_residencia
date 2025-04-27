@@ -49,6 +49,9 @@ test:
 cov:
 	make -C test cov
 
+cov_pages:
+	make -C test cov_pages
+
 doc:
 	doxygen Doxyfile
 	xdg-open docs/html/index.html

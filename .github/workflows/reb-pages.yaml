@@ -49,12 +49,12 @@ jobs:
       - name: Prepare Pages Directory
         run: |
           mkdir -p pages
-          cp -r docs/html/* pages/
-          cp -r coverage_report/* pages/cov
+          cp -r docs/html/* pages/doxygen
+          cp -r test/cov/out/* pages/cov
 
       - name: Create index.html to link Doxygen and Coverage (optional)
         run: |
-          echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Projeto Final Residência</title></head><body><h1>Documentação do Projeto</h1><ul><li><a href="./index.html">Doxygen Documentation</a></li><li><a href="./cov/index.html">Coverage Report</a></li></ul></body></html>' > pages/home.html
+          echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Projeto Final Residência</title></head><body><h1>Documentação do Projeto</h1><ul><li><a href="./doxygen/index.html">Doxygen Documentation</a></li><li><a href="./cov/index.html">Coverage Report</a></li></ul></body></html>' > pages/home.html
           mv pages/home.html pages/index.html
 
       - name: Deploy to GitHub Pages

@@ -195,10 +195,14 @@ to clean the folder use
   make misra-clean
   ```
 
-
-**Create `Doc` and view the html:**
+If you have access to Misra C 2012 rules, you may add a filed named misra_c_2012.txt at main project folder. If you do this, the misra C output will show besides the rule violation, the corresponding text to this rule. The format of this document is given bellow:
   ```
-  make doc
+  Rule 1.1	Mandatory
+  text for rule 1.1
+  Rule 1.2	Advisory
+  text for rule 1.2	
+  Rule 1.3	Required
+  text for rule 1.3
   ```
 
 ## ⚙️ Running Tests
@@ -215,6 +219,10 @@ To run test execute:
 To see test coverage execute:
   ```
   make cov
+  ```
+You may also generate a csv file (test_report.csv) with all test data like test name, requirements, expected test results and actual test results. To do that execute:
+  ```
+  make test-report
   ```
 
 

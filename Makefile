@@ -53,3 +53,5 @@ doc:
 	doxygen Doxyfile
 	xdg-open docs/html/index.html
 
+doc_pages:
+	doxygen Doxyfile

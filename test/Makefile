@@ -28,4 +28,11 @@ clean:
 	@make -C aux clean
 	@make -C reb clean
 
+cov_pages:
+	$(MAKE) clean
+	$(MAKE) all
+	@lcov -o cov/main/main_coverage.info -c -d . --ignore-errors=mismatch --rc branch_coverage=1 --ignore-errors=inconsistent --rc mcdc_coverage=1 
+	@lcov -o cov/main/main_coverage.info --ignore-errors=mismatch --rc branch_coverage=1 --ignore-errors=inconsistent --rc mcdc_coverage=1 -r cov/main/main_coverage.info /test/
+	@genhtml cov/main/main_coverage.info -o cov/out --branch-coverage --mcdc-coverage
+
 	

@@ -1,0 +1,65 @@
+name: Deploy Documentation and Coverage
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-docs-and-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full code coverage (repository)
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev \
+            doxygen graphviz git make perl software-properties-common
+          sudo apt-get remove -y lcov gcc
+          sudo add-apt-repository -y universe
+          sudo apt-get update
+          sudo apt-get install -y gcc-14 g++-14
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
+          sudo ln -sf $(which gcov-14) /usr/bin/gcov
+          git clone --branch v2.3.1 https://github.com/linux-test-project/lcov.git
+          cd lcov
+          sudo make install
+          cd ..
+
+      - name: Build and Test
+        run: |
+          make clean
+          make
+          make test
+
+      - name: Generate Documentation (Doxygen)
+        run: |
+          make doc
+
+      - name: Generate Coverage Report (LCOV)
+        run: |
+          make cov
+
+      - name: Prepare Pages Directory
+        run: |
+          mkdir -p pages
+          cp -r docs/html/* pages/doxygen
+          cp -r test/cov/out/* pages/cov
+
+      - name: Create index.html to link Doxygen and Coverage (optional)
+        run: |
+          echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Projeto Final Residência</title></head><body><h1>Documentação do Projeto</h1><ul><li><a href="./doxygen/index.html">Doxygen Documentation</a></li><li><a href="./cov/index.html">Coverage Report</a></li></ul></body></html>' > pages/home.html
+          mv pages/home.html pages/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: docs/reb-pages
+          publish_dir: ./pages

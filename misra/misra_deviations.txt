@@ -75,3 +75,44 @@ Reason:
 
 --------------------------------------------------------------------------------
 
+ID: R_000007
+Rule: 21.16
+File: bsw/src/file_utils.c
+Line: 4 
+code: #include <stdio.h>
+Status: Pending Approval
+Date: 28/04/2025
+Reason: 
+    Standard I/O functions from <stdio.h> are included, violating Rule 21.6. 
+    Usage is intentional due to unavailability of physical hardware.
+
+--------------------------------------------------------------------------------
+
+ID: R_000008
+Rule: 21.10
+File: bsw/src/file_utils.c
+Line: 6 
+code: #include <time.h>
+Status: Pending Approval
+Date: 28/04/2025
+Reason: 
+    Standard time functions from <time.h> are included, violating Rule 21.10. 
+    Usage is intentional due to unavailability of physical hardware.
+
+--------------------------------------------------------------------------------
+ 
+ID: R_000009
+Rule: 17.1
+File: bsw/src/file_utils.c
+Line: 16, 18, 21 
+code: 
+    va_list args;
+    va_start(args, format);
+    va_end(args);
+Status: Pending Approval
+Date: 28/04/2025
+Reason: 
+    The use of <stdarg.h> are included, violating Rule 17.1, required to abstract fprintf function.
+    Usage is intentional due to unavailability of physical hardware.
+
+--------------------------------------------------------------------------------

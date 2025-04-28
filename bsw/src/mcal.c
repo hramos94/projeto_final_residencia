@@ -337,10 +337,14 @@ uint8_t can_start(int *my_vcan, const char *interface)
         perror("Can interface Error: ");
         return_status = FAIL;
     }
-    else if ((can_bind_socket(my_vcan, interface) == FAIL))
+    else if((can_bind_socket(my_vcan, interface) == FAIL))
     {
         perror("Can bind Error: ");
         return_status = FAIL;
+    }
+    else
+    {
+  
     }
     return return_status;
 }
@@ -403,6 +407,5 @@ void show_log(const char logStr[])
 
 void get_time(struct timespec *time)
 {
-    clock_gettime(CLOCK_MONOTONIC, time);
-
+    (void) clock_gettime(CLOCK_MONOTONIC, time);
 }

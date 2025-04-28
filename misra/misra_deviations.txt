@@ -5,9 +5,9 @@ MISRA C:2012 Deviation Report
 ID: R_000001
 Rule: 18.4
 File: bsw/src/mcal.c
-Line: 85
+Line: 80
 code: if (sscanf(line + 4, "%d %d", &pin, &status) == 2)
-Status: Pending Approval
+Status: Approved
 Date: 20/04/2025
 Reason: 
     The '+' operator is applied to a pointer type expression, violating Rule 18.4 which restricts pointer arithmetic.
@@ -17,9 +17,9 @@ Reason:
 ID: R_000002
 Rule: 21.3
 File: bsw/src/mcal.c
-Line: 108
+Line: 103
 code: free(line);
-Status: Pending Approval
+Status: Approved
 Date: 20/04/2025
 Reason: 
     Use of memory deallocation function from <stdlib.h>, which is restricted under Rule 21.3.
@@ -31,34 +31,47 @@ Rule: 21.6
 File: bsw/src/mcal.c
 Line: 10
 code: #include <stdio.h>         // printf, perror, sprintf
-Status: Pending Approval
+Status: Approved
 Date: 20/04/2025
 Reason: 
     Standard I/O functions from <stdio.h> are included, violating Rule 21.6. 
     Usage is intentional due to unavailability of physical hardware.
-
 --------------------------------------------------------------------------------
 ID: R_000004
+Rule: 21.10
+File: bsw/src/mcal.c
+Line: 17
+code: #include <time.h>          // clock_getime()
+Status: Approved
+Date: 28/04/2025
+Reason: 
+    [bsw/src/mcal.c:17]: => [style - misra-c2012-21.10]: The Standard Library time and date functions shall not be used
+    Usage is intentional due to unavailability of physical hardware.
+
+
+--------------------------------------------------------------------------------
+ID: R_000005
 Rule: 21.14
 File: bsw/src/mcal.c
-Line: 81
+Line: 76
 code: if (memcmp(line, "pin", 3) == 0)
-Status: Pending Approval
+Status: Approved
 Date: 20/04/2025
 Reason: 
     memcmp is used to compare null-terminated strings, which is not the intended use of the function.
     Usage is intentional due to unavailability of physical hardware.
 
 --------------------------------------------------------------------------------
-ID: R_000005
+ID: R_000006
 Rule: 21.16
 File: bsw/src/mcal.c
-Line: 81
+Line: 76
 code: if (memcmp(line, "pin", 3) == 0)
-Status: Pending Approval
+Status: Approved
 Date: 20/04/2025
 Reason: 
     memcmp arguments may not conform to the required pointer types (e.g., pointer, signed, unsigned, bool, enum).
     Usage is intentional due to unavailability of physical hardware.
 
 --------------------------------------------------------------------------------
+

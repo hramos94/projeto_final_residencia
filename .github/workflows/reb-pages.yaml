@@ -35,8 +35,14 @@ jobs:
       - name: Build and Test
         run: |
           make clean
-          make
           make test
+
+      - name: Check compiler and lcov version
+        run: |
+          gcc --version
+          g++ --version
+          gcov --version
+          lcov --version
 
       - name: Generate Documentation (Doxygen)
         run: |
@@ -44,8 +50,8 @@ jobs:
 
       - name: Generate Coverage Report (LCOV)
         run: |
-          sudo apt install lcov
           make cov_pages
+#          sudo apt install lcov
 
       - name: Prepare Pages Directory
         run: |

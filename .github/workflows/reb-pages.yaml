@@ -44,6 +44,7 @@ jobs:
 
       - name: Generate Coverage Report (LCOV)
         run: |
+          sudo apt install lcov
           make cov_pages
 
       - name: Prepare Pages Directory

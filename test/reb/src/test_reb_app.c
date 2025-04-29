@@ -39,6 +39,7 @@ extern int mock_can_open_return;
 extern int mock_can_ioctl_return;
 extern int flag_fail_set_pin;
 extern int flag_fail_get_pin;
+extern int flag_fail_get_pin_counter;
 extern int flag_cout_set_pin[10];
 extern int flag_status_pin[10];
 extern int mock_can_read_return;
@@ -69,6 +70,7 @@ TEST_SETUP(reb_app)
     flag_fail_get_pin = 0;
     flag_send_ecu = 0;
     flag_send_ecu_count = 0;
+    flag_fail_get_pin_counter = 0;
 }
 
 TEST_TEAR_DOWN(reb_app)
@@ -480,6 +482,33 @@ TEST(reb_app, countdown_reb_not_inicialize)
     TEST_ASSERT_EQUAL(0, flag_send_ecu_count);
 }
 
+/** @brief Tests countdown_reb() function to FAIL.
+ *
+ * Scenario:
+ *  - With the activation of REB, the countdown should not start
+ *  - read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN) FAIL
+ * Expected:
+ *  - Should not inicialize the counting.
+ *  @requir{SwHLR_F_14}
+ */
+
+ TEST(reb_app, countdown_reb_not_inicialize_READ_PIN_FAIL)
+ {
+ 
+     pthread_t th_countdown_reb;
+     flag_fail_get_pin = 1;
+     pthread_create(&th_countdown_reb, NULL, (void *)countdown_reb, NULL);
+     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+ 
+     sleep(2);
+ 
+     pthread_cancel(th_countdown_reb);
+ 
+     TEST_ASSERT_EQUAL(0, flag_send_ecu_count);
+ }
+
+
 /** @brief Tests countdown_reb() function to SUCCESS.
  *
  * Scenario:
@@ -507,3 +536,37 @@ TEST(reb_app, countdown_reb_inicialize)
 
     TEST_ASSERT_GREATER_THAN(0, flag_send_ecu_count);
 }
+
+
+/** @brief Tests countdown_reb() function to SUCCESS.
+ *
+ * Scenario:
+ *  - With the activation of REB, the countdown should start.
+ * Expected:
+ *  - Inicialize the counting.
+ *  @requir{SwHLR_F_14}
+ */
+
+ TEST(reb_app, countdown_reb_inicialize_CAN_FAIL)
+ {
+     uint8_t status = 0;
+     //flag_send_ecu = 1; 
+     status = set_pin_status(1, REB_COUNTDOWN_PIN);
+     flag_fail_get_pin_counter = 2;
+     flag_fail_get_pin = 2;
+     TEST_ASSERT_EQUAL(0, status);
+     printf("Reb countdown waiting 20 seconds\n");
+     pthread_t th_countdown_reb;
+     pthread_create(&th_countdown_reb, NULL, (void *)countdown_reb, NULL);
+     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+    
+     sleep(17);
+     mock_can_write_return = -1;
+     flag_fail_set_pin = 2;
+     sleep(8);
+     pthread_cancel(th_countdown_reb);
+ 
+     TEST_ASSERT_GREATER_THAN(-1, flag_send_ecu_count);
+ }
+ 

@@ -25,5 +25,7 @@ TEST_GROUP_RUNNER(reb_app) {
     RUN_TEST_CASE(reb_app, monitor_read_can_check_WRONG_FRAME);
     RUN_TEST_CASE(reb_app, monitor_read_can_CAN_SEND_FAIL);
     RUN_TEST_CASE(reb_app, countdown_reb_not_inicialize);
+    RUN_TEST_CASE(reb_app, countdown_reb_not_inicialize_READ_PIN_FAIL);
     RUN_TEST_CASE(reb_app, countdown_reb_inicialize);
+    RUN_TEST_CASE(reb_app, countdown_reb_inicialize_CAN_FAIL);
     }

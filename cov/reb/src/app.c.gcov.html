@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-04-29 12:34:44</td>
+            <td class="headerValue">2025-04-29 12:35:57</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -249,21 +249,21 @@
 <span id="L169"><span class="lineNum">     169</span>                 :              :             :         // Verify the status of the pin</span>
 <span id="L170"><span class="lineNum">     170</span>                 :              :<span class="tlaGNC">           7 :         read_pin_status(&amp;reb_countdown_active, REB_COUNTDOWN_PIN);</span></span>
 <span id="L171"><span class="lineNum">     171</span>                 :              :             : </span>
-<span id="L172"><span class="lineNum">     172</span>         [<span class="tlaGBC" title="Branch 0 was taken 468907491 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 7 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">   468907498 :         while (reb_countdown_active == 1)</span></span>
+<span id="L172"><span class="lineNum">     172</span>         [<span class="tlaGBC" title="Branch 0 was taken 469215210 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 7 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">   469215217 :         while (reb_countdown_active == 1)</span></span>
 <span id="L173"><span class="lineNum">     173</span>                 :              :             :         {</span>
-<span id="L174"><span class="lineNum">     174</span>                 :              :<span class="tlaGNC">   468907491 :             clock_gettime(CLOCK_MONOTONIC, &amp;current_time);</span></span>
+<span id="L174"><span class="lineNum">     174</span>                 :              :<span class="tlaGNC">   469215210 :             clock_gettime(CLOCK_MONOTONIC, &amp;current_time);</span></span>
 <span id="L175"><span class="lineNum">     175</span>                 :              :             : </span>
-<span id="L176"><span class="lineNum">     176</span>                 :              :<span class="tlaGNC">   468907491 :             elapsed_time = (current_time.tv_sec - start_time.tv_sec) +</span></span>
-<span id="L177"><span class="lineNum">     177</span>                 :              :<span class="tlaGNC">   468907491 :                            ((double)(current_time.tv_nsec - start_time.tv_nsec) / 1e9);</span></span>
+<span id="L176"><span class="lineNum">     176</span>                 :              :<span class="tlaGNC">   469215210 :             elapsed_time = (current_time.tv_sec - start_time.tv_sec) +</span></span>
+<span id="L177"><span class="lineNum">     177</span>                 :              :<span class="tlaGNC">   469215210 :                            ((double)(current_time.tv_nsec - start_time.tv_nsec) / 1e9);</span></span>
 <span id="L178"><span class="lineNum">     178</span>                 :              :             : </span>
-<span id="L179"><span class="lineNum">     179</span>         [<span class="tlaGBC" title="Branch 0 was taken 1 time"> + </span><span class="tlaGBC" title="Branch 1 was taken 468907490 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">   468907491 :             if (elapsed_time &gt;= REB_TIMEOUT)</span></span>
+<span id="L179"><span class="lineNum">     179</span>         [<span class="tlaGBC" title="Branch 0 was taken 1 time"> + </span><span class="tlaGBC" title="Branch 1 was taken 469215209 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">   469215210 :             if (elapsed_time &gt;= REB_TIMEOUT)</span></span>
 <span id="L180"><span class="lineNum">     180</span>                 :              :             :             {</span>
 <span id="L181"><span class="lineNum">     181</span>                 :              :<span class="tlaGNC">           1 :                 reb_can_send_ecu(ECU_REB_START);</span></span>
 <span id="L182"><span class="lineNum">     182</span>                 :              :<span class="tlaGNC">           1 :                 set_pin_status(S_OFF, REB_COUNTDOWN_PIN);</span></span>
 <span id="L183"><span class="lineNum">     183</span>                 :              :             :             }</span>
 <span id="L184"><span class="lineNum">     184</span>                 :              :             : </span>
 <span id="L185"><span class="lineNum">     185</span>                 :              :             :             // Verify the status of the pin again</span>
-<span id="L186"><span class="lineNum">     186</span>                 :              :<span class="tlaGNC">   468907491 :             read_pin_status(&amp;reb_countdown_active, REB_COUNTDOWN_PIN);</span></span>
+<span id="L186"><span class="lineNum">     186</span>                 :              :<span class="tlaGNC">   469215210 :             read_pin_status(&amp;reb_countdown_active, REB_COUNTDOWN_PIN);</span></span>
 <span id="L187"><span class="lineNum">     187</span>                 :              :             :         }</span>
 <span id="L188"><span class="lineNum">     188</span>                 :              :             : </span>
 <span id="L189"><span class="lineNum">     189</span>                 :              :<span class="tlaGNC">           7 :         go_sleep(1);</span></span>

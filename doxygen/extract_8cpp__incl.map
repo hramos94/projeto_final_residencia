@@ -1,0 +1,11 @@
+<map id="lcov/tests/lcov/extract/extract.cpp" name="lcov/tests/lcov/extract/extract.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="89,5,255,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,67,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,48,69,89,67,84,138,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="91,93,157,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="163,47,141,83,136,80,158,44"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="181,93,261,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="186,44,209,80,205,83,182,47"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="285,93,344,119"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="207,43,283,84,281,89,205,48"/>
+</map>

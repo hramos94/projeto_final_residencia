@@ -1,0 +1,15 @@
+<map id="bsw/inc/can_utils.h" name="bsw/inc/can_utils.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="227,5,373,31"/>
+<area shape="rect" id="Node000002" href="$mcal_8h.html" title=" " alt="" coords="212,79,279,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="293,33,265,69,260,66,289,29"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="303,79,406,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="311,29,340,66,335,69,307,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,99,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,107,97,150,95,145,213,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="123,152,243,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="237,106,204,143,200,140,233,103"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="267,152,351,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="258,103,292,140,288,144,254,106"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="375,152,446,177"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="273,102,372,144,370,149,271,106"/>
+</map>

@@ -1,0 +1,23 @@
+<map id="aux/src/ecu_aux.c" name="aux/src/ecu_aux.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="163,5,302,31"/>
+<area shape="rect" id="Node000002" href="$ecu_8h.html" title=" " alt="" coords="5,79,63,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,33,77,78,75,72,200,28"/>
+<area shape="rect" id="Node000004" href="$ecu__aux_8h.html" title=" " alt="" coords="87,79,175,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="218,33,161,73,158,68,215,28"/>
+<area shape="rect" id="Node000005" href="$mcal_8h.html" title=" " alt="" coords="199,79,266,104"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="235,31,235,65,230,65,230,31"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="290,79,351,104"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="248,29,297,68,294,72,245,33"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="375,79,450,104"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="263,28,372,71,370,76,261,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="44,152,115,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="44,103,67,139,62,142,39,106"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="125,106,98,142,94,139,121,103"/>
+<area shape="poly" id="edge9_Node000005_Node000003" title=" " alt="" coords="209,106,118,149,116,144,207,102"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="139,152,233,177"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="227,106,203,142,199,139,223,103"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="257,152,377,177"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="248,102,294,141,291,145,244,106"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="401,152,485,177"/>
+<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="267,101,398,145,396,150,265,106"/>
+</map>

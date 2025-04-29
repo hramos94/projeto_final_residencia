@@ -1,0 +1,1 @@
+genhtml cov/main/main_coverage.info -o cov/out --branch-coverage --mcdc-coverage

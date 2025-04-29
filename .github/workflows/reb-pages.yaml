@@ -56,14 +56,14 @@ jobs:
       #     doxyfile-path: ./Doxyfile
       #     working-directory: .
 
-      - name: Generate Coverage Report (LCOV)
-        run: |
-          make cov_pages
-#          sudo apt install lcov
+#       - name: Generate Coverage Report (LCOV)
+#         run: |
+#           make cov_pages
+# #          sudo apt install lcov
 
       - name: Prepare Pages Directory
         run: |
-          mkdir -p pages/doxyen
+          mkdir -p pages/doxygen
           cp -r docs/html/* pages/doxygen
 #          cp -r ./test/cov/out/* pages/cov
 

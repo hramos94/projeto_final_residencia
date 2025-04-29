@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['g_0',['g',['../lambda_8cpp.html#a2127e7759884d5caddb75438fe4a89e9',1,'lambda.cpp']]],
-  ['gauss_5fget_5fsum_1',['gauss_get_sum',['../gauss_8h.html#ab60dc0194c01dd0f0be9a41093a67761',1,'gauss_get_sum(int min, int max):&#160;gauss.c'],['../gauss_8c.html#ab60dc0194c01dd0f0be9a41093a67761',1,'gauss_get_sum(int min, int max):&#160;gauss.c']]],
-  ['get_5fhazard_5fbutton_5fstatus_2',['get_hazard_button_status',['../ecu__aux_8h.html#a3a889e09e5b42a47bdb6f70cc1584248',1,'get_hazard_button_status(uint8_t *status):&#160;ecu_aux.c'],['../ecu__aux_8c.html#a3a889e09e5b42a47bdb6f70cc1584248',1,'get_hazard_button_status(uint8_t *status):&#160;ecu_aux.c']]],
-  ['get_5ftcu_5fcancel_5freb_3',['get_tcu_cancel_reb',['../ecu__aux_8h.html#a9a0b686a8de2290e5a707bcba7731965',1,'get_tcu_cancel_reb(uint8_t *status):&#160;ecu_aux.c'],['../ecu__aux_8c.html#a9a0b686a8de2290e5a707bcba7731965',1,'get_tcu_cancel_reb(uint8_t *status):&#160;ecu_aux.c']]],
-  ['get_5ftcu_5fstart_5freb_4',['get_tcu_start_reb',['../ecu__aux_8h.html#a424f03c31e119adabb0eabd6325f0f34',1,'get_tcu_start_reb(uint8_t *status):&#160;ecu_aux.c'],['../ecu__aux_8c.html#a424f03c31e119adabb0eabd6325f0f34',1,'get_tcu_start_reb(uint8_t *status):&#160;ecu_aux.c']]],
-  ['go_5fsleep_5',['go_sleep',['../mcal_8h.html#ab10b83e2d8ebcc06b9494eba0c2d85a2',1,'go_sleep(uint8_t seconds):&#160;mcal.c'],['../mcal_8c.html#ab10b83e2d8ebcc06b9494eba0c2d85a2',1,'go_sleep(uint8_t seconds):&#160;mcal.c']]]
+  ['handle_5fecu_5fcan_0',['handle_ecu_can',['../ecu__aux_8h.html#ab4dfdc08caa643c1113dffe9baed2535',1,'handle_ecu_can(unsigned char *data):&#160;ecu_aux.c'],['../ecu__aux_8c.html#ab4dfdc08caa643c1113dffe9baed2535',1,'handle_ecu_can(unsigned char *data):&#160;ecu_aux.c']]],
+  ['handle_5fipc_5fcan_1',['handle_ipc_can',['../ecu__aux_8h.html#a045a34f40859cf528550d4c47acd2d3b',1,'handle_ipc_can(unsigned char *data):&#160;ecu_aux.c'],['../ecu__aux_8c.html#a045a34f40859cf528550d4c47acd2d3b',1,'handle_ipc_can(unsigned char *data):&#160;ecu_aux.c']]],
+  ['handle_5ftcu_5fcan_2',['handle_tcu_can',['../ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9',1,'handle_tcu_can(unsigned char data[]):&#160;ecu_reb.h'],['../ecu__reb_8c.html#a9d4eaa872a2663ebb8d0d3e7b7913e46',1,'handle_tcu_can(unsigned char *data):&#160;ecu_reb.c']]],
+  ['hazard_5flights_5fblink_3',['hazard_lights_blink',['../aux_2inc_2app_8h.html#a1776ffb511ed30d87942c97f452a52d3',1,'hazard_lights_blink():&#160;app.c'],['../aux_2src_2app_8c.html#a1776ffb511ed30d87942c97f452a52d3',1,'hazard_lights_blink():&#160;app.c']]]
 ];

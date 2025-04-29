@@ -1,22 +1,8 @@
 var searchData=
 [
-  ['realloc_0',['realloc',['../unity__memory_8h.html#a1b739878adcdb46fb5d209af7ce79628',1,'unity_memory.h']]],
-  ['reb_5factivate_5fpin_1',['REB_ACTIVATE_PIN',['../aux_2inc_2pins_8h.html#a6ddcbddcfdb93af74c0b40953bbe594c',1,'pins.h']]],
-  ['reb_5fcancel_2',['REB_CANCEL',['../ecu__aux_8h.html#a8d1516f6f82e625ca6f5c7aca2bfbbc6',1,'ecu_aux.h']]],
-  ['reb_5fcanceled_3',['REB_CANCELED',['../reb_2inc_2app_8h.html#a05462d6c28c6d9282a749c08dcddd29a',1,'app.h']]],
-  ['reb_5fcom_5fid_4',['REB_COM_ID',['../ecu_8h.html#a035ca8c3ba337bcdac60430248515c10',1,'ecu.h']]],
-  ['reb_5fcom_5fsig_5',['REB_COM_SIG',['../ecu_8h.html#ae7c2b07a92f26b37f42a33acfaa1c89a',1,'ecu.h']]],
-  ['reb_5fcountdown_5fpin_6',['REB_COUNTDOWN_PIN',['../reb_2inc_2pins_8h.html#a25d9ca55feac496a19056ed58d6d7499',1,'pins.h']]],
-  ['reb_5fdeactivate_7',['REB_DEACTIVATE',['../aux_2inc_2pins_8h.html#a67347ed41d5b8b7513f8acbecc27b6cb',1,'pins.h']]],
-  ['reb_5fecu_5fid_8',['REB_ECU_ID',['../ecu_8h.html#a061276e3215717293dee822d7a586848',1,'ecu.h']]],
-  ['reb_5fipc_5ffault_5fpin_9',['REB_IPC_FAULT_PIN',['../aux_2inc_2pins_8h.html#ab3a6ab6d21d69e3c41315e04b23cdbce',1,'pins.h']]],
-  ['reb_5fipc_5fid_10',['REB_IPC_ID',['../ecu_8h.html#af1f95d874bf899ebab18520d78cea9d6',1,'ecu.h']]],
-  ['reb_5fipc_5fwarning_11',['REB_IPC_WARNING',['../aux_2inc_2pins_8h.html#a6a891fed886b8dd5f441fafe495a011c',1,'pins.h']]],
-  ['reb_5frunning_12',['REB_RUNNING',['../reb_2inc_2app_8h.html#a7d6ec295d2bf40012e88d84d64252c63',1,'app.h']]],
-  ['reb_5fstart_13',['REB_START',['../ecu__aux_8h.html#ae16ccb1b7f0aa5e37fbddbeffd24fba7',1,'ecu_aux.h']]],
-  ['reb_5ftimeout_14',['REB_TIMEOUT',['../ecu__reb_8h.html#a20a20fab2084270bd0a126411d224ef4',1,'ecu_reb.h']]],
-  ['return_5fif_5ffail_5for_5fignore_15',['RETURN_IF_FAIL_OR_IGNORE',['../unity_8c.html#abf9f99b384602e58874744dda3492aaa',1,'unity.c']]],
-  ['run_5ftest_16',['RUN_TEST',['../unity__internals_8h.html#a27cf08abbe33174b41d808a147cfef11',1,'unity_internals.h']]],
-  ['run_5ftest_5fcase_17',['RUN_TEST_CASE',['../unity__fixture_8h.html#adc2b732a34781cebd1432e413f4ccfbc',1,'unity_fixture.h']]],
-  ['run_5ftest_5fgroup_18',['RUN_TEST_GROUP',['../unity__fixture_8h.html#a7fc679775ab3aaf4dd7302a0a4118202',1,'unity_fixture.h']]]
+  ['s_5foff_0',['s_off',['../aux_2inc_2app_8h.html#a326a1e1b900ac33731f09957e307204d',1,'S_OFF:&#160;app.h'],['../ecu_8h.html#a326a1e1b900ac33731f09957e307204d',1,'S_OFF:&#160;ecu.h'],['../reb_2inc_2app_8h.html#a326a1e1b900ac33731f09957e307204d',1,'S_OFF:&#160;app.h']]],
+  ['s_5fon_1',['s_on',['../aux_2inc_2app_8h.html#aa498f2f67508f63e7e006c8c889639e7',1,'S_ON:&#160;app.h'],['../ecu_8h.html#aa498f2f67508f63e7e006c8c889639e7',1,'S_ON:&#160;ecu.h'],['../reb_2inc_2app_8h.html#aa498f2f67508f63e7e006c8c889639e7',1,'S_ON:&#160;app.h']]],
+  ['show_5flog_2',['SHOW_LOG',['../ecu_8h.html#a508f4432bedf96cd2dac37d38e29c630',1,'ecu.h']]],
+  ['strcmp_5fequal_3',['STRCMP_EQUAL',['../unity__fixture_8h.html#ade1dda09c948fee9ceb853bc6dd5f3cb',1,'unity_fixture.h']]],
+  ['success_4',['SUCCESS',['../ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58',1,'ecu.h']]]
 ];

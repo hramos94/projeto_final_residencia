@@ -72,11 +72,11 @@ $(function() {
   <div class="headertitle"><div class="title">Remote Engine Blocker - SW2</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1"></a> </p>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a> </p>
+<h1><a class="anchor" id="autotoc_md1"></a>
 📖 Project Overview</h1>
 <p>This project is the final assignment of the SW2 class at UFPE. It consists of developing a Remote Engine Blocker (REB) system.</p>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md2"></a>
 🔀 Branch and Commit Standardization</h1>
 <p>There will be three types of branches:</p>
 <ul>
@@ -100,10 +100,10 @@ $(function() {
 <p><code>fix: short description of the task resolution</code></p>
 <p><code>test: short description of the test</code></p>
 <p><code>docs: short description of the task documentation added/updated</code></p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 🚀 Getting Started</h1>
 <p>These instructions will help you get a copy of the project running on your local machine for development and testing purposes.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 System Architecture</h2>
 <p>This project consists of two programs:</p>
 <ul>
@@ -113,7 +113,7 @@ System Architecture</h2>
 <p><img src="./project.png" alt="System Architecture" class="inline"/></p>
 <p>Each program has an architecture based on AUTOSAR as shown below:</p>
 <p><img src="./project_architecture.png" alt="System Architecture" class="inline"/></p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 📋 Requirements</h2>
 <p>To run this project the following requirements must be met:</p><ul>
 <li>Linux Operating System</li>
@@ -123,11 +123,11 @@ System Architecture</h2>
 <li>SDL packages;</li>
 <li>Doxygen and graphviz packages for documentation.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md6"></a>
 Installation of SDL and build-essentials packages</h2>
 <p>To install SDL and build-essentials packages, run: </p><div class="fragment"><div class="line">apt-get install -y build-essential</div>
 <div class="line">apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Installation of lcov 2.3.1</h2>
 <p>To install the required version of lcov, run: </p><div class="fragment"><div class="line">sudo apt remove lcov gcov</div>
 <div class="line">sudo apt update</div>
@@ -139,7 +139,7 @@ Installation of lcov 2.3.1</h2>
 </div><!-- fragment --><p>After installation, create a symbolic link for gcov-14: </p><div class="fragment"><div class="line">sudo ln -s $(which gcov-14) /usr/bin/gcov</div>
 </div><!-- fragment --><p>Verify the versions with: </p><div class="fragment"><div class="line">lcov --version</div>
 <div class="line">gcov --version </div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
 Installation of gcc 14.2</h2>
 <p>To install gcc 14.2 execute the following commands: </p><div class="fragment"><div class="line">sudo apt remove gcc</div>
 <div class="line">sudo add-apt-repository universe</div>
@@ -148,11 +148,11 @@ Installation of gcc 14.2</h2>
 <div class="line">gcc-14 --version </div>
 </div><!-- fragment --><p>After installation, set it as the default gcc:: </p><div class="fragment"><div class="line">sudo ln -s /usr/bin/gcc-14 /usr/bin/gcc</div>
 </div><!-- fragment --><p>To check gcc version execute: </p><div class="fragment"><div class="line">gcc --version </div>
-</div><!-- fragment --> <h3><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --> <h3><a class="anchor" id="autotoc_md9"></a>
 Intallation of Doxygen:</h3>
 <div class="fragment"><div class="line">apt-get install doxygen</div>
 <div class="line">apt-get install graphviz</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
 🔧 Installation</h2>
 <p>Before executing the program, you need to activate the virtual CAN network in Linux. This setup is already automated in the Makefile. Use the following commands:</p>
 <ul>
@@ -169,12 +169,12 @@ Intallation of Doxygen:</h3>
 <div class="fragment"><div class="line">make reb</div>
 </div><!-- fragment --><p>To run the AUX module(using another terminal), execute:</p>
 <div class="fragment"><div class="line">make aux</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md12"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md11"></a>
 DoxyFiles Reports</h1>
 <p>To generate Doxygen reports execute: </p><div class="fragment"><div class="line">doxygen Doxyfile</div>
 </div><!-- fragment --><p>To see reports, execute the docs/html/index.html or</p>
 <p><b>Create <code>Doc</code> and view the html:</b> </p><div class="fragment"><div class="line">make doc</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md13"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md12"></a>
 ⚙️ Running Tests</h1>
 <p>To run the test you need to assure that:</p><ul>
 <li>lcov version is 2.3.1 or higher</li>
@@ -182,7 +182,7 @@ DoxyFiles Reports</h1>
 </ul>
 <p>To run test execute: </p><div class="fragment"><div class="line">make test</div>
 </div><!-- fragment --><p>To see test coverage execute: </p><div class="fragment"><div class="line">make cov</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md13"></a>
 ✒️ Authors</h1>
 <ul>
 <li><b>ANDRÉ ROETGER</b> - <a href="https://github.com/andremgbr">GitHub</a> - <a href="https://www.linkedin.com/in/andre-roetger/">LinkedIn</a></li>

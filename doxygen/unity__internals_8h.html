@@ -263,7 +263,7 @@ Macros</h2></td></tr>
 <tr class="separator:a61d21043921ebc1c2ee49543fc100f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35ff53d9ad3c4ec9d611fdf04319a23b" id="r_a35ff53d9ad3c4ec9d611fdf04319a23b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unity__internals_8h.html#a35ff53d9ad3c4ec9d611fdf04319a23b">TEST_ABORT</a>()&#160;&#160;&#160;longjmp(Unity.AbortFrame, 1)</td></tr>
 <tr class="separator:a35ff53d9ad3c4ec9d611fdf04319a23b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27cf08abbe33174b41d808a147cfef11" id="r_a27cf08abbe33174b41d808a147cfef11"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unity__internals_8h.html#a27cf08abbe33174b41d808a147cfef11">RUN_TEST</a>(<a class="el" href="template_8cpp.html#a095e0b83625f8e1e578eac00a59728cf">func</a>)&#160;&#160;&#160;<a class="el" href="unity__internals_8h.html#ae3c8272eef0f0b6228ca47b9dd1aa2af">UnityDefaultTestRun</a>(<a class="el" href="template_8cpp.html#a095e0b83625f8e1e578eac00a59728cf">func</a>, #<a class="el" href="template_8cpp.html#a095e0b83625f8e1e578eac00a59728cf">func</a>, __LINE__)</td></tr>
+<tr class="memitem:a27cf08abbe33174b41d808a147cfef11" id="r_a27cf08abbe33174b41d808a147cfef11"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unity__internals_8h.html#a27cf08abbe33174b41d808a147cfef11">RUN_TEST</a>(func)&#160;&#160;&#160;<a class="el" href="unity__internals_8h.html#ae3c8272eef0f0b6228ca47b9dd1aa2af">UnityDefaultTestRun</a>(func, #func, __LINE__)</td></tr>
 <tr class="separator:a27cf08abbe33174b41d808a147cfef11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9c480092f985483d29fe0bc26b3a650" id="r_aa9c480092f985483d29fe0bc26b3a650"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unity__internals_8h.html#aa9c480092f985483d29fe0bc26b3a650">TEST_LINE_NUM</a>&#160;&#160;&#160;(Unity.CurrentTestLineNumber)</td></tr>
 <tr class="separator:aa9c480092f985483d29fe0bc26b3a650"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -862,8 +862,8 @@ Variables</h2></td></tr>
           <td class="memname">#define RUN_TEST</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><a class="el" href="template_8cpp.html#a095e0b83625f8e1e578eac00a59728cf">func</a></td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="unity__internals_8h.html#ae3c8272eef0f0b6228ca47b9dd1aa2af">UnityDefaultTestRun</a>(<a class="el" href="template_8cpp.html#a095e0b83625f8e1e578eac00a59728cf">func</a>, #<a class="el" href="template_8cpp.html#a095e0b83625f8e1e578eac00a59728cf">func</a>, __LINE__)</td>
+          <td class="paramname">func</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="unity__internals_8h.html#ae3c8272eef0f0b6228ca47b9dd1aa2af">UnityDefaultTestRun</a>(func, #func, __LINE__)</td>
         </tr>
       </table>
 </div><div class="memdoc">

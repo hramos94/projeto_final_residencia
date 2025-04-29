@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['foo_0',['Foo',['../structFoo.html',1,'']]]
+  ['pointerpair_0',['PointerPair',['../structPointerPair.html',1,'']]]
 ];

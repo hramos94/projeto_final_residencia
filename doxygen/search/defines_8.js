@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['longs_5fequal_0',['LONGS_EQUAL',['../unity__fixture_8h.html#a7921a0c4f152a7879e78fe6fc2905590',1,'unity_fixture.h']]]
+  ['malloc_0',['malloc',['../unity__memory_8h.html#acf143577800376dd931c059ecc61ba06',1,'unity_memory.h']]],
+  ['malloc_5fdont_5ffail_1',['MALLOC_DONT_FAIL',['../unity__memory_8c.html#a3f1b1eff9064dbe426821f93e435fee5',1,'unity_memory.c']]]
 ];

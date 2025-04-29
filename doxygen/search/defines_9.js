@@ -1,5 +1,22 @@
 var searchData=
 [
-  ['malloc_0',['malloc',['../unity__memory_8h.html#acf143577800376dd931c059ecc61ba06',1,'unity_memory.h']]],
-  ['malloc_5fdont_5ffail_1',['MALLOC_DONT_FAIL',['../unity__memory_8c.html#a3f1b1eff9064dbe426821f93e435fee5',1,'unity_memory.c']]]
+  ['realloc_0',['realloc',['../unity__memory_8h.html#a1b739878adcdb46fb5d209af7ce79628',1,'unity_memory.h']]],
+  ['reb_5factivate_5fpin_1',['REB_ACTIVATE_PIN',['../aux_2inc_2pins_8h.html#a6ddcbddcfdb93af74c0b40953bbe594c',1,'pins.h']]],
+  ['reb_5fcancel_2',['REB_CANCEL',['../ecu__aux_8h.html#a8d1516f6f82e625ca6f5c7aca2bfbbc6',1,'ecu_aux.h']]],
+  ['reb_5fcanceled_3',['REB_CANCELED',['../reb_2inc_2app_8h.html#a05462d6c28c6d9282a749c08dcddd29a',1,'app.h']]],
+  ['reb_5fcom_5fid_4',['REB_COM_ID',['../ecu_8h.html#a035ca8c3ba337bcdac60430248515c10',1,'ecu.h']]],
+  ['reb_5fcom_5fsig_5',['REB_COM_SIG',['../ecu_8h.html#ae7c2b07a92f26b37f42a33acfaa1c89a',1,'ecu.h']]],
+  ['reb_5fcountdown_5fpin_6',['REB_COUNTDOWN_PIN',['../reb_2inc_2pins_8h.html#a25d9ca55feac496a19056ed58d6d7499',1,'pins.h']]],
+  ['reb_5fdeactivate_7',['REB_DEACTIVATE',['../aux_2inc_2pins_8h.html#a67347ed41d5b8b7513f8acbecc27b6cb',1,'pins.h']]],
+  ['reb_5fecu_5fid_8',['REB_ECU_ID',['../ecu_8h.html#a061276e3215717293dee822d7a586848',1,'ecu.h']]],
+  ['reb_5fipc_5ffault_5fpin_9',['REB_IPC_FAULT_PIN',['../aux_2inc_2pins_8h.html#ab3a6ab6d21d69e3c41315e04b23cdbce',1,'pins.h']]],
+  ['reb_5fipc_5fid_10',['REB_IPC_ID',['../ecu_8h.html#af1f95d874bf899ebab18520d78cea9d6',1,'ecu.h']]],
+  ['reb_5fipc_5fwarning_11',['REB_IPC_WARNING',['../aux_2inc_2pins_8h.html#a6a891fed886b8dd5f441fafe495a011c',1,'pins.h']]],
+  ['reb_5frunning_12',['REB_RUNNING',['../reb_2inc_2app_8h.html#a7d6ec295d2bf40012e88d84d64252c63',1,'app.h']]],
+  ['reb_5fstart_13',['REB_START',['../ecu__aux_8h.html#ae16ccb1b7f0aa5e37fbddbeffd24fba7',1,'ecu_aux.h']]],
+  ['reb_5ftimeout_14',['REB_TIMEOUT',['../ecu__reb_8h.html#a20a20fab2084270bd0a126411d224ef4',1,'ecu_reb.h']]],
+  ['return_5fif_5ffail_5for_5fignore_15',['RETURN_IF_FAIL_OR_IGNORE',['../unity_8c.html#abf9f99b384602e58874744dda3492aaa',1,'unity.c']]],
+  ['run_5ftest_16',['RUN_TEST',['../unity__internals_8h.html#a27cf08abbe33174b41d808a147cfef11',1,'unity_internals.h']]],
+  ['run_5ftest_5fcase_17',['RUN_TEST_CASE',['../unity__fixture_8h.html#adc2b732a34781cebd1432e413f4ccfbc',1,'unity_fixture.h']]],
+  ['run_5ftest_5fgroup_18',['RUN_TEST_GROUP',['../unity__fixture_8h.html#a7fc679775ab3aaf4dd7302a0a4118202',1,'unity_fixture.h']]]
 ];

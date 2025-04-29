@@ -7,13 +7,5 @@ var searchData=
   ['ecu_5faux_2eh_4',['ecu_aux.h',['../ecu__aux_8h.html',1,'']]],
   ['ecu_5faux_5frunner_2ec_5',['ecu_aux_runner.c',['../ecu__aux__runner_8c.html',1,'']]],
   ['ecu_5freb_2ec_6',['ecu_reb.c',['../ecu__reb_8c.html',1,'']]],
-  ['ecu_5freb_2eh_7',['ecu_reb.h',['../ecu__reb_8h.html',1,'']]],
-  ['example_2ec_8',['example.c',['../example_8c.html',1,'']]],
-  ['example_5fmod_2ec_9',['example_mod.c',['../example__mod_8c.html',1,'']]],
-  ['exception_2ecpp_10',['exception.cpp',['../exception_8cpp.html',1,'']]],
-  ['expr1_2ec_11',['expr1.c',['../expr1_8c.html',1,'']]],
-  ['expr2_2ec_12',['expr2.c',['../expr2_8c.html',1,'']]],
-  ['expr3_2ec_13',['expr3.c',['../expr3_8c.html',1,'']]],
-  ['expr4_2ec_14',['expr4.c',['../expr4_8c.html',1,'']]],
-  ['extract_2ecpp_15',['extract.cpp',['../extract_8cpp.html',1,'']]]
+  ['ecu_5freb_2eh_7',['ecu_reb.h',['../ecu__reb_8h.html',1,'']]]
 ];

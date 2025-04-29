@@ -5,7 +5,5 @@ var searchData=
   ['handle_5ftcu_5fcan_2',['handle_tcu_can',['../ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9',1,'handle_tcu_can(unsigned char data[]):&#160;ecu_reb.h'],['../ecu__reb_8c.html#a9d4eaa872a2663ebb8d0d3e7b7913e46',1,'handle_tcu_can(unsigned char *data):&#160;ecu_reb.c']]],
   ['hazard_5fbutton_5fpin_3',['HAZARD_BUTTON_PIN',['../aux_2inc_2pins_8h.html#ae3fff8d50f992f63008a2c0f5c0b7dc0',1,'pins.h']]],
   ['hazard_5flights_5fblink_4',['hazard_lights_blink',['../aux_2inc_2app_8h.html#a1776ffb511ed30d87942c97f452a52d3',1,'hazard_lights_blink():&#160;app.c'],['../aux_2src_2app_8c.html#a1776ffb511ed30d87942c97f452a52d3',1,'hazard_lights_blink():&#160;app.c']]],
-  ['hazard_5flights_5fpin_5',['HAZARD_LIGHTS_PIN',['../aux_2inc_2pins_8h.html#afd568cf9c4b24482a26ed6cfa15f2c33',1,'pins.h']]],
-  ['hello_5fworld_6',['hello_world',['../expr1_8c.html#a01d4035b37b68a4487d38d5b57e8452d',1,'expr1.c']]],
-  ['help_7',['help',['../namespacespreadsheet.html#a182ae4854e327f4c3799a0469c2b64aa',1,'spreadsheet']]]
+  ['hazard_5flights_5fpin_5',['HAZARD_LIGHTS_PIN',['../aux_2inc_2pins_8h.html#afd568cf9c4b24482a26ed6cfa15f2c33',1,'pins.h']]]
 ];

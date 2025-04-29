@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['✒️_20authors_0',['✒️ Authors',['../md_README.html#autotoc_md14',1,'']]]
+  ['🔀_20branch_20and_20commit_20standardization_0',['🔀 Branch and Commit Standardization',['../md_README.html#autotoc_md2',1,'']]]
 ];

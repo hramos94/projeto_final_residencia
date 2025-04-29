@@ -3,7 +3,7 @@ name: Deploy Documentation and Coverage
 on:
   push:
     branches:
-      - docs/reb_pages_workflow
+      - main
 
 jobs:
   deploy-docs-and-coverage:

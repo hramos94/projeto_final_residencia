@@ -330,11 +330,10 @@ TEST(reb_app, monitor_read_can_get_handle_tcu)
  *  - Expected DTC_MONITOR_READ_CAN_FAIL) in Output
  *  @requir{SwHLR_F_3}
  */
-TEST(reb_app, monitor_read_can_get_handle_tcu_fail)
+TEST(reb_app, monitor_read_can_read_can_fail)
 {
 
     mock_can_read_return = 2;
-
     pthread_t th_monitor_read_can;
     pthread_create(&th_monitor_read_can, NULL, (void *)monitor_read_can, NULL);
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
@@ -346,6 +345,35 @@ TEST(reb_app, monitor_read_can_get_handle_tcu_fail)
 
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_COUNTDOWN_PIN]);
 }
+
+/** @brief Tests monitor_read_can() function to FAIL.
+ *
+ * Scenario:
+ *  - can_read_vcan0(&frame) SUCCES
+ *  - handle_tcu_can(frame.data) FAIL
+ * Expected:
+ *  - Expected Output handle_tcu_can FAIL
+ *  @requir{SwHLR_F_3}
+ */
+TEST(reb_app, monitor_read_can_get_handle_tcu_fail)
+{
+
+    mock_can_read_return = 1;
+    mock_can_write_return = 3;
+
+    pthread_t th_monitor_read_can;
+    pthread_create(&th_monitor_read_can, NULL, (void *)monitor_read_can, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_read_can);
+
+    TEST_ASSERT_EQUAL(1, flag_status_pin[REB_COUNTDOWN_PIN]);
+}
+
+
 
 /** @brief Tests monitor_read_can() function to FAIL.
  *

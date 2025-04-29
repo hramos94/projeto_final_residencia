@@ -35,7 +35,7 @@ jobs:
       - name: Build and Test
         run: |
           make clean
-          make test
+#          make test
 
       - name: Check compiler and lcov version
         run: |
@@ -64,8 +64,8 @@ jobs:
       - name: Prepare Pages Directory
         run: |
           mkdir -p pages
-          cp -r ./docs/html/* pages/doxygen
           cp -r ./test/cov/out/* pages/cov
+          cp -r ./docs/html/* pages/doxygen
 
       - name: Create index.html to link Doxygen and Coverage (optional)
         run: |

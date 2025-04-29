@@ -1054,7 +1054,8 @@ RECURSIVE              = YES
 EXCLUDE                = */gui/* \
                          */img/* \
                          */obj/* \
-                         */bin/*
+                         */bin/* \
+                         */lcov/*
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -1073,7 +1074,8 @@ EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = */gui/* \
                          */img/* \
                          */obj/* \
-                         */bin/*
+                         */bin/* \
+                         */lcov/*
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the

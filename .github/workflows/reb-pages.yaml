@@ -3,7 +3,7 @@ name: Deploy Documentation and Coverage
 on:
   push:
     branches:
-      - docs/reb_pages_workflow
+      - main
 
 jobs:
   deploy-docs-and-coverage:
@@ -50,7 +50,6 @@ jobs:
       - name: Generate Coverage Report (LCOV)
         run: |
           make cov_pages
-# #          sudo apt install lcov
 
       - name: Prepare Pages Directory
         run: |

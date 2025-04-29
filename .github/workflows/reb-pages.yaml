@@ -64,8 +64,8 @@ jobs:
       - name: Prepare Pages Directory
         run: |
           mkdir -p pages
-          cp -r ./test/cov/out/* pages/cov
-          cp -r ./docs/html/* pages/doxygen
+          cp -r docs/html/* pages/doxygen
+#          cp -r ./test/cov/out/* pages/cov
 
       - name: Create index.html to link Doxygen and Coverage (optional)
         run: |

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-04-29 12:24:48</td>
+            <td class="headerValue">2025-04-29 12:34:44</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -288,9 +288,9 @@
 <span id="L208"><span class="lineNum">     208</span>                 :              :             :         }</span>
 <span id="L209"><span class="lineNum">     209</span>                 :              :<span class="tlaGNC">           4 :         uint8_t current_ipc_fault_pin_status = 0;</span></span>
 <span id="L210"><span class="lineNum">     210</span>                 :              :             : </span>
-<span id="L211"><span class="lineNum">     211</span>         [<span class="tlaGBC" title="Branch 0 was taken 28 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 1 time"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">          29 :         while (reb_con == 0)</span></span>
+<span id="L211"><span class="lineNum">     211</span>         [<span class="tlaGBC" title="Branch 0 was taken 26 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 1 time"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">          27 :         while (reb_con == 0)</span></span>
 <span id="L212"><span class="lineNum">     212</span>                 :              :             :         {</span>
-<span id="L213"><span class="lineNum">     213</span>         [<span class="tlaGBC" title="Branch 0 was taken 2 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 26 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">          28 :             if (cont_tries &gt;= 10)</span></span>
+<span id="L213"><span class="lineNum">     213</span>         [<span class="tlaGBC" title="Branch 0 was taken 2 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 24 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">          26 :             if (cont_tries &gt;= 10)</span></span>
 <span id="L214"><span class="lineNum">     214</span>                 :              :             :             {</span>
 <span id="L215"><span class="lineNum">     215</span>                 :              :             :                 // Try 10 times the communication test {SwHLR_F_15}</span>
 <span id="L216"><span class="lineNum">     216</span>                 :              :<span class="tlaGNC">           2 :                 read_pin_status(&amp;current_ipc_fault_pin_status, REB_IPC_FAULT_PIN);</span></span>
@@ -305,8 +305,8 @@
 <span id="L225"><span class="lineNum">     225</span>                 :              :<span class="tlaGNC">           2 :                 cont_tries = 0;</span></span>
 <span id="L226"><span class="lineNum">     226</span>                 :              :             :             }</span>
 <span id="L227"><span class="lineNum">     227</span>                 :              :             :             // Verify communication each 11 seconds</span>
-<span id="L228"><span class="lineNum">     228</span>                 :              :<span class="tlaGNC">          28 :             go_sleep(1);</span></span>
-<span id="L229"><span class="lineNum">     229</span>                 :              :<span class="tlaGNC">          25 :             cont_tries++;</span></span>
+<span id="L228"><span class="lineNum">     228</span>                 :              :<span class="tlaGNC">          26 :             go_sleep(1);</span></span>
+<span id="L229"><span class="lineNum">     229</span>                 :              :<span class="tlaGNC">          23 :             cont_tries++;</span></span>
 <span id="L230"><span class="lineNum">     230</span>                 :              :             :         }</span>
 <span id="L231"><span class="lineNum">     231</span>                 :              :<span class="tlaGNC">           1 :         read_pin_status(&amp;current_ipc_fault_pin_status, REB_IPC_FAULT_PIN);</span></span>
 <span id="L232"><span class="lineNum">     232</span>         [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaGBC" title="Branch 1 was taken 1 time"> + </span>]:      [<span class="tlaUNC" title="True sense of expression &quot;0&quot; was not sensitized"> t </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">           1 :         if (current_ipc_fault_pin_status != 0)</span></span>

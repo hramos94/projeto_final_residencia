@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-04-29 12:24:48</td>
+            <td class="headerValue">2025-04-29 12:34:44</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -188,11 +188,11 @@
 <span id="L108"><span class="lineNum">     108</span>                 :              :             :  *  @return SUCCESS(0), FAIL(1)</span>
 <span id="L109"><span class="lineNum">     109</span>                 :              :             :  *  @requir{SwHLR_F_13}</span>
 <span id="L110"><span class="lineNum">     110</span>                 :              :             :  */</span>
-<span id="L111"><span class="lineNum">     111</span>                 :              :<span class="tlaGNC">   469328541 : uint8_t read_pin_status(uint8_t *status, uint8_t pin)</span></span>
+<span id="L111"><span class="lineNum">     111</span>                 :              :<span class="tlaGNC">   468907525 : uint8_t read_pin_status(uint8_t *status, uint8_t pin)</span></span>
 <span id="L112"><span class="lineNum">     112</span>                 :              :             : {</span>
-<span id="L113"><span class="lineNum">     113</span>         [<span class="tlaGBC" title="Branch 0 was taken 469328540 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 1 time"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">   469328541 :     if (pin &lt; IOPINS)</span></span>
+<span id="L113"><span class="lineNum">     113</span>         [<span class="tlaGBC" title="Branch 0 was taken 468907524 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 1 time"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">   468907525 :     if (pin &lt; IOPINS)</span></span>
 <span id="L114"><span class="lineNum">     114</span>                 :              :             :     {</span>
-<span id="L115"><span class="lineNum">     115</span>                 :              :<span class="tlaGNC">   469328540 :         return dio_get_pin(status, pin, pins);</span></span>
+<span id="L115"><span class="lineNum">     115</span>                 :              :<span class="tlaGNC">   468907524 :         return dio_get_pin(status, pin, pins);</span></span>
 <span id="L116"><span class="lineNum">     116</span>                 :              :             :     }</span>
 <span id="L117"><span class="lineNum">     117</span>                 :              :<span class="tlaGNC">           1 :     return FAIL;</span></span>
 <span id="L118"><span class="lineNum">     118</span>                 :              :             : }</span>
@@ -219,7 +219,7 @@
 <span id="L139"><span class="lineNum">     139</span>                 :              :             :  *</span>
 <span id="L140"><span class="lineNum">     140</span>                 :              :             :  *  @param seconds How many seconds to sleep.</span>
 <span id="L141"><span class="lineNum">     141</span>                 :              :             :  */</span>
-<span id="L142"><span class="lineNum">     142</span>                 :              :<span class="tlaGNC">          47 : void go_sleep(uint8_t seconds) { sleep(seconds); }</span></span>
+<span id="L142"><span class="lineNum">     142</span>                 :              :<span class="tlaGNC">          45 : void go_sleep(uint8_t seconds) { sleep(seconds); }</span></span>
 <span id="L143"><span class="lineNum">     143</span>                 :              :             : </span>
 <span id="L144"><span class="lineNum">     144</span>                 :              :             : //======================================================================</span>
 <span id="L145"><span class="lineNum">     145</span>                 :              :             : //======================== CAN =========================================</span>

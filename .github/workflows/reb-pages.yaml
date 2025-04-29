@@ -63,7 +63,7 @@ jobs:
 
       - name: Prepare Pages Directory
         run: |
-          mkdir -p pages
+          mkdir -p pages/doxyen
           cp -r docs/html/* pages/doxygen
 #          cp -r ./test/cov/out/* pages/cov
 

@@ -32,9 +32,11 @@ jobs:
           cd lcov
           sudo make install
           cd ..
-          ls
+          echo "ls projeto_final_residencia"
+          ls projeto_final_residencia
+          pwd
 
-      - name: CLean project (lcov does the test)
+      - name: Clean project (lcov does the test)
         run: |
           make clean
 
@@ -47,8 +49,10 @@ jobs:
 
       - name: Generate Documentation (Doxygen)
         run: |
+          echo "pwd"
+          pwd
           make doc_pages
-      
+          
       - name: Generate Coverage Report (LCOV)
         run: |
           make cov_pages

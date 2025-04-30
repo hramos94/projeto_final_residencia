@@ -24,12 +24,17 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
+extern int flag_fail_set_pin;
 extern int reb_ipc_id;
 int reb_ecu_id;
 
 TEST_GROUP(reb_ecu);
 
-TEST_SETUP(reb_ecu) {}
+TEST_SETUP(reb_ecu) 
+{
+    flag_fail_set_pin = 0;
+
+}
 
 TEST_TEAR_DOWN(reb_ecu) {}
 
@@ -161,6 +166,30 @@ TEST(reb_ecu, reb_handle_tcu_can_CANCEL_REB_FAIL)
 }
 
 /**
+ * @brief Tests handle_tcu_can() for CANCEL_REB when cancel_reb() and Set_pin_status() fails.
+ *
+ * Scenario:
+ *  - data[0] = 0x02
+ *  - We force cancel_reb() to fail via mocks.
+ *  - Set_pin_status(S_OFF, REB_COUNTDOWN_PIN) FAIL
+ * Expected:
+ *  - Return FAIL (1).
+ * @requir{SwHLR_F_3}
+ * @requir{SwHLR_F_1}
+ */
+TEST(reb_ecu, reb_handle_tcu_can_CANCEL_REB_SET_PIN_FAIL)
+{
+    // Configure the mock function to fail at the position referring to cancel_reb()
+    set_mock_return_values(0, 0, -1, 0, 0, 0);
+    flag_fail_set_pin = 1;
+    uint8_t data_first_byte_2[8] = {0x02, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+    int result_ok = handle_tcu_can(data_first_byte_2);
+    TEST_ASSERT_EQUAL(1, result_ok);
+}
+
+
+/**
  * @brief Tests handle_tcu_can() for START_REB when start_reb() fails.
  *
  * Scenario:
@@ -180,6 +209,30 @@ TEST(reb_ecu, reb_handle_tcu_can_START_REB_FAIL)
     int result_ok = handle_tcu_can(data_first_byte_1);
     TEST_ASSERT_EQUAL(1, result_ok);
 }
+
+/**
+ * @brief Tests handle_tcu_can() for START_REB when start_reb() and set_pin_status() fails.
+ *
+ * Scenario:
+ *  - data[0] = 0x01
+ *  - We force start_reb() to fail via mocks.
+ *  - set_pin_status(S_ON, REB_COUNTDOWN_PIN) FAIL
+ * Expected:
+ *  - Return FAIL (1).
+ * @requir{SwHLR_F_3}
+ * @requir{SwHLR_F_1}
+ */
+TEST(reb_ecu, reb_handle_tcu_can_START_REB_SET_PIN_FAIL)
+{
+    // Configure the mock function to fail at the position referring to start_reb()
+    set_mock_return_values(0, 0, -1, 0, 0, 0);
+    flag_fail_set_pin = 1;
+    uint8_t data_first_byte_1[8] = {0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+    int result_ok = handle_tcu_can(data_first_byte_1);
+    TEST_ASSERT_EQUAL(1, result_ok);
+}
+
 
 /**
  * @brief Tests reb_can_send_ecu() with can_send_vcan0() failure.

@@ -6,7 +6,7 @@ This project is the final assignment of the SW2 class at UFPE. It consists of de
 
 ## 🔀 Branch and Commit Standardization
 
-There will be three types of branches:
+There will be four types of branches:
 
 - feat: creation of new features
 - fix: bug fixes

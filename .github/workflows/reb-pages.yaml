@@ -27,15 +27,18 @@ jobs:
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
           sudo ln -sf $(which gcov-14) /usr/bin/gcov
+          cd ..
           git clone --branch v2.3.1 https://github.com/linux-test-project/lcov.git
           cd lcov
           sudo make install
           cd ..
+          echo "ls projeto_final_residencia"
+          ls projeto_final_residencia
+          pwd
 
-      - name: Build and Test
+      - name: Clean project (lcov does the test)
         run: |
           make clean
-          make test
 
       - name: Check compiler and lcov version
         run: |
@@ -46,18 +49,20 @@ jobs:
 
       - name: Generate Documentation (Doxygen)
         run: |
+          echo "pwd"
+          pwd
           make doc_pages
-
+          
       - name: Generate Coverage Report (LCOV)
         run: |
           make cov_pages
-#          sudo apt install lcov
 
       - name: Prepare Pages Directory
         run: |
-          mkdir -p pages
+          mkdir -p pages/doxygen
+          mkdir -p pages/cov
           cp -r docs/html/* pages/doxygen
-          cp -r test/cov/out/* pages/cov
+          cp -r ./test/cov/out/* pages/cov
 
       - name: Create index.html to link Doxygen and Coverage (optional)
         run: |

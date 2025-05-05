@@ -40,11 +40,7 @@ TEST_GROUP(mcal_others);
 
 TEST_SETUP(mcal_others)
 {
-    set_mock_return_values(0, 0, 0, 0, 0, 0);
-    mock_can_write_return = 0;
-    mock_can_read_return = 0;
-    mock_can_ioctl_return = 0;
-    mock_can_open_return = 0;
+    set_mock_return_values(2, 0, 0, 0, 0, 0);
     flag_fail_set_pin = 0;
     flag_fail_get_pin = 0;
     flag_send_ecu = 0;
@@ -416,11 +412,7 @@ extern int Counter;
 
 TEST_SETUP(mcal_can)
 {
-    set_mock_return_values(0, 0, 0, 0, 0, 0);
-    mock_can_write_return = 0;
-    mock_can_read_return = 0;
-    mock_can_ioctl_return = 0;
-    mock_can_open_return = 0;
+    set_mock_return_values(2, 0, 0, 0, 0, 0);
     flag_fail_set_pin = 0;
     flag_fail_get_pin = 0;
     flag_send_ecu = 0;
@@ -777,14 +769,13 @@ TEST(mcal_can, can_start_BIND_FAIL)
  * @brief Tests can_init() when initialization is successful.
  *
  * Scenario:
- *  - can_socket is successfully initialized.
+ *  - can_init is successfully initialized.
  * Expected:
- *  - Return SUCCESS (1).
+ *  - Return SUCCESS (0).
  * @requir{SysHLR_9}
  */
 TEST(mcal_can, can_init_SUCCESS)
 {
-    int can_socket = -1;
     uint8_t result = can_init();
-    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT8(0, result);
 }

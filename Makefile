@@ -67,6 +67,9 @@ test:
 cov:
 	make -C test cov
 
+cov_pages:
+	make -C test cov_pages
+
 doc:
 	doxygen Doxyfile
 	xdg-open docs/html/index.html
@@ -142,3 +145,6 @@ misra-clean:
 	rm -f $(REB_REPORT_DIR)/*_misra.txt
 	rm -f $(BSW_REPORT_DIR)/*_misra.txt
 	rm -f $(AUX_REPORT_DIR)/*_misra.txt
+
+doc_pages:
+	doxygen Doxyfile

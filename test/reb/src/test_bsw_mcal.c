@@ -3,24 +3,61 @@
  * @brief Unit tests for functions in mcal.c
  *
  * This file contains the test suite that validates the main functions of
- * Remote Engine Blocking, in mcal, focusing on handling CAN socket, interface and communication. It also handles digital IO.
- * It covers success and failure scenarios.
+ * Remote Engine Blocking, in mcal, focusing on handling CAN socket, interface and communication. It
+ * also handles digital IO. It covers success and failure scenarios.
  *
  * Requirements covered:
  * - SysHLR_9
  */
 
+#include "dtc_logger.h"
 #include "mcal.h"
-#include <stdio.h>
+#include "mock_can_utils.h"
 #include "unity.h"
 #include "unity_fixture.h"
-#include "mock_can_utils.h"
+#include <stdio.h>
+
+extern int Counter;
+extern int flag_fail_set_pin;
+extern int mock_can_write_return;
+extern int mock_can_read_return;
+extern int mock_can_ioctl_return;
+extern int mock_can_open_return;
+extern int flag_fail_set_pin;
+extern int flag_fail_get_pin;
+extern int flag_send_ecu;
+extern int flag_send_ecu_count;
+extern int flag_fail_FILE;
+extern int flag_fail_localtime;
+extern int flag_fail_FILE_close;
+extern int flag_fail_fprintf;
+extern int count_file;
+extern int count_localtime;
+extern int count_file_close;
+extern int count_fprintf;
 
 TEST_GROUP(mcal_others);
 
-extern int Counter;
-
-TEST_SETUP(mcal_others) {}
+TEST_SETUP(mcal_others)
+{
+    set_mock_return_values(0, 0, 0, 0, 0, 0);
+    mock_can_write_return = 0;
+    mock_can_read_return = 0;
+    mock_can_ioctl_return = 0;
+    mock_can_open_return = 0;
+    flag_fail_set_pin = 0;
+    flag_fail_get_pin = 0;
+    flag_send_ecu = 0;
+    flag_send_ecu_count = 0;
+    flag_fail_FILE = 0;
+    flag_fail_localtime = 0;
+    flag_fail_FILE_close = 0;
+    flag_fail_fprintf = 0;
+    count_file = 0;
+    count_localtime = 0;
+    count_file_close = 0;
+    count_fprintf = 0;
+}
 
 TEST_TEAR_DOWN(mcal_others) {}
 
@@ -33,7 +70,8 @@ TEST_TEAR_DOWN(mcal_others) {}
  *  - Return FAILURE (1).
  */
 TEST(mcal_others, set_pin_status_FAIL_PIN_NUMBER)
-{   
+{
+    flag_fail_set_pin = 0;
     uint8_t pin = 10, status = 0;
     uint8_t result = set_pin_status(status, pin);
     TEST_ASSERT_EQUAL_UINT8(1, result);
@@ -48,7 +86,7 @@ TEST(mcal_others, set_pin_status_FAIL_PIN_NUMBER)
  *  - Return SUCCESS (0).
  */
 TEST(mcal_others, set_pin_status_SUCCESS)
-{   
+{
     uint8_t pin = 1, status = 0;
     uint8_t result = set_pin_status(status, pin);
     TEST_ASSERT_EQUAL_UINT8(0, result);
@@ -65,7 +103,7 @@ TEST(mcal_others, set_pin_status_SUCCESS)
 TEST(mcal_others, read_pin_status_FAIL_PIN_NUMBER)
 {
     uint8_t pin = 10, status = 0;
-    uint8_t result = read_pin_status(&status,pin);
+    uint8_t result = read_pin_status(&status, pin);
     TEST_ASSERT_EQUAL_UINT8(1, result);
 }
 
@@ -80,7 +118,7 @@ TEST(mcal_others, read_pin_status_FAIL_PIN_NUMBER)
 TEST(mcal_others, read_pin_status_SUCCESS)
 {
     uint8_t pin = 1, status = 0;
-    uint8_t result = read_pin_status(&status,pin);
+    uint8_t result = read_pin_status(&status, pin);
     TEST_ASSERT_EQUAL_UINT8(0, result);
 }
 
@@ -95,7 +133,7 @@ TEST(mcal_others, read_pin_status_SUCCESS)
  *  - Pin value should be 5, and status should be 0.
  */
 TEST(mcal_others, read_pint_status_SUCCESS_STATUS_0)
-{   
+{
     uint8_t pin = 0, status = 0;
     FILE *mock_stdin = fmemopen("pin 5 0\n", 8, "r");
     stdin = mock_stdin;
@@ -125,7 +163,7 @@ TEST(mcal_others, read_pint_status_SUCCESS_STATUS_1)
     stdin = mock_stdin;
     uint8_t result = read_pint_status(&pin, &status);
     stdin = original_stdin;
-    fclose(mock_stdin);  
+    fclose(mock_stdin);
 
     TEST_ASSERT_EQUAL_UINT8(0, result);
     TEST_ASSERT_EQUAL_UINT8(5, pin);
@@ -144,7 +182,7 @@ TEST(mcal_others, read_pint_status_SUCCESS_STATUS_1)
 TEST(mcal_others, read_pint_status_FAIL_GETLINE)
 {
     uint8_t pin = 0, status = 0;
-    fclose(stdin); 
+    fclose(stdin);
     uint8_t result = read_pint_status(&pin, &status);
 
     TEST_ASSERT_EQUAL_UINT8(1, result);
@@ -199,13 +237,13 @@ TEST(mcal_others, read_pint_status_FAIL_INVALID_STATUS)
 TEST(mcal_others, read_pint_status_FAIL_SSCANF)
 {
     uint8_t pin = 0, status = 0;
-    
+
     // Simula entrada inválida para sscanf
     FILE *mock_stdin = fmemopen("pin abc xyz\n", 13, "r");
     stdin = mock_stdin;
 
     uint8_t result = read_pint_status(&pin, &status);
-    
+
     fclose(mock_stdin);
 
     TEST_ASSERT_EQUAL_UINT8(1, result);
@@ -222,7 +260,7 @@ TEST(mcal_others, read_pint_status_FAIL_SSCANF)
 TEST(mcal_others, read_pint_status_FAIL_EDGE_CASE)
 {
     uint8_t pin = 0, status = 0;
-    FILE *mock_stdin = fmemopen("pin 5 \n", 8, "r"); 
+    FILE *mock_stdin = fmemopen("pin 5 \n", 8, "r");
     FILE *original_stdin = stdin;
     stdin = mock_stdin;
     uint8_t result = read_pint_status(&pin, &status);
@@ -242,7 +280,8 @@ TEST(mcal_others, read_pint_status_FAIL_EDGE_CASE)
  */
 TEST(mcal_others, mcal_init_SUCCESS)
 {
-    uint8_t result = mcal_init();
+    uint8_t result = 0;
+    mcal_init();
     TEST_ASSERT_EQUAL_UINT8(0, result);
 }
 
@@ -277,8 +316,8 @@ TEST(mcal_others, show_error_TEXT)
     TEST_ASSERT_EQUAL_UINT8(0, result);
 }
 
-
-void *my_func(void *arg) {
+void *my_func(void *arg)
+{
     uint8_t value = 0;
     (void)value; // Avoid unused variable warning
     return NULL;
@@ -299,36 +338,96 @@ TEST(mcal_others, new_thread_SUCCESS)
     pthread_join(result, NULL);
 }
 
+/**
+ * @brief Tests log_dtc fail at file_fopen
+ *
+ * Scenario:
+ *  - Fail to open log FILE
+ * Expected:
+ *  - return a perror ERROR and not generate a file
+ *  @requir{SwHLR_F_16}
+ */
+TEST(mcal_others, log_dtc_fopen_FAIL)
+{
+    flag_fail_FILE = 1;
+
+    log_dtc(0x123);
+
+    TEST_ASSERT_EQUAL_UINT8(0, count_file);
+}
+
+/**
+ * @brief Tests log_dtc fail at file_localtime_r
+ *
+ * Scenario:
+ *  - Fail to get local time
+ * Expected:
+ *  - return a perror ERROR and not generate a file
+ *  @requir{SwHLR_F_16}
+ */
+TEST(mcal_others, log_dtc_localtime_r_FAIL)
+{
+    flag_fail_localtime = 1;
+
+    log_dtc(0x123);
+
+    TEST_ASSERT_EQUAL_UINT8(0, count_localtime);
+}
+
+/**
+ * @brief Tests log_dtc fail at file_fprintf
+ *
+ * Scenario:
+ *  - Fail to format string
+ * Expected:
+ *  - return a perror ERROR and not generate a file
+ *  @requir{SwHLR_F_16}
+ */
+TEST(mcal_others, log_dtc_fprintf_FAIL)
+{
+    flag_fail_fprintf = 1;
+
+    log_dtc(0x123);
+
+    TEST_ASSERT_EQUAL_UINT8(0, count_fprintf);
+}
+
+/**
+ * @brief Tests log_dtc fail at fclose
+ *
+ * Scenario:
+ *  - Fail to close file
+ * Expected:
+ *  - return a perror ERROR and not generate a file
+ *  @requir{SwHLR_F_16}
+ */
+TEST(mcal_others, log_dtc_fclose_FAIL)
+{
+    flag_fail_FILE_close = 1;
+
+    log_dtc(0x123);
+
+    TEST_ASSERT_EQUAL_UINT8(0, count_file_close);
+}
 
 TEST_GROUP(mcal_can);
 
 extern int Counter;
 
-
-/**
- * @brief Sets up mock return values before each test in the mcal_can suite.
- *
- * Scenario:
- *  - Before each test in the mcal_can suite, the mock return values are set to default (0).
- * Expected:
- */
 TEST_SETUP(mcal_can)
 {
     set_mock_return_values(0, 0, 0, 0, 0, 0);
+    mock_can_write_return = 0;
+    mock_can_read_return = 0;
+    mock_can_ioctl_return = 0;
+    mock_can_open_return = 0;
+    flag_fail_set_pin = 0;
+    flag_fail_get_pin = 0;
+    flag_send_ecu = 0;
+    flag_send_ecu_count = 0;
 }
 
-/**
- * @brief Resets mock return values after each test in the mcal_can suite.
- * 
- * Expected:
- *  - Mock return values are set to default (0) to ensure no side effects between tests.
- * @requir{SysHLR_9}
- */
-TEST_TEAR_DOWN(mcal_can) 
-{
-    set_mock_return_values(0, 0, 0, 0, 0, 0);
-}
-
+TEST_TEAR_DOWN(mcal_can) { set_mock_return_values(0, 0, 0, 0, 0, 0); }
 
 /**
  * @brief Tests can_interface_status() with INTERFACE_UP.
@@ -514,7 +613,7 @@ TEST(mcal_can, can_send_SUCCESS)
     set_mock_return_values(0, 0, 0, 0, 0, 0);
     int can_socket = 0;
     struct can_frame frame;
-    uint8_t result = can_send(&can_socket,&frame);
+    uint8_t result = can_send(&can_socket, &frame);
     TEST_ASSERT_EQUAL_UINT8(0, result);
 }
 
@@ -532,7 +631,7 @@ TEST(mcal_can, can_send_FAIL)
     set_mock_return_values(0, 0, -1, 0, 0, 0);
     int can_socket = 0;
     struct can_frame frame;
-    uint8_t result = can_send(&can_socket,&frame);
+    uint8_t result = can_send(&can_socket, &frame);
     TEST_ASSERT_EQUAL_UINT8(1, result);
 }
 
@@ -557,8 +656,8 @@ TEST(mcal_can, can_send_vcan0_SUCCESS)
  * @brief Tests can_read() when can_read_socket succeeds.
  *
  * Scenario:
- *  - Mocked can_read_socket is set to return a positive value (indicating data was read successfully).
- * Expected:
+ *  - Mocked can_read_socket is set to return a positive value (indicating data was read
+ * successfully). Expected:
  *  - can_read() returns SUCCESS (0).
  * @requir{SysHLR_9}
  */
@@ -567,7 +666,7 @@ TEST(mcal_can, can_read_SUCCESS)
     set_mock_return_values(0, 0, 0, 0, 0, 0);
     int can_socket = 0;
     struct can_frame frame;
-    uint8_t result = can_read(&can_socket,&frame);
+    uint8_t result = can_read(&can_socket, &frame);
     TEST_ASSERT_EQUAL_UINT8(0, result);
 }
 
@@ -585,7 +684,7 @@ TEST(mcal_can, can_read_FAIL)
     set_mock_return_values(0, 0, 0, -1, 0, 0);
     int can_socket = 0;
     struct can_frame frame;
-    uint8_t result = can_read(&can_socket,&frame);
+    uint8_t result = can_read(&can_socket, &frame);
     TEST_ASSERT_EQUAL_UINT8(1, result);
 }
 
@@ -593,8 +692,8 @@ TEST(mcal_can, can_read_FAIL)
  * @brief Tests can_read_vcan0() when can_read_socket succeeds.
  *
  * Scenario:
- *  - Mocked can_read_socket is set to return a positive value (indicating data was read successfully).
- * Expected:
+ *  - Mocked can_read_socket is set to return a positive value (indicating data was read
+ * successfully). Expected:
  *  - can_read_vcan0() returns SUCCESS (0).
  * @requir{SysHLR_9}
  */

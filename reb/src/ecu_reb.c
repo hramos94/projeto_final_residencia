@@ -5,6 +5,9 @@
 #include <pins.h>
 #include <unistd.h>
 
+#include "dtc_codes_reb.h"
+#include "dtc_logger.h"
+
 /**
  *  @brief Handle TCU signal received from can
  *
@@ -12,34 +15,44 @@
  *  @return SUCCESS(0), FAIL(1)
  *  @requir{SwHLR_F_3}
  */
-uint8_t handle_tcu_can(unsigned char *data)
+uint8_t handle_tcu_can(const unsigned char *data)
 {
+    uint8_t status = SUCCESS;
+
     // Get first byte.
     unsigned char signalREB = data[0];
     // Signal from TCU to cancel REB
-    if (signalREB == 0x02)
+    if (signalREB == (uint8_t)0x02U)
     {
         // Deactivate pin for countdown
-        set_pin_status(S_OFF, REB_COUNTDOWN_PIN);
+        if (set_pin_status(S_OFF, REB_COUNTDOWN_PIN) == FAIL)
+            {
+                show_error("set_pin_status ERROR\n");
+            }
+        
         if (cancel_reb() == FAIL)
         {
-            show_error("tcu_can.cancel_reb FAIL\n");
-            return FAIL;
+            REPORT_ERROR("tcu_can.cancel_reb FAIL\n", DTC_TCU_CANCEL_REB_FAIL);
+            status = FAIL;
         }
     }
 
     // Signal from TCU to start REB
-    if (signalREB == 0x01)
+    if (signalREB == (uint8_t)0x01U)
     {
         // Activate pin for countdown
-        set_pin_status(S_ON, REB_COUNTDOWN_PIN);
+        if (set_pin_status(S_ON, REB_COUNTDOWN_PIN) == FAIL)
+        {
+            show_error("set_pin_status ERROR\n");
+        }
+
         if (start_reb() == FAIL)
         {
-            show_error("tcu_can.start_reb FAIL\n");
-            return FAIL;
+            REPORT_ERROR("tcu_can.start_reb FAIL\n", DTC_TCU_START_REB_FAIL);
+            status = FAIL;
         }
     }
-    return SUCCESS;
+    return status;
 }
 
 /**
@@ -48,9 +61,14 @@ uint8_t handle_tcu_can(unsigned char *data)
  *  @param status 1 to send frame data 0x01(Block);  2 to send frame data 0x02(Unblock).
  *  @return SUCCESS(0), FAIL(1)
  *  @requir{SwHLR_F_12}
+ *  @requir{SwHLR_F_10}
+ *  @requir{SwHLR_F_2}
+ *  @requir{SwHLR_F_1}
  */
 uint8_t reb_can_send_ecu(uint8_t status)
 {
+    uint8_t statusReturn = SUCCESS;
+
     struct can_frame frame = {.can_id = REB_ECU_ID, .can_dlc = 8, .data = {0}};
 
     if (status == ECU_REB_START)
@@ -69,9 +87,10 @@ uint8_t reb_can_send_ecu(uint8_t status)
 
     if (can_send_vcan0(&frame) == FAIL)
     {
-        return FAIL;
+        statusReturn = FAIL;
     }
-    return SUCCESS;
+
+    return statusReturn;
 }
 
 /**
@@ -83,6 +102,8 @@ uint8_t reb_can_send_ecu(uint8_t status)
  */
 uint8_t reb_can_send_ipc(uint8_t status)
 {
+    uint8_t statusReturn = SUCCESS;
+
     struct can_frame frame = {.can_id = REB_IPC_ID, .can_dlc = 8, .data = {0}};
 
     if (status == IPC_REB_START)
@@ -101,7 +122,7 @@ uint8_t reb_can_send_ipc(uint8_t status)
 
     if (can_send_vcan0(&frame) == FAIL)
     {
-        return FAIL;
+        statusReturn = FAIL;
     }
-    return SUCCESS;
+    return statusReturn;
 }

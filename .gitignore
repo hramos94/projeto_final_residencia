@@ -39,6 +39,8 @@
 *.i*86
 *.x86_64
 *.hex
+*.txt
+test/test_report.csv
 
 # Debug files
 *.dSYM/
@@ -64,3 +66,12 @@ compile_commands.json
 latex/
 html/
 cov/
+misra/aux
+misra/bsw
+misra/reb
+
+
+# NOT IGNORE
+!misra/misra_deviations.txt
+!misra/misra_false_positives_bsw.txt
+!misra/misra_false_positives_reb.txt

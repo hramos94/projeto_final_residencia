@@ -3,8 +3,9 @@
 #include <ecu_reb.h>
 #include <mcal.h>
 #include <pins.h>
-#include <stdio.h>
-#include <time.h>
+
+#include "dtc_codes_reb.h"
+#include "dtc_logger.h"
 
 uint8_t flag_reb_canceled = REB_RUNNING;
 
@@ -12,22 +13,17 @@ uint8_t flag_reb_canceled = REB_RUNNING;
  * @brief Initializes the application by configuring drivers.
  * @return SUCCESS(0); FAIL(1).
  */
-uint8_t application_init()
+uint8_t application_init(void)
 {
-
-    if (mcal_init() == FAIL)
-    {
-        show_error("mcal_init FAIL\n");
-        return FAIL;
-    }
+    uint8_t status = SUCCESS;
+    mcal_init();
 
     if (can_init() == FAIL)
     {
-        show_error("can_init FAIL\n");
-        return FAIL;
+        REPORT_ERROR("can_init FAIL\n", DTC_CAN_INIT_FAIL);
+        status = FAIL;
     }
-
-    return SUCCESS;
+    return status;
 }
 
 /**
@@ -37,13 +33,13 @@ uint8_t application_init()
  * ex: "pin 1 0"  set the pin number 1 to status 0
  *
  */
-uint8_t read_input()
+uint8_t read_input(void)
 {
     while (1)
     {
         if (read_console() == FAIL)
         {
-            show_error("app.read_console FAIL\n");
+            REPORT_ERROR("app.read_console FAIL\n", DTC_READ_INPUT_FAIL);
         }
     }
 }
@@ -51,14 +47,17 @@ uint8_t read_input()
 /**
  * @brief Handle messages received from CAN BUS
  * @return SUCCESS(0); FAIL(1).
- * @requir{SwHLR_F_9}
+ * @requir{SwHLR_F_1}
+ * @requir{SwHLR_F_3}
  * @requir{SwHLR_F_6}
  * @requir{SwHLR_F_10}
+ * @requir{SwHLR_F_13}
  * @requir{SwHLR_F_15}
  */
-uint8_t monitor_read_can()
+uint8_t monitor_read_can(void)
 {
-    while (1)
+    uint8_t status = SUCCESS;
+    while (status == SUCCESS)
     {
 
         struct can_frame frame = {
@@ -69,27 +68,35 @@ uint8_t monitor_read_can()
             // Handle message received from Telematic Control Unit(TCU)
             if (frame.can_id == TCU_REB_ID)
             {
-                handle_tcu_can(frame.data);
+                if (handle_tcu_can(frame.data) == FAIL)
+                {
+                    show_error("handle_tcu_can FAIL\n\n");
+                }
             }
-            if (frame.can_id == AUX_COM_ID && frame.data[0] == AUX_COM_SIG)
+            if ((frame.can_id == AUX_COM_ID) && (frame.data[0] == AUX_COM_SIG))
             {
                 // Check REB x AUX Communication and send response as ok
-                struct can_frame response = {
-                    .can_id = REB_COM_ID, .can_dlc = 1, .data = {REB_COM_SIG}};
+                struct can_frame response;
+                    response.can_id = REB_COM_ID;
+                    response.can_dlc = 1;
+                    response.data[0] = REB_COM_SIG;
 
                 if (can_send_vcan0(&response) == FAIL)
                 {
-                    show_error("respond_to_can_test: Error to send response\n");
-                    return FAIL;
+                    REPORT_ERROR("respond_to_can_test: Error to send response\n",
+                                 DTC_CAN_RESPONSE_FAIL);
+
+                    status = FAIL;
                 }
             }
         }
         else
         {
-            show_error("Error monitor_read_can\n");
+            REPORT_ERROR("Error monitor_read_can\n", DTC_MONITOR_READ_CAN_FAIL);
             go_sleep(2);
         }
     }
+    return status;
 }
 
 /**
@@ -97,25 +104,27 @@ uint8_t monitor_read_can()
  * @return SUCCESS(0); FAIL(1).
  * @requir{SwHLR_F_8}
  */
-uint8_t cancel_reb()
+uint8_t cancel_reb(void)
 {
+    uint8_t status = SUCCESS;
     flag_reb_canceled = REB_CANCELED;
-    // printf("Valor do REB_CANCELED = %d\n", flag_reb_canceled);
     //  Send by CAN to IPC the Caceled REB status
     if (reb_can_send_ipc(IPC_REB_CANCEL) == FAIL)
     {
-        show_error("cancel_reb.reb_can_send_ipc FAIL\n");
-        return FAIL;
+        REPORT_ERROR("cancel_reb.reb_can_send_ipc FAIL\n", DTC_REB_CAN_IPC_CANCEL_FAIL);
+        status = FAIL;
     }
 
-    // Send by CAN to Engine Control Unit the Caceled REB status
-    if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
+    if (status == SUCCESS)
     {
-        show_error("cancel_reb.reb_can_send_ecu FAIL\n");
-        return FAIL;
+        // Send by CAN to Engine Control Unit the Caceled REB status
+        if (reb_can_send_ecu(ECU_REB_CANCEL) == FAIL)
+        {
+            REPORT_ERROR("cancel_reb.reb_can_send_ecu FAIL\n", DTC_REB_CAN_ECU_CANCEL_FAIL);
+            status = FAIL;
+        }
     }
-
-    return SUCCESS;
+    return status;
 }
 
 /**
@@ -123,9 +132,12 @@ uint8_t cancel_reb()
  * @return SUCCESS(0); FAIL(1).
  * @requir{SwHLR_F_8}
  * @requir{SwHLR_F_12}
+ * @requir{SwHLR_F_14}
+ * @requir{SwHLR_F_2}
  */
-uint8_t start_reb()
+uint8_t start_reb(void)
 {
+    uint8_t status = SUCCESS;
 
     // Reset flag when start reb
     flag_reb_canceled = REB_RUNNING;
@@ -134,20 +146,11 @@ uint8_t start_reb()
     // send by CAN to IPC the start REB counting
     if (reb_can_send_ipc(IPC_REB_START) == FAIL)
     {
-        show_error("start_reb.reb_can_send_ipc FAIL\n");
-        return FAIL;
+        REPORT_ERROR("start_reb.reb_can_send_ipc FAIL\n", DTC_REB_CAN_IPC_START_FAIL);
+        status = FAIL;
     }
 
-    // TODO create another thread? probably a mutex?
-    // printf("Reb canceled entrou %d==%d\n", REB_CANCELED, flag_reb_canceled);
-
-    if (flag_reb_canceled == REB_CANCELED)
-    {
-        show_error("REB canceled before timeout\n");
-        return SUCCESS;
-    }
-
-    return SUCCESS;
+    return status;
 }
 
 /**
@@ -155,35 +158,50 @@ uint8_t start_reb()
  * @requir{SysHLR_3}
  * @requir{SwHLR_F_12}
  * @requir{SwHLR_F_14}
+ * @requir{SwHLR_F_1}
  */
 uint8_t countdown_reb(void)
 {
     while (1)
     {
-        struct timespec start_time, current_time;
-        double elapsed_time = 0;
+        struct timespec start_time;
+        struct timespec current_time;
         uint8_t reb_countdown_active = 0;
 
-        clock_gettime(CLOCK_MONOTONIC, &start_time);
+        get_time(&start_time);
 
         // Verify the status of the pin
-        read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN);
-
-        while (reb_countdown_active == 1)
+        if (read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN) == FAIL)
         {
-            clock_gettime(CLOCK_MONOTONIC, &current_time);
+            show_error("read_pin_status ERROR\n");
+        }
+
+        while (reb_countdown_active != 0U)
+        {
+            double elapsed_time = 0.0;
+            get_time(&current_time);
 
             elapsed_time = (current_time.tv_sec - start_time.tv_sec) +
                            ((double)(current_time.tv_nsec - start_time.tv_nsec) / 1e9);
 
-            if (elapsed_time >= REB_TIMEOUT)
+            if (elapsed_time >= (double)REB_TIMEOUT)
             {
-                reb_can_send_ecu(ECU_REB_START);
-                set_pin_status(S_OFF, REB_COUNTDOWN_PIN);
+                if (reb_can_send_ecu(ECU_REB_START) == FAIL)
+                {
+                    show_error("reb_can_send_ecu ERROR\n");
+                }
+                
+                if (set_pin_status(S_OFF, REB_COUNTDOWN_PIN) == FAIL)
+                {
+                    show_error("set_pin_status ERROR\n");
+                }
             }
 
             // Verify the status of the pin again
-            read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN);
+            if (read_pin_status(&reb_countdown_active, REB_COUNTDOWN_PIN)== FAIL)
+            {
+                show_error("read_pin_status ERROR\n");
+            }
         }
 
         go_sleep(1);

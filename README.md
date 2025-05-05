@@ -6,7 +6,7 @@ This project is the final assignment of the SW2 class at UFPE. It consists of de
 
 ## 🔀 Branch and Commit Standardization
 
-There will be three types of branches:
+There will be four types of branches:
 
 - feat: creation of new features
 - fix: bug fixes
@@ -65,14 +65,16 @@ To run this project the following requirements must be met:
 - gcc version 14.2 or higher;
 - lcov version 1.3.1 or higher;
 - SDL packages;
+- cppcheck package;
 - Doxygen and graphviz packages for documentation.
 
-### Installation of SDL and build-essentials packages
+### Installation of SDL, build-essentials and CPPCheck packages
 
-To install SDL and build-essentials packages, run:
+To install SDL, CPPCheck and build-essentials packages, run:
 ```
-apt-get install -y build-essential
-apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+sudo apt install cppcheck
+sudo apt-get install -y build-essential
+sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 ```
 
 ### Installation of lcov 2.3.1 
@@ -121,8 +123,8 @@ To check gcc version execute:
 #### Intallation of Doxygen:
 
 ```
-apt-get install doxygen
-apt-get install graphviz
+sudo apt-get install doxygen
+sudo apt-get install graphviz
 ```
 
 
@@ -175,6 +177,34 @@ To see reports, execute the docs/html/index.html or
   make doc
   ```
 
+
+## Static Misra Analysis Reports
+
+To generate Misra reports for all project files execute:
+  ```
+  make misra
+  ```
+To see reports, go to misra folder. There will be a file for each C file with the misra violation report. Alternatively you may generate individual report for aux, bsw and reb with the following commands:
+  ```
+  make misra-aux
+  make misra-bsw
+  make misra-reb
+  ```
+to clean the folder use
+  ```
+  make misra-clean
+  ```
+
+If you have access to Misra C 2012 rules, you may add a filed named misra_c_2012.txt at main project folder. If you do this, the misra C output will show besides the rule violation, the corresponding text to this rule. The format of this document is given bellow:
+  ```
+  Rule 1.1	Mandatory
+  text for rule 1.1
+  Rule 1.2	Advisory
+  text for rule 1.2	
+  Rule 1.3	Required
+  text for rule 1.3
+  ```
+
 ## ⚙️ Running Tests
 
 To run the test you need to assure that:
@@ -189,6 +219,10 @@ To run test execute:
 To see test coverage execute:
   ```
   make cov
+  ```
+You may also generate a csv file (test_report.csv) with all test data like test name, requirements, expected test results and actual test results. To do that execute:
+  ```
+  make test-report
   ```
 
 

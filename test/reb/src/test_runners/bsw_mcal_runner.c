@@ -31,7 +31,6 @@ TEST_GROUP_RUNNER(mcal_can)
     RUN_TEST_CASE(mcal_can, can_start_INTERFACE_FAIL);
     RUN_TEST_CASE(mcal_can, can_start_BIND_FAIL);
     RUN_TEST_CASE(mcal_can, can_init_SUCCESS);
-
 }
 
 TEST_GROUP_RUNNER(mcal_others)
@@ -49,6 +48,10 @@ TEST_GROUP_RUNNER(mcal_others)
     RUN_TEST_CASE(mcal_others, read_pint_status_SUCCESS_STATUS_0);
     RUN_TEST_CASE(mcal_others, mcal_init_SUCCESS);
     RUN_TEST_CASE(mcal_others, go_sleep_1);
-    RUN_TEST_CASE(mcal_others, show_error_TEXT); 
+    RUN_TEST_CASE(mcal_others, show_error_TEXT);
     RUN_TEST_CASE(mcal_others, new_thread_SUCCESS);
+    RUN_TEST_CASE(mcal_others, log_dtc_fopen_FAIL);
+    RUN_TEST_CASE(mcal_others, log_dtc_localtime_r_FAIL);
+    RUN_TEST_CASE(mcal_others, log_dtc_fprintf_FAIL);
+    RUN_TEST_CASE(mcal_others, log_dtc_fclose_FAIL);
 }

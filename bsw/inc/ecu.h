@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-#define SUCCESS 0
-#define FAIL 1
+#define SUCCESS 0x00U
+#define FAIL 0x01U
 
 #define TCU_REB_ID 0x150
 #define REB_ECU_ID 0x200
@@ -20,6 +20,8 @@
 
 #define SHOW_LOG 1
 
-uint8_t read_console();
+extern uint8_t reb_con;
+
+uint8_t read_console(void);
 
 #endif

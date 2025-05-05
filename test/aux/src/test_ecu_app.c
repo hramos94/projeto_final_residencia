@@ -47,6 +47,8 @@ extern uint8_t reb_con;
 
 extern int flag_can_REB_IPC_count;
 extern int flag_reb_id;
+extern int count_success;
+extern int count;
 
 TEST_GROUP(ecu_app);
 
@@ -71,6 +73,8 @@ TEST_SETUP(ecu_app)
     reb_con = 0;
     flag_can_REB_IPC_count = 0;
     flag_reb_id = 0;
+    count_success = 0;
+    count = 0;
 }
 
 TEST_TEAR_DOWN(ecu_app)
@@ -145,6 +149,8 @@ TEST(ecu_app, read_input_sucess)
     uint8_t status = 0, result = 0;
     result = read_pin_status(&status, 1);
 
+    sleep(3);
+
     pthread_cancel(th_read_input);
 
     TEST_ASSERT_EQUAL_INT(SUCCESS, status);
@@ -181,7 +187,7 @@ TEST(ecu_app, read_input_fail)
     uint8_t status = 0;
     status = flag_status_pin[1];
 
-    sleep(1);
+    sleep(3);
     pthread_cancel(th_read_input);
 
     // Status should stay 0;
@@ -205,7 +211,7 @@ TEST(ecu_app, hazard_lights_blink_BUTTON_OFF)
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
 
-    sleep(3);
+    sleep(5);
     pthread_cancel(th_hazard_lights_blink);
 
     TEST_ASSERT_EQUAL(0, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
@@ -233,7 +239,7 @@ TEST(ecu_app, hazard_lights_blink_BUTTON_ON)
 
     TEST_ASSERT_EQUAL(0, status);
 
-    sleep(3);
+    sleep(5);
     pthread_cancel(th_hazard_lights_blink);
 
     TEST_ASSERT_GREATER_THAN(0, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
@@ -264,7 +270,7 @@ TEST(ecu_app, hazard_lights_blink_get_hazard_button_FAIL)
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
 
-    sleep(1);
+    sleep(5);
     pthread_cancel(th_hazard_lights_blink);
 
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
@@ -295,7 +301,7 @@ TEST(ecu_app, hazard_lights_blink_set_hazard_light_ON_FAIL)
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
 
-    sleep(1);
+    sleep(5);
     pthread_cancel(th_hazard_lights_blink);
 
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
@@ -329,7 +335,7 @@ TEST(ecu_app, hazard_lights_blink_set_hazard_light_OFF_FAIL)
     // at this points, reading pins throw errors when Lights is ON
     flag_fail_set_pin = 1;
 
-    sleep(2);
+    sleep(5);
 
     pthread_cancel(th_hazard_lights_blink);
 
@@ -342,6 +348,7 @@ TEST(ecu_app, hazard_lights_blink_set_hazard_light_OFF_FAIL)
  *
  * Scenario:
  *  - Received a message to block engine from can network.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID REB_ECU_ID and frame.data[0] = 0x01
  * Expected:
  *  - The hazard button is HIGH.
  *  - The engine start the Bloking Mode.
@@ -369,10 +376,43 @@ TEST(ecu_app, monitor_read_can_get_handle_ecu_can)
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
+/** @brief Tests monitor_read_can() with handle_ecu_can() at fault
+ * Scenario:
+ *  - Received a message to block engine from can network.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID REB_ECU_ID and frame.data[0] = 0x01
+ *  - handle_ecu_can(frame.data) FAILED 
+ * Expected:
+ *  - Show Error should output handle_ecu_can ERROR
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ */
+TEST(ecu_app, monitor_read_can_get_handle_ecu_can_FAULT)
+{
+
+    mock_can_read_return = 2;
+    flag_fail_set_pin = 1;
+
+    pthread_t th_monitor_read_can;
+    pthread_create(&th_monitor_read_can, NULL, (void *)monitor_read_can, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_read_can);
+
+    // If received the ecu_can, should turOn the Hazard light
+    TEST_ASSERT_EQUAL(0, flag_cout_set_pin[HAZARD_BUTTON_PIN]);
+    TEST_ASSERT_EQUAL(0, flag_cout_set_pin[ENGINE_REB_MODE]);
+    TEST_ASSERT_EQUAL(0, flag_cout_set_pin[REB_IPC_WARNING]);
+}
+
+
 /** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
  *
  * Scenario:
  *  - Received a message from CAN to warning driver that Engine will be blocked.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID REB_IPC_ID and frame.data[0] = 0x01
  * Expected:
  *  - The IPC start warning that REB will be activated.
  * @requir{SwHLR_F_6}
@@ -396,10 +436,41 @@ TEST(ecu_app, monitor_reac_can_get_handle_ipc_can)
     TEST_ASSERT_EQUAL(1, flag_cout_set_pin[REB_IPC_WARNING]);
 }
 
-/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+/** @brief Tests monitor_read_can() with handle_ipc_can() at fault
  *
  * Scenario:
- *  - Received a message from CAN to check communication with Remote Engine Blocker.
+ *  - Received a message from CAN to warning driver that Engine will be blocked.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID REB_IPC_ID and frame.data[0] = 0x01
+ *  - handle_ipc_can(frame.data) FAILED 
+ * Expected:
+ *   - Show Error should output handle_ipc_can ERROR
+ * @requir{SwHLR_F_6}
+ * @requir{SwHLR_F_10}
+ */
+TEST(ecu_app, monitor_reac_can_get_handle_ipc_can_FAULT)
+{
+
+    mock_can_read_return = 3;
+    flag_fail_set_pin = 1;
+
+    pthread_t th_monitor_read_can;
+    pthread_create(&th_monitor_read_can, NULL, (void *)monitor_read_can, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_read_can);
+
+    // Check if warning REB is ON;
+    TEST_ASSERT_EQUAL(0, flag_cout_set_pin[REB_IPC_WARNING]);
+}
+
+/** @brief Tests monitor_read_can() read message to check communication with reb.
+ *
+ * Scenario:
+ *  - Received a message from CAN to warning driver that Engine will be blocked.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID 0x015 and frame.data[0] = 0x10
  * Expected:
  *  - The IPC not show warning REB FAULT.
  * @requir{SwHLR_F_6}
@@ -423,17 +494,17 @@ TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication)
     TEST_ASSERT_EQUAL(1, reb_con);
 }
 
-/** @brief Tests monitor_read_can() read message from Remote Engine Blocker.
+/** @brief Tests monitor_read_can() read message from reb with unkown data
  *
  * Scenario:
- *  - Received a message from CAN to check communication with Remote Engine Blocker with invalid
- * data.
+ *  - Received a message from CAN to warning driver that Engine will be blocked.
+ *  - can_read_vcan0(&frame) return SUCCESS with ID 0x015 and frame.data[0] = 0x11
  * Expected:
- *  - The IPC show warning REB FAULT.
+ *   - The IPC should show warning REB FAULT.
  * @requir{SwHLR_F_6}
  * @requir{SwHLR_F_10}
  */
-TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication_Diff_data_0x02)
+TEST(ecu_app, monitor_read_can_get_handle_REB_AUX_communication_Diff_data_0x11)
 {
 
     mock_can_read_return = 5;
@@ -574,6 +645,96 @@ TEST(ecu_app, monitor_tcu_get_reb_button_FAIL)
 /** @brief Tests monitor_tcu() function to FAIL.
  *
  * Scenario:
+ *  - Reb Deactivate Pin is unavailable to access.
+ * Expected:
+ *  - A message CAN should not to be send.
+ */
+TEST(ecu_app, monitor_tcu_get_reb_OFF_button_FAIL)
+{
+
+    uint8_t status = 0;
+    status = set_pin_status(0, REB_ACTIVATE_PIN);
+
+    TEST_ASSERT_EQUAL(0, status);
+
+    flag_fail_get_pin = 2;
+    count = 2;
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud not send signal ;
+    TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
+}
+
+/** @brief Tests monitor_tcu() function to FAIL.
+ *
+ * Scenario:
+ *  - Reb Deactivate Pin is unavailable to access.
+ * Expected:
+ *  - A message CAN should not to be send.
+ */
+TEST(ecu_app, monitor_tcu_set_reb_OFF_button_FAIL)
+{
+
+    uint8_t status = 0;
+    status = set_pin_status(1, REB_DEACTIVATE);
+
+    TEST_ASSERT_EQUAL(0, status);
+
+    flag_fail_set_pin = 1;
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud not send signal ;
+    TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
+}
+
+/** @brief Tests monitor_tcu() function to FAIL.
+ *
+ * Scenario:
+ *  - CAN is unavailable when send cancel reb messsage
+ * Expected:
+ *  - A message CAN should not to be send.
+ */
+TEST(ecu_app, monitor_tcu_can_send_cancel_reb_FAIL)
+{
+
+    uint8_t status = 0;
+    status = set_pin_status(1, REB_DEACTIVATE);
+
+    TEST_ASSERT_EQUAL(0, status);
+
+    mock_can_write_return = 1;
+
+    pthread_t th_monitor_tcu;
+    pthread_create(&th_monitor_tcu, NULL, (void *)monitor_tcu, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    pthread_cancel(th_monitor_tcu);
+
+    // Shoud not send signal ;
+    TEST_ASSERT_EQUAL(0, flag_can_REB_IPC_count);
+}
+/** @brief Tests monitor_tcu() function to FAIL.
+ *
+ * Scenario:
  *  - Reb Activate Pin is unavailable to set.
  * Expected:
  *  - A message CAN should not to be send.
@@ -639,10 +800,11 @@ TEST(ecu_app, monitor_tcu_can_send_reb_FAIL)
  *
  * Scenario:
  *  - Send a message to check communication with REB.
+ *  - can_send_vcan0(&test_frame) SUCCESS
  * Expected:
  *  - Receive from REB a CAN message response with status OK.
- * @requir {SwHLR_F_13}
- * @requir {SwHLR_F_15}
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
  */
 TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
 {
@@ -669,6 +831,123 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
     TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
 }
 
+/** @brief Tests check_can_communication() function when read_pin_status() failed.
+ *
+ * Scenario:
+ *  - Send a message to check communication with REB.
+ *  - can_send_vcan0(&test_frame) SUCCESS
+ *  - read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN) FAILED
+ * Expected:
+ *  - Show error read_pin_status ERROR.
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
+TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT)
+{
+
+    mock_can_write_return = 0;
+    flag_fail_get_pin = 1;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    // informing that received response OK from REB
+    reb_con = 1;
+    sleep(1);
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN not FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+/** @brief Tests check_can_communication() function when current_ipc_fault_pin_status = 0x02U.
+ *
+ * Scenario:
+ *  - can_send_vcan0(&test_frame) SUCCESS
+ *  - read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN) SUCESS
+ *  - current_ipc_fault_pin_status = 0x02U 
+ * Expected:
+ *  - Expected to not display any errors.
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
+TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE)
+{
+
+    mock_can_write_return = 0;
+    flag_fail_get_pin = 3;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    // informing that received response OK from REB
+    reb_con = 1;
+    sleep(1);
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN not FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+
+/** @brief Tests check_can_communication() function when current_ipc_fault_pin_status = 0x02U.
+ *
+ * Scenario:
+ *  - can_send_vcan0(&test_frame) SUCCESS
+ *  - read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN) SUCESS
+ *  - current_ipc_fault_pin_status = 0x02U
+ *  - set_pin_status(1, REB_IPC_FAULT_PIN) FAILED
+ * Expected:
+ *  - Expected error message set_pin_status ERROR
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
+TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK_PIN_FAULT_VALUE_PIN_SET_FAIL)
+{
+
+    mock_can_write_return = 0;
+    flag_fail_get_pin = 3;
+    flag_fail_set_pin = 1;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    sleep(1);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    // informing that received response OK from REB
+    reb_con = 1;
+    sleep(1);
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN not FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+
+
+
 /** @brief Tests check_can_communication() function.
  *
  * Scenario:
@@ -676,8 +955,8 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_OK)
  * Expected:
  *  - not receive from REB a CAN message response with status OK.
  *  - IPC painel show REB FAULT lamp.
- * @requir {SwHLR_F_13}
- * @requir {SwHLR_F_15}
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
  */
 TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_FAULT)
 {
@@ -717,8 +996,8 @@ TEST(ecu_app, check_can_communication_SEND_OK_RECEIVE_FAULT)
  * Expected:
  *  - not receive from REB a CAN message response with status OK.
  *  - IPC painel show REB FAULT lamp.
- * @requir {SwHLR_F_13}
- * @requir {SwHLR_F_15}
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
  */
 TEST(ecu_app, check_can_communication_SEND_CAN_FAIL)
 {
@@ -750,4 +1029,98 @@ TEST(ecu_app, check_can_communication_SEND_CAN_FAIL)
 
     // REB CAN FAULT
     TEST_ASSERT_EQUAL(1, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+/** @brief Tests check_can_communication() function when read_pin_status FAILED.
+ *
+ * Scenario:
+ *  read_pin_status(&current_ipc_fault_pin_status, REB_IPC_FAULT_PIN) FAILED
+ * Expected:
+ *  - Expected read_pin_status ERROR
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
+TEST(ecu_app, check_can_communication_SEND_PIN_FAIL)
+{
+
+    mock_can_write_return = 1;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    for (int i = 0; i <= 15; i++)
+    {
+        if(i == 5)
+        {
+            flag_fail_get_pin = 1;
+            flag_fail_set_pin = 1;
+        }
+
+        printf("check_can_communication_SEND_PIN_FAIL waiting for fault %d seconds remaining\n",
+               15 - i);
+        sleep(1);
+        if (flag_status_pin[REB_IPC_FAULT_PIN] == 1)
+        {
+            printf("check_can_communication_SEND_PIN_FAIL waiting 3 seconds\n");
+            sleep(3);
+            break;
+        }
+    }
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
+}
+
+/** @brief Tests check_can_communication() function.
+ *
+ * Scenario:
+ *  - current_ipc_fault_pin_status = 0x01U
+ *  - set_pin_status(0, REB_IPC_FAULT_PIN) FAILED
+ * Expected:
+ *  - Expected error set_pin_status ERROR
+ * @requir{SwHLR_F_13}
+ * @requir{SwHLR_F_15}
+ */
+TEST(ecu_app, check_can_communication_SEND_PIN_FAIL_VALUE)
+{
+
+    mock_can_write_return = 1;
+
+    pthread_t th_check_can_communication;
+    pthread_create(&th_check_can_communication, NULL, (void *)check_can_communication, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
+
+    // wainting for response
+    TEST_ASSERT_EQUAL(0, reb_con);
+
+    for (int i = 0; i <= 15; i++)
+    {
+        if(i == 5)
+        {
+            flag_fail_get_pin = 4;
+        }
+
+        printf("check_can_communication_SEND_PIN_FAIL_VALUE waiting for fault %d seconds remaining\n",
+               15 - i);
+        sleep(1);
+        if (flag_status_pin[REB_IPC_FAULT_PIN] == 1)
+        {
+            printf("check_can_communication_SEND_PIN_FAIL_VALUE waiting 3 seconds\n");
+            sleep(3);
+            break;
+        }
+    }
+
+    pthread_cancel(th_check_can_communication);
+
+    // REB CAN FAULT
+    TEST_ASSERT_EQUAL(0, flag_status_pin[REB_IPC_FAULT_PIN]);
 }

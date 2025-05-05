@@ -1,18 +1,25 @@
 <map id="bsw/src/ecu.c" name="bsw/src/ecu.c">
-<area shape="rect" id="Node000001" title="Unit tests for functions in ecu.c." alt="" coords="93,5,202,31"/>
-<area shape="rect" id="Node000002" href="$ecu_8h.html" title=" " alt="" coords="23,79,80,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,33,80,72,77,68,130,29"/>
-<area shape="rect" id="Node000004" href="$mcal_8h.html" title=" " alt="" coords="114,79,181,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="150,31,150,65,145,65,145,31"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="205,79,279,104"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="164,29,217,68,214,72,161,33"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,76,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="52,105,47,139,42,138,47,104"/>
-<area shape="poly" id="edge7_Node000004_Node000003" title=" " alt="" coords="132,106,71,147,68,142,129,102"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="101,152,194,177"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="150,104,150,138,145,138,145,104"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="218,152,338,177"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="170,102,246,143,244,148,167,106"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="363,152,447,177"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="182,99,351,146,350,151,180,104"/>
+<area shape="rect" id="Node000001" title="Unit tests for functions in ecu.c." alt="" coords="261,5,371,31"/>
+<area shape="rect" id="Node000002" href="$ecu_8h.html" title=" " alt="" coords="131,79,189,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="292,33,199,75,197,70,290,28"/>
+<area shape="rect" id="Node000004" href="$mcal_8h.html" title=" " alt="" coords="587,79,653,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="368,28,574,76,573,81,367,33"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="213,79,309,104"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="309,33,281,69,276,66,305,29"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="333,79,408,104"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="327,29,356,66,351,69,323,33"/>
+<area shape="rect" id="Node000010" href="$dtc__codes__bsw_8h.html" title=" " alt="" coords="432,79,563,104"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="346,28,456,71,454,76,344,33"/>
+<area shape="rect" id="Node000011" href="$dtc__logger_8h.html" title=" " alt="" coords="5,79,107,104"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="275,33,112,78,111,72,274,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="125,152,195,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="163,104,163,138,157,138,157,104"/>
+<area shape="poly" id="edge7_Node000004_Node000003" title=" " alt="" coords="587,104,575,107,372,140,210,161,209,155,372,135,574,101,586,99"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="443,152,536,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="600,106,524,148,521,143,598,102"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="560,152,680,177"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="623,104,623,138,617,138,617,104"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="705,152,789,177"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="642,102,715,143,713,147,639,106"/>
+<area shape="poly" id="edge12_Node000011_Node000003" title=" " alt="" coords="74,102,133,142,130,146,71,106"/>
 </map>

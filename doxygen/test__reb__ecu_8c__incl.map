@@ -1,5 +1,5 @@
-<map id="test/reb/reb_ecu/src/test_reb_ecu.c" name="test/reb/reb_ecu/src/test_reb_ecu.c">
-<area shape="rect" id="Node000001" title="Unit tests for functions in ecu_reb.c." alt="" coords="121,5,271,45"/>
+<map id="test/reb/src/test_reb_ecu.c" name="test/reb/src/test_reb_ecu.c">
+<area shape="rect" id="Node000001" title="Unit tests for functions in ecu_reb.c." alt="" coords="120,5,272,45"/>
 <area shape="rect" id="Node000002" href="$ecu__reb_8h.html" title=" " alt="" coords="5,240,91,265"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,48,95,67,66,95,51,127,45,163,44,197,46,226,41,227,38,197,39,162,46,125,62,92,92,63,128,43"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="77,93,211,119"/>

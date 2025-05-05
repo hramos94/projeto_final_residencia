@@ -84,13 +84,14 @@ $(document).ready(function() { init_codefold(0); });
 <a href="dio__utils_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef H_DIO_UTILS</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define H_DIO_UTILS</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="mcal_8h.html">mcal.h</a>&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>uint8_t <a class="code hl_function" href="dio__utils_8h.html#a140c7286bd860e750224711e4c75ba57">dio_get_pin</a>(uint8_t *status, uint8_t pin, <a class="code hl_struct" href="structdIO.html">dIO</a> io[]);</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>uint8_t <a class="code hl_function" href="dio__utils_8h.html#a9fdcaea37e19cf90e73daa9a8ddfed05">dio_set_pin</a>(uint8_t status, uint8_t pin, <a class="code hl_struct" href="structdIO.html">dIO</a> io[]);</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="adio__utils_8h_html_a140c7286bd860e750224711e4c75ba57"><div class="ttname"><a href="dio__utils_8h.html#a140c7286bd860e750224711e4c75ba57">dio_get_pin</a></div><div class="ttdeci">uint8_t dio_get_pin(uint8_t *status, uint8_t pin, dIO io[])</div><div class="ttdef"><b>Definition</b> dio_utils.c:5</div></div>
-<div class="ttc" id="adio__utils_8h_html_a9fdcaea37e19cf90e73daa9a8ddfed05"><div class="ttname"><a href="dio__utils_8h.html#a9fdcaea37e19cf90e73daa9a8ddfed05">dio_set_pin</a></div><div class="ttdeci">uint8_t dio_set_pin(uint8_t status, uint8_t pin, dIO io[])</div><div class="ttdef"><b>Definition</b> dio_utils.c:11</div></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;stdint.h&gt;</span>  <span class="comment">// Para tipos como uint8_t</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>uint8_t <a class="code hl_function" href="dio__utils_8h.html#a140c7286bd860e750224711e4c75ba57">dio_get_pin</a>(uint8_t *status, uint8_t pin, <a class="code hl_struct" href="structdIO.html">dIO</a> io[]);</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>uint8_t <a class="code hl_function" href="dio__utils_8h.html#a9fdcaea37e19cf90e73daa9a8ddfed05">dio_set_pin</a>(uint8_t status, uint8_t pin, <a class="code hl_struct" href="structdIO.html">dIO</a> io[]);</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="adio__utils_8h_html_a140c7286bd860e750224711e4c75ba57"><div class="ttname"><a href="dio__utils_8h.html#a140c7286bd860e750224711e4c75ba57">dio_get_pin</a></div><div class="ttdeci">uint8_t dio_get_pin(uint8_t *status, uint8_t pin, dIO io[])</div><div class="ttdef"><b>Definition</b> dio_utils.c:6</div></div>
+<div class="ttc" id="adio__utils_8h_html_a9fdcaea37e19cf90e73daa9a8ddfed05"><div class="ttname"><a href="dio__utils_8h.html#a9fdcaea37e19cf90e73daa9a8ddfed05">dio_set_pin</a></div><div class="ttdeci">uint8_t dio_set_pin(uint8_t status, uint8_t pin, dIO io[])</div><div class="ttdef"><b>Definition</b> dio_utils.c:12</div></div>
 <div class="ttc" id="amcal_8h_html"><div class="ttname"><a href="mcal_8h.html">mcal.h</a></div></div>
 <div class="ttc" id="astructdIO_html"><div class="ttname"><a href="structdIO.html">dIO</a></div><div class="ttdef"><b>Definition</b> mcal.h:12</div></div>
 </div><!-- fragment --></div><!-- contents -->

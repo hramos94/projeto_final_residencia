@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Remote Engine Block: test/reb/bsw_mcal/src/test_bsw_mcal.c File Reference</title>
+<title>Remote Engine Block: test/reb/src/test_bsw_mcal.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_d920adecd5f706702e7c31c1555af58c.html">reb</a></li><li class="navelem"><a class="el" href="dir_ec021be4fda0d2dcd0be49a7e8de93d9.html">bsw_mcal</a></li><li class="navelem"><a class="el" href="dir_8697110ace563ff9f3887ddebb2be40f.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_d920adecd5f706702e7c31c1555af58c.html">reb</a></li><li class="navelem"><a class="el" href="dir_9cc7f926d0db7b1872a758147ae2dc68.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -82,56 +82,60 @@ $(function() {
 
 <p>Unit tests for functions in <a class="el" href="mcal_8c.html">mcal.c</a>.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="mcal_8h_source.html">mcal.h</a>&quot;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="dtc__logger_8h_source.html">dtc_logger.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="mcal_8h_source.html">mcal.h</a>&quot;</code><br />
+<code>#include &quot;mock_can_utils.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="unity_8h_source.html">unity.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="unity__fixture_8h_source.html">unity_fixture.h</a>&quot;</code><br />
-<code>#include &quot;mock_can_utils.h&quot;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for test_bsw_mcal.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="test__bsw__mcal_8c__incl.png" border="0" usemap="#atest_2reb_2bsw__mcal_2src_2test__bsw__mcal_8c" alt=""/></div>
-<map name="atest_2reb_2bsw__mcal_2src_2test__bsw__mcal_8c" id="atest_2reb_2bsw__mcal_2src_2test__bsw__mcal_8c">
-<area shape="rect" title="Unit tests for functions in mcal.c." alt="" coords="765,5,929,45"/>
-<area shape="rect" href="mcal_8h.html" title=" " alt="" coords="173,93,239,119"/>
-<area shape="poly" title=" " alt="" coords="765,39,253,102,253,96,765,34"/>
-<area shape="rect" title=" " alt="" coords="881,313,947,339"/>
-<area shape="poly" title=" " alt="" coords="855,45,886,166,912,299,907,300,881,167,850,46"/>
-<area shape="rect" href="unity_8h.html" title=" " alt="" coords="805,167,871,192"/>
-<area shape="poly" title=" " alt="" coords="849,46,842,153,837,153,844,46"/>
-<area shape="rect" href="unity__fixture_8h.html" title=" " alt="" coords="693,93,809,119"/>
-<area shape="poly" title=" " alt="" coords="826,48,778,87,775,82,822,43"/>
-<area shape="rect" title=" " alt="" coords="947,93,1081,119"/>
-<area shape="poly" title=" " alt="" coords="888,43,978,85,976,90,886,48"/>
-<area shape="rect" title=" " alt="" coords="29,167,122,192"/>
-<area shape="poly" title=" " alt="" coords="186,121,110,162,107,158,184,116"/>
-<area shape="rect" title=" " alt="" coords="146,167,266,192"/>
-<area shape="poly" title=" " alt="" coords="209,119,209,153,203,153,203,119"/>
-<area shape="rect" title=" " alt="" coords="291,167,375,192"/>
-<area shape="poly" title=" " alt="" coords="228,116,301,157,299,162,225,121"/>
-<area shape="rect" title=" " alt="" coords="176,313,247,339"/>
-<area shape="poly" title=" " alt="" coords="173,109,135,112,92,121,51,139,34,152,19,168,9,191,12,212,25,232,47,251,104,284,164,307,162,312,102,288,44,255,21,236,7,214,4,190,14,165,30,148,49,135,91,116,134,107,172,104"/>
-<area shape="rect" href="unity__internals_8h.html" title=" " alt="" coords="681,240,811,265"/>
-<area shape="poly" title=" " alt="" coords="825,194,773,234,770,229,822,190"/>
-<area shape="poly" title=" " alt="" coords="681,265,261,321,260,316,680,260"/>
-<area shape="poly" title=" " alt="" coords="774,263,875,305,873,310,772,268"/>
-<area shape="rect" title=" " alt="" coords="685,313,764,339"/>
-<area shape="poly" title=" " alt="" coords="745,266,735,301,730,299,740,265"/>
-<area shape="rect" title=" " alt="" coords="788,313,856,339"/>
-<area shape="poly" title=" " alt="" coords="760,263,801,302,798,306,756,267"/>
-<area shape="rect" title=" " alt="" coords="491,313,566,339"/>
-<area shape="poly" title=" " alt="" coords="712,268,578,312,576,306,710,263"/>
-<area shape="rect" title=" " alt="" coords="591,313,661,339"/>
-<area shape="poly" title=" " alt="" coords="728,268,659,308,656,304,725,263"/>
-<area shape="poly" title=" " alt="" coords="767,117,815,156,812,160,764,121"/>
-<area shape="poly" title=" " alt="" coords="754,119,750,226,744,226,748,119"/>
-<area shape="rect" href="unity__fixture__internals_8h.html" title=" " alt="" coords="549,167,729,192"/>
-<area shape="poly" title=" " alt="" coords="735,121,671,161,668,157,732,116"/>
-<area shape="rect" href="unity__memory_8h.html" title=" " alt="" coords="399,167,525,192"/>
-<area shape="poly" title=" " alt="" coords="706,121,523,166,522,161,704,116"/>
-<area shape="poly" title=" " alt="" coords="474,191,504,239,525,299,520,301,500,241,469,194"/>
-<area shape="rect" title=" " alt="" coords="420,240,491,265"/>
-<area shape="poly" title=" " alt="" coords="464,193,460,227,455,226,458,192"/>
+<div class="center"><img src="test__bsw__mcal_8c__incl.png" border="0" usemap="#atest_2reb_2src_2test__bsw__mcal_8c" alt=""/></div>
+<map name="atest_2reb_2src_2test__bsw__mcal_8c" id="atest_2reb_2src_2test__bsw__mcal_8c">
+<area shape="rect" title="Unit tests for functions in mcal.c." alt="" coords="553,5,711,45"/>
+<area shape="rect" href="dtc__logger_8h.html" title=" " alt="" coords="5,240,107,265"/>
+<area shape="poly" title=" " alt="" coords="553,38,466,53,362,78,253,116,200,140,151,169,111,200,78,232,74,228,107,196,148,164,198,135,251,111,360,73,465,47,553,33"/>
+<area shape="rect" href="mcal_8h.html" title=" " alt="" coords="325,93,392,119"/>
+<area shape="poly" title=" " alt="" coords="567,48,406,94,404,89,566,43"/>
+<area shape="rect" title=" " alt="" coords="1099,93,1234,119"/>
+<area shape="poly" title=" " alt="" coords="711,36,1086,90,1086,96,711,41"/>
+<area shape="rect" href="unity_8h.html" title=" " alt="" coords="551,167,617,192"/>
+<area shape="poly" title=" " alt="" coords="628,47,612,94,594,154,589,153,607,93,623,45"/>
+<area shape="rect" title=" " alt="" coords="905,313,972,339"/>
+<area shape="poly" title=" " alt="" coords="711,26,792,36,882,59,926,77,968,100,1005,129,1037,165,1046,184,1046,205,1041,224,1030,244,1000,279,968,307,964,303,996,275,1026,241,1036,222,1041,204,1040,186,1032,168,1002,133,965,105,924,82,880,64,791,41,711,31"/>
+<area shape="rect" href="unity__fixture_8h.html" title=" " alt="" coords="622,93,738,119"/>
+<area shape="poly" title=" " alt="" coords="646,44,668,80,663,83,641,47"/>
+<area shape="rect" title=" " alt="" coords="109,313,179,339"/>
+<area shape="poly" title=" " alt="" coords="72,263,121,302,117,307,68,267"/>
+<area shape="poly" title=" " alt="" coords="326,110,289,114,247,124,206,141,187,153,171,168,153,199,144,235,142,269,143,299,138,300,137,269,139,234,148,197,167,165,184,149,203,136,245,119,288,109,325,105"/>
+<area shape="rect" title=" " alt="" coords="181,167,275,192"/>
+<area shape="poly" title=" " alt="" coords="339,121,262,162,260,158,336,116"/>
+<area shape="rect" title=" " alt="" coords="299,167,419,192"/>
+<area shape="poly" title=" " alt="" coords="361,119,361,153,356,153,356,119"/>
+<area shape="rect" title=" " alt="" coords="443,167,527,192"/>
+<area shape="poly" title=" " alt="" coords="380,116,454,157,451,162,378,121"/>
+<area shape="rect" href="unity__internals_8h.html" title=" " alt="" coords="536,240,667,265"/>
+<area shape="poly" title=" " alt="" coords="589,192,598,226,593,228,584,193"/>
+<area shape="poly" title=" " alt="" coords="536,267,193,320,193,314,535,261"/>
+<area shape="rect" title=" " alt="" coords="394,313,473,339"/>
+<area shape="poly" title=" " alt="" coords="575,268,474,310,472,305,573,263"/>
+<area shape="rect" title=" " alt="" coords="497,313,565,339"/>
+<area shape="poly" title=" " alt="" coords="592,268,554,306,550,302,588,264"/>
+<area shape="rect" title=" " alt="" coords="684,313,759,339"/>
+<area shape="poly" title=" " alt="" coords="622,263,691,304,688,308,619,268"/>
+<area shape="rect" title=" " alt="" coords="589,313,659,339"/>
+<area shape="poly" title=" " alt="" coords="608,265,619,299,614,301,603,266"/>
+<area shape="poly" title=" " alt="" coords="656,263,892,312,891,317,655,268"/>
+<area shape="poly" title=" " alt="" coords="666,121,612,160,609,156,663,117"/>
+<area shape="poly" title=" " alt="" coords="676,120,616,229,612,227,671,118"/>
+<area shape="rect" href="unity__fixture__internals_8h.html" title=" " alt="" coords="843,167,1023,192"/>
+<area shape="poly" title=" " alt="" coords="721,116,880,160,878,165,720,121"/>
+<area shape="rect" href="unity__memory_8h.html" title=" " alt="" coords="693,167,819,192"/>
+<area shape="poly" title=" " alt="" coords="694,117,735,155,732,159,690,121"/>
+<area shape="poly" title=" " alt="" coords="756,193,730,301,725,299,751,192"/>
+<area shape="rect" title=" " alt="" coords="759,240,830,265"/>
+<area shape="poly" title=" " alt="" coords="765,191,784,227,780,229,760,194"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -177,26 +181,36 @@ Functions</h2></td></tr>
 <tr class="memdesc:af5a63f67333aea3ca54c4b2d2327b9e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a6470a2809bd1a1de0e6a3460bd12325c" title="Set the status of PIN by terminal.">read_pint_status()</a> for edge case with missing status value.  <br /></td></tr>
 <tr class="separator:af5a63f67333aea3ca54c4b2d2327b9e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a375c7d34937fa6125e1ceb265a7c02" id="r_a0a375c7d34937fa6125e1ceb265a7c02"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a0a375c7d34937fa6125e1ceb265a7c02">TEST</a> (mcal_others, mcal_init_SUCCESS)</td></tr>
-<tr class="memdesc:a0a375c7d34937fa6125e1ceb265a7c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a83541205a7800d9dbbee9ff09f4100cc" title="Inicializate the PINs status.">mcal_init()</a> when all pin structures are initialized successfully.  <br /></td></tr>
+<tr class="memdesc:a0a375c7d34937fa6125e1ceb265a7c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a516cabcc1e5cbe74743a57c8efb1c02f" title="Inicializate the PINs status.">mcal_init()</a> when all pin structures are initialized successfully.  <br /></td></tr>
 <tr class="separator:a0a375c7d34937fa6125e1ceb265a7c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8beef0846f9d243f474a3d4da7fb0efd" id="r_a8beef0846f9d243f474a3d4da7fb0efd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a8beef0846f9d243f474a3d4da7fb0efd">TEST</a> (mcal_others, go_sleep_1)</td></tr>
 <tr class="memdesc:a8beef0846f9d243f474a3d4da7fb0efd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#ab10b83e2d8ebcc06b9494eba0c2d85a2" title="Sleep thread POSIX.">go_sleep()</a> with 1 second delay.  <br /></td></tr>
 <tr class="separator:a8beef0846f9d243f474a3d4da7fb0efd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af83bebbad56780c463ed4f1e6cd38859" id="r_af83bebbad56780c463ed4f1e6cd38859"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#af83bebbad56780c463ed4f1e6cd38859">TEST</a> (mcal_others, show_error_TEXT)</td></tr>
-<tr class="memdesc:af83bebbad56780c463ed4f1e6cd38859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#acd0780fe2f6bc6ee131dd88a4026fcb6" title="Show in terminal ERROR Message.">show_error()</a> when displaying an error message.  <br /></td></tr>
+<tr class="memdesc:af83bebbad56780c463ed4f1e6cd38859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a7d76c7fa57934a555b76934eec73c224" title="Show in terminal ERROR Message.">show_error()</a> when displaying an error message.  <br /></td></tr>
 <tr class="separator:af83bebbad56780c463ed4f1e6cd38859"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a857903f00898b66b6ea286fbb628b30b" id="r_a857903f00898b66b6ea286fbb628b30b"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a857903f00898b66b6ea286fbb628b30b">my_func</a> (void *arg)</td></tr>
 <tr class="separator:a857903f00898b66b6ea286fbb628b30b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60e0ac62c36db840cb6779ca4ce996ff" id="r_a60e0ac62c36db840cb6779ca4ce996ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a60e0ac62c36db840cb6779ca4ce996ff">TEST</a> (mcal_others, new_thread_SUCCESS)</td></tr>
 <tr class="memdesc:a60e0ac62c36db840cb6779ca4ce996ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a326615062cd1b0298e583f9e1521c8bd" title="Create a new thread in posix.">new_thread()</a> when thread creation is successful.  <br /></td></tr>
 <tr class="separator:a60e0ac62c36db840cb6779ca4ce996ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab717c6ae2c2d17657215a10fc4d8bb78" id="r_ab717c6ae2c2d17657215a10fc4d8bb78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#ab717c6ae2c2d17657215a10fc4d8bb78">TEST</a> (mcal_others, log_dtc_fopen_FAIL)</td></tr>
+<tr class="memdesc:ab717c6ae2c2d17657215a10fc4d8bb78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests log_dtc fail at file_fopen.  <br /></td></tr>
+<tr class="separator:ab717c6ae2c2d17657215a10fc4d8bb78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e78817e8066b123941b53a047320796" id="r_a9e78817e8066b123941b53a047320796"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a9e78817e8066b123941b53a047320796">TEST</a> (mcal_others, log_dtc_localtime_r_FAIL)</td></tr>
+<tr class="memdesc:a9e78817e8066b123941b53a047320796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests log_dtc fail at file_localtime_r.  <br /></td></tr>
+<tr class="separator:a9e78817e8066b123941b53a047320796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83a73b0cd26c9dee446ffb3281e60ed8" id="r_a83a73b0cd26c9dee446ffb3281e60ed8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a83a73b0cd26c9dee446ffb3281e60ed8">TEST</a> (mcal_others, log_dtc_fprintf_FAIL)</td></tr>
+<tr class="memdesc:a83a73b0cd26c9dee446ffb3281e60ed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests log_dtc fail at file_fprintf.  <br /></td></tr>
+<tr class="separator:a83a73b0cd26c9dee446ffb3281e60ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fbf8ffd6de9d3bddfb72906f40d409e" id="r_a2fbf8ffd6de9d3bddfb72906f40d409e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a2fbf8ffd6de9d3bddfb72906f40d409e">TEST</a> (mcal_others, log_dtc_fclose_FAIL)</td></tr>
+<tr class="memdesc:a2fbf8ffd6de9d3bddfb72906f40d409e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests log_dtc fail at fclose.  <br /></td></tr>
+<tr class="separator:a2fbf8ffd6de9d3bddfb72906f40d409e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a090d4ac8e2a3d73ada161db46d3b61a4" id="r_a090d4ac8e2a3d73ada161db46d3b61a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a090d4ac8e2a3d73ada161db46d3b61a4">TEST_GROUP</a> (mcal_can)</td></tr>
 <tr class="separator:a090d4ac8e2a3d73ada161db46d3b61a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d700c8db3829e8fe128fef60e4b71cc" id="r_a7d700c8db3829e8fe128fef60e4b71cc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a7d700c8db3829e8fe128fef60e4b71cc">TEST_SETUP</a> (mcal_can)</td></tr>
-<tr class="memdesc:a7d700c8db3829e8fe128fef60e4b71cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up mock return values before each test in the mcal_can suite.  <br /></td></tr>
 <tr class="separator:a7d700c8db3829e8fe128fef60e4b71cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5384854d3f2d8805b9fcf4f3b764eaff" id="r_a5384854d3f2d8805b9fcf4f3b764eaff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a5384854d3f2d8805b9fcf4f3b764eaff">TEST_TEAR_DOWN</a> (mcal_can)</td></tr>
-<tr class="memdesc:a5384854d3f2d8805b9fcf4f3b764eaff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets mock return values after each test in the mcal_can suite.  <br /></td></tr>
 <tr class="separator:a5384854d3f2d8805b9fcf4f3b764eaff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae963f0d40acbcf2fa75d437864b52534" id="r_ae963f0d40acbcf2fa75d437864b52534"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#ae963f0d40acbcf2fa75d437864b52534">TEST</a> (mcal_can, can_interface_status_UP)</td></tr>
 <tr class="memdesc:ae963f0d40acbcf2fa75d437864b52534"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#ab7197354c57154dabaceef1004cad9d2" title="Function to verify if can interface is UP or DOWN.">can_interface_status()</a> with INTERFACE_UP.  <br /></td></tr>
@@ -226,7 +240,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a971ee4eb63295521c9c8ff3f1a5df25d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a8a3b4ae5135d291a4373041572c34e36" title="Closes CAN socket - does not depend on VCAN interface.">can_socket_close()</a> when socket_close fails.  <br /></td></tr>
 <tr class="separator:a971ee4eb63295521c9c8ff3f1a5df25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8102f1096733574b1f1f9ee500c35c03" id="r_a8102f1096733574b1f1f9ee500c35c03"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a8102f1096733574b1f1f9ee500c35c03">TEST</a> (mcal_can, can_close_SUCCESS)</td></tr>
-<tr class="memdesc:a8102f1096733574b1f1f9ee500c35c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a3a8f1bfa8a7c26030431edc93574789d" title="function that close Socket CAN Linux.">can_close()</a> when can_socket_close is successful.  <br /></td></tr>
+<tr class="memdesc:a8102f1096733574b1f1f9ee500c35c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a63c26f7e10830fd4e632bf50ed516c96" title="function that close Socket CAN Linux.">can_close()</a> when can_socket_close is successful.  <br /></td></tr>
 <tr class="separator:a8102f1096733574b1f1f9ee500c35c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a032564032a0023e72210f082a0695b02" id="r_a032564032a0023e72210f082a0695b02"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a032564032a0023e72210f082a0695b02">TEST</a> (mcal_can, can_send_SUCCESS)</td></tr>
 <tr class="memdesc:a032564032a0023e72210f082a0695b02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a69a9db79ed459a360b1d63b451f8fb06" title="function to send frames on CAN BUS.">can_send()</a> when can_write succeeds.  <br /></td></tr>
@@ -259,13 +273,45 @@ Functions</h2></td></tr>
 <tr class="memdesc:a7828d1d4a326b8e037bb3c3d874034a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a9339d68ae4ff1b918fc5016d541b4670" title="function that open SOCKET CAN.">can_start()</a> when binding the socket fails.  <br /></td></tr>
 <tr class="separator:a7828d1d4a326b8e037bb3c3d874034a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a530b764537dfd96c3a2a47e6a78992" id="r_a8a530b764537dfd96c3a2a47e6a78992"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a8a530b764537dfd96c3a2a47e6a78992">TEST</a> (mcal_can, can_init_SUCCESS)</td></tr>
-<tr class="memdesc:a8a530b764537dfd96c3a2a47e6a78992"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#a5ae806ae19d1ad827c350b67ff4b9bc5" title="function that initialize Socket CAN Linux.">can_init()</a> when initialization is successful.  <br /></td></tr>
+<tr class="memdesc:a8a530b764537dfd96c3a2a47e6a78992"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="mcal_8h.html#aae6e8d6e086ce592ecec1c2de2466f58" title="function that initialize Socket CAN Linux.">can_init()</a> when initialization is successful.  <br /></td></tr>
 <tr class="separator:a8a530b764537dfd96c3a2a47e6a78992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a8da6d6b33b7597f02434fedca1781cbc" id="r_a8da6d6b33b7597f02434fedca1781cbc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a8da6d6b33b7597f02434fedca1781cbc">Counter</a></td></tr>
 <tr class="separator:a8da6d6b33b7597f02434fedca1781cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e900cda1f82f209e8ea2fd76d3c3ed6" id="r_a3e900cda1f82f209e8ea2fd76d3c3ed6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a3e900cda1f82f209e8ea2fd76d3c3ed6">flag_fail_set_pin</a></td></tr>
+<tr class="separator:a3e900cda1f82f209e8ea2fd76d3c3ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5476e9a27846f3daaf3357e8133ec88b" id="r_a5476e9a27846f3daaf3357e8133ec88b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a5476e9a27846f3daaf3357e8133ec88b">mock_can_write_return</a></td></tr>
+<tr class="separator:a5476e9a27846f3daaf3357e8133ec88b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75342df41f827c6daa390c199284c194" id="r_a75342df41f827c6daa390c199284c194"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a75342df41f827c6daa390c199284c194">mock_can_read_return</a></td></tr>
+<tr class="separator:a75342df41f827c6daa390c199284c194"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b170ce30905833445232f7ad3eba1df" id="r_a6b170ce30905833445232f7ad3eba1df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a6b170ce30905833445232f7ad3eba1df">mock_can_ioctl_return</a></td></tr>
+<tr class="separator:a6b170ce30905833445232f7ad3eba1df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a374ccb8f2b18daeb9b01773f19249259" id="r_a374ccb8f2b18daeb9b01773f19249259"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a374ccb8f2b18daeb9b01773f19249259">mock_can_open_return</a></td></tr>
+<tr class="separator:a374ccb8f2b18daeb9b01773f19249259"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50686be605e74a16c8535272484756b0" id="r_a50686be605e74a16c8535272484756b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a50686be605e74a16c8535272484756b0">flag_fail_get_pin</a></td></tr>
+<tr class="separator:a50686be605e74a16c8535272484756b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c41be98f190eb55fb519e160a868dc5" id="r_a6c41be98f190eb55fb519e160a868dc5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a6c41be98f190eb55fb519e160a868dc5">flag_send_ecu</a></td></tr>
+<tr class="separator:a6c41be98f190eb55fb519e160a868dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26c63031b3b528dab9285d4b0bc796ca" id="r_a26c63031b3b528dab9285d4b0bc796ca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a26c63031b3b528dab9285d4b0bc796ca">flag_send_ecu_count</a></td></tr>
+<tr class="separator:a26c63031b3b528dab9285d4b0bc796ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a12a321b51ce547d6d971076d6212e2" id="r_a5a12a321b51ce547d6d971076d6212e2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a5a12a321b51ce547d6d971076d6212e2">flag_fail_FILE</a></td></tr>
+<tr class="separator:a5a12a321b51ce547d6d971076d6212e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8607e34214c46b7e53d5664745e003eb" id="r_a8607e34214c46b7e53d5664745e003eb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a8607e34214c46b7e53d5664745e003eb">flag_fail_localtime</a></td></tr>
+<tr class="separator:a8607e34214c46b7e53d5664745e003eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc074c19404b6d4566041e50b987cefa" id="r_abc074c19404b6d4566041e50b987cefa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#abc074c19404b6d4566041e50b987cefa">flag_fail_FILE_close</a></td></tr>
+<tr class="separator:abc074c19404b6d4566041e50b987cefa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc6d8fd4508523096823ee2d1d77768c" id="r_afc6d8fd4508523096823ee2d1d77768c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#afc6d8fd4508523096823ee2d1d77768c">flag_fail_fprintf</a></td></tr>
+<tr class="separator:afc6d8fd4508523096823ee2d1d77768c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d54246b24a83c84cdf61fd95c6d9319" id="r_a6d54246b24a83c84cdf61fd95c6d9319"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a6d54246b24a83c84cdf61fd95c6d9319">count_file</a></td></tr>
+<tr class="separator:a6d54246b24a83c84cdf61fd95c6d9319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e88f9690fcefe56816c3764e10547ff" id="r_a8e88f9690fcefe56816c3764e10547ff"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a8e88f9690fcefe56816c3764e10547ff">count_localtime</a></td></tr>
+<tr class="separator:a8e88f9690fcefe56816c3764e10547ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01512c64ec5c0c75226e3dfe3cd68070" id="r_a01512c64ec5c0c75226e3dfe3cd68070"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a01512c64ec5c0c75226e3dfe3cd68070">count_file_close</a></td></tr>
+<tr class="separator:a01512c64ec5c0c75226e3dfe3cd68070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b5c39a8a5555a4396969e7ec560c376" id="r_a8b5c39a8a5555a4396969e7ec560c376"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__bsw__mcal_8c.html#a8b5c39a8a5555a4396969e7ec560c376">count_fprintf</a></td></tr>
+<tr class="separator:a8b5c39a8a5555a4396969e7ec560c376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Unit tests for functions in <a class="el" href="mcal_8c.html">mcal.c</a>. </p>
@@ -293,7 +339,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a911af0a4a0983295dc40e0108e7b9577" name="a911af0a4a0983295dc40e0108e7b9577"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a911af0a4a0983295dc40e0108e7b9577">&#9670;&#160;</a></span>TEST() <span class="overload">[1/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a911af0a4a0983295dc40e0108e7b9577">&#9670;&#160;</a></span>TEST() <span class="overload">[1/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -321,14 +367,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#ab8e172a897e7dff7a9e1245034d8038b" title="Armed with the interface index, we can now bind the socket to the CAN Interface:">can_bind_socket()</a> when can_bind fails. </p>
 <p>Scenario:</p><ul>
 <li>Mocked can_bind is set to return -1 (failure). Expected:</li>
-<li><a class="el" href="mcal_8h.html#ab8e172a897e7dff7a9e1245034d8038b" title="Armed with the interface index, we can now bind the socket to the CAN Interface:">can_bind_socket()</a> returns FAIL (1) due to bind failure. <dl class="req"><dt><b><a class="el" href="req.html#_req000061">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#ab8e172a897e7dff7a9e1245034d8038b" title="Armed with the interface index, we can now bind the socket to the CAN Interface:">can_bind_socket()</a> returns FAIL (1) due to bind failure. <dl class="req"><dt><b><a class="el" href="req.html#_req000071">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="ace6bead2d1240a7570cda3734bbe8191" name="ace6bead2d1240a7570cda3734bbe8191"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace6bead2d1240a7570cda3734bbe8191">&#9670;&#160;</a></span>TEST() <span class="overload">[2/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ace6bead2d1240a7570cda3734bbe8191">&#9670;&#160;</a></span>TEST() <span class="overload">[2/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -357,14 +403,14 @@ Variables</h2></td></tr>
 <p>Scenario:</p><ul>
 <li>Mocked can_bind is set to return 0 (success).</li>
 <li>All other mocked functions also return success. Expected:</li>
-<li><a class="el" href="mcal_8h.html#ab8e172a897e7dff7a9e1245034d8038b" title="Armed with the interface index, we can now bind the socket to the CAN Interface:">can_bind_socket()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000060">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#ab8e172a897e7dff7a9e1245034d8038b" title="Armed with the interface index, we can now bind the socket to the CAN Interface:">can_bind_socket()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000070">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a8102f1096733574b1f1f9ee500c35c03" name="a8102f1096733574b1f1f9ee500c35c03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8102f1096733574b1f1f9ee500c35c03">&#9670;&#160;</a></span>TEST() <span class="overload">[3/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8102f1096733574b1f1f9ee500c35c03">&#9670;&#160;</a></span>TEST() <span class="overload">[3/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -389,17 +435,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests <a class="el" href="mcal_8h.html#a3a8f1bfa8a7c26030431edc93574789d" title="function that close Socket CAN Linux.">can_close()</a> when can_socket_close is successful. </p>
+<p>Tests <a class="el" href="mcal_8h.html#a63c26f7e10830fd4e632bf50ed516c96" title="function that close Socket CAN Linux.">can_close()</a> when can_socket_close is successful. </p>
 <p>Scenario:</p><ul>
 <li>Mocked can_socket_close is set to return success (0). Expected:</li>
-<li><a class="el" href="mcal_8h.html#a3a8f1bfa8a7c26030431edc93574789d" title="function that close Socket CAN Linux.">can_close()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000066">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#a63c26f7e10830fd4e632bf50ed516c96" title="function that close Socket CAN Linux.">can_close()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000076">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a8a530b764537dfd96c3a2a47e6a78992" name="a8a530b764537dfd96c3a2a47e6a78992"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a530b764537dfd96c3a2a47e6a78992">&#9670;&#160;</a></span>TEST() <span class="overload">[4/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a530b764537dfd96c3a2a47e6a78992">&#9670;&#160;</a></span>TEST() <span class="overload">[4/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -424,17 +470,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests <a class="el" href="mcal_8h.html#a5ae806ae19d1ad827c350b67ff4b9bc5" title="function that initialize Socket CAN Linux.">can_init()</a> when initialization is successful. </p>
+<p>Tests <a class="el" href="mcal_8h.html#aae6e8d6e086ce592ecec1c2de2466f58" title="function that initialize Socket CAN Linux.">can_init()</a> when initialization is successful. </p>
 <p>Scenario:</p><ul>
-<li>can_socket is successfully initialized. Expected:</li>
-<li>Return SUCCESS (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000077">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li>can_init is successfully initialized. Expected:</li>
+<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000087">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a56486fde9542aff78ac0ad1109554c0b" name="a56486fde9542aff78ac0ad1109554c0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56486fde9542aff78ac0ad1109554c0b">&#9670;&#160;</a></span>TEST() <span class="overload">[5/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a56486fde9542aff78ac0ad1109554c0b">&#9670;&#160;</a></span>TEST() <span class="overload">[5/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -462,14 +508,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#ab7197354c57154dabaceef1004cad9d2" title="Function to verify if can interface is UP or DOWN.">can_interface_status()</a> when INTERFACE DOES NOT EXIST. </p>
 <p>Scenario:</p><ul>
 <li>CAN interface is does not exist. Expected:</li>
-<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000059">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000069">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a9be13fecc2ea008088dd3707674177e5" name="a9be13fecc2ea008088dd3707674177e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9be13fecc2ea008088dd3707674177e5">&#9670;&#160;</a></span>TEST() <span class="overload">[6/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9be13fecc2ea008088dd3707674177e5">&#9670;&#160;</a></span>TEST() <span class="overload">[6/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -497,14 +543,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#ab7197354c57154dabaceef1004cad9d2" title="Function to verify if can interface is UP or DOWN.">can_interface_status()</a> with INTERFACE_DOWN. </p>
 <p>Scenario:</p><ul>
 <li>CAN interface is DOWN Expected:</li>
-<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000058">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000068">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="ae963f0d40acbcf2fa75d437864b52534" name="ae963f0d40acbcf2fa75d437864b52534"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae963f0d40acbcf2fa75d437864b52534">&#9670;&#160;</a></span>TEST() <span class="overload">[7/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae963f0d40acbcf2fa75d437864b52534">&#9670;&#160;</a></span>TEST() <span class="overload">[7/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -532,14 +578,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#ab7197354c57154dabaceef1004cad9d2" title="Function to verify if can interface is UP or DOWN.">can_interface_status()</a> with INTERFACE_UP. </p>
 <p>Scenario:</p><ul>
 <li>CAN interface is UP Expected:</li>
-<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000057">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000067">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a0686953221f669a4757122a9688333b7" name="a0686953221f669a4757122a9688333b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0686953221f669a4757122a9688333b7">&#9670;&#160;</a></span>TEST() <span class="overload">[8/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0686953221f669a4757122a9688333b7">&#9670;&#160;</a></span>TEST() <span class="overload">[8/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -567,14 +613,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#afb57e6c3b6ff8856739bbad40ae86526" title="function to read frames on CAN - this will block execution until a frame is received.">can_read()</a> when can_read_socket fails. </p>
 <p>Scenario:</p><ul>
 <li>Mocked can_read_socket is set to return -1 (failure). Expected:</li>
-<li><a class="el" href="mcal_8h.html#afb57e6c3b6ff8856739bbad40ae86526" title="function to read frames on CAN - this will block execution until a frame is received.">can_read()</a> returns FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000071">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#afb57e6c3b6ff8856739bbad40ae86526" title="function to read frames on CAN - this will block execution until a frame is received.">can_read()</a> returns FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000081">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a43d60f8ebf926a6ea0e26f78d0c81341" name="a43d60f8ebf926a6ea0e26f78d0c81341"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43d60f8ebf926a6ea0e26f78d0c81341">&#9670;&#160;</a></span>TEST() <span class="overload">[9/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a43d60f8ebf926a6ea0e26f78d0c81341">&#9670;&#160;</a></span>TEST() <span class="overload">[9/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -602,14 +648,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#afb57e6c3b6ff8856739bbad40ae86526" title="function to read frames on CAN - this will block execution until a frame is received.">can_read()</a> when can_read_socket succeeds. </p>
 <p>Scenario:</p><ul>
 <li>Mocked can_read_socket is set to return a positive value (indicating data was read successfully). Expected:</li>
-<li><a class="el" href="mcal_8h.html#afb57e6c3b6ff8856739bbad40ae86526" title="function to read frames on CAN - this will block execution until a frame is received.">can_read()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000070">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#afb57e6c3b6ff8856739bbad40ae86526" title="function to read frames on CAN - this will block execution until a frame is received.">can_read()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000080">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a51f35d9c6daa978721d272606f7c9b15" name="a51f35d9c6daa978721d272606f7c9b15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51f35d9c6daa978721d272606f7c9b15">&#9670;&#160;</a></span>TEST() <span class="overload">[10/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a51f35d9c6daa978721d272606f7c9b15">&#9670;&#160;</a></span>TEST() <span class="overload">[10/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -637,14 +683,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a558bb78b1bfb28f6f1c0cfbc6e56ef3e" title="function that will read frame can coming from vcan0 of LINUX">can_read_vcan0()</a> when can_read_socket succeeds. </p>
 <p>Scenario:</p><ul>
 <li>Mocked can_read_socket is set to return a positive value (indicating data was read successfully). Expected:</li>
-<li><a class="el" href="mcal_8h.html#a558bb78b1bfb28f6f1c0cfbc6e56ef3e" title="function that will read frame can coming from vcan0 of LINUX">can_read_vcan0()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000072">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#a558bb78b1bfb28f6f1c0cfbc6e56ef3e" title="function that will read frame can coming from vcan0 of LINUX">can_read_vcan0()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000082">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a9f94c14f661f716d8425d4071a9cbfcb" name="a9f94c14f661f716d8425d4071a9cbfcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f94c14f661f716d8425d4071a9cbfcb">&#9670;&#160;</a></span>TEST() <span class="overload">[11/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f94c14f661f716d8425d4071a9cbfcb">&#9670;&#160;</a></span>TEST() <span class="overload">[11/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -672,14 +718,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a69a9db79ed459a360b1d63b451f8fb06" title="function to send frames on CAN BUS.">can_send()</a> when can_write fails. </p>
 <p>Scenario:</p><ul>
 <li>Mocked can_write is set to return -1 (failure). Expected:</li>
-<li><a class="el" href="mcal_8h.html#a69a9db79ed459a360b1d63b451f8fb06" title="function to send frames on CAN BUS.">can_send()</a> returns FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000068">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#a69a9db79ed459a360b1d63b451f8fb06" title="function to send frames on CAN BUS.">can_send()</a> returns FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000078">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a032564032a0023e72210f082a0695b02" name="a032564032a0023e72210f082a0695b02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a032564032a0023e72210f082a0695b02">&#9670;&#160;</a></span>TEST() <span class="overload">[12/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a032564032a0023e72210f082a0695b02">&#9670;&#160;</a></span>TEST() <span class="overload">[12/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -707,14 +753,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a69a9db79ed459a360b1d63b451f8fb06" title="function to send frames on CAN BUS.">can_send()</a> when can_write succeeds. </p>
 <p>Scenario:</p><ul>
 <li>Mocked can_write is set to return success (0). Expected:</li>
-<li><a class="el" href="mcal_8h.html#a69a9db79ed459a360b1d63b451f8fb06" title="function to send frames on CAN BUS.">can_send()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000067">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#a69a9db79ed459a360b1d63b451f8fb06" title="function to send frames on CAN BUS.">can_send()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000077">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a562f5095256cfa0ec1441a586e5abf2b" name="a562f5095256cfa0ec1441a586e5abf2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a562f5095256cfa0ec1441a586e5abf2b">&#9670;&#160;</a></span>TEST() <span class="overload">[13/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a562f5095256cfa0ec1441a586e5abf2b">&#9670;&#160;</a></span>TEST() <span class="overload">[13/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -742,14 +788,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a629367622920865f61d37b81915381d7" title="function that send frame CAN to vcan0 of LINUX">can_send_vcan0()</a> when can_send is successful. </p>
 <p>Scenario:</p><ul>
 <li>Mocked can_send is set to return success (0). Expected:</li>
-<li><a class="el" href="mcal_8h.html#a629367622920865f61d37b81915381d7" title="function that send frame CAN to vcan0 of LINUX">can_send_vcan0()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000069">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#a629367622920865f61d37b81915381d7" title="function that send frame CAN to vcan0 of LINUX">can_send_vcan0()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000079">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a971ee4eb63295521c9c8ff3f1a5df25d" name="a971ee4eb63295521c9c8ff3f1a5df25d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a971ee4eb63295521c9c8ff3f1a5df25d">&#9670;&#160;</a></span>TEST() <span class="overload">[14/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a971ee4eb63295521c9c8ff3f1a5df25d">&#9670;&#160;</a></span>TEST() <span class="overload">[14/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -777,14 +823,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a8a3b4ae5135d291a4373041572c34e36" title="Closes CAN socket - does not depend on VCAN interface.">can_socket_close()</a> when socket_close fails. </p>
 <p>Scenario:</p><ul>
 <li>Mocked socket_close is set to return -1 (failure). Expected:</li>
-<li><a class="el" href="mcal_8h.html#a8a3b4ae5135d291a4373041572c34e36" title="Closes CAN socket - does not depend on VCAN interface.">can_socket_close()</a> returns FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000065">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#a8a3b4ae5135d291a4373041572c34e36" title="Closes CAN socket - does not depend on VCAN interface.">can_socket_close()</a> returns FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000075">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="aa89c5f57695b48229fe2a082ddcf89ff" name="aa89c5f57695b48229fe2a082ddcf89ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa89c5f57695b48229fe2a082ddcf89ff">&#9670;&#160;</a></span>TEST() <span class="overload">[15/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa89c5f57695b48229fe2a082ddcf89ff">&#9670;&#160;</a></span>TEST() <span class="overload">[15/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -812,14 +858,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a8a3b4ae5135d291a4373041572c34e36" title="Closes CAN socket - does not depend on VCAN interface.">can_socket_close()</a> when socket_close succeeds. </p>
 <p>Scenario:</p><ul>
 <li>Mocked socket_close is set to return success (0). Expected:</li>
-<li><a class="el" href="mcal_8h.html#a8a3b4ae5135d291a4373041572c34e36" title="Closes CAN socket - does not depend on VCAN interface.">can_socket_close()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000064">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#a8a3b4ae5135d291a4373041572c34e36" title="Closes CAN socket - does not depend on VCAN interface.">can_socket_close()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000074">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a8c4e9fed14f63ce6a739aee29717e6e4" name="a8c4e9fed14f63ce6a739aee29717e6e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c4e9fed14f63ce6a739aee29717e6e4">&#9670;&#160;</a></span>TEST() <span class="overload">[16/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c4e9fed14f63ce6a739aee29717e6e4">&#9670;&#160;</a></span>TEST() <span class="overload">[16/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -847,14 +893,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#aa511100bc20ee63c2c091bc068c62fdf" title="Opens Can socket - does not depend on VCAN interface.">can_socket_open()</a> when socket_create fails. </p>
 <p>Scenario:</p><ul>
 <li>Mocked socket_create is set to return -1 (failure). Expected:</li>
-<li><a class="el" href="mcal_8h.html#aa511100bc20ee63c2c091bc068c62fdf" title="Opens Can socket - does not depend on VCAN interface.">can_socket_open()</a> returns FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000063">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#aa511100bc20ee63c2c091bc068c62fdf" title="Opens Can socket - does not depend on VCAN interface.">can_socket_open()</a> returns FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000073">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a879e206e33e336b649536f217d1062c5" name="a879e206e33e336b649536f217d1062c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a879e206e33e336b649536f217d1062c5">&#9670;&#160;</a></span>TEST() <span class="overload">[17/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a879e206e33e336b649536f217d1062c5">&#9670;&#160;</a></span>TEST() <span class="overload">[17/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -882,14 +928,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#aa511100bc20ee63c2c091bc068c62fdf" title="Opens Can socket - does not depend on VCAN interface.">can_socket_open()</a> when socket_create succeeds. </p>
 <p>Scenario:</p><ul>
 <li>Mocked socket_create is set to return a valid socket (1). Expected:</li>
-<li><a class="el" href="mcal_8h.html#aa511100bc20ee63c2c091bc068c62fdf" title="Opens Can socket - does not depend on VCAN interface.">can_socket_open()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000062">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li><a class="el" href="mcal_8h.html#aa511100bc20ee63c2c091bc068c62fdf" title="Opens Can socket - does not depend on VCAN interface.">can_socket_open()</a> returns SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000072">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a7828d1d4a326b8e037bb3c3d874034a8" name="a7828d1d4a326b8e037bb3c3d874034a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7828d1d4a326b8e037bb3c3d874034a8">&#9670;&#160;</a></span>TEST() <span class="overload">[18/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7828d1d4a326b8e037bb3c3d874034a8">&#9670;&#160;</a></span>TEST() <span class="overload">[18/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -917,14 +963,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a9339d68ae4ff1b918fc5016d541b4670" title="function that open SOCKET CAN.">can_start()</a> when binding the socket fails. </p>
 <p>Scenario:</p><ul>
 <li>can_bind_socket returns 1, simulating a failure in binding the socket. Expected:</li>
-<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000076">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000086">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a81cffae1c940f42419af314ed832a70b" name="a81cffae1c940f42419af314ed832a70b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81cffae1c940f42419af314ed832a70b">&#9670;&#160;</a></span>TEST() <span class="overload">[19/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a81cffae1c940f42419af314ed832a70b">&#9670;&#160;</a></span>TEST() <span class="overload">[19/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -952,14 +998,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a9339d68ae4ff1b918fc5016d541b4670" title="function that open SOCKET CAN.">can_start()</a> when the interface status check fails. </p>
 <p>Scenario:</p><ul>
 <li>can_interface_status returns 1, simulating a failure in the interface status check. Expected:</li>
-<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000075">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000085">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a2102276f7bc2d8b5adce095dc400454a" name="a2102276f7bc2d8b5adce095dc400454a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2102276f7bc2d8b5adce095dc400454a">&#9670;&#160;</a></span>TEST() <span class="overload">[20/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2102276f7bc2d8b5adce095dc400454a">&#9670;&#160;</a></span>TEST() <span class="overload">[20/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -987,14 +1033,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a9339d68ae4ff1b918fc5016d541b4670" title="function that open SOCKET CAN.">can_start()</a> when socket creation fails. </p>
 <p>Scenario:</p><ul>
 <li>can_socket_open returns 1, simulating a failure in socket creation. Expected:</li>
-<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000074">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li>Return FAILURE (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000084">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a7c6aa87f5390ad171c386b29152dc767" name="a7c6aa87f5390ad171c386b29152dc767"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c6aa87f5390ad171c386b29152dc767">&#9670;&#160;</a></span>TEST() <span class="overload">[21/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c6aa87f5390ad171c386b29152dc767">&#9670;&#160;</a></span>TEST() <span class="overload">[21/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1022,14 +1068,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="mcal_8h.html#a9339d68ae4ff1b918fc5016d541b4670" title="function that open SOCKET CAN.">can_start()</a> when all operations are successful. </p>
 <p>Scenario:</p><ul>
 <li>can_socket_open, can_interface_status, and can_bind_socket all return successful values. Expected:</li>
-<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000073">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
+<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000083">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a8beef0846f9d243f474a3d4da7fb0efd" name="a8beef0846f9d243f474a3d4da7fb0efd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8beef0846f9d243f474a3d4da7fb0efd">&#9670;&#160;</a></span>TEST() <span class="overload">[22/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8beef0846f9d243f474a3d4da7fb0efd">&#9670;&#160;</a></span>TEST() <span class="overload">[22/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1062,8 +1108,148 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a2fbf8ffd6de9d3bddfb72906f40d409e" name="a2fbf8ffd6de9d3bddfb72906f40d409e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fbf8ffd6de9d3bddfb72906f40d409e">&#9670;&#160;</a></span>TEST() <span class="overload">[23/40]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">mcal_others&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">log_dtc_fclose_FAIL&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests log_dtc fail at fclose. </p>
+<p>Scenario:</p><ul>
+<li>Fail to close file Expected:</li>
+<li>return a perror ERROR and not generate a file <dl class="req"><dt><b><a class="el" href="req.html#_req000066">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="ab717c6ae2c2d17657215a10fc4d8bb78" name="ab717c6ae2c2d17657215a10fc4d8bb78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab717c6ae2c2d17657215a10fc4d8bb78">&#9670;&#160;</a></span>TEST() <span class="overload">[24/40]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">mcal_others&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">log_dtc_fopen_FAIL&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests log_dtc fail at file_fopen. </p>
+<p>Scenario:</p><ul>
+<li>Fail to open log FILE Expected:</li>
+<li>return a perror ERROR and not generate a file <dl class="req"><dt><b><a class="el" href="req.html#_req000063">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a83a73b0cd26c9dee446ffb3281e60ed8" name="a83a73b0cd26c9dee446ffb3281e60ed8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83a73b0cd26c9dee446ffb3281e60ed8">&#9670;&#160;</a></span>TEST() <span class="overload">[25/40]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">mcal_others&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">log_dtc_fprintf_FAIL&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests log_dtc fail at file_fprintf. </p>
+<p>Scenario:</p><ul>
+<li>Fail to format string Expected:</li>
+<li>return a perror ERROR and not generate a file <dl class="req"><dt><b><a class="el" href="req.html#_req000065">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a9e78817e8066b123941b53a047320796" name="a9e78817e8066b123941b53a047320796"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e78817e8066b123941b53a047320796">&#9670;&#160;</a></span>TEST() <span class="overload">[26/40]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">mcal_others&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">log_dtc_localtime_r_FAIL&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests log_dtc fail at file_localtime_r. </p>
+<p>Scenario:</p><ul>
+<li>Fail to get local time Expected:</li>
+<li>return a perror ERROR and not generate a file <dl class="req"><dt><b><a class="el" href="req.html#_req000064">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
 <a id="a0a375c7d34937fa6125e1ceb265a7c02" name="a0a375c7d34937fa6125e1ceb265a7c02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a375c7d34937fa6125e1ceb265a7c02">&#9670;&#160;</a></span>TEST() <span class="overload">[23/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a375c7d34937fa6125e1ceb265a7c02">&#9670;&#160;</a></span>TEST() <span class="overload">[27/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1088,7 +1274,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests <a class="el" href="mcal_8h.html#a83541205a7800d9dbbee9ff09f4100cc" title="Inicializate the PINs status.">mcal_init()</a> when all pin structures are initialized successfully. </p>
+<p>Tests <a class="el" href="mcal_8h.html#a516cabcc1e5cbe74743a57c8efb1c02f" title="Inicializate the PINs status.">mcal_init()</a> when all pin structures are initialized successfully. </p>
 <p>Scenario:</p><ul>
 <li>Iterates through all I/O pins and sets default values. Expected:</li>
 <li>All pins initialized with status 0 and corresponding pin numbers.</li>
@@ -1098,7 +1284,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a60e0ac62c36db840cb6779ca4ce996ff" name="a60e0ac62c36db840cb6779ca4ce996ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60e0ac62c36db840cb6779ca4ce996ff">&#9670;&#160;</a></span>TEST() <span class="overload">[24/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a60e0ac62c36db840cb6779ca4ce996ff">&#9670;&#160;</a></span>TEST() <span class="overload">[28/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1132,7 +1318,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5a7a53a4c6fd2ead5ed89d33b4457852" name="a5a7a53a4c6fd2ead5ed89d33b4457852"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a7a53a4c6fd2ead5ed89d33b4457852">&#9670;&#160;</a></span>TEST() <span class="overload">[25/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a7a53a4c6fd2ead5ed89d33b4457852">&#9670;&#160;</a></span>TEST() <span class="overload">[29/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1166,7 +1352,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab0242cf806df5753d2200116a2f01696" name="ab0242cf806df5753d2200116a2f01696"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0242cf806df5753d2200116a2f01696">&#9670;&#160;</a></span>TEST() <span class="overload">[26/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0242cf806df5753d2200116a2f01696">&#9670;&#160;</a></span>TEST() <span class="overload">[30/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1200,7 +1386,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af5a63f67333aea3ca54c4b2d2327b9e5" name="af5a63f67333aea3ca54c4b2d2327b9e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5a63f67333aea3ca54c4b2d2327b9e5">&#9670;&#160;</a></span>TEST() <span class="overload">[27/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af5a63f67333aea3ca54c4b2d2327b9e5">&#9670;&#160;</a></span>TEST() <span class="overload">[31/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1234,7 +1420,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a21c9c1b52eff69362522035cc0cf1b03" name="a21c9c1b52eff69362522035cc0cf1b03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21c9c1b52eff69362522035cc0cf1b03">&#9670;&#160;</a></span>TEST() <span class="overload">[28/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a21c9c1b52eff69362522035cc0cf1b03">&#9670;&#160;</a></span>TEST() <span class="overload">[32/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1269,7 +1455,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0653cb69fbccc2e88e54628c30ce554a" name="a0653cb69fbccc2e88e54628c30ce554a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0653cb69fbccc2e88e54628c30ce554a">&#9670;&#160;</a></span>TEST() <span class="overload">[29/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0653cb69fbccc2e88e54628c30ce554a">&#9670;&#160;</a></span>TEST() <span class="overload">[33/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1303,7 +1489,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5c02408bcde44c596d1b88e28f47d3ec" name="a5c02408bcde44c596d1b88e28f47d3ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c02408bcde44c596d1b88e28f47d3ec">&#9670;&#160;</a></span>TEST() <span class="overload">[30/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c02408bcde44c596d1b88e28f47d3ec">&#9670;&#160;</a></span>TEST() <span class="overload">[34/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1337,7 +1523,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aaaa3823c3818c6b4b26c423c69d672ec" name="aaaa3823c3818c6b4b26c423c69d672ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaaa3823c3818c6b4b26c423c69d672ec">&#9670;&#160;</a></span>TEST() <span class="overload">[31/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaa3823c3818c6b4b26c423c69d672ec">&#9670;&#160;</a></span>TEST() <span class="overload">[35/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1371,7 +1557,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab391a56af770ba3302e5fcfc56c464b5" name="ab391a56af770ba3302e5fcfc56c464b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab391a56af770ba3302e5fcfc56c464b5">&#9670;&#160;</a></span>TEST() <span class="overload">[32/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab391a56af770ba3302e5fcfc56c464b5">&#9670;&#160;</a></span>TEST() <span class="overload">[36/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1407,7 +1593,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a2fb6be1ec6ee60fe57ef211ded51e7d6" name="a2fb6be1ec6ee60fe57ef211ded51e7d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fb6be1ec6ee60fe57ef211ded51e7d6">&#9670;&#160;</a></span>TEST() <span class="overload">[33/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fb6be1ec6ee60fe57ef211ded51e7d6">&#9670;&#160;</a></span>TEST() <span class="overload">[37/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1443,7 +1629,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a48536a3eeca01c0736ae30b26dd88bc7" name="a48536a3eeca01c0736ae30b26dd88bc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48536a3eeca01c0736ae30b26dd88bc7">&#9670;&#160;</a></span>TEST() <span class="overload">[34/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a48536a3eeca01c0736ae30b26dd88bc7">&#9670;&#160;</a></span>TEST() <span class="overload">[38/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1477,7 +1663,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="abef7fd160a74d68a8a042bc61241a167" name="abef7fd160a74d68a8a042bc61241a167"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abef7fd160a74d68a8a042bc61241a167">&#9670;&#160;</a></span>TEST() <span class="overload">[35/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abef7fd160a74d68a8a042bc61241a167">&#9670;&#160;</a></span>TEST() <span class="overload">[39/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1511,7 +1697,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af83bebbad56780c463ed4f1e6cd38859" name="af83bebbad56780c463ed4f1e6cd38859"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af83bebbad56780c463ed4f1e6cd38859">&#9670;&#160;</a></span>TEST() <span class="overload">[36/36]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af83bebbad56780c463ed4f1e6cd38859">&#9670;&#160;</a></span>TEST() <span class="overload">[40/40]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1536,10 +1722,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests <a class="el" href="mcal_8h.html#acd0780fe2f6bc6ee131dd88a4026fcb6" title="Show in terminal ERROR Message.">show_error()</a> when displaying an error message. </p>
+<p>Tests <a class="el" href="mcal_8h.html#a7d76c7fa57934a555b76934eec73c224" title="Show in terminal ERROR Message.">show_error()</a> when displaying an error message. </p>
 <p>Scenario:</p><ul>
-<li>A text message is passed to <a class="el" href="mcal_8h.html#acd0780fe2f6bc6ee131dd88a4026fcb6" title="Show in terminal ERROR Message.">show_error()</a>. Expected:</li>
-<li>The function prints the message and does not modify the input result. <dl class="req"><dt><b><a class="el" href="req.html#_req000055">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
+<li>A text message is passed to <a class="el" href="mcal_8h.html#a7d76c7fa57934a555b76934eec73c224" title="Show in terminal ERROR Message.">show_error()</a>. Expected:</li>
+<li>The function prints the message and does not modify the input result. <dl class="req"><dt><b><a class="el" href="req.html#_req000062">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
 </li>
 </ul>
 
@@ -1597,11 +1783,6 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets up mock return values before each test in the mcal_can suite. </p>
-<p>Scenario:</p><ul>
-<li>Before each test in the mcal_can suite, the mock return values are set to default (0). Expected: </li>
-</ul>
-
 </div>
 </div>
 <a id="a9c1ca48ecea21fc8090d2756400bae10" name="a9c1ca48ecea21fc8090d2756400bae10"></a>
@@ -1638,12 +1819,6 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Resets mock return values after each test in the mcal_can suite. </p>
-<p>Expected:</p><ul>
-<li>Mock return values are set to default (0) to ensure no side effects between tests. <dl class="req"><dt><b><a class="el" href="req.html#_req000056">Requirement:</a></b></dt><dd>SysHLR_9 </dd></dl>
-</li>
-</ul>
-
 </div>
 </div>
 <a id="a9f24fa2d74d968790b274c09035beaca" name="a9f24fa2d74d968790b274c09035beaca"></a>
@@ -1665,6 +1840,94 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a6d54246b24a83c84cdf61fd95c6d9319" name="a6d54246b24a83c84cdf61fd95c6d9319"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d54246b24a83c84cdf61fd95c6d9319">&#9670;&#160;</a></span>count_file</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int count_file</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a01512c64ec5c0c75226e3dfe3cd68070" name="a01512c64ec5c0c75226e3dfe3cd68070"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01512c64ec5c0c75226e3dfe3cd68070">&#9670;&#160;</a></span>count_file_close</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int count_file_close</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8b5c39a8a5555a4396969e7ec560c376" name="a8b5c39a8a5555a4396969e7ec560c376"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b5c39a8a5555a4396969e7ec560c376">&#9670;&#160;</a></span>count_fprintf</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int count_fprintf</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8e88f9690fcefe56816c3764e10547ff" name="a8e88f9690fcefe56816c3764e10547ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e88f9690fcefe56816c3764e10547ff">&#9670;&#160;</a></span>count_localtime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int count_localtime</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a8da6d6b33b7597f02434fedca1781cbc" name="a8da6d6b33b7597f02434fedca1781cbc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8da6d6b33b7597f02434fedca1781cbc">&#9670;&#160;</a></span>Counter</h2>
 
@@ -1676,6 +1939,270 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">int Counter</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5a12a321b51ce547d6d971076d6212e2" name="a5a12a321b51ce547d6d971076d6212e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a12a321b51ce547d6d971076d6212e2">&#9670;&#160;</a></span>flag_fail_FILE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_fail_FILE</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abc074c19404b6d4566041e50b987cefa" name="abc074c19404b6d4566041e50b987cefa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc074c19404b6d4566041e50b987cefa">&#9670;&#160;</a></span>flag_fail_FILE_close</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_fail_FILE_close</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afc6d8fd4508523096823ee2d1d77768c" name="afc6d8fd4508523096823ee2d1d77768c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc6d8fd4508523096823ee2d1d77768c">&#9670;&#160;</a></span>flag_fail_fprintf</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_fail_fprintf</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a50686be605e74a16c8535272484756b0" name="a50686be605e74a16c8535272484756b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50686be605e74a16c8535272484756b0">&#9670;&#160;</a></span>flag_fail_get_pin</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_fail_get_pin</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8607e34214c46b7e53d5664745e003eb" name="a8607e34214c46b7e53d5664745e003eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8607e34214c46b7e53d5664745e003eb">&#9670;&#160;</a></span>flag_fail_localtime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_fail_localtime</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3e900cda1f82f209e8ea2fd76d3c3ed6" name="a3e900cda1f82f209e8ea2fd76d3c3ed6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e900cda1f82f209e8ea2fd76d3c3ed6">&#9670;&#160;</a></span>flag_fail_set_pin</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_fail_set_pin</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6c41be98f190eb55fb519e160a868dc5" name="a6c41be98f190eb55fb519e160a868dc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c41be98f190eb55fb519e160a868dc5">&#9670;&#160;</a></span>flag_send_ecu</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_send_ecu</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a26c63031b3b528dab9285d4b0bc796ca" name="a26c63031b3b528dab9285d4b0bc796ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26c63031b3b528dab9285d4b0bc796ca">&#9670;&#160;</a></span>flag_send_ecu_count</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_send_ecu_count</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6b170ce30905833445232f7ad3eba1df" name="a6b170ce30905833445232f7ad3eba1df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b170ce30905833445232f7ad3eba1df">&#9670;&#160;</a></span>mock_can_ioctl_return</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mock_can_ioctl_return</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a374ccb8f2b18daeb9b01773f19249259" name="a374ccb8f2b18daeb9b01773f19249259"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a374ccb8f2b18daeb9b01773f19249259">&#9670;&#160;</a></span>mock_can_open_return</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mock_can_open_return</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a75342df41f827c6daa390c199284c194" name="a75342df41f827c6daa390c199284c194"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75342df41f827c6daa390c199284c194">&#9670;&#160;</a></span>mock_can_read_return</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mock_can_read_return</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5476e9a27846f3daaf3357e8133ec88b" name="a5476e9a27846f3daaf3357e8133ec88b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5476e9a27846f3daaf3357e8133ec88b">&#9670;&#160;</a></span>mock_can_write_return</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mock_can_write_return</td>
         </tr>
       </table>
   </td>

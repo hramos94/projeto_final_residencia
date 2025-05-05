@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
-            <td class="headerCovTableEntry">9</td>
-            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntry">12</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-05-02 10:32:38</td>
+            <td class="headerValue">2025-05-05 20:12:19</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -50,8 +50,8 @@
             <td></td>
             <td class="headerItem">Branches:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
-            <td class="headerCovTableEntry">4</td>
-            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
           </tr>
           <tr>
             <td></td>
@@ -59,8 +59,8 @@
             <td></td>
             <td class="headerItem">MC/DC:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
-            <td class="headerCovTableEntry">4</td>
-            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
           </tr>
                   <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
                 </table>
@@ -80,30 +80,39 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>                 :              :             : #include &lt;ecu.h&gt;</span>
 <span id="L2"><span class="lineNum">       2</span>                 :              :             : #include &lt;mcal.h&gt;</span>
-<span id="L3"><span class="lineNum">       3</span>                 :              :             : #include &lt;unistd.h&gt;</span>
-<span id="L4"><span class="lineNum">       4</span>                 :              :             : </span>
-<span id="L5"><span class="lineNum">       5</span>                 :              :             : /**</span>
-<span id="L6"><span class="lineNum">       6</span>                 :              :             :  *  @brief function get by console the status and number of the PIN set it.</span>
-<span id="L7"><span class="lineNum">       7</span>                 :              :             :  *  @return SUCCESS(0), FAIL(1)</span>
-<span id="L8"><span class="lineNum">       8</span>                 :              :             :  */</span>
-<span id="L9"><span class="lineNum">       9</span>                 :              :             : </span>
-<span id="L10"><span class="lineNum">      10</span>                 :              :<span class="tlaGNC">           9 : uint8_t read_console()</span></span>
-<span id="L11"><span class="lineNum">      11</span>                 :              :             : {</span>
-<span id="L12"><span class="lineNum">      12</span>                 :              :<span class="tlaGNC">           9 :     uint8_t pin = 0, status = 0;</span></span>
-<span id="L13"><span class="lineNum">      13</span>         [<span class="tlaGBC" title="Branch 0 was taken 1 time"> + </span><span class="tlaGBC" title="Branch 1 was taken 5 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">           9 :     if (read_pint_status(&amp;pin, &amp;status) == FAIL)</span></span>
-<span id="L14"><span class="lineNum">      14</span>                 :              :             :     {</span>
-<span id="L15"><span class="lineNum">      15</span>                 :              :<span class="tlaGNC">           1 :         show_error(&quot;read_pin_status FAIL\n&quot;);</span></span>
-<span id="L16"><span class="lineNum">      16</span>                 :              :<span class="tlaGNC">           1 :         return FAIL;</span></span>
-<span id="L17"><span class="lineNum">      17</span>                 :              :             :     }</span>
-<span id="L18"><span class="lineNum">      18</span>                 :              :             : </span>
-<span id="L19"><span class="lineNum">      19</span>         [<span class="tlaGBC" title="Branch 0 was taken 2 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 3 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">           5 :     if (set_pin_status(status, pin) == FAIL)</span></span>
+<span id="L3"><span class="lineNum">       3</span>                 :              :             : #include &lt;sys/types.h&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>                 :              :             : #include &lt;unistd.h&gt;</span>
+<span id="L5"><span class="lineNum">       5</span>                 :              :             : </span>
+<span id="L6"><span class="lineNum">       6</span>                 :              :             : #include &quot;dtc_codes_bsw.h&quot;</span>
+<span id="L7"><span class="lineNum">       7</span>                 :              :             : #include &quot;dtc_logger.h&quot;</span>
+<span id="L8"><span class="lineNum">       8</span>                 :              :             : </span>
+<span id="L9"><span class="lineNum">       9</span>                 :              :             : /**</span>
+<span id="L10"><span class="lineNum">      10</span>                 :              :             :  *  @brief function get by console the status and number of the PIN set it.</span>
+<span id="L11"><span class="lineNum">      11</span>                 :              :             :  *  @return SUCCESS(0), FAIL(1)</span>
+<span id="L12"><span class="lineNum">      12</span>                 :              :             :  */</span>
+<span id="L13"><span class="lineNum">      13</span>                 :              :             : </span>
+<span id="L14"><span class="lineNum">      14</span>                 :              :<span class="tlaGNC">          11 : uint8_t read_console(void)</span></span>
+<span id="L15"><span class="lineNum">      15</span>                 :              :             : {</span>
+<span id="L16"><span class="lineNum">      16</span>                 :              :<span class="tlaGNC">          11 :     uint8_t pin = 0;</span></span>
+<span id="L17"><span class="lineNum">      17</span>                 :              :<span class="tlaGNC">          11 :     uint8_t status = 0;</span></span>
+<span id="L18"><span class="lineNum">      18</span>                 :              :<span class="tlaGNC">          11 :     uint8_t ret = SUCCESS;</span></span>
+<span id="L19"><span class="lineNum">      19</span>         [<span class="tlaGBC" title="Branch 0 was taken 1 time"> + </span><span class="tlaGBC" title="Branch 1 was taken 6 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">          11 :     if (read_pint_status(&amp;pin, &amp;status) == FAIL)</span></span>
 <span id="L20"><span class="lineNum">      20</span>                 :              :             :     {</span>
-<span id="L21"><span class="lineNum">      21</span>                 :              :<span class="tlaGNC">           2 :         show_error(&quot;read_console.set_pin_status FAIL\n&quot;);</span></span>
-<span id="L22"><span class="lineNum">      22</span>                 :              :<span class="tlaGNC">           2 :         return FAIL;</span></span>
+<span id="L21"><span class="lineNum">      21</span>                 :              :<span class="tlaGNC">           1 :         REPORT_ERROR(&quot;read_pin_status FAIL\n&quot;, DTC_READ_PIN_FAIL);</span></span>
+<span id="L22"><span class="lineNum">      22</span>                 :              :<span class="tlaGNC">           1 :         ret = FAIL;</span></span>
 <span id="L23"><span class="lineNum">      23</span>                 :              :             :     }</span>
 <span id="L24"><span class="lineNum">      24</span>                 :              :             : </span>
-<span id="L25"><span class="lineNum">      25</span>                 :              :<span class="tlaGNC">           3 :     return SUCCESS;</span></span>
-<span id="L26"><span class="lineNum">      26</span>                 :              :             : }</span>
+<span id="L25"><span class="lineNum">      25</span>         [<span class="tlaGBC" title="Branch 0 was taken 6 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 1 time"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">           7 :     if (ret == SUCCESS)</span></span>
+<span id="L26"><span class="lineNum">      26</span>                 :              :             :     {</span>
+<span id="L27"><span class="lineNum">      27</span>         [<span class="tlaGBC" title="Branch 0 was taken 3 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 3 times"> + </span>]:      [<span class="tlaGBC" title="True sense of expression &quot;0&quot; was sensitized"> T </span><span class="tlaGBC" title="False sense of expression &quot;0&quot; was sensitized"> F </span>]:<span class="tlaGNC">           6 :         if (set_pin_status(status, pin) == FAIL)</span></span>
+<span id="L28"><span class="lineNum">      28</span>                 :              :             :         {</span>
+<span id="L29"><span class="lineNum">      29</span>                 :              :<span class="tlaGNC">           3 :             REPORT_ERROR(&quot;read_console.set_pin_status FAIL\n&quot;, DTC_READ_CONSOLE_FAIL);</span></span>
+<span id="L30"><span class="lineNum">      30</span>                 :              :<span class="tlaGNC">           3 :             ret = FAIL;</span></span>
+<span id="L31"><span class="lineNum">      31</span>                 :              :             :         }</span>
+<span id="L32"><span class="lineNum">      32</span>                 :              :             :     }</span>
+<span id="L33"><span class="lineNum">      33</span>                 :              :             : </span>
+<span id="L34"><span class="lineNum">      34</span>                 :              :<span class="tlaGNC">           7 :     return ret;</span></span>
+<span id="L35"><span class="lineNum">      35</span>                 :              :             : }</span>
         </pre>
               </td>
             </tr>

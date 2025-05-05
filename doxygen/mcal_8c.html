@@ -94,51 +94,55 @@ $(function() {
 <code>#include &lt;sys/socket.h&gt;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for mcal.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="mcal_8c__incl.png" border="0" usemap="#absw_2src_2mcal_8c" alt=""/></div>
 <map name="absw_2src_2mcal_8c" id="absw_2src_2mcal_8c">
-<area shape="rect" title=" " alt="" coords="446,5,565,31"/>
-<area shape="rect" href="can__utils_8h.html" title=" " alt="" coords="223,79,315,104"/>
-<area shape="poly" title=" " alt="" coords="468,33,321,77,320,72,467,28"/>
-<area shape="rect" href="mcal_8h.html" title=" " alt="" coords="157,152,224,177"/>
-<area shape="poly" title=" " alt="" coords="446,27,382,34,313,45,253,60,230,70,214,81,204,93,198,108,193,138,188,138,193,106,200,90,210,77,227,65,251,55,312,40,381,28,445,21"/>
+<area shape="rect" title=" " alt="" coords="511,5,630,31"/>
+<area shape="rect" href="can__utils_8h.html" title=" " alt="" coords="305,79,397,104"/>
+<area shape="poly" title=" " alt="" coords="536,33,400,77,398,72,535,28"/>
+<area shape="rect" href="mcal_8h.html" title=" " alt="" coords="203,152,269,177"/>
+<area shape="poly" title=" " alt="" coords="511,22,424,25,324,34,235,51,202,64,181,80,175,95,180,111,193,127,209,141,205,145,189,130,176,113,170,95,177,77,200,60,234,46,323,28,423,20,511,17"/>
 <area shape="rect" title=" " alt="" coords="5,225,99,251"/>
-<area shape="poly" title=" " alt="" coords="446,25,211,45,103,61,66,71,47,81,38,95,32,111,29,146,35,181,44,211,39,213,30,183,24,146,27,110,33,92,44,77,64,66,102,56,211,40,445,20"/>
-<area shape="rect" title=" " alt="" coords="264,225,384,251"/>
-<area shape="poly" title=" " alt="" coords="498,33,344,216,340,213,494,29"/>
-<area shape="rect" title=" " alt="" coords="419,225,490,251"/>
-<area shape="poly" title=" " alt="" coords="505,32,463,212,458,211,500,30"/>
-<area shape="rect" title=" " alt="" coords="254,152,357,177"/>
-<area shape="poly" title=" " alt="" coords="476,33,432,53,387,81,353,111,325,143,321,139,349,108,384,77,430,48,474,28"/>
-<area shape="rect" href="dio__utils_8h.html" title=" " alt="" coords="58,79,147,104"/>
-<area shape="poly" title=" " alt="" coords="446,32,167,81,161,82,160,77,166,76,446,27"/>
-<area shape="rect" href="ecu_8h.html" title=" " alt="" coords="493,152,550,177"/>
-<area shape="poly" title=" " alt="" coords="509,31,521,138,516,139,504,31"/>
-<area shape="rect" title=" " alt="" coords="543,79,609,104"/>
-<area shape="poly" title=" " alt="" coords="519,29,557,67,553,71,515,33"/>
-<area shape="rect" title=" " alt="" coords="633,79,700,104"/>
-<area shape="poly" title=" " alt="" coords="532,28,629,71,627,75,530,33"/>
-<area shape="rect" title=" " alt="" coords="725,79,795,104"/>
-<area shape="poly" title=" " alt="" coords="547,28,712,74,710,79,546,33"/>
-<area shape="rect" title=" " alt="" coords="819,79,890,104"/>
-<area shape="poly" title=" " alt="" coords="566,28,806,76,805,81,565,33"/>
-<area shape="rect" title=" " alt="" coords="915,79,1003,104"/>
-<area shape="poly" title=" " alt="" coords="565,25,714,46,901,76,900,81,713,51,564,30"/>
-<area shape="rect" title=" " alt="" coords="1027,79,1123,104"/>
-<area shape="poly" title=" " alt="" coords="565,22,760,43,1013,76,1013,81,760,48,564,28"/>
-<area shape="rect" title=" " alt="" coords="1147,79,1221,104"/>
-<area shape="poly" title=" " alt="" coords="565,20,809,37,969,54,1133,76,1132,81,968,59,809,43,565,25"/>
-<area shape="poly" title=" " alt="" coords="258,106,215,145,212,141,255,102"/>
-<area shape="poly" title=" " alt="" coords="278,103,296,138,291,141,273,106"/>
-<area shape="poly" title=" " alt="" coords="170,180,88,221,86,217,167,175"/>
-<area shape="poly" title=" " alt="" coords="213,175,291,216,289,221,211,180"/>
-<area shape="rect" title=" " alt="" coords="149,225,233,251"/>
-<area shape="poly" title=" " alt="" coords="193,178,193,212,188,212,188,178"/>
-<area shape="poly" title=" " alt="" coords="225,172,407,221,405,226,223,178"/>
-<area shape="poly" title=" " alt="" coords="118,102,167,141,164,145,115,106"/>
-<area shape="poly" title=" " alt="" coords="512,179,477,217,473,213,508,176"/>
+<area shape="poly" title=" " alt="" coords="511,24,420,30,315,40,218,57,180,68,152,81,120,110,94,145,75,182,62,213,57,211,70,180,89,143,116,106,149,76,178,63,217,52,314,35,420,25,511,19"/>
+<area shape="rect" title=" " alt="" coords="123,225,243,251"/>
+<area shape="poly" title=" " alt="" coords="511,22,421,24,318,33,270,40,227,51,192,64,170,80,161,95,155,111,154,147,162,182,173,212,168,214,157,183,149,147,150,110,156,93,166,77,190,59,225,46,269,35,318,28,421,19,511,16"/>
+<area shape="rect" title=" " alt="" coords="413,225,483,251"/>
+<area shape="poly" title=" " alt="" coords="566,32,464,214,459,212,562,30"/>
+<area shape="rect" title=" " alt="" coords="345,152,447,177"/>
+<area shape="poly" title=" " alt="" coords="546,33,508,53,468,81,438,111,414,142,409,139,434,108,465,77,505,49,544,28"/>
+<area shape="rect" href="dio__utils_8h.html" title=" " alt="" coords="191,79,281,104"/>
+<area shape="poly" title=" " alt="" coords="517,33,295,80,294,75,516,28"/>
+<area shape="rect" href="ecu_8h.html" title=" " alt="" coords="523,152,581,177"/>
+<area shape="poly" title=" " alt="" coords="571,31,564,79,557,139,552,138,559,78,566,30"/>
+<area shape="rect" title=" " alt="" coords="573,79,640,104"/>
+<area shape="poly" title=" " alt="" coords="579,30,597,65,592,68,574,32"/>
+<area shape="rect" title=" " alt="" coords="664,79,731,104"/>
+<area shape="poly" title=" " alt="" coords="592,28,666,69,663,74,590,33"/>
+<area shape="rect" title=" " alt="" coords="755,79,826,104"/>
+<area shape="poly" title=" " alt="" coords="607,28,743,72,742,77,605,33"/>
+<area shape="rect" title=" " alt="" coords="850,79,921,104"/>
+<area shape="poly" title=" " alt="" coords="624,28,837,76,836,81,623,33"/>
+<area shape="rect" title=" " alt="" coords="945,79,1033,104"/>
+<area shape="poly" title=" " alt="" coords="631,26,932,76,931,81,630,31"/>
+<area shape="rect" title=" " alt="" coords="1057,79,1153,104"/>
+<area shape="poly" title=" " alt="" coords="630,23,811,44,1044,76,1043,81,811,49,630,28"/>
+<area shape="rect" title=" " alt="" coords="1177,79,1252,104"/>
+<area shape="poly" title=" " alt="" coords="630,20,860,38,1010,54,1164,76,1163,81,1009,60,860,44,630,25"/>
+<area shape="rect" title=" " alt="" coords="1276,79,1340,104"/>
+<area shape="poly" title=" " alt="" coords="631,18,901,34,1079,51,1263,76,1262,81,1079,56,900,39,630,24"/>
+<area shape="poly" title=" " alt="" coords="334,106,268,147,265,142,331,102"/>
+<area shape="poly" title=" " alt="" coords="360,103,384,139,379,142,356,106"/>
+<area shape="poly" title=" " alt="" coords="207,180,96,223,94,218,205,175"/>
+<area shape="poly" title=" " alt="" coords="229,179,202,216,197,213,225,176"/>
+<area shape="rect" title=" " alt="" coords="267,225,351,251"/>
+<area shape="poly" title=" " alt="" coords="250,176,289,214,286,218,246,180"/>
+<area shape="poly" title=" " alt="" coords="270,175,402,218,400,224,269,180"/>
+<area shape="poly" title=" " alt="" coords="239,104,239,138,233,138,233,104"/>
+<area shape="poly" title=" " alt="" coords="249,102,286,137,335,175,410,217,408,222,332,180,282,141,245,106"/>
+<area shape="poly" title=" " alt="" coords="537,180,478,219,475,215,534,175"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -147,15 +151,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a326615062cd1b0298e583f9e1521c8bd" id="r_a326615062cd1b0298e583f9e1521c8bd"><td class="memItemLeft" align="right" valign="top">pthread_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a326615062cd1b0298e583f9e1521c8bd">new_thread</a> (void *func)</td></tr>
 <tr class="memdesc:a326615062cd1b0298e583f9e1521c8bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new thread in posix.  <br /></td></tr>
 <tr class="separator:a326615062cd1b0298e583f9e1521c8bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd0780fe2f6bc6ee131dd88a4026fcb6" id="r_acd0780fe2f6bc6ee131dd88a4026fcb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#acd0780fe2f6bc6ee131dd88a4026fcb6">show_error</a> (char errorStr[])</td></tr>
-<tr class="memdesc:acd0780fe2f6bc6ee131dd88a4026fcb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show in terminal ERROR Message.  <br /></td></tr>
-<tr class="separator:acd0780fe2f6bc6ee131dd88a4026fcb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d76c7fa57934a555b76934eec73c224" id="r_a7d76c7fa57934a555b76934eec73c224"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a7d76c7fa57934a555b76934eec73c224">show_error</a> (const char errorStr[])</td></tr>
+<tr class="memdesc:a7d76c7fa57934a555b76934eec73c224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show in terminal ERROR Message.  <br /></td></tr>
+<tr class="separator:a7d76c7fa57934a555b76934eec73c224"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6470a2809bd1a1de0e6a3460bd12325c" id="r_a6470a2809bd1a1de0e6a3460bd12325c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a6470a2809bd1a1de0e6a3460bd12325c">read_pint_status</a> (uint8_t *p_pin, uint8_t *p_status)</td></tr>
 <tr class="memdesc:a6470a2809bd1a1de0e6a3460bd12325c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the status of PIN by terminal.  <br /></td></tr>
 <tr class="separator:a6470a2809bd1a1de0e6a3460bd12325c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83541205a7800d9dbbee9ff09f4100cc" id="r_a83541205a7800d9dbbee9ff09f4100cc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a83541205a7800d9dbbee9ff09f4100cc">mcal_init</a> ()</td></tr>
-<tr class="memdesc:a83541205a7800d9dbbee9ff09f4100cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializate the PINs status.  <br /></td></tr>
-<tr class="separator:a83541205a7800d9dbbee9ff09f4100cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a516cabcc1e5cbe74743a57c8efb1c02f" id="r_a516cabcc1e5cbe74743a57c8efb1c02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a516cabcc1e5cbe74743a57c8efb1c02f">mcal_init</a> (void)</td></tr>
+<tr class="memdesc:a516cabcc1e5cbe74743a57c8efb1c02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializate the PINs status.  <br /></td></tr>
+<tr class="separator:a516cabcc1e5cbe74743a57c8efb1c02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af38ca82cc10f5d93b4f1a51876500cb5" id="r_af38ca82cc10f5d93b4f1a51876500cb5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#af38ca82cc10f5d93b4f1a51876500cb5">read_pin_status</a> (uint8_t *status, uint8_t pin)</td></tr>
 <tr class="memdesc:af38ca82cc10f5d93b4f1a51876500cb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the status of desired PIN number.  <br /></td></tr>
 <tr class="separator:af38ca82cc10f5d93b4f1a51876500cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,10 +175,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a8a3b4ae5135d291a4373041572c34e36" id="r_a8a3b4ae5135d291a4373041572c34e36"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a8a3b4ae5135d291a4373041572c34e36">can_socket_close</a> (int *can_socket)</td></tr>
 <tr class="memdesc:a8a3b4ae5135d291a4373041572c34e36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes CAN socket - does not depend on VCAN interface.  <br /></td></tr>
 <tr class="separator:a8a3b4ae5135d291a4373041572c34e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7197354c57154dabaceef1004cad9d2" id="r_ab7197354c57154dabaceef1004cad9d2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#ab7197354c57154dabaceef1004cad9d2">can_interface_status</a> (int *can_socket, const char *<a class="el" href="mcal_8c.html#a4dcae56eb6645becdd38c6a852ba7055">interface</a>)</td></tr>
+<tr class="memitem:ab7197354c57154dabaceef1004cad9d2" id="r_ab7197354c57154dabaceef1004cad9d2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#ab7197354c57154dabaceef1004cad9d2">can_interface_status</a> (int *can_socket, const char *<a class="el" href="mcal_8h.html#a4dcae56eb6645becdd38c6a852ba7055">interface</a>)</td></tr>
 <tr class="memdesc:ab7197354c57154dabaceef1004cad9d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to verify if can interface is UP or DOWN.  <br /></td></tr>
 <tr class="separator:ab7197354c57154dabaceef1004cad9d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8e172a897e7dff7a9e1245034d8038b" id="r_ab8e172a897e7dff7a9e1245034d8038b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#ab8e172a897e7dff7a9e1245034d8038b">can_bind_socket</a> (int *can_socket, const char *<a class="el" href="mcal_8c.html#a4dcae56eb6645becdd38c6a852ba7055">interface</a>)</td></tr>
+<tr class="memitem:ab8e172a897e7dff7a9e1245034d8038b" id="r_ab8e172a897e7dff7a9e1245034d8038b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#ab8e172a897e7dff7a9e1245034d8038b">can_bind_socket</a> (int *can_socket, const char *<a class="el" href="mcal_8h.html#a4dcae56eb6645becdd38c6a852ba7055">interface</a>)</td></tr>
 <tr class="memdesc:ab8e172a897e7dff7a9e1245034d8038b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Armed with the interface index, we can now bind the socket to the CAN Interface:  <br /></td></tr>
 <tr class="separator:ab8e172a897e7dff7a9e1245034d8038b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69a9db79ed459a360b1d63b451f8fb06" id="r_a69a9db79ed459a360b1d63b451f8fb06"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a69a9db79ed459a360b1d63b451f8fb06">can_send</a> (int *can_socket, struct <a class="el" href="structcan__frame.html">can_frame</a> *frame)</td></tr>
@@ -183,7 +187,7 @@ Functions</h2></td></tr>
 <tr class="memitem:afb57e6c3b6ff8856739bbad40ae86526" id="r_afb57e6c3b6ff8856739bbad40ae86526"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#afb57e6c3b6ff8856739bbad40ae86526">can_read</a> (int *can_socket, struct <a class="el" href="structcan__frame.html">can_frame</a> *frame)</td></tr>
 <tr class="memdesc:afb57e6c3b6ff8856739bbad40ae86526"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to read frames on CAN - this will block execution until a frame is received.  <br /></td></tr>
 <tr class="separator:afb57e6c3b6ff8856739bbad40ae86526"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9339d68ae4ff1b918fc5016d541b4670" id="r_a9339d68ae4ff1b918fc5016d541b4670"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a9339d68ae4ff1b918fc5016d541b4670">can_start</a> (int *<a class="el" href="mcal_8c.html#abaa434c3920d7645e4118a51292df9b6">my_vcan</a>, const char *<a class="el" href="mcal_8c.html#a4dcae56eb6645becdd38c6a852ba7055">interface</a>)</td></tr>
+<tr class="memitem:a9339d68ae4ff1b918fc5016d541b4670" id="r_a9339d68ae4ff1b918fc5016d541b4670"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a9339d68ae4ff1b918fc5016d541b4670">can_start</a> (int *<a class="el" href="mcal_8h.html#abaa434c3920d7645e4118a51292df9b6">my_vcan</a>, const char *<a class="el" href="mcal_8h.html#a4dcae56eb6645becdd38c6a852ba7055">interface</a>)</td></tr>
 <tr class="memdesc:a9339d68ae4ff1b918fc5016d541b4670"><td class="mdescLeft">&#160;</td><td class="mdescRight">function that open SOCKET CAN.  <br /></td></tr>
 <tr class="separator:a9339d68ae4ff1b918fc5016d541b4670"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a629367622920865f61d37b81915381d7" id="r_a629367622920865f61d37b81915381d7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a629367622920865f61d37b81915381d7">can_send_vcan0</a> (struct <a class="el" href="structcan__frame.html">can_frame</a> *frame)</td></tr>
@@ -192,15 +196,17 @@ Functions</h2></td></tr>
 <tr class="memitem:a558bb78b1bfb28f6f1c0cfbc6e56ef3e" id="r_a558bb78b1bfb28f6f1c0cfbc6e56ef3e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a558bb78b1bfb28f6f1c0cfbc6e56ef3e">can_read_vcan0</a> (struct <a class="el" href="structcan__frame.html">can_frame</a> *frame)</td></tr>
 <tr class="memdesc:a558bb78b1bfb28f6f1c0cfbc6e56ef3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">function that will read frame can coming from vcan0 of LINUX  <br /></td></tr>
 <tr class="separator:a558bb78b1bfb28f6f1c0cfbc6e56ef3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ae806ae19d1ad827c350b67ff4b9bc5" id="r_a5ae806ae19d1ad827c350b67ff4b9bc5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a5ae806ae19d1ad827c350b67ff4b9bc5">can_init</a> ()</td></tr>
-<tr class="memdesc:a5ae806ae19d1ad827c350b67ff4b9bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">function that initialize Socket CAN Linux.  <br /></td></tr>
-<tr class="separator:a5ae806ae19d1ad827c350b67ff4b9bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a8f1bfa8a7c26030431edc93574789d" id="r_a3a8f1bfa8a7c26030431edc93574789d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a3a8f1bfa8a7c26030431edc93574789d">can_close</a> ()</td></tr>
-<tr class="memdesc:a3a8f1bfa8a7c26030431edc93574789d"><td class="mdescLeft">&#160;</td><td class="mdescRight">function that close Socket CAN Linux.  <br /></td></tr>
-<tr class="separator:a3a8f1bfa8a7c26030431edc93574789d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3dc09877158f541e57273fa708abc7f" id="r_ac3dc09877158f541e57273fa708abc7f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#ac3dc09877158f541e57273fa708abc7f">show_log</a> (char logStr[])</td></tr>
-<tr class="memdesc:ac3dc09877158f541e57273fa708abc7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show in terminal LOG Message.  <br /></td></tr>
-<tr class="separator:ac3dc09877158f541e57273fa708abc7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae6e8d6e086ce592ecec1c2de2466f58" id="r_aae6e8d6e086ce592ecec1c2de2466f58"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#aae6e8d6e086ce592ecec1c2de2466f58">can_init</a> (void)</td></tr>
+<tr class="memdesc:aae6e8d6e086ce592ecec1c2de2466f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">function that initialize Socket CAN Linux.  <br /></td></tr>
+<tr class="separator:aae6e8d6e086ce592ecec1c2de2466f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63c26f7e10830fd4e632bf50ed516c96" id="r_a63c26f7e10830fd4e632bf50ed516c96"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a63c26f7e10830fd4e632bf50ed516c96">can_close</a> (void)</td></tr>
+<tr class="memdesc:a63c26f7e10830fd4e632bf50ed516c96"><td class="mdescLeft">&#160;</td><td class="mdescRight">function that close Socket CAN Linux.  <br /></td></tr>
+<tr class="separator:a63c26f7e10830fd4e632bf50ed516c96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae490b9d7ce7c209b7e114fa4a245565f" id="r_ae490b9d7ce7c209b7e114fa4a245565f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#ae490b9d7ce7c209b7e114fa4a245565f">show_log</a> (const char logStr[])</td></tr>
+<tr class="memdesc:ae490b9d7ce7c209b7e114fa4a245565f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show in terminal LOG Message.  <br /></td></tr>
+<tr class="separator:ae490b9d7ce7c209b7e114fa4a245565f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6082e32ac3a6bb7b224629c968d1a72b" id="r_a6082e32ac3a6bb7b224629c968d1a72b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mcal_8c.html#a6082e32ac3a6bb7b224629c968d1a72b">get_time</a> (struct timespec *time)</td></tr>
+<tr class="separator:a6082e32ac3a6bb7b224629c968d1a72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -247,16 +253,15 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000029">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000026">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
 
 </div>
 </div>
-<a id="a3a8f1bfa8a7c26030431edc93574789d" name="a3a8f1bfa8a7c26030431edc93574789d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a8f1bfa8a7c26030431edc93574789d">&#9670;&#160;</a></span>can_close()</h2>
+<a id="a63c26f7e10830fd4e632bf50ed516c96" name="a63c26f7e10830fd4e632bf50ed516c96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63c26f7e10830fd4e632bf50ed516c96">&#9670;&#160;</a></span>can_close()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -264,6 +269,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">uint8_t can_close </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -272,16 +278,15 @@ Variables</h2></td></tr>
 
 <p>function that close Socket CAN Linux. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000036">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000033">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
 
 </div>
 </div>
-<a id="a5ae806ae19d1ad827c350b67ff4b9bc5" name="a5ae806ae19d1ad827c350b67ff4b9bc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ae806ae19d1ad827c350b67ff4b9bc5">&#9670;&#160;</a></span>can_init()</h2>
+<a id="aae6e8d6e086ce592ecec1c2de2466f58" name="aae6e8d6e086ce592ecec1c2de2466f58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae6e8d6e086ce592ecec1c2de2466f58">&#9670;&#160;</a></span>can_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -289,6 +294,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">uint8_t can_init </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -297,8 +303,7 @@ Variables</h2></td></tr>
 
 <p>function that initialize Socket CAN Linux. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000035">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000032">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
@@ -340,8 +345,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000028">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000025">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
@@ -383,8 +387,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000031">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000028">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
@@ -415,8 +418,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000034">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000031">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
@@ -458,8 +460,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000030">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000027">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
@@ -490,8 +491,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000033">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000030">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
@@ -522,8 +522,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000027">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000024">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
@@ -554,8 +553,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000026">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000023">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
@@ -597,11 +595,28 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000032">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000029">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
+
+</div>
+</div>
+<a id="a6082e32ac3a6bb7b224629c968d1a72b" name="a6082e32ac3a6bb7b224629c968d1a72b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6082e32ac3a6bb7b224629c968d1a72b">&#9670;&#160;</a></span>get_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void get_time </td>
+          <td>(</td>
+          <td class="paramtype">struct timespec *&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -631,15 +646,16 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a83541205a7800d9dbbee9ff09f4100cc" name="a83541205a7800d9dbbee9ff09f4100cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83541205a7800d9dbbee9ff09f4100cc">&#9670;&#160;</a></span>mcal_init()</h2>
+<a id="a516cabcc1e5cbe74743a57c8efb1c02f" name="a516cabcc1e5cbe74743a57c8efb1c02f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a516cabcc1e5cbe74743a57c8efb1c02f">&#9670;&#160;</a></span>mcal_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t mcal_init </td>
+          <td class="memname">void mcal_init </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -647,7 +663,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Inicializate the PINs status. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
@@ -713,7 +729,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000024">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_13">SwHLR_F_13</a> </dd></dl>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000021">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_13">SwHLR_F_13</a> </dd></dl>
 
 </div>
 </div>
@@ -752,7 +768,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000023">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_13">SwHLR_F_13</a> </dd></dl>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000020">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_13">SwHLR_F_13</a> </dd></dl>
 
 </div>
 </div>
@@ -791,12 +807,12 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000025">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_13">SwHLR_F_13</a> </dd></dl>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000022">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_13">SwHLR_F_13</a> </dd></dl>
 
 </div>
 </div>
-<a id="acd0780fe2f6bc6ee131dd88a4026fcb6" name="acd0780fe2f6bc6ee131dd88a4026fcb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd0780fe2f6bc6ee131dd88a4026fcb6">&#9670;&#160;</a></span>show_error()</h2>
+<a id="a7d76c7fa57934a555b76934eec73c224" name="a7d76c7fa57934a555b76934eec73c224"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d76c7fa57934a555b76934eec73c224">&#9670;&#160;</a></span>show_error()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -804,7 +820,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void show_error </td>
           <td>(</td>
-          <td class="paramtype">char&#160;</td>
+          <td class="paramtype">const char&#160;</td>
           <td class="paramname"><em>errorStr</em>[]</td><td>)</td>
           <td></td>
         </tr>
@@ -818,12 +834,13 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000022">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000019">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
 
 </div>
 </div>
-<a id="ac3dc09877158f541e57273fa708abc7f" name="ac3dc09877158f541e57273fa708abc7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3dc09877158f541e57273fa708abc7f">&#9670;&#160;</a></span>show_log()</h2>
+<a id="ae490b9d7ce7c209b7e114fa4a245565f" name="ae490b9d7ce7c209b7e114fa4a245565f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae490b9d7ce7c209b7e114fa4a245565f">&#9670;&#160;</a></span>show_log()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -831,7 +848,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void show_log </td>
           <td>(</td>
-          <td class="paramtype">char&#160;</td>
+          <td class="paramtype">const char&#160;</td>
           <td class="paramname"><em>logStr</em>[]</td><td>)</td>
           <td></td>
         </tr>
@@ -845,7 +862,8 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000037">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000034">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_16">SwHLR_F_16</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>, <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a> </dd></dl>
 
 </div>
 </div>

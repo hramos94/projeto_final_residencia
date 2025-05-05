@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🔧_20installation_0',['🔧 Installation',['../md_README.html#autotoc_md10',1,'']]]
+  ['🔀_20branch_20and_20commit_20standardization_0',['🔀 Branch and Commit Standardization',['../md_README.html#autotoc_md2',1,'']]]
 ];

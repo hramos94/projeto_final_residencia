@@ -75,7 +75,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">app.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -103,61 +104,34 @@ Macros</h2></td></tr>
 <tr class="separator:a7d6ec295d2bf40012e88d84d64252c63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05462d6c28c6d9282a749c08dcddd29a" id="r_a05462d6c28c6d9282a749c08dcddd29a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a05462d6c28c6d9282a749c08dcddd29a">REB_CANCELED</a>&#160;&#160;&#160;0x00U</td></tr>
 <tr class="separator:a05462d6c28c6d9282a749c08dcddd29a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af068ecf4f5b8e7a4c0ee17c23564e82e" id="r_af068ecf4f5b8e7a4c0ee17c23564e82e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#af068ecf4f5b8e7a4c0ee17c23564e82e">CAN_TEST_ID</a>&#160;&#160;&#160;0x100</td></tr>
-<tr class="separator:af068ecf4f5b8e7a4c0ee17c23564e82e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1eb8b624ccb86f97422008bf0282f0db" id="r_a1eb8b624ccb86f97422008bf0282f0db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a1eb8b624ccb86f97422008bf0282f0db">CAN_RESPONSE_ID</a>&#160;&#160;&#160;0x101</td></tr>
-<tr class="separator:a1eb8b624ccb86f97422008bf0282f0db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a013488c9212c73691b5643dd36091f02" id="r_a013488c9212c73691b5643dd36091f02"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a013488c9212c73691b5643dd36091f02">application_init</a> ()</td></tr>
-<tr class="memdesc:a013488c9212c73691b5643dd36091f02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the application by configuring drivers.  <br /></td></tr>
-<tr class="separator:a013488c9212c73691b5643dd36091f02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46c72743d50f7b29bff8de5b94d3ef18" id="r_a46c72743d50f7b29bff8de5b94d3ef18"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a46c72743d50f7b29bff8de5b94d3ef18">read_input</a> ()</td></tr>
-<tr class="memdesc:a46c72743d50f7b29bff8de5b94d3ef18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle terminal PIN inputs.  <br /></td></tr>
-<tr class="separator:a46c72743d50f7b29bff8de5b94d3ef18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae523ecfe7e109f7c6ce64dcaf13ffa80" id="r_ae523ecfe7e109f7c6ce64dcaf13ffa80"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#ae523ecfe7e109f7c6ce64dcaf13ffa80">monitor_read_can</a> ()</td></tr>
-<tr class="memdesc:ae523ecfe7e109f7c6ce64dcaf13ffa80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle messages received from CAN BUS.  <br /></td></tr>
-<tr class="separator:ae523ecfe7e109f7c6ce64dcaf13ffa80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a701f315e7af1774fcf7550974ee33521" id="r_a701f315e7af1774fcf7550974ee33521"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a701f315e7af1774fcf7550974ee33521">start_reb</a> ()</td></tr>
-<tr class="memdesc:a701f315e7af1774fcf7550974ee33521"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the activating REB.  <br /></td></tr>
-<tr class="separator:a701f315e7af1774fcf7550974ee33521"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6b9d569d0f2621d7a003fc273aab9bd" id="r_ad6b9d569d0f2621d7a003fc273aab9bd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#ad6b9d569d0f2621d7a003fc273aab9bd">cancel_reb</a> ()</td></tr>
-<tr class="memdesc:ad6b9d569d0f2621d7a003fc273aab9bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the deactivating REB.  <br /></td></tr>
-<tr class="separator:ad6b9d569d0f2621d7a003fc273aab9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04b75b8611ec60b8425d2d7439445eb2" id="r_a04b75b8611ec60b8425d2d7439445eb2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a04b75b8611ec60b8425d2d7439445eb2">countdown_reb</a> ()</td></tr>
-<tr class="memdesc:a04b75b8611ec60b8425d2d7439445eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the activating REB countdown.  <br /></td></tr>
-<tr class="separator:a04b75b8611ec60b8425d2d7439445eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62a3119a391e4603353865e33876efb2" id="r_a62a3119a391e4603353865e33876efb2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a62a3119a391e4603353865e33876efb2">application_init</a> (void)</td></tr>
+<tr class="memdesc:a62a3119a391e4603353865e33876efb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the application by configuring drivers.  <br /></td></tr>
+<tr class="separator:a62a3119a391e4603353865e33876efb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d9384dee50671f9843470191f3e0e6c" id="r_a7d9384dee50671f9843470191f3e0e6c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a7d9384dee50671f9843470191f3e0e6c">read_input</a> (void)</td></tr>
+<tr class="memdesc:a7d9384dee50671f9843470191f3e0e6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle terminal PIN inputs.  <br /></td></tr>
+<tr class="separator:a7d9384dee50671f9843470191f3e0e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d3eb1d4446afa331f26f38c0625489c" id="r_a2d3eb1d4446afa331f26f38c0625489c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a2d3eb1d4446afa331f26f38c0625489c">monitor_read_can</a> (void)</td></tr>
+<tr class="memdesc:a2d3eb1d4446afa331f26f38c0625489c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle messages received from CAN BUS.  <br /></td></tr>
+<tr class="separator:a2d3eb1d4446afa331f26f38c0625489c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ba689b74e8d08d4633d4b1152dc0f4f" id="r_a7ba689b74e8d08d4633d4b1152dc0f4f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a7ba689b74e8d08d4633d4b1152dc0f4f">start_reb</a> (void)</td></tr>
+<tr class="memdesc:a7ba689b74e8d08d4633d4b1152dc0f4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the activating REB.  <br /></td></tr>
+<tr class="separator:a7ba689b74e8d08d4633d4b1152dc0f4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a350eb40cfc9e57b67462259207f997f1" id="r_a350eb40cfc9e57b67462259207f997f1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a350eb40cfc9e57b67462259207f997f1">cancel_reb</a> (void)</td></tr>
+<tr class="memdesc:a350eb40cfc9e57b67462259207f997f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the deactivating REB.  <br /></td></tr>
+<tr class="separator:a350eb40cfc9e57b67462259207f997f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07e38f0a0b3a6f45e5525b1b021f1e4c" id="r_a07e38f0a0b3a6f45e5525b1b021f1e4c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a07e38f0a0b3a6f45e5525b1b021f1e4c">countdown_reb</a> (void)</td></tr>
+<tr class="memdesc:a07e38f0a0b3a6f45e5525b1b021f1e4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the activating REB countdown.  <br /></td></tr>
+<tr class="separator:a07e38f0a0b3a6f45e5525b1b021f1e4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a823460ba1c58b07c7258986e784d9987" id="r_a823460ba1c58b07c7258986e784d9987"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="reb_2inc_2app_8h.html#a823460ba1c58b07c7258986e784d9987">flag_reb_canceled</a></td></tr>
+<tr class="separator:a823460ba1c58b07c7258986e784d9987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a1eb8b624ccb86f97422008bf0282f0db" name="a1eb8b624ccb86f97422008bf0282f0db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1eb8b624ccb86f97422008bf0282f0db">&#9670;&#160;</a></span>CAN_RESPONSE_ID</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CAN_RESPONSE_ID&#160;&#160;&#160;0x101</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af068ecf4f5b8e7a4c0ee17c23564e82e" name="af068ecf4f5b8e7a4c0ee17c23564e82e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af068ecf4f5b8e7a4c0ee17c23564e82e">&#9670;&#160;</a></span>CAN_TEST_ID</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CAN_TEST_ID&#160;&#160;&#160;0x100</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a05462d6c28c6d9282a749c08dcddd29a" name="a05462d6c28c6d9282a749c08dcddd29a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a05462d6c28c6d9282a749c08dcddd29a">&#9670;&#160;</a></span>REB_CANCELED</h2>
 
@@ -215,8 +189,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a013488c9212c73691b5643dd36091f02" name="a013488c9212c73691b5643dd36091f02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a013488c9212c73691b5643dd36091f02">&#9670;&#160;</a></span>application_init()</h2>
+<a id="a62a3119a391e4603353865e33876efb2" name="a62a3119a391e4603353865e33876efb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62a3119a391e4603353865e33876efb2">&#9670;&#160;</a></span>application_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,6 +198,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint8_t application_init </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -235,8 +210,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad6b9d569d0f2621d7a003fc273aab9bd" name="ad6b9d569d0f2621d7a003fc273aab9bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6b9d569d0f2621d7a003fc273aab9bd">&#9670;&#160;</a></span>cancel_reb()</h2>
+<a id="a350eb40cfc9e57b67462259207f997f1" name="a350eb40cfc9e57b67462259207f997f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a350eb40cfc9e57b67462259207f997f1">&#9670;&#160;</a></span>cancel_reb()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -244,6 +219,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint8_t cancel_reb </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -252,12 +228,12 @@ Functions</h2></td></tr>
 
 <p>Handle the deactivating REB. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>; <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a>. </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000039">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_8">SwHLR_F_8</a> </dd></dl>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000036">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_8">SwHLR_F_8</a> </dd></dl>
 
 </div>
 </div>
-<a id="a04b75b8611ec60b8425d2d7439445eb2" name="a04b75b8611ec60b8425d2d7439445eb2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04b75b8611ec60b8425d2d7439445eb2">&#9670;&#160;</a></span>countdown_reb()</h2>
+<a id="a07e38f0a0b3a6f45e5525b1b021f1e4c" name="a07e38f0a0b3a6f45e5525b1b021f1e4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07e38f0a0b3a6f45e5525b1b021f1e4c">&#9670;&#160;</a></span>countdown_reb()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -273,15 +249,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Handle the activating REB countdown. </p>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000041">Requirement:</a></b></dt><dd><p class="startdd">SysHLR_3 </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000038">Requirement:</a></b></dt><dd><p class="startdd">SysHLR_3 </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_12">SwHLR_F_12</a> </p>
-<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_14">SwHLR_F_14</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_14">SwHLR_F_14</a> </p>
+<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_1">SwHLR_F_1</a> </p>
 </dd></dl>
 
 </div>
 </div>
-<a id="ae523ecfe7e109f7c6ce64dcaf13ffa80" name="ae523ecfe7e109f7c6ce64dcaf13ffa80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae523ecfe7e109f7c6ce64dcaf13ffa80">&#9670;&#160;</a></span>monitor_read_can()</h2>
+<a id="a2d3eb1d4446afa331f26f38c0625489c" name="a2d3eb1d4446afa331f26f38c0625489c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d3eb1d4446afa331f26f38c0625489c">&#9670;&#160;</a></span>monitor_read_can()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -289,6 +266,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint8_t monitor_read_can </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -297,22 +275,23 @@ Functions</h2></td></tr>
 
 <p>Handle messages received from CAN BUS. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>; <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a>. </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000017">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
-<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000012">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>; <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a>. </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000038">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_9">SwHLR_F_9</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000035">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_1">SwHLR_F_1</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_3">SwHLR_F_3</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_6">SwHLR_F_6</a> </p>
 <p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_13">SwHLR_F_13</a> </p>
 <p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_15">SwHLR_F_15</a> </p>
 </dd></dl>
 
 </div>
 </div>
-<a id="a46c72743d50f7b29bff8de5b94d3ef18" name="a46c72743d50f7b29bff8de5b94d3ef18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46c72743d50f7b29bff8de5b94d3ef18">&#9670;&#160;</a></span>read_input()</h2>
+<a id="a7d9384dee50671f9843470191f3e0e6c" name="a7d9384dee50671f9843470191f3e0e6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d9384dee50671f9843470191f3e0e6c">&#9670;&#160;</a></span>read_input()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -320,6 +299,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint8_t read_input </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -331,8 +311,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a701f315e7af1774fcf7550974ee33521" name="a701f315e7af1774fcf7550974ee33521"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a701f315e7af1774fcf7550974ee33521">&#9670;&#160;</a></span>start_reb()</h2>
+<a id="a7ba689b74e8d08d4633d4b1152dc0f4f" name="a7ba689b74e8d08d4633d4b1152dc0f4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ba689b74e8d08d4633d4b1152dc0f4f">&#9670;&#160;</a></span>start_reb()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -340,6 +320,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint8_t start_reb </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -348,9 +329,34 @@ Functions</h2></td></tr>
 
 <p>Handle the activating REB. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS(0)</a>; <a class="el" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">FAIL(1)</a>. </dd></dl>
-<dl class="req"><dt><b><a class="el" href="req.html#_req000040">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_8">SwHLR_F_8</a> </p>
-<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_12">SwHLR_F_12</a> </p>
+<dl class="req"><dt><b><a class="el" href="req.html#_req000037">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_8">SwHLR_F_8</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_12">SwHLR_F_12</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_14">SwHLR_F_14</a> </p>
+<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_2">SwHLR_F_2</a> </p>
 </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a823460ba1c58b07c7258986e784d9987" name="a823460ba1c58b07c7258986e784d9987"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a823460ba1c58b07c7258986e784d9987">&#9670;&#160;</a></span>flag_reb_canceled</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t flag_reb_canceled</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

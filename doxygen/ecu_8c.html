@@ -83,43 +83,53 @@ $(function() {
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="ecu_8h_source.html">ecu.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="mcal_8h_source.html">mcal.h</a>&gt;</code><br />
+<code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="dtc__codes__bsw_8h_source.html">dtc_codes_bsw.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="dtc__logger_8h_source.html">dtc_logger.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ecu.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="ecu_8c__incl.png" border="0" usemap="#absw_2src_2ecu_8c" alt=""/></div>
 <map name="absw_2src_2ecu_8c" id="absw_2src_2ecu_8c">
-<area shape="rect" title="Unit tests for functions in ecu.c." alt="" coords="93,5,202,31"/>
-<area shape="rect" href="ecu_8h.html" title=" " alt="" coords="23,79,80,104"/>
-<area shape="poly" title=" " alt="" coords="133,33,80,72,77,68,130,29"/>
-<area shape="rect" href="mcal_8h.html" title=" " alt="" coords="114,79,181,104"/>
-<area shape="poly" title=" " alt="" coords="150,31,150,65,145,65,145,31"/>
-<area shape="rect" title=" " alt="" coords="205,79,279,104"/>
-<area shape="poly" title=" " alt="" coords="164,29,217,68,214,72,161,33"/>
-<area shape="rect" title=" " alt="" coords="5,152,76,177"/>
-<area shape="poly" title=" " alt="" coords="52,105,47,139,42,138,47,104"/>
-<area shape="poly" title=" " alt="" coords="132,106,71,147,68,142,129,102"/>
-<area shape="rect" title=" " alt="" coords="101,152,194,177"/>
-<area shape="poly" title=" " alt="" coords="150,104,150,138,145,138,145,104"/>
-<area shape="rect" title=" " alt="" coords="218,152,338,177"/>
-<area shape="poly" title=" " alt="" coords="170,102,246,143,244,148,167,106"/>
-<area shape="rect" title=" " alt="" coords="363,152,447,177"/>
-<area shape="poly" title=" " alt="" coords="182,99,351,146,350,151,180,104"/>
+<area shape="rect" title="Unit tests for functions in ecu.c." alt="" coords="261,5,371,31"/>
+<area shape="rect" href="ecu_8h.html" title=" " alt="" coords="131,79,189,104"/>
+<area shape="poly" title=" " alt="" coords="292,33,199,75,197,70,290,28"/>
+<area shape="rect" href="mcal_8h.html" title=" " alt="" coords="587,79,653,104"/>
+<area shape="poly" title=" " alt="" coords="368,28,574,76,573,81,367,33"/>
+<area shape="rect" title=" " alt="" coords="213,79,309,104"/>
+<area shape="poly" title=" " alt="" coords="309,33,281,69,276,66,305,29"/>
+<area shape="rect" title=" " alt="" coords="333,79,408,104"/>
+<area shape="poly" title=" " alt="" coords="327,29,356,66,351,69,323,33"/>
+<area shape="rect" href="dtc__codes__bsw_8h.html" title=" " alt="" coords="432,79,563,104"/>
+<area shape="poly" title=" " alt="" coords="346,28,456,71,454,76,344,33"/>
+<area shape="rect" href="dtc__logger_8h.html" title=" " alt="" coords="5,79,107,104"/>
+<area shape="poly" title=" " alt="" coords="275,33,112,78,111,72,274,28"/>
+<area shape="rect" title=" " alt="" coords="125,152,195,177"/>
+<area shape="poly" title=" " alt="" coords="163,104,163,138,157,138,157,104"/>
+<area shape="poly" title=" " alt="" coords="587,104,575,107,372,140,210,161,209,155,372,135,574,101,586,99"/>
+<area shape="rect" title=" " alt="" coords="443,152,536,177"/>
+<area shape="poly" title=" " alt="" coords="600,106,524,148,521,143,598,102"/>
+<area shape="rect" title=" " alt="" coords="560,152,680,177"/>
+<area shape="poly" title=" " alt="" coords="623,104,623,138,617,138,617,104"/>
+<area shape="rect" title=" " alt="" coords="705,152,789,177"/>
+<area shape="poly" title=" " alt="" coords="642,102,715,143,713,147,639,106"/>
+<area shape="poly" title=" " alt="" coords="74,102,133,142,130,146,71,106"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1eb8a897b87741a910aaee47f5a6cf0a" id="r_a1eb8a897b87741a910aaee47f5a6cf0a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ecu_8c.html#a1eb8a897b87741a910aaee47f5a6cf0a">read_console</a> ()</td></tr>
-<tr class="memdesc:a1eb8a897b87741a910aaee47f5a6cf0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">function get by console the status and number of the PIN set it.  <br /></td></tr>
-<tr class="separator:a1eb8a897b87741a910aaee47f5a6cf0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ee51537a2045ba55fa1a10d42fc5843" id="r_a9ee51537a2045ba55fa1a10d42fc5843"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ecu_8c.html#a9ee51537a2045ba55fa1a10d42fc5843">read_console</a> (void)</td></tr>
+<tr class="memdesc:a9ee51537a2045ba55fa1a10d42fc5843"><td class="mdescLeft">&#160;</td><td class="mdescRight">function get by console the status and number of the PIN set it.  <br /></td></tr>
+<tr class="separator:a9ee51537a2045ba55fa1a10d42fc5843"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Unit tests for functions in <a class="el" href="ecu_8c.html" title="Unit tests for functions in ecu.c.">ecu.c</a>. </p>
 <p>This file contains the test suite that validates the main functions of Base Software for ECU It covers success and failure scenarios, as well as different status/byte values. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a1eb8a897b87741a910aaee47f5a6cf0a" name="a1eb8a897b87741a910aaee47f5a6cf0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1eb8a897b87741a910aaee47f5a6cf0a">&#9670;&#160;</a></span>read_console()</h2>
+<a id="a9ee51537a2045ba55fa1a10d42fc5843" name="a9ee51537a2045ba55fa1a10d42fc5843"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ee51537a2045ba55fa1a10d42fc5843">&#9670;&#160;</a></span>read_console()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,6 +137,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint8_t read_console </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>

@@ -1,0 +1,16 @@
+<map id="bsw/src/dtc_logger.c" name="bsw/src/dtc_logger.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="85,5,238,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="10,152,81,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,33,46,51,28,64,13,80,8,94,10,110,28,140,23,142,5,111,3,94,9,77,24,60,43,46,85,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="147,152,214,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="166,31,180,138,174,139,161,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="275,152,339,177"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="225,28,267,46,286,60,303,77,310,92,314,108,314,138,309,138,309,108,305,94,298,80,283,64,265,51,223,33"/>
+<area shape="rect" id="Node000005" href="$file__utils_8h.html" title=" " alt="" coords="200,79,289,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="177,29,222,67,219,72,173,33"/>
+<area shape="rect" id="Node000006" href="$dtc__logger_8h.html" title=" " alt="" coords="23,79,124,104"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="149,33,100,72,97,68,146,29"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="236,106,202,144,198,140,232,103"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="257,103,290,140,286,143,253,106"/>
+<area shape="poly" id="edge8_Node000006_Node000002" title=" " alt="" coords="72,105,58,140,53,138,67,103"/>
+</map>

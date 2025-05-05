@@ -15,8 +15,9 @@ var searchData=
   ['reb_5frunning_12',['REB_RUNNING',['../reb_2inc_2app_8h.html#a7d6ec295d2bf40012e88d84d64252c63',1,'app.h']]],
   ['reb_5fstart_13',['REB_START',['../ecu__aux_8h.html#ae16ccb1b7f0aa5e37fbddbeffd24fba7',1,'ecu_aux.h']]],
   ['reb_5ftimeout_14',['REB_TIMEOUT',['../ecu__reb_8h.html#a20a20fab2084270bd0a126411d224ef4',1,'ecu_reb.h']]],
-  ['return_5fif_5ffail_5for_5fignore_15',['RETURN_IF_FAIL_OR_IGNORE',['../unity_8c.html#abf9f99b384602e58874744dda3492aaa',1,'unity.c']]],
-  ['run_5ftest_16',['RUN_TEST',['../unity__internals_8h.html#a27cf08abbe33174b41d808a147cfef11',1,'unity_internals.h']]],
-  ['run_5ftest_5fcase_17',['RUN_TEST_CASE',['../unity__fixture_8h.html#adc2b732a34781cebd1432e413f4ccfbc',1,'unity_fixture.h']]],
-  ['run_5ftest_5fgroup_18',['RUN_TEST_GROUP',['../unity__fixture_8h.html#a7fc679775ab3aaf4dd7302a0a4118202',1,'unity_fixture.h']]]
+  ['report_5ferror_15',['REPORT_ERROR',['../dtc__logger_8h.html#a64d68506f71afb189c9e1eb99e1cfbc2',1,'dtc_logger.h']]],
+  ['return_5fif_5ffail_5for_5fignore_16',['RETURN_IF_FAIL_OR_IGNORE',['../unity_8c.html#abf9f99b384602e58874744dda3492aaa',1,'unity.c']]],
+  ['run_5ftest_17',['RUN_TEST',['../unity__internals_8h.html#a27cf08abbe33174b41d808a147cfef11',1,'unity_internals.h']]],
+  ['run_5ftest_5fcase_18',['RUN_TEST_CASE',['../unity__fixture_8h.html#adc2b732a34781cebd1432e413f4ccfbc',1,'unity_fixture.h']]],
+  ['run_5ftest_5fgroup_19',['RUN_TEST_GROUP',['../unity__fixture_8h.html#a7fc679775ab3aaf4dd7302a0a4118202',1,'unity_fixture.h']]]
 ];

@@ -86,8 +86,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">    6</a></span><span class="preprocessor">#define SUCCESS 0</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">    7</a></span><span class="preprocessor">#define FAIL 1</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="ecu_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">    6</a></span><span class="preprocessor">#define SUCCESS 0x00U</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="ecu_8h.html#abb508ea8227673f419e9fe3a86c30d8e">    7</a></span><span class="preprocessor">#define FAIL 0x01U</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="ecu_8h.html#af6acbcc6b88895dfd03f4b8675858bd9">    9</a></span><span class="preprocessor">#define TCU_REB_ID 0x150</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="ecu_8h.html#a061276e3215717293dee822d7a586848">   10</a></span><span class="preprocessor">#define REB_ECU_ID 0x200</span></div>
@@ -103,10 +103,13 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="ecu_8h.html#a508f4432bedf96cd2dac37d38e29c630">   21</a></span><span class="preprocessor">#define SHOW_LOG 1</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>uint8_t <a class="code hl_function" href="ecu_8h.html#a1eb8a897b87741a910aaee47f5a6cf0a">read_console</a>();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">extern</span> uint8_t <a class="code hl_variable" href="ecu_8h.html#a6263770a5f534d593ff5a4875973018f">reb_con</a>;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aecu_8h_html_a1eb8a897b87741a910aaee47f5a6cf0a"><div class="ttname"><a href="ecu_8h.html#a1eb8a897b87741a910aaee47f5a6cf0a">read_console</a></div><div class="ttdeci">uint8_t read_console()</div><div class="ttdoc">function get by console the status and number of the PIN set it.</div><div class="ttdef"><b>Definition</b> ecu.c:10</div></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>uint8_t <a class="code hl_function" href="ecu_8h.html#a9ee51537a2045ba55fa1a10d42fc5843">read_console</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aecu_8h_html_a6263770a5f534d593ff5a4875973018f"><div class="ttname"><a href="ecu_8h.html#a6263770a5f534d593ff5a4875973018f">reb_con</a></div><div class="ttdeci">uint8_t reb_con</div><div class="ttdef"><b>Definition</b> app.c:7</div></div>
+<div class="ttc" id="aecu_8h_html_a9ee51537a2045ba55fa1a10d42fc5843"><div class="ttname"><a href="ecu_8h.html#a9ee51537a2045ba55fa1a10d42fc5843">read_console</a></div><div class="ttdeci">uint8_t read_console(void)</div><div class="ttdoc">function get by console the status and number of the PIN set it.</div><div class="ttdef"><b>Definition</b> ecu.c:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

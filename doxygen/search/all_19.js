@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📋_20requirements_0',['📋 Requirements',['../md_README.html#autotoc_md5',1,'']]]
+  ['✒️_20authors_0',['✒️ Authors',['../md_README.html#autotoc_md14',1,'']]]
 ];

@@ -1,5 +1,7 @@
 <map id="bsw/inc/can_utils.h" name="bsw/inc/can_utils.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,151,31"/>
-<area shape="rect" id="Node000002" href="$mcal_8c.html" title=" " alt="" coords="19,79,137,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,44,81,79,75,79,75,44"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="82,5,227,31"/>
+<area shape="rect" id="Node000002" href="$can__utils_8c.html" title=" " alt="" coords="5,79,149,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,42,92,80,88,76,130,38"/>
+<area shape="rect" id="Node000003" href="$mcal_8c.html" title=" " alt="" coords="174,79,293,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,38,222,76,219,80,176,42"/>
 </map>

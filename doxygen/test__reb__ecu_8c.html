@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Remote Engine Block: test/reb/reb_ecu/src/test_reb_ecu.c File Reference</title>
+<title>Remote Engine Block: test/reb/src/test_reb_ecu.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_d920adecd5f706702e7c31c1555af58c.html">reb</a></li><li class="navelem"><a class="el" href="dir_993dafc5554a8d4748c055ac4716a728.html">reb_ecu</a></li><li class="navelem"><a class="el" href="dir_f6d8db064326be1a6f4c339de5ec40e9.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_d920adecd5f706702e7c31c1555af58c.html">reb</a></li><li class="navelem"><a class="el" href="dir_9cc7f926d0db7b1872a758147ae2dc68.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -89,9 +89,9 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for test_reb_ecu.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="test__reb__ecu_8c__incl.png" border="0" usemap="#atest_2reb_2reb__ecu_2src_2test__reb__ecu_8c" alt=""/></div>
-<map name="atest_2reb_2reb__ecu_2src_2test__reb__ecu_8c" id="atest_2reb_2reb__ecu_2src_2test__reb__ecu_8c">
-<area shape="rect" title="Unit tests for functions in ecu_reb.c." alt="" coords="121,5,271,45"/>
+<div class="center"><img src="test__reb__ecu_8c__incl.png" border="0" usemap="#atest_2reb_2src_2test__reb__ecu_8c" alt=""/></div>
+<map name="atest_2reb_2src_2test__reb__ecu_8c" id="atest_2reb_2src_2test__reb__ecu_8c">
+<area shape="rect" title="Unit tests for functions in ecu_reb.c." alt="" coords="120,5,272,45"/>
 <area shape="rect" href="ecu__reb_8h.html" title=" " alt="" coords="5,240,91,265"/>
 <area shape="poly" title=" " alt="" coords="130,48,95,67,66,95,51,127,45,163,44,197,46,226,41,227,38,197,39,162,46,125,62,92,92,63,128,43"/>
 <area shape="rect" title=" " alt="" coords="77,93,211,119"/>
@@ -148,17 +148,23 @@ Functions</h2></td></tr>
 <tr class="memdesc:ab4a016eb6a2ca125c90601af30e33d3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#aa128994e67f18a5c0f2494b90e74c49b" title="Send a can message to ECM to block or unblock engine.">reb_can_send_ecu()</a> with ECU_REB_CANCEL (2).  <br /></td></tr>
 <tr class="separator:ab4a016eb6a2ca125c90601af30e33d3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a846eeaee83be5298ba0c40665d7cea09" id="r_a846eeaee83be5298ba0c40665d7cea09"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#a846eeaee83be5298ba0c40665d7cea09">TEST</a> (reb_ecu, reb_handle_tcu_can_CANCEL_REB)</td></tr>
-<tr class="memdesc:a846eeaee83be5298ba0c40665d7cea09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9">handle_tcu_can()</a> with the first byte = 0x02 (CANCEL_REB).  <br /></td></tr>
+<tr class="memdesc:a846eeaee83be5298ba0c40665d7cea09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> with the first byte = 0x02 (CANCEL_REB).  <br /></td></tr>
 <tr class="separator:a846eeaee83be5298ba0c40665d7cea09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5454d2dcf8968466f70de2dad1736fb" id="r_af5454d2dcf8968466f70de2dad1736fb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#af5454d2dcf8968466f70de2dad1736fb">TEST</a> (reb_ecu, reb_handle_tcu_can_START_REB)</td></tr>
-<tr class="memdesc:af5454d2dcf8968466f70de2dad1736fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9">handle_tcu_can()</a> with the first byte = 0x01 (START_REB).  <br /></td></tr>
+<tr class="memdesc:af5454d2dcf8968466f70de2dad1736fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> with the first byte = 0x01 (START_REB).  <br /></td></tr>
 <tr class="separator:af5454d2dcf8968466f70de2dad1736fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa446a48cbbb95b00b60096a0ec9d5373" id="r_aa446a48cbbb95b00b60096a0ec9d5373"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#aa446a48cbbb95b00b60096a0ec9d5373">TEST</a> (reb_ecu, reb_handle_tcu_can_CANCEL_REB_FAIL)</td></tr>
-<tr class="memdesc:aa446a48cbbb95b00b60096a0ec9d5373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9">handle_tcu_can()</a> for CANCEL_REB when <a class="el" href="reb_2inc_2app_8h.html#ad6b9d569d0f2621d7a003fc273aab9bd" title="Handle the deactivating REB.">cancel_reb()</a> fails.  <br /></td></tr>
+<tr class="memdesc:aa446a48cbbb95b00b60096a0ec9d5373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> for CANCEL_REB when <a class="el" href="reb_2inc_2app_8h.html#a350eb40cfc9e57b67462259207f997f1" title="Handle the deactivating REB.">cancel_reb()</a> fails.  <br /></td></tr>
 <tr class="separator:aa446a48cbbb95b00b60096a0ec9d5373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6eaf63e82140ce201a421a544b9488c" id="r_ad6eaf63e82140ce201a421a544b9488c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#ad6eaf63e82140ce201a421a544b9488c">TEST</a> (reb_ecu, reb_handle_tcu_can_CANCEL_REB_SET_PIN_FAIL)</td></tr>
+<tr class="memdesc:ad6eaf63e82140ce201a421a544b9488c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> for CANCEL_REB when <a class="el" href="reb_2inc_2app_8h.html#a350eb40cfc9e57b67462259207f997f1" title="Handle the deactivating REB.">cancel_reb()</a> and Set_pin_status() fails.  <br /></td></tr>
+<tr class="separator:ad6eaf63e82140ce201a421a544b9488c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e55c5bc8d2daa671bf65f2a04fa242f" id="r_a4e55c5bc8d2daa671bf65f2a04fa242f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#a4e55c5bc8d2daa671bf65f2a04fa242f">TEST</a> (reb_ecu, reb_handle_tcu_can_START_REB_FAIL)</td></tr>
-<tr class="memdesc:a4e55c5bc8d2daa671bf65f2a04fa242f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9">handle_tcu_can()</a> for START_REB when <a class="el" href="reb_2inc_2app_8h.html#a701f315e7af1774fcf7550974ee33521" title="Handle the activating REB.">start_reb()</a> fails.  <br /></td></tr>
+<tr class="memdesc:a4e55c5bc8d2daa671bf65f2a04fa242f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> for START_REB when <a class="el" href="reb_2inc_2app_8h.html#a7ba689b74e8d08d4633d4b1152dc0f4f" title="Handle the activating REB.">start_reb()</a> fails.  <br /></td></tr>
 <tr class="separator:a4e55c5bc8d2daa671bf65f2a04fa242f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91956f1ce54f345fc4b9b0b05536b810" id="r_a91956f1ce54f345fc4b9b0b05536b810"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#a91956f1ce54f345fc4b9b0b05536b810">TEST</a> (reb_ecu, reb_handle_tcu_can_START_REB_SET_PIN_FAIL)</td></tr>
+<tr class="memdesc:a91956f1ce54f345fc4b9b0b05536b810"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> for START_REB when <a class="el" href="reb_2inc_2app_8h.html#a7ba689b74e8d08d4633d4b1152dc0f4f" title="Handle the activating REB.">start_reb()</a> and <a class="el" href="mcal_8h.html#a5e27e189a7a737884041443b081fe818" title="Set the status of desired PIN number.">set_pin_status()</a> fails.  <br /></td></tr>
+<tr class="separator:a91956f1ce54f345fc4b9b0b05536b810"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d0bc2cbc49cfd2158fae786168ded8c" id="r_a0d0bc2cbc49cfd2158fae786168ded8c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#a0d0bc2cbc49cfd2158fae786168ded8c">TEST</a> (reb_ecu, reb_can_send_ecu_CAN_SEND_VCAN_FAIL)</td></tr>
 <tr class="memdesc:a0d0bc2cbc49cfd2158fae786168ded8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests <a class="el" href="ecu__reb_8h.html#aa128994e67f18a5c0f2494b90e74c49b" title="Send a can message to ECM to block or unblock engine.">reb_can_send_ecu()</a> with <a class="el" href="mcal_8h.html#a629367622920865f61d37b81915381d7" title="function that send frame CAN to vcan0 of LINUX">can_send_vcan0()</a> failure.  <br /></td></tr>
 <tr class="separator:a0d0bc2cbc49cfd2158fae786168ded8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,6 +174,8 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a3e900cda1f82f209e8ea2fd76d3c3ed6" id="r_a3e900cda1f82f209e8ea2fd76d3c3ed6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#a3e900cda1f82f209e8ea2fd76d3c3ed6">flag_fail_set_pin</a></td></tr>
+<tr class="separator:a3e900cda1f82f209e8ea2fd76d3c3ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab920de79971626511e6d8d2115d8d7b6" id="r_ab920de79971626511e6d8d2115d8d7b6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#ab920de79971626511e6d8d2115d8d7b6">reb_ipc_id</a></td></tr>
 <tr class="separator:ab920de79971626511e6d8d2115d8d7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7471a7359e135e100e2db96356c33b46" id="r_a7471a7359e135e100e2db96356c33b46"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test__reb__ecu_8c.html#a7471a7359e135e100e2db96356c33b46">reb_ecu_id</a></td></tr>
@@ -183,7 +191,7 @@ Variables</h2></td></tr>
 </ul>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a0d0bc2cbc49cfd2158fae786168ded8c" name="a0d0bc2cbc49cfd2158fae786168ded8c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d0bc2cbc49cfd2158fae786168ded8c">&#9670;&#160;</a></span>TEST() <span class="overload">[1/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d0bc2cbc49cfd2158fae786168ded8c">&#9670;&#160;</a></span>TEST() <span class="overload">[1/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,13 +220,18 @@ Variables</h2></td></tr>
 <p>Scenario:</p><ul>
 <li>reb_ecu_id = 2</li>
 <li>We force <a class="el" href="mcal_8h.html#a629367622920865f61d37b81915381d7" title="function that send frame CAN to vcan0 of LINUX">can_send_vcan0()</a> to fail via mocks (returning -1). Expected:</li>
-<li>Return FAIL (1). </li>
+<li>Return FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000115">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_12">SwHLR_F_12</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_2">SwHLR_F_2</a> </p>
+<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_1">SwHLR_F_1</a> </p>
+</dd></dl>
+</li>
 </ul>
 
 </div>
 </div>
 <a id="ab4a016eb6a2ca125c90601af30e33d3b" name="ab4a016eb6a2ca125c90601af30e33d3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4a016eb6a2ca125c90601af30e33d3b">&#9670;&#160;</a></span>TEST() <span class="overload">[2/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4a016eb6a2ca125c90601af30e33d3b">&#9670;&#160;</a></span>TEST() <span class="overload">[2/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -246,14 +259,18 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="ecu__reb_8h.html#aa128994e67f18a5c0f2494b90e74c49b" title="Send a can message to ECM to block or unblock engine.">reb_can_send_ecu()</a> with ECU_REB_CANCEL (2). </p>
 <p>Scenario:</p><ul>
 <li>reb_ecu_id = 2 (engine unblock) Expected:</li>
-<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000081">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_12">SwHLR_F_12</a> </dd></dl>
+<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000108">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_12">SwHLR_F_12</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_2">SwHLR_F_2</a> </p>
+<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_1">SwHLR_F_1</a> </p>
+</dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="ae780c0ffaade10caa54a0361b055d874" name="ae780c0ffaade10caa54a0361b055d874"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae780c0ffaade10caa54a0361b055d874">&#9670;&#160;</a></span>TEST() <span class="overload">[3/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae780c0ffaade10caa54a0361b055d874">&#9670;&#160;</a></span>TEST() <span class="overload">[3/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -281,14 +298,18 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="ecu__reb_8h.html#aa128994e67f18a5c0f2494b90e74c49b" title="Send a can message to ECM to block or unblock engine.">reb_can_send_ecu()</a> with ECU_REB_START (1). </p>
 <p>Scenario:</p><ul>
 <li>reb_ecu_id = 1 (engine block) Expected:</li>
-<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000080">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_12">SwHLR_F_12</a> </dd></dl>
+<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000107">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_12">SwHLR_F_12</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_10">SwHLR_F_10</a> </p>
+<p class="interdd"><a class="el" href="system_requirements.html#SwHLR_F_2">SwHLR_F_2</a> </p>
+<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_1">SwHLR_F_1</a> </p>
+</dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="ab16f02d6e22134b3898e8357d8233ea0" name="ab16f02d6e22134b3898e8357d8233ea0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab16f02d6e22134b3898e8357d8233ea0">&#9670;&#160;</a></span>TEST() <span class="overload">[4/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab16f02d6e22134b3898e8357d8233ea0">&#9670;&#160;</a></span>TEST() <span class="overload">[4/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -317,13 +338,14 @@ Variables</h2></td></tr>
 <p>Scenario:</p><ul>
 <li>reb_ipc_id = 2</li>
 <li>We force <a class="el" href="mcal_8h.html#a629367622920865f61d37b81915381d7" title="function that send frame CAN to vcan0 of LINUX">can_send_vcan0()</a> to fail via mocks (returning -1). Expected:</li>
-<li>Return FAIL (1). </li>
+<li>Return FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000116">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_8">SwHLR_F_8</a> </dd></dl>
+</li>
 </ul>
 
 </div>
 </div>
 <a id="a77609f922380621f9ffc0222ca0dc168" name="a77609f922380621f9ffc0222ca0dc168"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77609f922380621f9ffc0222ca0dc168">&#9670;&#160;</a></span>TEST() <span class="overload">[5/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a77609f922380621f9ffc0222ca0dc168">&#9670;&#160;</a></span>TEST() <span class="overload">[5/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -351,14 +373,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="ecu__reb_8h.html#af666e03276748ed255d57225e3e80650" title="Send a can message to Instrument Paincel Control status of REB.">reb_can_send_ipc()</a> with IPC_REB_CANCEL (2). </p>
 <p>Scenario:</p><ul>
 <li>reb_ipc_id = 2 (deactivates REB on the panel) Expected:</li>
-<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000079">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_8">SwHLR_F_8</a> </dd></dl>
+<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000106">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_8">SwHLR_F_8</a> </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a9c755a15659e9bedc3316ae8781cc4ef" name="a9c755a15659e9bedc3316ae8781cc4ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c755a15659e9bedc3316ae8781cc4ef">&#9670;&#160;</a></span>TEST() <span class="overload">[6/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c755a15659e9bedc3316ae8781cc4ef">&#9670;&#160;</a></span>TEST() <span class="overload">[6/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -386,14 +408,14 @@ Variables</h2></td></tr>
 <p>Tests <a class="el" href="ecu__reb_8h.html#af666e03276748ed255d57225e3e80650" title="Send a can message to Instrument Paincel Control status of REB.">reb_can_send_ipc()</a> with IPC_REB_START (1). </p>
 <p>Scenario:</p><ul>
 <li>reb_ipc_id = 1 (activates REB on the panel) Expected:</li>
-<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000078">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_8">SwHLR_F_8</a> </dd></dl>
+<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000105">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_8">SwHLR_F_8</a> </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a846eeaee83be5298ba0c40665d7cea09" name="a846eeaee83be5298ba0c40665d7cea09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a846eeaee83be5298ba0c40665d7cea09">&#9670;&#160;</a></span>TEST() <span class="overload">[7/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a846eeaee83be5298ba0c40665d7cea09">&#9670;&#160;</a></span>TEST() <span class="overload">[7/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -418,18 +440,18 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests <a class="el" href="ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9">handle_tcu_can()</a> with the first byte = 0x02 (CANCEL_REB). </p>
+<p>Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> with the first byte = 0x02 (CANCEL_REB). </p>
 <p>Scenario:</p><ul>
 <li>data[0] = 0x02</li>
-<li>Expects <a class="el" href="reb_2inc_2app_8h.html#ad6b9d569d0f2621d7a003fc273aab9bd" title="Handle the deactivating REB.">cancel_reb()</a> to be called internally. Expected:</li>
-<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000082">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_3">SwHLR_F_3</a> </dd></dl>
+<li>Expects <a class="el" href="reb_2inc_2app_8h.html#a350eb40cfc9e57b67462259207f997f1" title="Handle the deactivating REB.">cancel_reb()</a> to be called internally. Expected:</li>
+<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000109">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_3">SwHLR_F_3</a> </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="aa446a48cbbb95b00b60096a0ec9d5373" name="aa446a48cbbb95b00b60096a0ec9d5373"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa446a48cbbb95b00b60096a0ec9d5373">&#9670;&#160;</a></span>TEST() <span class="overload">[8/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa446a48cbbb95b00b60096a0ec9d5373">&#9670;&#160;</a></span>TEST() <span class="overload">[8/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -454,17 +476,59 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests <a class="el" href="ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9">handle_tcu_can()</a> for CANCEL_REB when <a class="el" href="reb_2inc_2app_8h.html#ad6b9d569d0f2621d7a003fc273aab9bd" title="Handle the deactivating REB.">cancel_reb()</a> fails. </p>
+<p>Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> for CANCEL_REB when <a class="el" href="reb_2inc_2app_8h.html#a350eb40cfc9e57b67462259207f997f1" title="Handle the deactivating REB.">cancel_reb()</a> fails. </p>
 <p>Scenario:</p><ul>
 <li>data[0] = 0x02</li>
-<li>We force <a class="el" href="reb_2inc_2app_8h.html#ad6b9d569d0f2621d7a003fc273aab9bd" title="Handle the deactivating REB.">cancel_reb()</a> to fail via mocks. Expected:</li>
-<li>Return FAIL (1). </li>
+<li>We force <a class="el" href="reb_2inc_2app_8h.html#a350eb40cfc9e57b67462259207f997f1" title="Handle the deactivating REB.">cancel_reb()</a> to fail via mocks. Expected:</li>
+<li>Return FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000111">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_3">SwHLR_F_3</a> </p>
+<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_1">SwHLR_F_1</a> </p>
+</dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="ad6eaf63e82140ce201a421a544b9488c" name="ad6eaf63e82140ce201a421a544b9488c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6eaf63e82140ce201a421a544b9488c">&#9670;&#160;</a></span>TEST() <span class="overload">[9/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">reb_ecu&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">reb_handle_tcu_can_CANCEL_REB_SET_PIN_FAIL&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> for CANCEL_REB when <a class="el" href="reb_2inc_2app_8h.html#a350eb40cfc9e57b67462259207f997f1" title="Handle the deactivating REB.">cancel_reb()</a> and Set_pin_status() fails. </p>
+<p>Scenario:</p><ul>
+<li>data[0] = 0x02</li>
+<li>We force <a class="el" href="reb_2inc_2app_8h.html#a350eb40cfc9e57b67462259207f997f1" title="Handle the deactivating REB.">cancel_reb()</a> to fail via mocks.</li>
+<li>Set_pin_status(S_OFF, REB_COUNTDOWN_PIN) FAIL Expected:</li>
+<li>Return FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000112">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_3">SwHLR_F_3</a> </p>
+<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_1">SwHLR_F_1</a> </p>
+</dd></dl>
+</li>
 </ul>
 
 </div>
 </div>
 <a id="af5454d2dcf8968466f70de2dad1736fb" name="af5454d2dcf8968466f70de2dad1736fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5454d2dcf8968466f70de2dad1736fb">&#9670;&#160;</a></span>TEST() <span class="overload">[9/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af5454d2dcf8968466f70de2dad1736fb">&#9670;&#160;</a></span>TEST() <span class="overload">[10/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -489,18 +553,18 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests <a class="el" href="ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9">handle_tcu_can()</a> with the first byte = 0x01 (START_REB). </p>
+<p>Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> with the first byte = 0x01 (START_REB). </p>
 <p>Scenario:</p><ul>
 <li>data[0] = 0x01</li>
-<li>Expects <a class="el" href="reb_2inc_2app_8h.html#a701f315e7af1774fcf7550974ee33521" title="Handle the activating REB.">start_reb()</a> to be called internally. Expected:</li>
-<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000083">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_3">SwHLR_F_3</a> </dd></dl>
+<li>Expects <a class="el" href="reb_2inc_2app_8h.html#a7ba689b74e8d08d4633d4b1152dc0f4f" title="Handle the activating REB.">start_reb()</a> to be called internally. Expected:</li>
+<li>Return SUCCESS (0). <dl class="req"><dt><b><a class="el" href="req.html#_req000110">Requirement:</a></b></dt><dd><a class="el" href="system_requirements.html#SwHLR_F_3">SwHLR_F_3</a> </dd></dl>
 </li>
 </ul>
 
 </div>
 </div>
 <a id="a4e55c5bc8d2daa671bf65f2a04fa242f" name="a4e55c5bc8d2daa671bf65f2a04fa242f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e55c5bc8d2daa671bf65f2a04fa242f">&#9670;&#160;</a></span>TEST() <span class="overload">[10/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e55c5bc8d2daa671bf65f2a04fa242f">&#9670;&#160;</a></span>TEST() <span class="overload">[11/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -525,11 +589,53 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests <a class="el" href="ecu__reb_8h.html#a43c241b60cbd83dbfc4ceb869f2f41f9">handle_tcu_can()</a> for START_REB when <a class="el" href="reb_2inc_2app_8h.html#a701f315e7af1774fcf7550974ee33521" title="Handle the activating REB.">start_reb()</a> fails. </p>
+<p>Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> for START_REB when <a class="el" href="reb_2inc_2app_8h.html#a7ba689b74e8d08d4633d4b1152dc0f4f" title="Handle the activating REB.">start_reb()</a> fails. </p>
 <p>Scenario:</p><ul>
 <li>data[0] = 0x01</li>
-<li>We force <a class="el" href="reb_2inc_2app_8h.html#a701f315e7af1774fcf7550974ee33521" title="Handle the activating REB.">start_reb()</a> to fail via mocks. Expected:</li>
-<li>Return FAIL (1). </li>
+<li>We force <a class="el" href="reb_2inc_2app_8h.html#a7ba689b74e8d08d4633d4b1152dc0f4f" title="Handle the activating REB.">start_reb()</a> to fail via mocks. Expected:</li>
+<li>Return FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000113">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_3">SwHLR_F_3</a> </p>
+<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_1">SwHLR_F_1</a> </p>
+</dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a91956f1ce54f345fc4b9b0b05536b810" name="a91956f1ce54f345fc4b9b0b05536b810"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91956f1ce54f345fc4b9b0b05536b810">&#9670;&#160;</a></span>TEST() <span class="overload">[12/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">reb_ecu&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">reb_handle_tcu_can_START_REB_SET_PIN_FAIL&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests <a class="el" href="ecu__reb_8h.html#af1a256c02f1f0bb0e323060c62da760d">handle_tcu_can()</a> for START_REB when <a class="el" href="reb_2inc_2app_8h.html#a7ba689b74e8d08d4633d4b1152dc0f4f" title="Handle the activating REB.">start_reb()</a> and <a class="el" href="mcal_8h.html#a5e27e189a7a737884041443b081fe818" title="Set the status of desired PIN number.">set_pin_status()</a> fails. </p>
+<p>Scenario:</p><ul>
+<li>data[0] = 0x01</li>
+<li>We force <a class="el" href="reb_2inc_2app_8h.html#a7ba689b74e8d08d4633d4b1152dc0f4f" title="Handle the activating REB.">start_reb()</a> to fail via mocks.</li>
+<li>set_pin_status(S_ON, REB_COUNTDOWN_PIN) FAIL Expected:</li>
+<li>Return FAIL (1). <dl class="req"><dt><b><a class="el" href="req.html#_req000114">Requirement:</a></b></dt><dd><p class="startdd"><a class="el" href="system_requirements.html#SwHLR_F_3">SwHLR_F_3</a> </p>
+<p class="enddd"><a class="el" href="system_requirements.html#SwHLR_F_1">SwHLR_F_1</a> </p>
+</dd></dl>
+</li>
 </ul>
 
 </div>
@@ -589,6 +695,28 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a3e900cda1f82f209e8ea2fd76d3c3ed6" name="a3e900cda1f82f209e8ea2fd76d3c3ed6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e900cda1f82f209e8ea2fd76d3c3ed6">&#9670;&#160;</a></span>flag_fail_set_pin</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_fail_set_pin</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a7471a7359e135e100e2db96356c33b46" name="a7471a7359e135e100e2db96356c33b46"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7471a7359e135e100e2db96356c33b46">&#9670;&#160;</a></span>reb_ecu_id</h2>
 

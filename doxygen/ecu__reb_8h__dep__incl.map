@@ -10,8 +10,8 @@
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="498,44,498,79,493,79,493,44"/>
 <area shape="rect" id="Node000006" href="$reb_2mocks_2mock__can__utils_8c.html" title=" " alt="" coords="601,79,760,119"/>
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="536,33,637,76,635,81,534,38"/>
-<area shape="rect" id="Node000007" href="$test__reb__app_8c.html" title=" " alt="" coords="784,79,935,119"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="562,31,773,76,784,78,783,84,772,81,561,36"/>
-<area shape="rect" id="Node000008" href="$test__reb__ecu_8c.html" title="Unit tests for functions in ecu_reb.c." alt="" coords="959,79,1109,119"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="576,25,747,46,948,76,959,78,958,83,947,81,747,51,575,31"/>
+<area shape="rect" id="Node000007" href="$test__reb__app_8c.html" title="Unit tests for functions in reb/app.c." alt="" coords="785,79,937,119"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="562,31,785,78,784,84,561,36"/>
+<area shape="rect" id="Node000008" href="$test__reb__ecu_8c.html" title="Unit tests for functions in ecu_reb.c." alt="" coords="961,79,1113,119"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="576,25,748,46,949,76,961,78,960,83,948,81,747,51,575,31"/>
 </map>
